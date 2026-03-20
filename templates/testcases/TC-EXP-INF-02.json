@@ -85,7 +85,8 @@
           "result": null
         }
       ],
-      "source_test": "EXP_INF_06"
+      "source_test": "EXP_INF_06",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -99,6 +100,56 @@
         {
           "description": "info.csv korrekt; description leer oder fehlend",
           "expected": "EXP_INF_05",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
           "result_options": [
             "pass",
             "fail",
@@ -169,6 +220,66 @@
         {
           "description": "description:-Zeile enthält Hersteller-Beschreibung korrekt",
           "expected": "EXP_INF_06",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
           "result_options": [
             "pass",
             "fail",
@@ -253,6 +364,66 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -325,7 +496,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     }
   ],
   "references": [

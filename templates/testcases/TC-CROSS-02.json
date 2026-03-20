@@ -125,7 +125,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -161,7 +162,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -197,7 +199,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -233,7 +236,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -269,7 +273,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -295,7 +300,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -321,7 +327,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -355,6 +362,36 @@
         {
           "description": "Keine Lücken",
           "expected": "CROSS_LOG_CTR_GAPS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Monoton steigende signatureCreationTime [CROSS_LOG_TIME_MONO]",
+          "expected": "Alle Zeitstempel sind in der Reihenfolge des `signatureCounter`",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliches Zeitformat im gesamten Archiv [CROSS_LOG_TIMEFMT]",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format",
           "result_options": [
             "pass",
             "fail",
@@ -402,6 +439,13 @@
         {
           "check_id": "LOG_CTR_COMPLETE",
           "title": "Lückenlose Vollständigkeit aller Signaturzähler im Export",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null

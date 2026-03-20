@@ -84,7 +84,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_LOG_06"
+      "source_test": "SM_LOG_06",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -110,7 +111,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_LOG_06"
+      "source_test": "SM_LOG_06",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -190,6 +192,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "exitSecureState – System-Log-Nachweis [EXP_LOG_01_EXIT_SECURE_STATE]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"exitSecureState\" gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -240,7 +252,8 @@
           "result": null
         }
       ],
-      "notes": "Nur wenn Profil AUDIT_MODIFY aktiv"
+      "notes": "Nur wenn Profil AUDIT_MODIFY aktiv",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -290,6 +303,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "eventType = disableSecureElement [DSE_LOG_EVTYPE]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface [DSE_LOG_EVORIGIN]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -331,6 +364,20 @@
         {
           "check_id": "STOR_EVT_DISABLE_IS_LAST",
           "title": "disableSecureElement hat den höchsten signatureCounter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null

@@ -114,7 +114,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -140,7 +141,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -166,7 +168,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -202,7 +205,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -228,7 +232,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -254,7 +259,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -279,7 +285,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.1"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -304,7 +311,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -330,7 +338,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -356,7 +365,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -382,7 +392,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -407,7 +418,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -432,7 +444,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -457,7 +470,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -492,7 +506,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -514,7 +529,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 23,
@@ -559,7 +575,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "tar_validation": []
     },
     {
       "step": 24,
@@ -643,6 +660,366 @@
         {
           "description": "Max. Abstand zwischen Update-Logs einer Transaktion ≤ MAX_UPDATE_DELAY (ICS) (TIME_SM_UPDATE_DELAY)",
           "expected": "TIME_SM_UPDATE_DELAY bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
+          "expected": "Alle Header enthalten `ustar` oder `ustar ` (mit Leerzeichen).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
+          "expected": "Zwei Null-Blöcke erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
+          "expected": "Keine Verzeichniseinträge und keine Dateien in Unterverzeichnissen vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Header-Checksummen [EXP_TAR_CHK]",
+          "expected": "Alle Header-Checksummen gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
+          "expected": "Alle Dateien entsprechen den erlaubten Typen.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
+          "expected": "Alle Dateien im TAR entsprechen einem der zulässigen Muster.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType vorhanden [LOG_EVTYPE]",
+          "expected": "eventType vorhanden. Bekannte TR-Events werden als solche markiert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
+          "expected": "LOG_ORIGIN: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser [LOG_TRIGGER]",
+          "expected": "LOG_TRIGGER: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData vorhanden [LOG_EVDATA]",
+          "expected": "Feld vorhanden (auch leer ist gültig, z.B. für `startAudit`, `exitSecureState`).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
+          "expected": "Dateiname-eventType = Log-eventType.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
+          "expected": "SYSLOG_RULES: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine doppelten signatureCounter-Werte [CROSS_LOG_CTR_UNIQUE]",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Mindestens ein updateTime-SystemLog vorhanden [STOR_EVT_UPDATETIME_PRESENT]",
+          "expected": "Mindestens eine SystemLog-Datei mit `eventType = updateTime`",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitabhängige SystemLog-Ereignisse nach updateTime [TIMESET_SYSLOG_WRITES_AFTER_UPDATETIME]",
+          "expected": "Alle SystemLog-Einträge der genannten Typen haben",
           "result_options": [
             "pass",
             "fail",
@@ -984,7 +1361,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     }
   ],
   "references": [

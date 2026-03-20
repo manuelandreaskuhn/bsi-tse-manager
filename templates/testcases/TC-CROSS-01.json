@@ -111,7 +111,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_KRY_03"
+      "source_test": "SM_KRY_03",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -143,7 +144,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_KRY_03"
+      "source_test": "SM_KRY_03",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -175,7 +177,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_KRY_03"
+      "source_test": "SM_KRY_03",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -255,6 +258,13 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "source_test": "SM_KRY_03"
@@ -315,6 +325,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -356,6 +376,13 @@
         {
           "check_id": "LOG_CTR_COMPLETE",
           "title": "Lückenlose Vollständigkeit aller Signaturzähler im Export",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null

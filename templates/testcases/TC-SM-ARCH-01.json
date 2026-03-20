@@ -137,7 +137,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -159,7 +160,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -181,7 +183,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -203,7 +206,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -229,7 +233,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -265,7 +270,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -291,7 +297,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_ARCH_01"
+      "source_test": "SM_ARCH_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -330,6 +337,36 @@
         {
           "description": "Kein Fehlermeldung",
           "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1-Struktur der Seriennummer korrekt [ESN_ASN1]",
+          "expected": "ASN.1-Dekodierung erfolgreich; genau eine Seriennummer vom",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel [ESN_CROSS_CERT]",
+          "expected": "Hashwerte stimmen überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer entspricht serialNumber in Log-Nachrichten [ESN_CROSS_LOG]",
+          "expected": "Alle `serialNumber`-Felder in den Log-Nachrichten stimmen mit",
           "result_options": [
             "pass",
             "fail",
@@ -440,7 +477,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -480,7 +518,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_ARCH_09"
+      "source_test": "SM_ARCH_09",
+      "tar_validation": []
     }
   ],
   "references": [

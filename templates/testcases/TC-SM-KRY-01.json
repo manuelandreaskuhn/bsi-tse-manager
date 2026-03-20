@@ -113,7 +113,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_KRY_01"
+      "source_test": "SM_KRY_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -191,6 +192,36 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [CERT_SIG_ALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Schlüsselkurve [CERT_CURVE]",
+          "expected": "CERT_CURVE: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -239,6 +270,16 @@
         {
           "description": "Konkatenation der zu signierenden Felder korrekt",
           "expected": "SIG_VERIFY_CONCAT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kryptographische Signaturverifikation der Log-Nachrichten [SIG_VERIFY_LOGMSG]",
+          "expected": "Signatur für alle Log-Nachrichten gültig.",
           "result_options": [
             "pass",
             "fail",

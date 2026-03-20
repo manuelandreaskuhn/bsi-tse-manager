@@ -138,7 +138,8 @@
           "result": null
         }
       ],
-      "source_test": "II_RFB_01"
+      "source_test": "II_RFB_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -160,7 +161,8 @@
           "result": null
         }
       ],
-      "source_test": "II_RFB_01"
+      "source_test": "II_RFB_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -182,7 +184,8 @@
           "result": null
         }
       ],
-      "source_test": "II_RFB_01"
+      "source_test": "II_RFB_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -238,6 +241,306 @@
         {
           "description": "Einheitliche Seriennummer nach Restore",
           "expected": "RFB_TAR_CROSS_SERIAL",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
+          "expected": "Alle Header enthalten `ustar` oder `ustar ` (mit Leerzeichen).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
+          "expected": "Zwei Null-Blöcke erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
+          "expected": "Keine Verzeichniseinträge und keine Dateien in Unterverzeichnissen vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Header-Checksummen [EXP_TAR_CHK]",
+          "expected": "Alle Header-Checksummen gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
+          "expected": "Alle Dateien entsprechen den erlaubten Typen.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
+          "expected": "Alle Dateien im TAR entsprechen einem der zulässigen Muster.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "operationType vorhanden und gültig [LOG_TXN_OPTYPE]",
+          "expected": "Wert vorhanden und in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "clientId vorhanden [LOG_TXN_CLIENT]",
+          "expected": "clientId vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "processData vorhanden [LOG_TXN_PDATA]",
+          "expected": "Feld vorhanden (Länge und Textinhalt werden ausgegeben).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "processType vorhanden, max. 100 Zeichen [LOG_TXN_PTYPE]",
+          "expected": "Vorhanden und ≤ 100 Zeichen.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumber vorhanden [LOG_TXN_TXNNUM]",
+          "expected": "Nummer vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_TXN_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema vollständig korrekt [LOG_TXN_FNAME]",
+          "expected": "Dateiname entspricht vollständig dem Schema.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitformat-Präfix [LOG_TXN_FNAME_FMT]",
+          "expected": "Gültiger Präfix erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "No-{transactionNumber} stimmt [LOG_TXN_FNAME_NUM]",
+          "expected": "Übereinstimmung.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TYPE stimmt (Start|Update|Finish) [LOG_TXN_FNAME_TYPE]",
+          "expected": "TYPE entspricht dem Mapping.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Client-{clientId} stimmt [LOG_TXN_FNAME_CLIENT]",
+          "expected": "clientId stimmt überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein [LOG_FIELD_NO_ADD_INT]",
+          "expected": "Kein `additionalInternalData`-Eintrag in einer der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalExternalData nur vorhanden wenn Daten übergeben wurden [LOG_FIELD_ADD_EXT_ABSENT]",
+          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert",
           "result_options": [
             "pass",
             "fail",
@@ -518,7 +821,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -551,7 +855,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -580,7 +885,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     }
   ],
   "references": [

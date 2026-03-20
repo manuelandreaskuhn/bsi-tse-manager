@@ -149,7 +149,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -185,7 +186,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -221,7 +223,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -257,7 +260,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -293,7 +297,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -319,7 +324,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -345,7 +351,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -370,7 +377,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.1"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -396,7 +404,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -421,7 +430,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -447,7 +457,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -473,7 +484,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -499,7 +511,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -524,7 +537,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -550,7 +564,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 23,
@@ -576,7 +591,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 24,
@@ -601,7 +617,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 25,
@@ -626,7 +643,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 26,
@@ -648,7 +666,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_SIG_01"
+      "source_test": "SM_SIG_01",
+      "tar_validation": []
     },
     {
       "step": 27,
@@ -748,6 +767,306 @@
         {
           "description": "disableSecureElement hat den höchsten Signaturzähler",
           "expected": "STOR_EVT_DISABLE_IS_LAST",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
+          "expected": "Alle Header enthalten `ustar` oder `ustar ` (mit Leerzeichen).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
+          "expected": "Zwei Null-Blöcke erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
+          "expected": "Keine Verzeichniseinträge und keine Dateien in Unterverzeichnissen vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Header-Checksummen [EXP_TAR_CHK]",
+          "expected": "Alle Header-Checksummen gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
+          "expected": "Alle Dateien entsprechen den erlaubten Typen.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
+          "expected": "Alle Dateien im TAR entsprechen einem der zulässigen Muster.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Monoton steigende signatureCreationTime [CROSS_LOG_TIME_MONO]",
+          "expected": "Alle Zeitstempel sind in der Reihenfolge des `signatureCounter`",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliches Zeitformat im gesamten Archiv [CROSS_LOG_TIMEFMT]",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kryptographische Signaturverifikation der Log-Nachrichten [SIG_VERIFY_LOGMSG]",
+          "expected": "Signatur für alle Log-Nachrichten gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Korrektheit der Feldkonkatenation [SIG_VERIFY_CONCAT]",
+          "expected": "Konkatenation reproduzierbar und Signatur gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein signatureCounter am oder über dem Maximalwert [SIG_CTR_OVERFLOW_CHECK]",
+          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet",
           "result_options": [
             "pass",
             "fail",
@@ -1040,7 +1359,8 @@
           "result": null
         }
       ],
-      "notes": "Über Herstellerdokumentation oder kontrollierte Simulation"
+      "notes": "Über Herstellerdokumentation oder kontrollierte Simulation",
+      "tar_validation": []
     }
   ],
   "references": [

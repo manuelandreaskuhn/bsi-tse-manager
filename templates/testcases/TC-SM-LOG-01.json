@@ -79,7 +79,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_LOG_01"
+      "source_test": "SM_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -145,7 +146,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_LOG_01"
+      "source_test": "SM_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -219,6 +221,246 @@
         {
           "description": "Nur relevant wenn Profil SMAADMIN_AVAILABLE aktiv",
           "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType vorhanden [LOG_EVTYPE]",
+          "expected": "eventType vorhanden. Bekannte TR-Events werden als solche markiert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
+          "expected": "LOG_ORIGIN: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser [LOG_TRIGGER]",
+          "expected": "LOG_TRIGGER: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData vorhanden [LOG_EVDATA]",
+          "expected": "Feld vorhanden (auch leer ist gültig, z.B. für `startAudit`, `exitSecureState`).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
+          "expected": "Dateiname-eventType = Log-eventType.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
+          "expected": "SYSLOG_RULES: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "seAuditData vorhanden [LOG_AUDIT_DATA]",
+          "expected": "Feld vorhanden (Länge in Byte, ASN.1-Inhalt wenn erkannt).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "seAuditData nicht leer [LOG_AUDIT_NOTEMPTY]",
+          "expected": "Länge > 0 Byte.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein certifiedData-Platzhalter [LOG_AUDIT_NOEVT]",
+          "expected": "Weder `eventType` noch `eventOrigin` vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema AuditLog [LOG_AUDIT_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticateSmaAdmin – System-Log-Nachweis [EXP_LOG_01_AUTH_SMA_ADMIN]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"authenticateSmaAdmin\" gefunden.",
           "result_options": [
             "pass",
             "fail",
@@ -445,6 +687,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "timeOfEvent bei enterSecureState (Format) [EVDATA_ENTERSTATE_TIMEOFEVENT]",
+          "expected": "`timeOfEvent` verwendet dasselbe Format und dieselbe Zeitzone",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -486,6 +738,36 @@
         {
           "description": "Bei Fehler: authenticationResult=failed, remainingRetries dekrementiert",
           "expected": "Korrekte Felder",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticationResult bei Authentifizierungsereignissen [EVDATA_AUTH_RESULT]",
+          "expected": "`authenticationResult` vorhanden und ist ein gültiger BOOLEAN-Wert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries bei fehlgeschlagener Authentifizierung [EVDATA_AUTH_RETRIES]",
+          "expected": "`remainingRetries` ist vorhanden und ist ein nicht-negativer INTEGER.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zulässige Werte für authenticationResult [EVDATA_AUTH_RESULT_VALUES]",
+          "expected": "`authenticationResult` enthält einen der vier zulässigen",
           "result_options": [
             "pass",
             "fail",

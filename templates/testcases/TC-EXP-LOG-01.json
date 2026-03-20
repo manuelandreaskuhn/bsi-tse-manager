@@ -217,7 +217,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -243,7 +244,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -269,7 +271,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -295,7 +298,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -321,7 +325,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -347,7 +352,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -373,7 +379,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -399,7 +406,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -425,7 +433,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -451,7 +460,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -473,7 +483,8 @@
           "result": null
         }
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -499,7 +510,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 23,
@@ -525,7 +537,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 24,
@@ -547,7 +560,8 @@
           "result": null
         }
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 25,
@@ -573,7 +587,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 26,
@@ -599,7 +614,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 27,
@@ -625,7 +641,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 28,
@@ -651,7 +668,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 29,
@@ -677,7 +695,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 30,
@@ -703,7 +722,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 31,
@@ -729,7 +749,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_01"
+      "source_test": "EXP_LOG_01",
+      "tar_validation": []
     },
     {
       "step": 32,
@@ -1246,6 +1267,86 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Zeitformat-Präfix [LOG_TXN_FNAME_FMT]",
+          "expected": "Gültiger Präfix erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "No-{transactionNumber} stimmt [LOG_TXN_FNAME_NUM]",
+          "expected": "Übereinstimmung.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TYPE stimmt (Start|Update|Finish) [LOG_TXN_FNAME_TYPE]",
+          "expected": "TYPE entspricht dem Mapping.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Client-{clientId} stimmt [LOG_TXN_FNAME_CLIENT]",
+          "expected": "clientId stimmt überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein [LOG_FIELD_NO_ADD_INT]",
+          "expected": "Kein `additionalInternalData`-Eintrag in einer der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine doppelten Update-Signaturen [TXN_LIFE_NODUP_UPDATE]",
+          "expected": "Alle Counter-Werte innerhalb jeder Transaktion sind eindeutig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitliche Reihenfolge innerhalb einer Transaktion [TXN_LIFE_TIME_ORDER]",
+          "expected": "Zeitstempel innerhalb aller Transaktionen sind monoton.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumbers eindeutig pro Start-Eintrag [TXN_NUM_UNIQUE]",
+          "expected": "Alle `transactionNumber`-Werte in `startTransaction`-Logs",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -1546,6 +1647,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Kein signatureCounter am oder über dem Maximalwert [SIG_CTR_OVERFLOW_CHECK]",
+          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -1601,6 +1712,13 @@
         {
           "check_id": "SIG_CTR_OVERFLOW_CHECK",
           "title": "Kein signatureCounter am oder über dem Maximalwert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null

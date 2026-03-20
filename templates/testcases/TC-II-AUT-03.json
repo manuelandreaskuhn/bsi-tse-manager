@@ -128,7 +128,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -154,7 +155,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -180,7 +182,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -206,7 +209,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -232,6 +236,13 @@
         {
           "check_id": "EVDATA_AUTH_RETRIES_MAX",
           "title": "remainingRetries = ICS-Maximalwert nach Erfolg",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES",
+          "title": "remainingRetries bei fehlgeschlagener Authentifizierung",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
@@ -273,7 +284,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -303,7 +315,8 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "II_AUT_19",
-      "notes": "Nur wenn Profil CENTRAL_TIME aktiv"
+      "notes": "Nur wenn Profil CENTRAL_TIME aktiv",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -323,7 +336,8 @@
           "result": null
         }
       ],
-      "notes": "Nur wenn Profil CENTRAL_TIME aktiv"
+      "notes": "Nur wenn Profil CENTRAL_TIME aktiv",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -352,7 +366,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_19"
+      "source_test": "II_AUT_19",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -371,7 +386,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     }
   ],
   "references": [

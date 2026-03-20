@@ -131,7 +131,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -167,7 +168,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -193,7 +195,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -219,7 +222,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -245,7 +249,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -271,7 +276,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -297,7 +303,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -323,7 +330,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -369,7 +377,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -395,7 +404,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -421,7 +431,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -447,7 +458,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TME_04"
+      "source_test": "SM_TME_04",
+      "tar_validation": [
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
     },
     {
       "step": 19,
@@ -481,6 +501,26 @@
         {
           "description": "Signaturzähler über PIN-Entsperrungen hinweg lückenlos",
           "expected": "Keine Lücken",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine doppelten signatureCounter-Werte [CROSS_LOG_CTR_UNIQUE]",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der",
           "result_options": [
             "pass",
             "fail",
@@ -558,6 +598,13 @@
           "check_id": "STOR_EVT_UPDATETIME_PRESENT",
           "title": "Mindestens ein updateTime-SystemLog vorhanden",
           "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
         }

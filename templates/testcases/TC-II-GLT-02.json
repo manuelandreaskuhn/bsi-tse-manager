@@ -125,7 +125,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -167,7 +168,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -193,7 +195,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -219,7 +222,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -245,7 +249,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -267,7 +272,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -289,7 +295,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -311,7 +318,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -378,6 +386,16 @@
         {
           "description": "Inline-Log stimmt mit TAR-Export überein (INLINE_MATCH_EXPORT)",
           "expected": "INLINE_MATCH_EXPORT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logMessageContent entspricht TAR-Dateiinhalt [GLT_CONTENT_MATCH]",
+          "expected": "Byte-Inhalt stimmt exakt überein.",
           "result_options": [
             "pass",
             "fail",
@@ -455,7 +473,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -480,7 +499,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -502,7 +522,8 @@
           "result": null
         }
       ],
-      "source_test": "II_GLT_04"
+      "source_test": "II_GLT_04",
+      "tar_validation": []
     }
   ],
   "references": [

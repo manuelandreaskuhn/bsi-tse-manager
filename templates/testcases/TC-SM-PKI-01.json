@@ -69,7 +69,8 @@
           "result": null
         }
       ],
-      "source_test": "SM_PKI_01"
+      "source_test": "SM_PKI_01",
+      "tar_validation": []
     },
     {
       "step": 4,
@@ -88,7 +89,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 5,
@@ -147,6 +149,316 @@
         {
           "description": "SKI, AKI, CRL-Punkt, Certificate Policies vorhanden",
           "expected": "CERT_SKI + CERT_AKI + CERT_CRL + CERT_POLICY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
+          "expected": "Alle Header enthalten `ustar` oder `ustar ` (mit Leerzeichen).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
+          "expected": "Zwei Null-Blöcke erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
+          "expected": "Keine Verzeichniseinträge und keine Dateien in Unterverzeichnissen vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Header-Checksummen [EXP_TAR_CHK]",
+          "expected": "Alle Header-Checksummen gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CertificateExport-Dateiname [EXP_ARCH_NAME_CERT]",
+          "expected": "Dateiname entspricht Schema `CertificateExport_{Gent|Utc|Unixt}_{DATUM}.tar[.{N}]`.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitformat-Präfix im Dateinamen [EXP_ARCH_FMT]",
+          "expected": "Gültiger Präfix erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Archiv-Typ (info) [EXP_ARCH_TYPE_CERT]",
+          "expected": "EXP_ARCH_TYPE_CERT: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Log-Dateien enthalten [CRTEXP_NOLOG]",
+          "expected": "Keine Log-Dateien vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur erlaubte Dateitypen [CRTEXP_FILES]",
+          "expected": "Alle Dateien vom erlaubten Typ.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikatskette vollständig [CRTEXP_CHAIN]",
+          "expected": "Mindestens 2 Zertifikat-Dateien vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat-Dateien vorhanden [EXP_CRT_PRESENT]",
+          "expected": "Anzahl und Namen der Zertifikate werden ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat-Dateinamen [EXP_CRT_NAME]",
+          "expected": "Alle Zertifikat-Dateien entsprechen dem Schema.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Private Key Usage Period [CERT_PKUP]",
+          "expected": "CERT_PKUP: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Basic Constraints: CA:TRUE [CERT_BC_CA]",
+          "expected": "`CA:TRUE` vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Key Usage: Certificate Sign + CRL Sign [CERT_KU_CA]",
+          "expected": "Beide Bits gesetzt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Root-CA selbst-signiert [CERT_SELF_SIGN]",
+          "expected": "Issuer = Subject.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Basic Constraints: CA:FALSE [CERT_BC_LEAF]",
+          "expected": "`CA:FALSE` oder keine BasicConstraints-Extension.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Key Usage: Digital Signature [CERT_KU_LEAF]",
+          "expected": "`digitalSignature` gesetzt, keine anderen Bits.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "BSI-TSE-OID im Subject [CERT_BSI_OID]",
+          "expected": "OID vorhanden mit zugehörigem Wert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname = Subject CN = TSE-Seriennummer [CERT_CN_HASH]",
+          "expected": "CN, Seriennummer und Dateiname stimmen überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels [CERT_CN_PUBKEY_HASH]",
+          "expected": "`CN`-Wert des Zertifikats stimmt (hex, case-insensitive)",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikatskette vollständig [CHAIN_COMPLETE]",
+          "expected": "Root-CA + TSE-Blatt vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "AKI→SKI Verkettung [CHAIN_AKI_SKI]",
+          "expected": "Alle AKI→SKI-Verknüpfungen korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kindsgültigkeit ≤ Ausstellergültigkeit [CHAIN_VALIDITY]",
+          "expected": "Alle Gültigkeitszeiträume innerhalb des Ausstellers.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Aussteller-Inhaber-Übereinstimmung [CHAIN_ISSUER_MATCH]",
+          "expected": "Alle Issuer/Subject-DNs konsistent.",
           "result_options": [
             "pass",
             "fail",
@@ -435,6 +747,20 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME",
+          "title": "Archivdateiname (Export_*.tar)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
@@ -508,6 +834,36 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "CRL-Endpunkt erreichbar [CRL_LIVE_FETCH]",
+          "expected": "Alle CRL-Endpunkte erreichbar, CRL-Download erfolgreich.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CRL selbst noch gültig [CRL_LIVE_VALIDITY]",
+          "expected": "`nextUpdate` liegt in der Zukunft. Verbleibende Gültigkeitsdauer",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CA-Zertifikat nicht widerrufen [CRL_LIVE_CA_REVOKED]",
+          "expected": "Kein CA-Zertifikat in einer CRL eingetragen.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -564,6 +920,20 @@
           "check_id": "CRL_LIVE_CA_REVOKED",
           "title": "CA-Zertifikat nicht widerrufen",
           "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_PUBKEY_HASH",
+          "title": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SIG_ALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
         }

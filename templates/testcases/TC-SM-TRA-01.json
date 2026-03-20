@@ -137,7 +137,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -163,7 +164,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -189,7 +191,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -215,7 +218,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -241,7 +245,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -267,7 +272,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -293,7 +299,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -317,6 +324,16 @@
         {
           "description": "Jede Transaktionsnummer eindeutig",
           "expected": "TXN_NUM_UNIQUE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Jede transactionNumber hat genau einen Start-Eintrag [TXN_LIFE_START]",
+          "expected": "Alle transactionNumbers haben genau einen Start-Eintrag.",
           "result_options": [
             "pass",
             "fail",
@@ -389,7 +406,8 @@
         "BSI TR-03151-1 §5.3.1"
       ],
       "source_test": "SM_TRA_01",
-      "notes": "Nur wenn SM_MULTI aktiv"
+      "notes": "Nur wenn SM_MULTI aktiv",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -425,7 +443,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -454,7 +473,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -483,7 +503,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -512,7 +533,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_TRA_01"
+      "source_test": "SM_TRA_01",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -542,7 +564,8 @@
           "result": null
         }
       ],
-      "notes": "Via Herstellerdokumentation oder kontrollierte Simulation"
+      "notes": "Via Herstellerdokumentation oder kontrollierte Simulation",
+      "tar_validation": []
     }
   ],
   "references": [

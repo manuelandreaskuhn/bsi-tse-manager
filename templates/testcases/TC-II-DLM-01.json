@@ -110,7 +110,8 @@
           "result": null
         }
       ],
-      "source_test": "II_DLM_01"
+      "source_test": "II_DLM_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -136,7 +137,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_DLM_01"
+      "source_test": "II_DLM_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -158,7 +160,8 @@
           "result": null
         }
       ],
-      "source_test": "II_DLM_01"
+      "source_test": "II_DLM_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -298,6 +301,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Minimale TAR-Struktur nach dem Löschen [DEL_TAR_STRUCT]",
+          "expected": "Archiv enthält `info.csv` und mindestens eine Zertifikatsdatei",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "deleteLogMessages – System-Log-Nachweis [EXP_LOG_01_DELETE_LOG_MESSAGES]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"deleteLogMessages\" gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -370,6 +393,20 @@
           "outcome_type": "PASS_FAIL",
           "condition": "conditional",
           "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "source_test": "II_DLM_01",
@@ -408,7 +445,8 @@
           "result": null
         }
       ],
-      "source_test": "II_DLM_01"
+      "source_test": "II_DLM_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -437,7 +475,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     }
   ],
   "references": [

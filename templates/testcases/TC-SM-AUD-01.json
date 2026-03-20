@@ -69,7 +69,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_AUD_01"
+      "source_test": "SM_AUD_01",
+      "tar_validation": []
     },
     {
       "step": 5,
@@ -95,7 +96,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_AUD_01"
+      "source_test": "SM_AUD_01",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -126,7 +128,8 @@
           "result": null
         }
       ],
-      "notes": "Nur wenn Profil AUDIT_MODIFY aktiv"
+      "notes": "Nur wenn Profil AUDIT_MODIFY aktiv",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -156,7 +159,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -216,6 +220,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "disableSecureElement ist der letzte signierte Log-Eintrag [DSE_FINAL_LOG]",
+          "expected": "`disableSecureElement`-Log hat den maximalen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -257,6 +271,20 @@
         {
           "check_id": "STOR_EVT_DISABLE_IS_LAST",
           "title": "disableSecureElement hat den höchsten signatureCounter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null

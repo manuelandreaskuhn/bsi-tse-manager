@@ -124,7 +124,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -190,7 +191,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -226,7 +228,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -251,7 +254,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.14"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -276,7 +280,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -298,7 +303,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -320,7 +326,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -342,7 +349,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -368,7 +376,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -411,7 +420,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -437,7 +447,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -474,7 +485,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -500,7 +512,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -544,6 +557,26 @@
         {
           "description": "processData des aggregierten Logs ist Konkatenation aller nicht-gesicherten Updates",
           "expected": "AGG_PDATA_CONCAT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Log-Nachricht für nicht-signierte Zwischenupdates [AGG_UPDATE_ABSENT]",
+          "expected": "Die Anzahl der Aktualisierungs-Log-Nachrichten im TAR stimmt mit",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Genau ein aggregiertes Update-Log pro Transaktion (SM_AGG) [STOR_AGG_COUNT_PER_TXN]",
+          "expected": "Für alle vollständig exportierten SM_AGG-Transaktionen mit",
           "result_options": [
             "pass",
             "fail",
@@ -604,7 +637,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -643,7 +677,16 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": [
+        {
+          "check_id": "LOG_NEG_TXN",
+          "title": "Kein Transaktions-Log bei fehlgeschlagenem API-Aufruf",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
     },
     {
       "step": 21,
@@ -669,7 +712,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_UPD_01"
+      "source_test": "II_UPD_01",
+      "tar_validation": []
     }
   ],
   "references": [

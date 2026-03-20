@@ -82,7 +82,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 5,
@@ -107,7 +108,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -132,7 +134,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -187,7 +190,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -213,7 +217,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -238,7 +243,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -352,6 +358,186 @@
         {
           "description": "disableSecureElement ist der letzte signierte Log-Eintrag (höchster signatureCounter) (DSE_FINAL_LOG / STOR_EVT_DISABLE_IS_LAST)",
           "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
+          "expected": "LOG_ORIGIN: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser [LOG_TRIGGER]",
+          "expected": "LOG_TRIGGER: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
+          "expected": "Dateiname-eventType = Log-eventType.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
+          "expected": "SYSLOG_RULES: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "disableSecureElement – System-Log-Nachweis [EXP_LOG_01_DISABLE_SE]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"disableSecureElement\" gefunden.",
           "result_options": [
             "pass",
             "fail",
@@ -570,7 +756,8 @@
           "result": null
         }
       ],
-      "source_test": "II_DSE_01"
+      "source_test": "II_DSE_01",
+      "tar_validation": []
     }
   ],
   "references": [

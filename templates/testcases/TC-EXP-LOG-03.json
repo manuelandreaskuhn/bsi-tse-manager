@@ -157,7 +157,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -183,7 +184,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -209,7 +211,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 14,
@@ -234,7 +237,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 15,
@@ -259,7 +263,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -284,7 +289,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -310,7 +316,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -336,7 +343,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -362,7 +370,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -388,7 +397,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -414,7 +424,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -440,7 +451,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 23,
@@ -465,7 +477,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 24,
@@ -490,7 +503,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 25,
@@ -515,7 +529,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 26,
@@ -541,7 +556,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 27,
@@ -567,7 +583,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 28,
@@ -593,7 +610,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 29,
@@ -619,7 +637,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 30,
@@ -645,7 +664,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 31,
@@ -671,7 +691,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 32,
@@ -697,7 +718,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 33,
@@ -723,7 +745,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 34,
@@ -749,7 +772,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 35,
@@ -775,7 +799,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 36,
@@ -801,7 +826,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 37,
@@ -827,7 +853,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 38,
@@ -853,7 +880,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 39,
@@ -879,7 +907,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 40,
@@ -905,7 +934,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 41,
@@ -931,7 +961,8 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 42,
@@ -957,7 +988,8 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "EXP_LOG_27"
+      "source_test": "EXP_LOG_27",
+      "tar_validation": []
     },
     {
       "step": 43,
@@ -1057,6 +1089,13 @@
         {
           "check_id": "LOG_ASN1_PDATA_TAG_INDEF",
           "title": "Korrekte Struktur von processData bei indefiniter Länge (Aggregation)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ASN1_PDATA_TAG_DEF",
+          "title": "Korrekte Struktur von processData bei definitiver Länge",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null

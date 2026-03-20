@@ -103,7 +103,8 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.13"
       ],
-      "source_test": "EXP_TAR_01"
+      "source_test": "EXP_TAR_01",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -129,7 +130,8 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "EXP_TAR_01"
+      "source_test": "EXP_TAR_01",
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -235,6 +237,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Archiv-Typ (info) [EXP_ARCH_TYPE]",
+          "expected": "EXP_ARCH_TYPE: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Aufgeteiltes Archiv [EXP_ARCH_SPLIT]",
+          "expected": "EXP_ARCH_SPLIT: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -306,6 +328,13 @@
           "title": "Fc-{n} Kollisionszähler (optional)",
           "outcome_type": "INFO",
           "condition": "info",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
           "result": null
         }
       ],

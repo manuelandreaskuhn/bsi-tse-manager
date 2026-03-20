@@ -81,7 +81,8 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "SM_TME_10"
+      "source_test": "SM_TME_10",
+      "tar_validation": []
     },
     {
       "step": 5,
@@ -107,7 +108,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_10"
+      "source_test": "SM_TME_10",
+      "tar_validation": []
     },
     {
       "step": 6,
@@ -133,7 +135,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_10"
+      "source_test": "SM_TME_10",
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -159,7 +162,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_TME_10"
+      "source_test": "SM_TME_10",
+      "tar_validation": []
     },
     {
       "step": 8,
@@ -179,7 +183,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -208,7 +213,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -262,6 +268,86 @@
         {
           "description": "Mehrere Stromlosigkeits-Zyklen erkannt und statistisch ausgewertet (POWERLOSS_MULTIPLE_CYCLES, info)",
           "expected": "POWERLOSS_MULTIPLE_CYCLES: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType vorhanden [LOG_EVTYPE]",
+          "expected": "eventType vorhanden. Bekannte TR-Events werden als solche markiert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
+          "expected": "LOG_ORIGIN: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser [LOG_TRIGGER]",
+          "expected": "LOG_TRIGGER: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData vorhanden [LOG_EVDATA]",
+          "expected": "Feld vorhanden (auch leer ist gültig, z.B. für `startAudit`, `exitSecureState`).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
+          "expected": "Dateiname-eventType = Log-eventType.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
+          "expected": "SYSLOG_RULES: informativ",
           "result_options": [
             "pass",
             "fail",

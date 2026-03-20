@@ -92,7 +92,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_01_Template"
+      "source_test": "II_AUT_01_Template",
+      "tar_validation": []
     },
     {
       "step": 4,
@@ -150,7 +151,8 @@
       "references": [
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 5,
@@ -369,6 +371,216 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "ASN.1 Parsing [LOG_PARSE]",
+          "expected": "LOG_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Version = 3 [LOG_VERSION]",
+          "expected": "Version 3 erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "certifiedDataType OID [LOG_OID]",
+          "expected": "OID vorhanden und einem Log-Typ zugeordnet.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus [LOG_SIGALG]",
+          "expected": "OID in erlaubter Liste.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
+          "expected": "32 Byte serialNumber vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
+          "expected": "serialNumber stimmt mit Zertifikat-CN überein.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter vorhanden [LOG_SIGCTR]",
+          "expected": "Zählerwert wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
+          "expected": "Zeitpunkt (formatiert) wird ausgegeben.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
+          "expected": "Signatur vorhanden, korrekte Länge.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
+          "expected": "Dateiname-Zähler = signatureCounter.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
+          "expected": "Zeitstempel konsistent.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType vorhanden [LOG_EVTYPE]",
+          "expected": "eventType vorhanden. Bekannte TR-Events werden als solche markiert.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
+          "expected": "LOG_ORIGIN: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser [LOG_TRIGGER]",
+          "expected": "LOG_TRIGGER: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData vorhanden [LOG_EVDATA]",
+          "expected": "Feld vorhanden (auch leer ist gültig, z.B. für `startAudit`, `exitSecureState`).",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
+          "expected": "Schema korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
+          "expected": "Dateiname-eventType = Log-eventType.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
+          "expected": "Feld nicht vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
+          "expected": "SYSLOG_RULES: informativ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticateUser – System-Log-Nachweis [EXP_LOG_01_AUTHENTICATE_USER]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"authenticateUser\" gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logOut – System-Log-Nachweis [EXP_LOG_01_LOGOUT]",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"logOut\" gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -560,6 +772,13 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES",
+          "title": "remainingRetries bei fehlgeschlagener Authentifizierung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
@@ -593,7 +812,8 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 7,
@@ -699,7 +919,8 @@
       "references": [
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
-      ]
+      ],
+      "tar_validation": []
     },
     {
       "step": 9,
@@ -786,7 +1007,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "notes": "Gleiche Prüfungen wie Schritte 1-4"
+      "notes": "Gleiche Prüfungen wie Schritte 1-4",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -811,7 +1033,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "notes": "Nur wenn Profil II_UPDATETIME aktiv"
+      "notes": "Nur wenn Profil II_UPDATETIME aktiv",
+      "tar_validation": []
     }
   ],
   "references": [

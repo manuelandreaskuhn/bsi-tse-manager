@@ -151,7 +151,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 10,
@@ -187,7 +188,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 11,
@@ -213,7 +215,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 12,
@@ -239,7 +242,8 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 13,
@@ -253,6 +257,16 @@
         {
           "description": "Der TAR-Container enthält die Log-Nachrichten für die Entsperrversuche der PIN des Nutzers.",
           "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser in unblockPin-Logs [EVDATA_UNBLOCK_TRIGGER]",
+          "expected": "`eventTriggeredByUser` vorhanden und enthält einen",
           "result_options": [
             "pass",
             "fail",
@@ -395,7 +409,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 16,
@@ -417,7 +432,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 17,
@@ -439,7 +455,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 18,
@@ -461,7 +478,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 19,
@@ -523,7 +541,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 20,
@@ -545,7 +564,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 21,
@@ -567,7 +587,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 22,
@@ -629,7 +650,8 @@
           "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": []
     },
     {
       "step": 23,
@@ -766,6 +788,13 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES",
+          "title": "remainingRetries bei fehlgeschlagener Authentifizierung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
@@ -809,7 +838,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_04"
+      "source_test": "II_UBP_04",
+      "tar_validation": []
     },
     {
       "step": 26,
@@ -836,7 +866,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_04"
+      "source_test": "II_UBP_04",
+      "tar_validation": []
     },
     {
       "step": 27,
@@ -863,7 +894,8 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_04"
+      "source_test": "II_UBP_04",
+      "tar_validation": []
     },
     {
       "step": 28,
@@ -896,7 +928,8 @@
         }
       ],
       "source_test": "II_UBP_04",
-      "notes": "Nur wenn Profil PUK_BLOCKABLE aktiv"
+      "notes": "Nur wenn Profil PUK_BLOCKABLE aktiv",
+      "tar_validation": []
     }
   ],
   "references": [
