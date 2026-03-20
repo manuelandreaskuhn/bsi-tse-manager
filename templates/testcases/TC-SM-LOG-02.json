@@ -150,6 +150,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"exitSecureState\" vorhanden sein. eventData ist eine leere ASN.1-Sequenz (BSI TR-03153-1 §9.8.4). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -166,9 +176,19 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_EXIT_SECURE_STATE",
+          "title": "exitSecureState – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
         }
       ],
-      "source_test": "SM_LOG_06"
+      "source_test": "SM_LOG_06",
+      "references": [
+        "BSI TR-03153-1 §9.8.4"
+      ]
     },
     {
       "step": 9,
@@ -289,6 +309,7 @@
     }
   ],
   "references": [
-    "BSI TR-03151-1 §5"
+    "BSI TR-03151-1 §5",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

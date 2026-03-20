@@ -510,6 +510,36 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Nach Re-Registrierung: Transaktions-Log für Client wieder vorhanden (DRC_TXN_PRESENT)",
+          "expected": "DRC_TXN_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"registerClient\" vorhanden sein (BSI TR-03151-1 §4.11).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"deregisterClient\" vorhanden sein (BSI TR-03151-1 §4.11).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -659,9 +689,33 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "DRC_TXN_PRESENT",
+          "title": "Transaktions-Log für re-registrierten Client vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_REGISTER_CLIENT",
+          "title": "registerClient – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_DEREGISTER_CLIENT",
+          "title": "deregisterClient – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
-      "source_test": "II_REC_01"
+      "source_test": "II_REC_01",
+      "references": [
+        "BSI TR-03151-1 §4.11"
+      ]
     },
     {
       "step": 22,
@@ -766,6 +820,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Nach Re-Registrierung eines Clients: Transaktions-Log für diesen Client wieder vorhanden (DRC_TXN_PRESENT)",
+          "expected": "DRC_TXN_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -810,6 +874,13 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "DRC_TXN_PRESENT",
+          "title": "Transaktions-Log für re-registrierten Client vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "source_test": "II_REC_01"
@@ -845,6 +916,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

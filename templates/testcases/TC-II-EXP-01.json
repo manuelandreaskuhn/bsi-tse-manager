@@ -239,6 +239,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Export ist zeitunabhängig möglich (auch ohne gestellte Zeit) (TIMESET_EXPORT_ANYTIME, info)",
+          "expected": "TIMESET_EXPORT_ANYTIME: info – kein Fehler bei ungestellter Zeit",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Export zeitunabhängig möglich (auch ohne gestellte Zeit) (TIMESET_EXPORT_ANYTIME, info)",
+          "expected": "TIMESET_EXPORT_ANYTIME: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -891,6 +911,13 @@
           "title": "Kein signatureCounter am oder über dem Maximalwert",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TIMESET_EXPORT_ANYTIME",
+          "title": "Export-Funktionen sind zeitunabhängig (info)",
+          "outcome_type": "INFO",
+          "condition": "info",
           "result": null
         }
       ],

@@ -883,6 +883,36 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Gefilterter TAR enthält alle Logs des Voll-TAR (EXF_SUBSET_INCLUDES_PREV)",
+          "expected": "EXF_SUBSET_INCLUDES_PREV bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Gefilterter TAR und Voll-TAR überschneiden sich nicht (EXF_SUBSET_DISJOINT)",
+          "expected": "EXF_SUBSET_DISJOINT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-/Audit-Logs außerhalb Filterbereich ausgeschlossen (EXF_SYSAUDIT_OUT_RANGE)",
+          "expected": "EXF_SYSAUDIT_OUT_RANGE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -1183,6 +1213,27 @@
         {
           "check_id": "EXF_SYSAUDIT_NOT_REQUESTED",
           "title": "Ohne Flags keine System-/Audit-Logs",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SUBSET_INCLUDES_PREV",
+          "title": "Gefilterter TAR enthält alle Logs des Voll-TAR",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SUBSET_DISJOINT",
+          "title": "Gefilterter TAR und Voll-TAR überschneiden sich nicht",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SYSAUDIT_OUT_RANGE",
+          "title": "System-/Audit-Logs außerhalb des Filterbereichs ausgeschlossen",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null

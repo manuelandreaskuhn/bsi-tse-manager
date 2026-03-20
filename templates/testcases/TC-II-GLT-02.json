@@ -318,7 +318,7 @@
       "type": "VERIFY",
       "title": "Letzte TxLog-Nachricht mit TxNr (SM_AGG, II_GLT_04)",
       "result": null,
-      "instruction": "Letzte TxLog-Nachricht mit TxNr (SM_AGG, II_GLT_04)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "instruction": "Letzte TxLog-Nachricht mit TxNr (SM_AGG, II_GLT_04)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.\n\nInline-Log-Validierung: Der zurückgegebene logMessageContent wird als ASN.1-Inline-Log geprüft (INLINE_PARSE, INLINE_FIELDS, INLINE_LAST) und mit dem TAR-Export verglichen (INLINE_MATCH_EXPORT).",
       "function": "getLastTransactionLogMessage",
       "user": "logger",
       "parameters": {
@@ -344,6 +344,46 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Inline-Log (logMessageContent) ist als ASN.1 parsebar (INLINE_PARSE)",
+          "expected": "INLINE_PARSE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder der Inline-Log-Nachricht vorhanden (INLINE_FIELDS)",
+          "expected": "INLINE_FIELDS bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Inline-Log ist tatsächlich die zuletzt erstellte Log-Nachricht (INLINE_LAST)",
+          "expected": "INLINE_LAST bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Inline-Log stimmt mit TAR-Export überein (INLINE_MATCH_EXPORT)",
+          "expected": "INLINE_MATCH_EXPORT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -357,6 +397,34 @@
         {
           "check_id": "GLT_CONTENT_MATCH",
           "title": "logMessageContent entspricht TAR-Dateiinhalt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INLINE_PARSE",
+          "title": "Inline-Log-Nachricht parsebar",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INLINE_FIELDS",
+          "title": "Pflichtfelder der Inline-Log-Nachricht vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INLINE_LAST",
+          "title": "Inline-Log ist tatsächlich die letzte Log-Nachricht",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INLINE_MATCH_EXPORT",
+          "title": "Inline-Log stimmt mit TAR-Export überein",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null

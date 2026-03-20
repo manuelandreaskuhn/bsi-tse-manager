@@ -292,6 +292,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Differenz zwischen sequentiellen TAR-Exporten zeigt SM_AGG-Aggregationsverhalten korrekt (STOR_AGG_SEQ_DELTA)",
+          "expected": "STOR_AGG_SEQ_DELTA bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Differenz sequentieller TAR-Exporte zeigt SM_AGG-Aggregationsverhalten (STOR_AGG_SEQ_DELTA)",
+          "expected": "STOR_AGG_SEQ_DELTA bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -642,6 +662,13 @@
           "check_id": "LOG_ASN1_NO_INDEFINITE",
           "title": "Kein indefinite length encoding außerhalb von processData",
           "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_AGG_SEQ_DELTA",
+          "title": "Differenz sequentieller TAR-Exporte zeigt Aggregationsverhalten (Multi-TAR)",
+          "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
         }

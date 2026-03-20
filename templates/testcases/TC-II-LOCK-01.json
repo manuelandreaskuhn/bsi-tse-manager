@@ -286,6 +286,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"lockTransactionLogging\" (alternativ \"lockDevice\") vorhanden sein (BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unlockTransactionLogging\" (alternativ \"unlockDevice\") vorhanden sein (BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -435,9 +455,26 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_LOCK_TXN_LOGGING",
+          "title": "lockTransactionLogging / lockDevice – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_UNLOCK_TXN_LOGGING",
+          "title": "unlockTransactionLogging / unlockDevice – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
         }
       ],
-      "source_test": "II_LTL_01"
+      "source_test": "II_LTL_01",
+      "references": [
+        "BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11"
+      ]
     },
     {
       "step": 13,
@@ -558,6 +595,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

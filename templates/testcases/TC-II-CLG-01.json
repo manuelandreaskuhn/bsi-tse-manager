@@ -143,6 +143,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"configureLogging\" vorhanden sein (BSI TR-03153-1 §9.8.6). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -278,9 +288,19 @@
           "outcome_type": "INFO",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_CONFIGURE_LOGGING",
+          "title": "configureLogging – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
         }
       ],
-      "source_test": "II_CLG_01"
+      "source_test": "II_CLG_01",
+      "references": [
+        "BSI TR-03153-1 §9.8.6"
+      ]
     },
     {
       "step": 6,
@@ -326,6 +346,7 @@
   ],
   "references": [
     "BSI TR-03153-1 §6.3.1",
-    "BSI TR-03151-1"
+    "BSI TR-03151-1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

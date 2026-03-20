@@ -218,6 +218,46 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Signaturzähler-Kontinuität nach Löschen und Neustart korrekt (DEL_TAR_CTR_RESET)",
+          "expected": "DEL_TAR_CTR_RESET bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zweiter Export-TAR enthält alle Logs des ersten TAR (DLM_TAR_SUPERSET)",
+          "expected": "DLM_TAR_SUPERSET bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zweiter TAR-Export enthält alle Logs des ersten TAR (DLM_TAR_SUPERSET)",
+          "expected": "DLM_TAR_SUPERSET bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"deleteLogMessages\" vorhanden sein (BSI TR-03151-1 §4.12). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -269,9 +309,33 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "DEL_TAR_CTR_RESET",
+          "title": "Signaturzähler-Kontinuität nach Neustart",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DLM_TAR_SUPERSET",
+          "title": "Zweiter TAR enthält alle Logs des ersten TAR",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_DELETE_LOG_MESSAGES",
+          "title": "deleteLogMessages – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
         }
       ],
-      "source_test": "II_DLM_01"
+      "source_test": "II_DLM_01",
+      "references": [
+        "BSI TR-03151-1 §4.12"
+      ]
     },
     {
       "step": 11,
@@ -336,6 +400,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

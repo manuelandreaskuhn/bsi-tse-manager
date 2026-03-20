@@ -215,6 +215,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Fc-{n} Kollisionszähler im TransactionLog-Dateinamen korrekt (LOG_TXN_FNAME_FC, info): nur vorhanden bei Namenskollision",
+          "expected": "LOG_TXN_FNAME_FC: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fc-{n} Kollisionszähler im TransactionLog-Dateinamen (LOG_TXN_FNAME_FC, info): optional, nur bei Namenskollision",
+          "expected": "LOG_TXN_FNAME_FC: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -279,6 +299,13 @@
           "title": "Aufgeteiltes Archiv",
           "outcome_type": "INFO",
           "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FC",
+          "title": "Fc-{n} Kollisionszähler (optional)",
+          "outcome_type": "INFO",
+          "condition": "info",
           "result": null
         }
       ],

@@ -209,6 +209,86 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "logOut-Ereignis nach authentifizierter Operation im Archiv vorhanden (SYS_EVT_LOGOUT_PRESENT)",
+          "expected": "SYS_EVT_LOGOUT_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Bei Nutzerwechsel: Implizites logOut-Log für vorherigen Nutzer vorhanden (IMPLICIT_LOGOUT_PRESENT)",
+          "expected": "IMPLICIT_LOGOUT_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Bei Neu-Authentifizierung desselben Nutzers: Kein implizites logOut-Log (IMPLICIT_LOGOUT_ABSENT_SAME_USER)",
+          "expected": "IMPLICIT_LOGOUT_ABSENT_SAME_USER bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logOut-Ereignis im Archiv vorhanden nach authentifizierter Operation (SYS_EVT_LOGOUT_PRESENT)",
+          "expected": "SYS_EVT_LOGOUT_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Implizites logOut-Log bei Nutzerwechsel vorhanden (IMPLICIT_LOGOUT_PRESENT)",
+          "expected": "IMPLICIT_LOGOUT_PRESENT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein implizites logOut bei Neu-Auth desselben Nutzers (IMPLICIT_LOGOUT_ABSENT_SAME_USER)",
+          "expected": "IMPLICIT_LOGOUT_ABSENT_SAME_USER bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"authenticateUser\" vorhanden sein (BSI TR-03151-1 §4.4.1).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"logOut\" vorhanden sein (BSI TR-03151-1 §4.4.2).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -365,11 +445,48 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "SYS_EVT_LOGOUT_PRESENT",
+          "title": "logOut-Ereignis im Archiv vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "IMPLICIT_LOGOUT_PRESENT",
+          "title": "Implizites logOut-Log bei Nutzerwechsel vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "IMPLICIT_LOGOUT_ABSENT_SAME_USER",
+          "title": "Kein implizites logOut bei Neuauth desselben Nutzers",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_AUTHENTICATE_USER",
+          "title": "authenticateUser – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_LOGOUT",
+          "title": "logOut – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
         "BSI TR-03153-1 §6.4",
-        "BSI TR-03151-1 §5.2"
+        "BSI TR-03151-1 §5.2",
+        "BSI TR-03151-1 §4.4.1",
+        "BSI TR-03151-1 §4.4.2"
       ]
     },
     {
@@ -616,6 +733,7 @@
   ],
   "references": [
     "BSI TR-03153-1 §6.2",
-    "BSI TR-03151-1 §6"
+    "BSI TR-03151-1 §6",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

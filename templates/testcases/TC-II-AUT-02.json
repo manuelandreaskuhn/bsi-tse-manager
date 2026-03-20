@@ -259,9 +259,28 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "eventTriggeredByUser in unblockPin-Log-Nachrichten gesetzt (EVDATA_UNBLOCK_TRIGGER)",
+          "expected": "EVDATA_UNBLOCK_TRIGGER bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
-      "source_test": "II_AUT_03_Template"
+      "source_test": "II_AUT_03_Template",
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_UNBLOCK_TRIGGER",
+          "title": "eventTriggeredByUser in unblockPin-Logs",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
     },
     {
       "step": 14,
@@ -829,6 +848,7 @@
   ],
   "references": [
     "BSI TR-03153-1 §6.2",
-    "BSI TR-03151-1 §6"
+    "BSI TR-03151-1 §6",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

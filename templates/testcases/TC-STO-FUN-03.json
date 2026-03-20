@@ -523,6 +523,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Verhältnis AuditLog zu SystemLog-Nachrichten plausibel (STOR_AUDIT_SYSLOG_RATIO, info)",
+          "expected": "STOR_AUDIT_SYSLOG_RATIO: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Statistik der SystemLog-Ereignistypen ausgewertet (STOR_EVT_SYSLOG_EVTYPE_STATS, info)",
+          "expected": "STOR_EVT_SYSLOG_EVTYPE_STATS: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -986,6 +1006,20 @@
           "title": "Mindestens eine AuditLog-Datei vorhanden",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_AUDIT_SYSLOG_RATIO",
+          "title": "Verhältnis AuditLog zu SystemLog (Info)",
+          "outcome_type": "INFO",
+          "condition": "info",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_SYSLOG_EVTYPE_STATS",
+          "title": "Statistik der SystemLog-Ereignistypen (Info)",
+          "outcome_type": "INFO",
+          "condition": "info",
           "result": null
         }
       ],

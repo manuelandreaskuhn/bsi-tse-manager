@@ -132,6 +132,66 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Alle TransactionLog-Einträge liegen zeitlich nach initialize (INIT_SEQ_TXN_AFTER_INIT)",
+          "expected": "INIT_SEQ_TXN_AFTER_INIT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)",
+          "expected": "INIT_SEQ_UPDATETIME_AFTER_INIT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitabhängige SystemLog-Typen liegen nach initialize (INIT_SEQ_SYSLOG_EVENTTYPE_INIT_DEPENDENCY, info)",
+          "expected": "INIT_SEQ_SYSLOG_EVENTTYPE_INIT_DEPENDENCY: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitabhängige SystemLog-Typen nach initialize (INIT_SEQ_SYSLOG_EVENTTYPE_INIT_DEPENDENCY, info)",
+          "expected": "INIT_SEQ_SYSLOG_EVENTTYPE_INIT_DEPENDENCY: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"initialize\" vorhanden sein (BSI TR-03151-1 §4.6).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"startAudit\" vorhanden sein. startAudit MUSS das erste Ereignis im Archiv sein (BSI TR-03153-1 §9.8.2).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -372,11 +432,48 @@
           "outcome_type": "INFO",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "INIT_SEQ_TXN_AFTER_INIT",
+          "title": "Alle TransactionLog-Einträge nach initialize",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INIT_SEQ_UPDATETIME_AFTER_INIT",
+          "title": "updateTime muss nach initialize liegen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "INIT_SEQ_SYSLOG_EVENTTYPE_INIT_DEPENDENCY",
+          "title": "Zeitabhängige SystemLog-Typen prüfen",
+          "outcome_type": "INFO",
+          "condition": "info",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_INITIALIZE",
+          "title": "initialize – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_START_AUDIT",
+          "title": "startAudit – System-Log-Nachweis (erstes Ereignis)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
         "BSI TR-03153-1 §6.4",
-        "BSI TR-03151-1 §5.2"
+        "BSI TR-03151-1 §5.2",
+        "BSI TR-03151-1 §4.6",
+        "BSI TR-03153-1 §9.8.2"
       ],
       "source_test": "II_INI_01"
     },
@@ -404,6 +501,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

@@ -609,6 +609,46 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Maximaler Zeitabstand zwischen updateTime-Ereignissen eingehalten (SYS_EVT_UPDATETIME_GAP): Abstand ≤ ICS-Maximalwert",
+          "expected": "SYS_EVT_UPDATETIME_GAP bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Maximaler Abstand zwischen Update-Logs einer Transaktion eingehalten (TIME_SM_UPDATE_DELAY): ≤ MAX_UPDATE_DELAY (ICS)",
+          "expected": "TIME_SM_UPDATE_DELAY bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Max. Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)",
+          "expected": "SYS_EVT_UPDATETIME_GAP bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Max. Abstand zwischen Update-Logs einer Transaktion ≤ MAX_UPDATE_DELAY (ICS) (TIME_SM_UPDATE_DELAY)",
+          "expected": "TIME_SM_UPDATE_DELAY bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -903,6 +943,20 @@
           "check_id": "EVDATA_UPDATETIME",
           "title": "seTimeAfterUpdate in updateTime-Ereignissen",
           "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYS_EVT_UPDATETIME_GAP",
+          "title": "Maximaler Zeitabstand zwischen updateTime-Ereignissen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TIME_SM_UPDATE_DELAY",
+          "title": "Maximaler Abstand zwischen Update-Logs einer Transaktion",
+          "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
         }

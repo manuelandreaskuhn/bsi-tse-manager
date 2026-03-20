@@ -218,6 +218,146 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "exportLoggingCertificates ist ohne Authentifizierung aufrufbar (CRTEXP_ACCESSIBLE_UNAUTHENTICATED)",
+          "expected": "Aufruf als unauthenticated-Nutzer ohne Fehler möglich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle Zertifikatsdateien sind als X.509 kodiert (EXC_CERT_X509)",
+          "expected": "EXC_CERT_X509 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateinamen der Zertifikatsdateien: SERIAL-Komponente = Zertifikat-CN (EXC_FNAME_SERIAL)",
+          "expected": "EXC_FNAME_SERIAL bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateinamen der Zertifikatsdateien: TYPE-Komponente entspricht Zertifikatstyp (EXC_FNAME_TYPE)",
+          "expected": "EXC_FNAME_TYPE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiendungen der Zertifikatsdateien normiert (.cer/.crt/.der/.pem) (EXC_FNAME_EXT)",
+          "expected": "EXC_FNAME_EXT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR enthält ausschließlich Zertifikatsdateien und info.csv – keine weiteren Dateien (EXC_NO_EXTRA_FILES)",
+          "expected": "EXC_NO_EXTRA_FILES bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kollisionszähler Fc-{n} im Dateinamen vorhanden (falls Kollision) (EXP_ARCH_SPLIT_CERT, info)",
+          "expected": "EXP_ARCH_SPLIT_CERT: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "exportLoggingCertificates ohne Authentifizierung aufrufbar (CRTEXP_ACCESSIBLE_UNAUTHENTICATED)",
+          "expected": "CRTEXP_ACCESSIBLE_UNAUTHENTICATED bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikatsdateien als X.509 kodiert (EXC_CERT_X509)",
+          "expected": "EXC_CERT_X509 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: SERIAL-Komponente entspricht Zertifikat-CN (EXC_FNAME_SERIAL)",
+          "expected": "EXC_FNAME_SERIAL bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: TYPE-Komponente entspricht Zertifikatstyp (EXC_FNAME_TYPE)",
+          "expected": "EXC_FNAME_TYPE bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiendung der Zertifikatsdateien normiert (.cer/.crt/.der/.pem) (EXC_FNAME_EXT)",
+          "expected": "EXC_FNAME_EXT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR enthält ausschließlich Zertifikatsdateien und info.csv (EXC_NO_EXTRA_FILES)",
+          "expected": "EXC_NO_EXTRA_FILES bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kollisionszähler Fc-{n} im CertExport-Dateinamen (EXP_ARCH_SPLIT_CERT, info)",
+          "expected": "EXP_ARCH_SPLIT_CERT: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -499,6 +639,55 @@
           "title": "Aussteller-Inhaber-Übereinstimmung",
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_ACCESSIBLE_UNAUTHENTICATED",
+          "title": "exportLoggingCertificates ohne Authentifizierung aufrufbar",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXC_CERT_X509",
+          "title": "Zertifikate sind als X.509 kodiert",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXC_FNAME_SERIAL",
+          "title": "SERIAL-Komponente im Dateinamen entspricht Zertifikat",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXC_FNAME_TYPE",
+          "title": "TYPE-Komponente im Dateinamen entspricht Zertifikatstyp",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXC_FNAME_EXT",
+          "title": "Dateiendung der Zertifikatsdateien normiert",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXC_NO_EXTRA_FILES",
+          "title": "TAR enthält ausschließlich Zertifikate und info.csv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_SPLIT_CERT",
+          "title": "Kollisionszähler (info)",
+          "outcome_type": "INFO",
+          "condition": "info",
           "result": null
         }
       ],

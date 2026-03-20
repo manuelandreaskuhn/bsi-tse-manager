@@ -248,6 +248,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Nicht-Stellung der Uhrzeit erkennbar im Export (TIME_SM_UNSET): TSE signalisiert ungültige Zeit nach Stromlosigkeit",
+          "expected": "TIME_SM_UNSET bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Mehrere Stromlosigkeits-Zyklen erkannt und statistisch ausgewertet (POWERLOSS_MULTIPLE_CYCLES, info)",
+          "expected": "POWERLOSS_MULTIPLE_CYCLES: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -326,6 +346,20 @@
           "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
           "outcome_type": "INFO",
           "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TIME_SM_UNSET",
+          "title": "Erkennung einer „Nicht-Stellung\" der Uhrzeit",
+          "outcome_type": "WARN_OR_OK",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "POWERLOSS_MULTIPLE_CYCLES",
+          "title": "Mehrere Stromlosigkeits-Zyklen erkannt (info/statistik)",
+          "outcome_type": "WARN_OR_OK",
+          "condition": "info",
           "result": null
         }
       ],

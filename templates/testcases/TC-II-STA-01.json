@@ -388,6 +388,26 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "additionalExternalData im Log (LOG_TXN_EXTDATA): optional; nur vorhanden wenn übergeben – Feld korrekt kodiert (info)",
+          "expected": "LOG_TXN_EXTDATA: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalExternalData (LOG_TXN_EXTDATA, info): optional; nur vorhanden wenn übergeben",
+          "expected": "LOG_TXN_EXTDATA: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -669,6 +689,13 @@
           "title": "Korrektheit der Feldkonkatenation",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_EXTDATA",
+          "title": "additionalExternalData (optional, info)",
+          "outcome_type": "INFO",
+          "condition": "info",
           "result": null
         }
       ],

@@ -330,6 +330,56 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "selfTest-Ereignis ist zeitunabhängig – darf vor updateTime auftreten (TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME, info)",
+          "expected": "info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "selfTest Sonderregel: Ereignis korrekt nach Sonderregeln protokolliert (selfTest, info)",
+          "expected": "info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "selfTest-Sonderregel: Ereignis nach spezifischen selfTest-Regeln korrekt protokolliert (selfTest, info)",
+          "expected": "selfTest: info",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"selfTest\" vorhanden sein. Bei externem Aufruf: eventOrigin=integration-interface, eventTriggeredByUser MUSS gesetzt sein (BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS eine System-Log-Nachricht mit eventType \"selfTest\" und eventOrigin \"SMA\" oder \"CSP\" vorhanden sein, wenn ein interner Selbsttest fehlschlägt. eventTriggeredByUser DARF NICHT vorhanden sein (BSI TR-03153-1 §9.8.5, Tabelle 16). (nur wenn Profil aktiv)",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -479,9 +529,41 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME",
+          "title": "selfTest ist zeitunabhängig (info)",
+          "outcome_type": "INFO",
+          "condition": "info",
+          "result": null
+        },
+        {
+          "check_id": "selfTest",
+          "title": "Detaillierte Sonderregel",
+          "outcome_type": "INFO",
+          "condition": "info",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_SELFTEST",
+          "title": "selfTest (extern, eventOrigin=integration-interface) – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_SELFTEST_FAILED",
+          "title": "selfTest-Fehlschlag (intern, eventOrigin=SMA/CSP) – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
         }
       ],
-      "source_test": "II_STE_01"
+      "source_test": "II_STE_01",
+      "references": [
+        "BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5",
+        "BSI TR-03153-1 §9.8.5 / Tabelle 16"
+      ]
     },
     {
       "step": 12,
@@ -507,6 +589,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }

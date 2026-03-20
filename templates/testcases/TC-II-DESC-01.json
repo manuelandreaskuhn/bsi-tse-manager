@@ -290,6 +290,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"setDescription\" vorhanden sein (BSI TR-03151-1 §4.6).",
+          "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -425,11 +435,19 @@
           "outcome_type": "INFO",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_SET_DESCRIPTION",
+          "title": "setDescription – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
       ],
       "references": [
         "BSI TR-03153-1 §6.4",
-        "BSI TR-03151-1 §5.2"
+        "BSI TR-03151-1 §5.2",
+        "BSI TR-03151-1 §4.6"
       ],
       "source_test": "II_SDE_01"
     },
@@ -550,6 +568,7 @@
     }
   ],
   "references": [
-    "BSI TR-03153-1 §6.3.1"
+    "BSI TR-03153-1 §6.3.1",
+    "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
   ]
 }
