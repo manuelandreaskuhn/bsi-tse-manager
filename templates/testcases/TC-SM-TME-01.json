@@ -75,23 +75,12 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert (initialize, Variante 2)",
-      "result": null,
-      "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
-      "function": "initialize",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.1"
-      ]
-    },
-    {
-      "step": 5,
-      "type": "PRECONDITION",
       "title": "Vorbedingung: Der Hersteller stellt eine geeignete Dokumentation zur Zeitf",
       "result": null,
       "instruction": "Der Hersteller stellt eine geeignete Dokumentation zur Zeitführung zur Verfügung."
     },
     {
-      "step": 6,
+      "step": 5,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -118,7 +107,7 @@
       "tar_validation": []
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -145,7 +134,7 @@
       "tar_validation": []
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -172,7 +161,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "getCurrentSignatureCounter aufrufen",
       "result": null,
@@ -182,7 +171,7 @@
       "source_test": "SM_TME_01"
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -209,7 +198,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -236,7 +225,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -263,7 +252,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -289,7 +278,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -315,7 +304,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -342,7 +331,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -369,7 +358,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 16,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -396,7 +385,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 17,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -422,7 +411,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 18,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -448,7 +437,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 19,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -474,7 +463,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 20,
       "type": "ACTION",
       "title": "Zeitaktualisierung mit gültigem Wert (SM_TME_01)",
       "result": null,
@@ -510,7 +499,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 21,
       "type": "VERIFY",
       "title": "Mehrfache Zeitaktualisierung: Signaturzähler prüfen (SM_TME_02)",
       "result": null,
@@ -533,7 +522,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "NEGATIVE",
       "title": "Zeitaktualisierung mit ungültigem Wert / falschem Format  (SM_TME_03)",
       "result": null,
@@ -579,7 +568,7 @@
       "tar_validation": []
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "VERIFY",
       "title": "Export nach Sequenz Initialize → updateTime(n) → Transaktion → Außerbetriebnahme",
       "result": null,
@@ -1389,7 +1378,7 @@
       "source_test": "SM_TME_01"
     },
     {
-      "step": 25,
+      "step": 24,
       "type": "VERIFY",
       "title": "Dokumentation: Zeitführung im Krypto-Kern (SM_TME_12, FP)",
       "result": null,

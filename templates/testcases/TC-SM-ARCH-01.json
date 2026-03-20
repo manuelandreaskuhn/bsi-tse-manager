@@ -67,28 +67,6 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert (initialize, Variante 2)",
-      "result": null,
-      "instruction": "Die Technischen Sicherheitseinrichtungen wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
-      "function": "initialize",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.1"
-      ]
-    },
-    {
-      "step": 5,
-      "type": "PRECONDITION",
-      "title": "Zeit gestellt (updateTime, Variante 2)",
-      "result": null,
-      "instruction": "Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
-      "function": "updateTime",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6"
-      ]
-    },
-    {
-      "step": 6,
-      "type": "PRECONDITION",
       "title": "Nutzer logger authentifiziert",
       "result": null,
       "instruction": "Der Nutzer logger wurde von den Technischen Sicherheitseinrichtungen authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
@@ -103,7 +81,7 @@
       ]
     },
     {
-      "step": 7,
+      "step": 5,
       "type": "PRECONDITION",
       "title": "Aufzeichnungssystem $client1 registriert",
       "result": null,
@@ -118,7 +96,7 @@
       ]
     },
     {
-      "step": 8,
+      "step": 6,
       "type": "SETUP",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
@@ -141,7 +119,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 7,
       "type": "SETUP",
       "title": "getCurrentSignatureCounter aufrufen",
       "result": null,
@@ -164,7 +142,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 8,
       "type": "SETUP",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
@@ -187,7 +165,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 9,
       "type": "SETUP",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
@@ -210,7 +188,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 10,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -237,7 +215,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 11,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -274,7 +252,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 12,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -301,7 +279,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 13,
       "type": "VERIFY",
       "title": "Seriennummer-Export: Genau einen Schlüssel prüfen",
       "result": null,
@@ -415,7 +393,7 @@
       ]
     },
     {
-      "step": 16,
+      "step": 14,
       "type": "FP",
       "title": "Herstellerdokumentation: Architekturnachweise (FP)",
       "result": null,
@@ -485,7 +463,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 15,
       "type": "ACTION",
       "title": "Zeitnahe Aufzeichnung unter maximaler Last (SM_ARCH_09)",
       "result": null,

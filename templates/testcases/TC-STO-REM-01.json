@@ -38,16 +38,6 @@
     },
     {
       "step": 3,
-      "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
-      "result": null,
-      "instruction": "Herstellerdokumentation liegt vor",
-      "references": [
-        "BSI TR-03153-1 Anhang A"
-      ]
-    },
-    {
-      "step": 4,
       "type": "VERIFY",
       "title": "Secure-Channel-Dokumentation prüfen",
       "result": null,

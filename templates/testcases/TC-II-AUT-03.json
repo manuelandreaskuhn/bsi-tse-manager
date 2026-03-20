@@ -74,28 +74,12 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "logger",
-      "parameters": {
-        "userId": "logger",
-        "pin": "<korrekter logger-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 6,
-      "type": "PRECONDITION",
       "title": "Vorbedingung: Der Hersteller stellt eine Dokumentation über die durch den ",
       "result": null,
       "instruction": "Der Hersteller stellt eine Dokumentation über die durch den centraltimeadmin ausführbaren Funktionen zur Verfügung."
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -132,7 +116,7 @@
       "tar_validation": []
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -159,7 +143,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -186,7 +170,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -213,7 +197,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "VERIFY",
       "title": "PIN-Fehlbedienungszähler-Reset nach erfolgreicher Auth (II_AUT_20)",
       "result": null,
@@ -256,7 +240,7 @@
       "source_test": "II_AUT_19"
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "ACTION",
       "title": "Nur Standard-Nutzer erlaubt (II_AUT_21)",
       "result": null,
@@ -289,7 +273,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "NEGATIVE",
       "title": "centralTimeAdmin nicht über Einbindungsschnittstelle anmeldbar  (II_AUT_22, C...",
       "result": null,
@@ -320,7 +304,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "VERIFY",
       "title": "centralTimeAdmin-Rechte beschränkt auf Zeitstellung (II_AUT_23, FP, CENTRAL_T...",
       "result": null,
@@ -341,7 +325,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "NEGATIVE",
       "title": "smaadmin nicht über Einbindungsschnittstelle anmeldbar  (II_AUT_24)",
       "result": null,
@@ -371,7 +355,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "VERIFY",
       "title": "Fehlerweiterleitung bei Abmeldung durch Auth ausgelöst (II_AUT_19, FP)",
       "result": null,

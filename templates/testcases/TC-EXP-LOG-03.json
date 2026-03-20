@@ -77,64 +77,26 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert (initialize, Variante 2)",
-      "result": null,
-      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
-      "function": "initialize",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.1"
-      ]
-    },
-    {
-      "step": 6,
-      "type": "PRECONDITION",
-      "title": "Zeit gestellt (updateTime, Variante 2)",
-      "result": null,
-      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
-      "function": "updateTime",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6"
-      ]
-    },
-    {
-      "step": 7,
-      "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "logger",
-      "parameters": {
-        "userId": "logger",
-        "pin": "<korrekter logger-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 8,
-      "type": "PRECONDITION",
       "title": "Vorbedingung: Der Hersteller der TSE hat eine Dokumentation bereitgestellt",
       "result": null,
       "instruction": "Der Hersteller der TSE hat eine Dokumentation bereitgestellt, welche erklärt, wann die TSE indefinite length encoding und wann nicht verwendet und wie diese Zustände durch die Prüfstelle provoziert werden können."
     },
     {
-      "step": 9,
+      "step": 6,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Es wurde die Situtation hergestellt, in der die TSE indefini",
       "result": null,
       "instruction": "Es wurde die Situtation hergestellt, in der die TSE indefinite length encoding verwendet und Aktualisierungen aggregiert."
     },
     {
-      "step": 10,
+      "step": 7,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Es wurde die Situtation hergestellt in der die TSE kein inde",
       "result": null,
       "instruction": "Es wurde die Situtation hergestellt in der die TSE kein indefinite length encoding verwendet und Aktualisierungen aggregiert."
     },
     {
-      "step": 11,
+      "step": 8,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -161,7 +123,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 9,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -188,7 +150,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 10,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -215,7 +177,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 11,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -241,7 +203,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 12,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -267,7 +229,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 13,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -293,7 +255,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 14,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -320,7 +282,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 15,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -347,7 +309,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 16,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -374,7 +336,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 17,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -401,7 +363,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 18,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -428,7 +390,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 19,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -455,7 +417,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 20,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -481,7 +443,7 @@
       "tar_validation": []
     },
     {
-      "step": 24,
+      "step": 21,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -507,7 +469,7 @@
       "tar_validation": []
     },
     {
-      "step": 25,
+      "step": 22,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -533,7 +495,7 @@
       "tar_validation": []
     },
     {
-      "step": 26,
+      "step": 23,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -560,7 +522,7 @@
       "tar_validation": []
     },
     {
-      "step": 27,
+      "step": 24,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -587,7 +549,7 @@
       "tar_validation": []
     },
     {
-      "step": 28,
+      "step": 25,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -614,7 +576,7 @@
       "tar_validation": []
     },
     {
-      "step": 29,
+      "step": 26,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -641,7 +603,7 @@
       "tar_validation": []
     },
     {
-      "step": 30,
+      "step": 27,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -668,7 +630,7 @@
       "tar_validation": []
     },
     {
-      "step": 31,
+      "step": 28,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -695,7 +657,7 @@
       "tar_validation": []
     },
     {
-      "step": 32,
+      "step": 29,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -722,7 +684,7 @@
       "tar_validation": []
     },
     {
-      "step": 33,
+      "step": 30,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -749,7 +711,7 @@
       "tar_validation": []
     },
     {
-      "step": 34,
+      "step": 31,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -776,7 +738,7 @@
       "tar_validation": []
     },
     {
-      "step": 35,
+      "step": 32,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -803,7 +765,7 @@
       "tar_validation": []
     },
     {
-      "step": 36,
+      "step": 33,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -830,7 +792,7 @@
       "tar_validation": []
     },
     {
-      "step": 37,
+      "step": 34,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -857,7 +819,7 @@
       "tar_validation": []
     },
     {
-      "step": 38,
+      "step": 35,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -884,7 +846,7 @@
       "tar_validation": []
     },
     {
-      "step": 39,
+      "step": 36,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -911,7 +873,7 @@
       "tar_validation": []
     },
     {
-      "step": 40,
+      "step": 37,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -938,7 +900,7 @@
       "tar_validation": []
     },
     {
-      "step": 41,
+      "step": 38,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -965,7 +927,7 @@
       "tar_validation": []
     },
     {
-      "step": 42,
+      "step": 39,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -992,7 +954,7 @@
       "tar_validation": []
     },
     {
-      "step": 43,
+      "step": 40,
       "type": "VERIFY",
       "title": "SM_NO_INDEF: Kein indefinite length encoding in keiner Log-Nachricht",
       "result": null,
@@ -1043,7 +1005,7 @@
       "notes": "Nur wenn Profil SM_NO_INDEF aktiv"
     },
     {
-      "step": 44,
+      "step": 41,
       "type": "VERIFY",
       "title": "SM_INDEF: Indefinite encoding ausschließlich in processData von updateTransac...",
       "result": null,
@@ -1109,7 +1071,7 @@
       "notes": "Nur wenn Profil SM_INDEF aktiv"
     },
     {
-      "step": 45,
+      "step": 42,
       "type": "VERIFY",
       "title": "RECERT: Aufzeichnungen vor/nach Firmware-Update strukturell identisch",
       "result": null,

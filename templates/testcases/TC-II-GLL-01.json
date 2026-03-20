@@ -61,22 +61,6 @@
     },
     {
       "step": 4,
-      "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "logger",
-      "parameters": {
-        "userId": "logger",
-        "pin": "<korrekter logger-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 5,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -102,7 +86,7 @@
       "tar_validation": []
     },
     {
-      "step": 6,
+      "step": 5,
       "type": "SETUP",
       "title": "getLastLogMessage aufrufen",
       "result": null,
@@ -145,7 +129,7 @@
       "tar_validation": []
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -172,7 +156,7 @@
       "tar_validation": []
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -199,7 +183,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -226,7 +210,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "Aufzeichnungssystem deregistrieren",
       "result": null,
@@ -252,7 +236,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "SETUP",
       "title": "getLastLogMessage aufrufen",
       "result": null,
@@ -275,7 +259,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "VERIFY",
       "title": "Letzte Log-Nachricht abrufen (SM_NOAGG)",
       "result": null,
@@ -427,7 +411,7 @@
       "source_test": "II_GLL_01"
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "VERIFY",
       "title": "Letzte Log-Nachricht abrufen (SM_AGG)",
       "result": null,
@@ -485,7 +469,7 @@
       "notes": "Gleiche Prüfungen für SM_AGG"
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "NEGATIVE",
       "title": "Fehlerfall",
       "result": null,

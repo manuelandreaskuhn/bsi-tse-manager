@@ -56,13 +56,6 @@
     },
     {
       "step": 5,
-      "type": "PRECONDITION",
-      "title": "Herstelleranleitung: Audit-Funktionalität dauerhaft deaktivieren (SM_AUD_02, Variante 2)",
-      "result": null,
-      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Audit-Funktionalität gestoppt werden kann (SM_AUD_02). Diese Anleitung wird in Schritt 10 (SM_AUD_02) angewendet."
-    },
-    {
-      "step": 6,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -88,7 +81,7 @@
       "tar_validation": []
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -115,7 +108,7 @@
       "tar_validation": []
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "VERIFY",
       "title": "exitSecureState-Log prüfen (SM_LOG_06)",
       "result": null,
@@ -239,7 +232,7 @@
       ]
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "ACTION",
       "title": "SM_AUD_01 (AUDIT_MODIFY): Deaktivierung bei Audit-Einstellungsänderung",
       "result": null,
@@ -261,7 +254,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "VERIFY",
       "title": "SM_AUD_02: Permanente Deaktivierung bei Audit-Stopp",
       "result": null,

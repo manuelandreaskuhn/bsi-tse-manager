@@ -31,26 +31,6 @@
     },
     {
       "step": 2,
-      "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
-      "result": null,
-      "instruction": "Herstellerdokumentation und ausgefülltes ICS liegen vollständig vor.",
-      "references": [
-        "BSI TR-03153-1 Anhang A"
-      ]
-    },
-    {
-      "step": 3,
-      "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden (Variante 3)",
-      "result": null,
-      "instruction": "Herstellerdokumentation liegt vor",
-      "references": [
-        "BSI TR-03153-1 Anhang A"
-      ]
-    },
-    {
-      "step": 4,
       "type": "VERIFY",
       "title": "ICS auf Kapazitätsangaben prüfen",
       "result": null,
@@ -119,7 +99,7 @@
       ]
     },
     {
-      "step": 5,
+      "step": 3,
       "type": "VERIFY",
       "title": "Plausibilität der Kapazitätsangaben prüfen",
       "result": null,

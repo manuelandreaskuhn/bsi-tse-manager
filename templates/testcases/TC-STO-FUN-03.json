@@ -95,39 +95,12 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert (initialize, Variante 2)",
-      "result": null,
-      "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
-      "function": "initialize",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.1"
-      ]
-    },
-    {
-      "step": 7,
-      "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "admin",
-      "parameters": {
-        "userId": "admin",
-        "pin": "<korrekter admin-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 8,
-      "type": "PRECONDITION",
       "title": "Vorbedingung: Ein Nutzer, der entsprechend seiner Rolle eine Funktionalitä",
       "result": null,
       "instruction": "Ein Nutzer, der entsprechend seiner Rolle eine Funktionalität ausführen darf, bei deren Ausführung eine Audit-Log-Nachricht erwartet wird, wurde von der Technischen Sicherheitseinrichtung authentifiziert."
     },
     {
-      "step": 9,
+      "step": 7,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -154,7 +127,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 8,
       "type": "SETUP",
       "title": "logOut aufrufen",
       "result": null,
@@ -190,7 +163,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 9,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -217,7 +190,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 10,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -244,7 +217,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 11,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -271,7 +244,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 12,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -298,7 +271,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 13,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -325,7 +298,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 14,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -351,7 +324,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 15,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -377,7 +350,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 16,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -403,7 +376,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 17,
       "type": "SETUP",
       "title": "startAudit aufrufen",
       "result": null,
@@ -426,7 +399,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 18,
       "type": "ACTION",
       "title": "Zeitaktualisierung durchführen",
       "result": null,
@@ -452,7 +425,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 19,
       "type": "ACTION",
       "title": "Transaktion mit Aktualisierung protokollieren (nach Zeitaktualisierung)",
       "result": null,
@@ -479,7 +452,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 20,
       "type": "VERIFY",
       "title": "Export und Validierung aller Log-Typen",
       "result": null,

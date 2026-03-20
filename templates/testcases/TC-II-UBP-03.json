@@ -71,28 +71,12 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "logger",
-      "parameters": {
-        "userId": "logger",
-        "pin": "<korrekter logger-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 6,
-      "type": "PRECONDITION",
       "title": "PIN-Eingabe für admin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des admin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "PRECONDITION",
       "title": "Nutzer admin authentifiziert",
       "result": null,
@@ -108,14 +92,14 @@
       ]
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "PRECONDITION",
       "title": "PIN-Eingabe für timeadmin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des timeadmin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -151,7 +135,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -187,7 +171,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -213,7 +197,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -239,7 +223,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -261,7 +245,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -323,7 +307,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -345,7 +329,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -367,7 +351,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 17,
+      "step": 16,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -389,7 +373,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 18,
+      "step": 17,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -451,7 +435,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 19,
+      "step": 18,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -473,7 +457,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 20,
+      "step": 19,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -495,7 +479,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 21,
+      "step": 20,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -557,7 +541,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 22,
+      "step": 21,
       "type": "VERIFY",
       "title": "Gegenmaßnahmen gegen PUK-Raten prüfen (II_UBP_03)",
       "result": null,
@@ -576,7 +560,7 @@
       ]
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "NEGATIVE",
       "title": "Temporäre PUK-Sperrung bei wiederholten Fehlversuchen  (II_UBP_04, PUK_BLOCKA...",
       "result": null,
@@ -608,7 +592,7 @@
       "source_test": "II_UBP_04"
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "NEGATIVE",
       "title": "Leerer PIN abgelehnt für admin  (II_UBP_05)",
       "result": null,
@@ -634,7 +618,7 @@
       "source_test": "II_UBP_04"
     },
     {
-      "step": 25,
+      "step": 24,
       "type": "NEGATIVE",
       "title": "Leerer PIN abgelehnt für timeadmin  (II_UBP_06, II_UPDATETIME)",
       "result": null,

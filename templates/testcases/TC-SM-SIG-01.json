@@ -101,17 +101,6 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert (initialize, Variante 2)",
-      "result": null,
-      "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
-      "function": "initialize",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.1"
-      ]
-    },
-    {
-      "step": 7,
-      "type": "PRECONDITION",
       "title": "Nutzer admin authentifiziert",
       "result": null,
       "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
@@ -126,7 +115,7 @@
       ]
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -153,7 +142,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -190,7 +179,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -227,7 +216,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -264,7 +253,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -301,7 +290,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -328,7 +317,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -355,7 +344,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "SETUP",
       "title": "TSE initialisieren",
       "result": null,
@@ -381,7 +370,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -408,7 +397,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 16,
       "type": "SETUP",
       "title": "Aufzeichnungssystem registrieren",
       "result": null,
@@ -434,7 +423,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 17,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -461,7 +450,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 18,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -488,7 +477,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 19,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -515,7 +504,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 20,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -541,7 +530,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 21,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -568,7 +557,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -595,7 +584,7 @@
       "tar_validation": []
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -621,7 +610,7 @@
       "tar_validation": []
     },
     {
-      "step": 25,
+      "step": 24,
       "type": "SETUP",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
@@ -647,7 +636,7 @@
       "tar_validation": []
     },
     {
-      "step": 26,
+      "step": 25,
       "type": "ACTION",
       "title": "Sequenz: Init → updateTime(n) → Transaktion → disableSecureElement",
       "result": null,
@@ -670,7 +659,7 @@
       "tar_validation": []
     },
     {
-      "step": 27,
+      "step": 26,
       "type": "VERIFY",
       "title": "Signaturzähler-Abfrage",
       "result": null,
@@ -738,7 +727,7 @@
       ]
     },
     {
-      "step": 28,
+      "step": 27,
       "type": "VERIFY",
       "title": "Export und Signaturzähler-Vollständigkeit prüfen",
       "result": null,
@@ -1357,7 +1346,7 @@
       "source_test": "SM_SIG_05"
     },
     {
-      "step": 29,
+      "step": 28,
       "type": "VERIFY",
       "title": "Überlauftest (SM_SIG_05): Signaturzähler-Überlauf dokumentiert oder simuliert",
       "result": null,

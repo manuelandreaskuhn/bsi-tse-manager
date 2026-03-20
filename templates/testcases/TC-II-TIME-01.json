@@ -73,46 +73,19 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "admin",
-      "parameters": {
-        "userId": "admin",
-        "pin": "<korrekter admin-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 5,
-      "type": "PRECONDITION",
       "title": "API-Implementierung $api_time_sync verfügbar (TIME_SYNC)",
       "result": null,
       "instruction": "$api_time_sync: Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit unterstützt Profil TIME_SYNC – updateTime wird ohne expliziten Zeitparameter aufgerufen, die TSE ermittelt den Zeitwert automatisch. Relevant für Schritte mit updateTime ohne newDateTime-Parameter."
     },
     {
-      "step": 6,
+      "step": 5,
       "type": "PRECONDITION",
       "title": "API-Implementierung $api_no_time_sync verfügbar (NO_TIME_SYNC)",
       "result": null,
       "instruction": "$api_no_time_sync: Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit unterstützt Profil NO_TIME_SYNC – updateTime wird mit explizitem newDateTime-Parameter aufgerufen. Relevant für alle updateTime-Schritte mit Zeitparameter."
     },
     {
-      "step": 7,
-      "type": "PRECONDITION",
-      "title": "Zeit gestellt (updateTime, Variante 2)",
-      "result": null,
-      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde auf die zum Zeitpunkt der Aktualisierung aktuelle offizielle Zeit aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
-      "function": "updateTime",
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6"
-      ]
-    },
-    {
-      "step": 8,
+      "step": 6,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -139,7 +112,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 7,
       "type": "SETUP",
       "title": "logOut aufrufen",
       "result": null,
@@ -175,7 +148,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 8,
       "type": "SETUP",
       "title": "Log-Nachricht für updateTime im TAR identifizieren (Dateiname)",
       "result": null,
@@ -202,7 +175,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 9,
       "type": "SETUP",
       "title": "Datenfelder der updateTime-Log-Nachricht im TAR prüfen",
       "result": null,
@@ -289,7 +262,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 10,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -316,7 +289,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 11,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -343,7 +316,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 12,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -370,7 +343,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 13,
       "type": "SETUP",
       "title": "Nutzer timeadmin authentifizieren",
       "result": null,
@@ -397,7 +370,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 14,
       "type": "SETUP",
       "title": "Authentifizierungs-Log für timeadmin im TAR identifizieren",
       "result": null,
@@ -424,7 +397,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 15,
       "type": "SETUP",
       "title": "Datenfelder des timeadmin-Authentifizierungs-Logs prüfen",
       "result": null,
@@ -451,7 +424,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 16,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -478,7 +451,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 17,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -505,7 +478,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 18,
       "type": "SETUP",
       "title": "Nutzer admin authentifizieren",
       "result": null,
@@ -532,7 +505,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 19,
       "type": "SETUP",
       "title": "Authentifizierungs-Log für admin im TAR identifizieren",
       "result": null,
@@ -559,7 +532,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 20,
       "type": "SETUP",
       "title": "Datenfelder des admin-Authentifizierungs-Logs prüfen",
       "result": null,
@@ -586,7 +559,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 21,
       "type": "SETUP",
       "title": "Zeit aktualisieren",
       "result": null,
@@ -613,7 +586,7 @@
       "tar_validation": []
     },
     {
-      "step": 24,
+      "step": 22,
       "type": "SETUP",
       "title": "getTimeSyncVariant aufrufen",
       "result": null,
@@ -646,7 +619,7 @@
       "tar_validation": []
     },
     {
-      "step": 25,
+      "step": 23,
       "type": "SETUP",
       "title": "updateTime: Fehlerfall provozieren",
       "result": null,
@@ -673,7 +646,7 @@
       "tar_validation": []
     },
     {
-      "step": 26,
+      "step": 24,
       "type": "SETUP",
       "title": "getCurrentSeTime aufrufen",
       "result": null,
@@ -706,7 +679,7 @@
       "tar_validation": []
     },
     {
-      "step": 27,
+      "step": 25,
       "type": "SETUP",
       "title": "getCurrentSeTime aufrufen",
       "result": null,
@@ -729,7 +702,7 @@
       "tar_validation": []
     },
     {
-      "step": 28,
+      "step": 26,
       "type": "VERIFY",
       "title": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)",
       "result": null,
@@ -1241,7 +1214,7 @@
       ]
     },
     {
-      "step": 29,
+      "step": 27,
       "type": "ACTION",
       "title": "updateTime ohne Parameter (TIME_SYNC)",
       "result": null,
@@ -1268,7 +1241,7 @@
       "tar_validation": []
     },
     {
-      "step": 30,
+      "step": 28,
       "type": "NEGATIVE",
       "title": "Fehler: Ungültiges Zeitformat",
       "result": null,
@@ -1314,7 +1287,7 @@
       "tar_validation": []
     },
     {
-      "step": 31,
+      "step": 29,
       "type": "VERIFY",
       "title": "Zeitmonotonie und Zeitformat-Konsistenz im Export prüfen",
       "result": null,
@@ -1483,7 +1456,7 @@
       "source_test": "II_UDT_01"
     },
     {
-      "step": 32,
+      "step": 30,
       "type": "NEGATIVE",
       "title": "Fehler: Falsche updateTime-Variante",
       "result": null,
@@ -1506,7 +1479,7 @@
       "tar_validation": []
     },
     {
-      "step": 33,
+      "step": 31,
       "type": "ACTION",
       "title": "getTimeSyncVariant",
       "result": null,
@@ -1545,7 +1518,7 @@
       "tar_validation": []
     },
     {
-      "step": 34,
+      "step": 32,
       "type": "ACTION",
       "title": "getCurrentSeTime (II_CURRENTTIME)",
       "result": null,

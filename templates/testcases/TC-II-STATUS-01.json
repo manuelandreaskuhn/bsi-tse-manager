@@ -126,22 +126,6 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "admin",
-      "parameters": {
-        "userId": "admin",
-        "pin": "<korrekter admin-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 9,
-      "type": "PRECONDITION",
       "title": "Aufzeichnungssystem $client1 registriert",
       "result": null,
       "instruction": "Es ist mindestens ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
@@ -155,7 +139,7 @@
       ]
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "PRECONDITION",
       "title": "Maximale Anzahl Aufzeichnungssysteme registriert (ICS-Maximum)",
       "result": null,
@@ -170,7 +154,7 @@
       ]
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "PRECONDITION",
       "title": "Kein Aufzeichnungssystem registriert",
       "result": null,
@@ -185,7 +169,7 @@
       ]
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "PRECONDITION",
       "title": "Maximale Anzahl Aufzeichnungssysteme registriert (Szenario: getClientIds gefüllt)",
       "result": null,
@@ -200,21 +184,21 @@
       ]
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Im Sicherheitsmodul wird keine offene Transaktion verwaltet.",
       "result": null,
       "instruction": "Im Sicherheitsmodul wird keine offene Transaktion verwaltet."
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Im Sicherheitsmodul wird eine offene Transaktion verwaltet.",
       "result": null,
       "instruction": "Im Sicherheitsmodul wird eine offene Transaktion verwaltet."
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "PRECONDITION",
       "title": "Herstellerdokumentation und ICS vorhanden ($count)",
       "result": null,
@@ -224,14 +208,14 @@
       ]
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Im Sicherheitsmodul wird die maximale Anzahl von offenen Tra",
       "result": null,
       "instruction": "Im Sicherheitsmodul wird die maximale Anzahl von offenen Transaktionen verwaltet. Diese Anzahl und als $count festgehalten."
     },
     {
-      "step": 17,
+      "step": 16,
       "type": "PRECONDITION",
       "title": "Nutzer logger authentifiziert",
       "result": null,
@@ -247,42 +231,42 @@
       ]
     },
     {
-      "step": 18,
+      "step": 17,
       "type": "PRECONDITION",
       "title": "Speichermedium: Log für mindestens eine offene Transaktion",
       "result": null,
       "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine nicht beendete Transaktion gespeichert."
     },
     {
-      "step": 19,
+      "step": 18,
       "type": "PRECONDITION",
       "title": "Speichermedium: Log für offene Transaktion mit bekannter $tn_open",
       "result": null,
       "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine nicht beendete Transaktion mit der Transaktionsnummer TN1 gespeichert. Transaktionsnummer als $tn_open festhalten."
     },
     {
-      "step": 20,
+      "step": 19,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Die Anzahl der offenen Transaktionen entspricht der maximale",
       "result": null,
       "instruction": "Die Anzahl der offenen Transaktionen entspricht der maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann."
     },
     {
-      "step": 21,
+      "step": 20,
       "type": "PRECONDITION",
       "title": "Speichermedium: Keine Logs für offene Transaktionen vorhanden",
       "result": null,
       "instruction": "Auf dem Speichermedium sind keine Log-Nachrichten für nicht beendete Transaktionen gespeichert. Wird im Negativtest für getOpenTransactions bei leerem Transaktionssatz verwendet."
     },
     {
-      "step": 22,
+      "step": 21,
       "type": "PRECONDITION",
       "title": "Vorbedingung: Es wurde noch keine Transaktion gestartet.",
       "result": null,
       "instruction": "Es wurde noch keine Transaktion gestartet."
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "PRECONDITION",
       "title": "Aufzeichnungssystem $client1 registriert (Szenario 5)",
       "result": null,
@@ -297,7 +281,7 @@
       ]
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "SETUP",
       "title": "getCurrentNumberOfClients aufrufen",
       "result": null,
@@ -329,7 +313,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 25,
+      "step": 24,
       "type": "SETUP",
       "title": "getMaxNumberOfClients aufrufen",
       "result": null,
@@ -361,7 +345,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 26,
+      "step": 25,
       "type": "SETUP",
       "title": "getRegisteredClients aufrufen",
       "result": null,
@@ -393,7 +377,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 27,
+      "step": 26,
       "type": "SETUP",
       "title": "exportSerialNumbers aufrufen",
       "result": null,
@@ -415,7 +399,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 28,
+      "step": 27,
       "type": "SETUP",
       "title": "getCurrentNumberOfTransactions aufrufen",
       "result": null,
@@ -447,7 +431,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 29,
+      "step": 28,
       "type": "SETUP",
       "title": "getCurrentNumberOfTransactions aufrufen",
       "result": null,
@@ -469,7 +453,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 30,
+      "step": 29,
       "type": "SETUP",
       "title": "getMaxNumberOfTransactions aufrufen",
       "result": null,
@@ -501,7 +485,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 31,
+      "step": 30,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -527,7 +511,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 32,
+      "step": 31,
       "type": "SETUP",
       "title": "getTransactionState aufrufen",
       "result": null,
@@ -559,7 +543,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 33,
+      "step": 32,
       "type": "SETUP",
       "title": "updateTransaction aufrufen",
       "result": null,
@@ -585,7 +569,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 34,
+      "step": 33,
       "type": "SETUP",
       "title": "finishTransaction aufrufen",
       "result": null,
@@ -611,7 +595,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 35,
+      "step": 34,
       "type": "SETUP",
       "title": "getTransactionState aufrufen",
       "result": null,
@@ -633,7 +617,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 36,
+      "step": 35,
       "type": "SETUP",
       "title": "getTransactionState aufrufen",
       "result": null,
@@ -655,7 +639,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 37,
+      "step": 36,
       "type": "SETUP",
       "title": "getOpenTransactions aufrufen",
       "result": null,
@@ -697,7 +681,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 38,
+      "step": 37,
       "type": "SETUP",
       "title": "getOpenTransactions aufrufen",
       "result": null,
@@ -719,7 +703,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 39,
+      "step": 38,
       "type": "SETUP",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
@@ -751,7 +735,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 40,
+      "step": 39,
       "type": "SETUP",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
@@ -773,7 +757,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 41,
+      "step": 40,
       "type": "ACTION",
       "title": "Aktuelle Client-Anzahl (II_CURNOCLIENTS)",
       "result": null,
@@ -825,7 +809,7 @@
       "source_test": "II_CNC_01"
     },
     {
-      "step": 42,
+      "step": 41,
       "type": "ACTION",
       "title": "Maximale Client-Anzahl (II_MAXNOCLIENTS)",
       "result": null,
@@ -847,7 +831,7 @@
       "source_test": "II_MNC_01"
     },
     {
-      "step": 43,
+      "step": 42,
       "type": "ACTION",
       "title": "Registrierte Clients (II_REGISTEREDCLIENTS)",
       "result": null,
@@ -899,7 +883,7 @@
       ]
     },
     {
-      "step": 44,
+      "step": 43,
       "type": "ACTION",
       "title": "Aktuelle Transaktionsanzahl (II_CURNOTRANSACTIONS)",
       "result": null,
@@ -921,7 +905,7 @@
       "source_test": "II_CNT_01"
     },
     {
-      "step": 45,
+      "step": 44,
       "type": "ACTION",
       "title": "Maximale Transaktionsanzahl (II_MAXNOTRANSACTIONS)",
       "result": null,
@@ -943,7 +927,7 @@
       "source_test": "II_MNT_01"
     },
     {
-      "step": 46,
+      "step": 45,
       "type": "ACTION",
       "title": "Transaktionsstadium (II_TRANSACTIONSTATE)",
       "result": null,
@@ -988,7 +972,7 @@
       "source_test": "II_GTS_01"
     },
     {
-      "step": 47,
+      "step": 46,
       "type": "ACTION",
       "title": "Offene Transaktionsnummern (II_OPENTRANSACTIONS)",
       "result": null,
@@ -1020,7 +1004,7 @@
       "source_test": "II_GOT_01"
     },
     {
-      "step": 48,
+      "step": 47,
       "type": "ACTION",
       "title": "Aktueller Transaktionszähler (II_CTC)",
       "result": null,
@@ -1052,7 +1036,7 @@
       "source_test": "II_CTC_01"
     },
     {
-      "step": 49,
+      "step": 48,
       "type": "NEGATIVE",
       "title": "Alle Fehlerfälle",
       "result": null,

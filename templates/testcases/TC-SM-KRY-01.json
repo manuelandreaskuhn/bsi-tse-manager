@@ -71,16 +71,6 @@
     },
     {
       "step": 5,
-      "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
-      "result": null,
-      "instruction": "Signaturverfahren ist aus dem ICS bekannt.",
-      "references": [
-        "BSI TR-03153-1 Anhang A"
-      ]
-    },
-    {
-      "step": 6,
       "type": "SETUP",
       "title": "startTransaction aufrufen",
       "result": null,
@@ -117,7 +107,7 @@
       "tar_validation": []
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "VERIFY",
       "title": "ICS-Kryptographieangaben gegen BSI TR-03116-5 prüfen (FP, SM_KRY_01)",
       "result": null,
@@ -252,7 +242,7 @@
       ]
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "VERIFY",
       "title": "Externe Signaturverifikation (SM_KRY_02)",
       "result": null,
@@ -312,7 +302,7 @@
       "source_test": "SM_KRY_02"
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "VERIFY",
       "title": "Seriennummernberechnung prüfen (SM_KRY_03)",
       "result": null,

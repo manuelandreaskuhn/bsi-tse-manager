@@ -35,16 +35,6 @@
     },
     {
       "step": 2,
-      "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
-      "result": null,
-      "instruction": "Herstellerdokumentation liegt vollständig vor",
-      "references": [
-        "BSI TR-03153-1 Anhang A"
-      ]
-    },
-    {
-      "step": 3,
       "type": "VERIFY",
       "title": "ICS auf Vollständigkeit und Plausibilität prüfen",
       "result": null,
@@ -103,7 +93,7 @@
       ]
     },
     {
-      "step": 4,
+      "step": 3,
       "type": "VERIFY",
       "title": "Fehlercode-Dokumentation prüfen",
       "result": null,
@@ -142,7 +132,7 @@
       ]
     },
     {
-      "step": 5,
+      "step": 4,
       "type": "VERIFY",
       "title": "Technische Spezifikationen prüfen",
       "result": null,

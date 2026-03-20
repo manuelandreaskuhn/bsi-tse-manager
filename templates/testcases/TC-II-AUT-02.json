@@ -74,28 +74,12 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
-      "result": null,
-      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
-      "function": "authenticateUser",
-      "user": "logger",
-      "parameters": {
-        "userId": "logger",
-        "pin": "<korrekter logger-PIN laut ICS>"
-      },
-      "references": [
-        "BSI TR-03153-1 §6.2"
-      ]
-    },
-    {
-      "step": 6,
-      "type": "PRECONDITION",
       "title": "PIN-Eingabe für admin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des admin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
     {
-      "step": 7,
+      "step": 6,
       "type": "PRECONDITION",
       "title": "Nutzer admin authentifiziert",
       "result": null,
@@ -111,14 +95,14 @@
       ]
     },
     {
-      "step": 8,
+      "step": 7,
       "type": "PRECONDITION",
       "title": "PIN-Eingabe für timeadmin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des timeadmin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -155,7 +139,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -192,7 +176,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -219,7 +203,7 @@
       "tar_validation": []
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "SETUP",
       "title": "Nutzer logger authentifizieren",
       "result": null,
@@ -246,7 +230,7 @@
       "tar_validation": []
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -291,7 +275,7 @@
       ]
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "VERIFY",
       "title": "unblockPin-Log im TAR prüfen",
       "result": null,
@@ -353,7 +337,7 @@
       ]
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -416,7 +400,7 @@
       "tar_validation": []
     },
     {
-      "step": 16,
+      "step": 15,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -439,7 +423,7 @@
       "tar_validation": []
     },
     {
-      "step": 17,
+      "step": 16,
       "type": "SETUP",
       "title": "unblockPin: PIN von admin entsperren",
       "result": null,
@@ -462,7 +446,7 @@
       "tar_validation": []
     },
     {
-      "step": 18,
+      "step": 17,
       "type": "SETUP",
       "title": "unblockPin: PIN von admin entsperren",
       "result": null,
@@ -485,7 +469,7 @@
       "tar_validation": []
     },
     {
-      "step": 19,
+      "step": 18,
       "type": "SETUP",
       "title": "unblockPin: PIN von admin entsperren",
       "result": null,
@@ -548,7 +532,7 @@
       "tar_validation": []
     },
     {
-      "step": 20,
+      "step": 19,
       "type": "SETUP",
       "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
@@ -571,7 +555,7 @@
       "tar_validation": []
     },
     {
-      "step": 21,
+      "step": 20,
       "type": "SETUP",
       "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
@@ -594,7 +578,7 @@
       "tar_validation": []
     },
     {
-      "step": 22,
+      "step": 21,
       "type": "SETUP",
       "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
@@ -657,7 +641,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "NEGATIVE",
       "title": "Authentifizierung mit falscher PIN",
       "result": null,
@@ -748,7 +732,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "NEGATIVE",
       "title": "Wiederholte Fehlversuche bis zur Sperrung",
       "result": null,
@@ -811,7 +795,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 25,
+      "step": 24,
       "type": "ACTION",
       "title": "PIN-Entsperrung mit korrekter PUK [PT]",
       "result": null,
@@ -849,7 +833,7 @@
       "tar_validation": []
     },
     {
-      "step": 26,
+      "step": 25,
       "type": "NEGATIVE",
       "title": "Entsperrung mit falschem PUK",
       "result": null,
@@ -877,7 +861,7 @@
       "tar_validation": []
     },
     {
-      "step": 27,
+      "step": 26,
       "type": "NEGATIVE",
       "title": "Leerer String als neuer PIN abgelehnt",
       "result": null,
@@ -905,7 +889,7 @@
       "tar_validation": []
     },
     {
-      "step": 28,
+      "step": 27,
       "type": "ACTION",
       "title": "Gegenmaßnahmen gegen PUK-Raten (PUK_BLOCKABLE)",
       "result": null,
