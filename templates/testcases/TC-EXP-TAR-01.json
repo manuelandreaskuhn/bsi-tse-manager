@@ -1,0 +1,297 @@
+{
+  "testcase_id": "TC-EXP-TAR-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "TAR-Format: Struktur, Dateinamen, erlaubte Dateitypen",
+  "description": "Prüft das TAR-Format des exportierten Containers auf POSIX.1-2001-Konformität, erlaubte Dateitypen, keine Unterverzeichnisse und korrekte Header-Checksummen.",
+  "purpose": "Prüfung, ob die Datei, die die Exportschnittstelle bei einem Export zurückgibt, das definierte TAR-Format hat.",
+  "module": "Export",
+  "submodule": "EXP_TAR",
+  "function": "exportLogMessages",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "STORAGE_BASIC"
+  ],
+  "source_tests": [
+    "EXP_TAR_01",
+    "EXP_TAR_02",
+    "EXP_TAR_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Speicher der TSE enthält keine Transaktions-Log-Nachrich",
+      "result": null,
+      "instruction": "Der Speicher der TSE enthält keine Transaktions-Log-Nachrichten."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die aktuelle freie Speicherkapazität reicht nicht aus, um di",
+      "result": null,
+      "instruction": "Die aktuelle freie Speicherkapazität reicht nicht aus, um die Daten für den Start einer weiteren Transaktion zu speichern."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Während der gesamten Prüfung werden die erzeugten TAR-Contai",
+      "result": null,
+      "instruction": "Während der gesamten Prüfung werden die erzeugten TAR-Container untersucht."
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Für die Seriennummer des Aufzeichnungssystems wird ein String mit unter 30 Zeichen verwendet.",
+      "function": "registerClient",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "EXP_TAR_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für die Seriennummer des Aufzeichnungssystems wird ein String mit unter 30 Zeichen verwendet.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "EXP_TAR_01"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "TAR-Container exportieren und Struktur vollständig prüfen",
+      "result": null,
+      "instruction": "TAR-Container exportieren und Struktur vollständig prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "POSIX.1-2001 konformes TAR-Archiv"
+        }
+      },
+      "checks": [
+        {
+          "description": "Magic-String 'ustar' in allen Header-Einträgen vorhanden",
+          "expected": "EXP_TAR_01 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abschluss mit mindestens zwei Null-Blöcken (512 Byte)",
+          "expected": "EXP_TAR_END bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Verzeichniseinträge, keine Unterverzeichnisse",
+          "expected": "EXP_TAR_DIR bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle Header-Checksummen korrekt",
+          "expected": "EXP_TAR_CHK bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur erlaubte Dateitypen: info.csv, .log, .cer/.crt/.der/.pem",
+          "expected": "EXP_TAR_03 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unzulässigen Dateien im Archiv",
+          "expected": "EXP_TAR_NOEXTRA bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname: Export_{Zeitstempel}.tar",
+          "expected": "EXP_ARCH_NAME bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_03",
+          "title": "Keine unspezifizierten Dateien",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_NOEXTRA",
+          "title": "Keine unzulässigen Dateien im TAR-Container",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME",
+          "title": "Archivdateiname (Export_*.tar)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_SPLIT",
+          "title": "Aufgeteiltes Archiv",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "EXP_TAR_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.4.1",
+    "BSI TR-03151-1 §5.2",
+    "POSIX.1-2001"
+  ]
+}

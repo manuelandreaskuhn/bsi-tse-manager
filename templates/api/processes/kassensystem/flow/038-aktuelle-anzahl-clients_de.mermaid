@@ -1,0 +1,11 @@
+flowchart TD
+    Start([Nutzer: getCurrentNumberOfClients])
+    Start --> CheckUnlimited{TSE unterstützt<br/>unbegrenzte Clients<br/>ohne Tracking?}
+    CheckUnlimited -->|Ja| ErrorNotTracked[Exception: ErrorCurrentNumberOfClientsNotTracked]
+    CheckUnlimited -->|Nein| Get[Bestimme Anzahl Clients<br/>mit offenen Transaktionen]
+    Get --> Return[Rückgabe: currentNumberClients]
+    Return --> End([Ende])
+    ErrorNotTracked --> End
+    style Get fill:#87CEEB
+    Note1[Zählt distinct Clients<br/>die offene Transaktionen haben]
+    Get -.-> Note1

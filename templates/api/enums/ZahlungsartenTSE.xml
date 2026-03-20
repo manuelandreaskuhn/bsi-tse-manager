@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="ZahlungsartenTSE" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+    <name>ZahlungsartenTSE</name>
+    <category>TransactionData</category>
+    <source>DSFinV-K</source>
+    <description>Zulässige Zahlungsarten für die Übergabe an die TSE bei Kassenbeleg-V1. Bei mehreren Zahlungsarten sind diese entsprechend zu akkumulieren.</description>
+    <values>
+        <value>
+            <name>Bar</name>
+            <description>Bargeldbewegungen. Zahlungen mit physischem Bargeld.</description>
+        </value>
+        <value>
+            <name>Unbar</name>
+            <description>Alle Sachverhalte ohne Bargeldbewegung (z.B. Kartenzahlung, Guthabenkarte, Überweisung, etc.).</description>
+        </value>
+    </values>
+</enum>

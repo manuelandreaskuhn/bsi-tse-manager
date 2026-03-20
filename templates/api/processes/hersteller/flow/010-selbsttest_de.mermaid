@@ -1,0 +1,50 @@
+flowchart TD
+    Start([Nutzer: selfTest aufrufen])
+    Start --> CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| TestSM[SM: Teste Sicherheitsmodul]
+    
+    TestSM --> TestCrypto{Krypto-Funktionen<br/>OK?}
+    TestCrypto -->|Nein| FailCrypto[Test fehlgeschlagen:<br/>Kryptographie-Fehler]
+    TestCrypto -->|Ja| TestMemory{Speicher<br/>OK?}
+    
+    TestMemory -->|Nein| FailMemory[Test fehlgeschlagen:<br/>Speicher-Fehler]
+    TestMemory -->|Ja| TestTime{Zeitführung<br/>OK?}
+    
+    TestTime -->|Nein| FailTime[Test fehlgeschlagen:<br/>Zeit-Fehler]
+    TestTime -->|Ja| TestInterface{Schnittstellen<br/>OK?}
+    
+    TestInterface -->|Nein| FailInterface[Test fehlgeschlagen:<br/>Schnittstellen-Fehler]
+    TestInterface -->|Ja| CreateLog[Erstelle System-Log-Nachricht<br/>selfTest]
+    
+    CreateLog --> LogResult{Test-Ergebnis}
+    LogResult -->|Erfolgreich| LogSuccess[eventData: success = true]
+    LogResult -->|Fehlgeschlagen| LogFail[eventData: success = false]
+    
+    LogSuccess --> IncrSig
+    LogFail --> IncrSig[SM: Signaturzähler++]
+    
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> ReturnSuccess{Test erfolgreich?}
+    ReturnSuccess -->|Ja| ReturnOK[Rückgabe: OK]
+    ReturnSuccess -->|Nein| ReturnError[Rückgabe: ErrorSelfTestFailed]
+    
+    ReturnOK --> End([Ende])
+    ReturnError --> End
+    
+    FailCrypto --> CreateLog
+    FailMemory --> CreateLog
+    FailTime --> CreateLog
+    FailInterface --> CreateLog
+    
+    ErrorInit --> End
+    
+    style TestCrypto fill:#FFE4B5
+    style TestMemory fill:#FFE4B5
+    style TestTime fill:#FFE4B5
+    style TestInterface fill:#FFE4B5
+    style ReturnOK fill:#90EE90
+    style ReturnError fill:#FFB6C1

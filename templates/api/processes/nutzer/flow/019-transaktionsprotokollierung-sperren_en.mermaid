@@ -1,0 +1,42 @@
+flowchart TD
+    Start([Admin/Central Operator:<br/>lockTransactionLogging call])
+    Start --> CheckAuth{Admin<br/>authenticated?}
+    
+    CheckAuth -->|No| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Yes| CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| CheckTime{Time<br/>set?}
+    
+    CheckTime -->|No| ErrorTime[Exception:<br/>ErrorTimeNotSet]
+    CheckTime -->|Yes| CreateLog[Create System Log Message<br/>lockTransactionLogging]
+    
+    CreateLog --> SetOrigin{Caller?}
+    SetOrigin -->|Admin| SetOriginAdmin[eventOrigin = Interface<br/>eventTriggeredByUser = admin]
+    SetOrigin -->|Central Operator| SetOriginCO[eventOrigin = centraloperator<br/>eventTriggeredByUser = centraloperator]
+    
+    SetOriginAdmin --> IncrSig
+    SetOriginCO --> IncrSig[SM: Signature Counter++]
+    
+    IncrSig --> CalcSig[SM: Create Signature]
+    CalcSig --> SaveLog[Save Log Message]
+    
+    SaveLog --> LockFunctions[Lock Functions:<br/>- startTransaction<br/>- updateTransaction<br/>- finishTransaction]
+    
+    LockFunctions --> CheckLock{Locking<br/>successful?}
+    
+    CheckLock -->|No| ErrorLock[Exception:<br/>ErrorLockTransactionLoggingFailed]
+    CheckLock -->|Yes| Return[Return: Success]
+    
+    Return --> End([End - Transactions locked])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorTime --> End
+    ErrorLock --> End
+    
+    style LockFunctions fill:#FFB6C1
+    style Return fill:#FFD700
+    
+    Note1[Note: Open transactions<br/>can still exist,<br/>but no new ones can be started]
+    CheckLock -.-> Note1

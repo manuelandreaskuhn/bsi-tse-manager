@@ -1,0 +1,563 @@
+{
+  "testcase_id": "TC-II-LOCK-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Sperren und Entsperren von Transaktionsaufzeichnungen",
+  "description": "Prüft lockTransactionLogging und unlockTransactionLogging.",
+  "purpose": "Prüfung, ob die Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen das Ausführen der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion unterbindet. Zusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_LTL/II_UTL",
+  "function": "lockTransactionLogging/unlockTransactionLogging",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_LOCKTRANSLOGGING",
+    "II_UNLOCKTRANSLOGGING"
+  ],
+  "source_tests": [
+    "II_LTL_01",
+    "II_UTL_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "lockTransactionLogging aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen.",
+      "function": "lockTransactionLogging",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionLoggingLocked ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionLoggingLocked ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionLoggingLocked ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "unlockTransactionLogging aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ermöglichung der Aufzeichnung von Transaktionen nach einer vorherigen Unterbindung selbiger.",
+      "function": "unlockTransactionLogging",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 12,
+      "type": "VERIFY",
+      "title": "Transaktionsaufzeichnung sperren",
+      "result": null,
+      "instruction": "Transaktionsaufzeichnung sperren\n\nAufruf der Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen.",
+      "function": "lockTransactionLogging",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Sperrung erfolgreich, kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für Lock erstellt",
+          "expected": "LOCK_EVT_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Neue Transaktionen nach Sperrung nicht möglich",
+          "expected": "LOCK_EVT_NO_NEW_TXN",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOCK_EVT_PRESENT",
+          "title": "System-Log-Ereignis für Lock vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOCK_EVT_NO_NEW_TXN",
+          "title": "Keine neuen Transaktions-Logs nach Lock",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 13,
+      "type": "VERIFY",
+      "title": "Transaktionsaufzeichnung entsperren",
+      "result": null,
+      "instruction": "Transaktionsaufzeichnung entsperren\n\nAufruf der Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen.",
+      "function": "unlockTransactionLogging",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Entsperrung erfolgreich, kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für Unlock erstellt",
+          "expected": "UNLOCK_EVT_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Lock-Ereignis geht Unlock voraus",
+          "expected": "UNLOCK_EVT_LOCK_PRECEDES",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Transaktionen nach Entsperrung wieder möglich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "UNLOCK_EVT_PRESENT",
+          "title": "System-Log-Ereignis für Unlock vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "UNLOCK_EVT_LOCK_PRECEDES",
+          "title": "Lock-Ereignis geht Unlock voraus",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_LTL_01"
+    },
+    {
+      "step": 14,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle",
+      "result": null,
+      "instruction": "Fehlerfälle [NT].",
+      "checks": [
+        {
+          "description": "Lock bei offenen nicht-verwaisten Transaktionen: Fehler",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Lock fehlgeschlagen: ErrorLockTransactionLoggingFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Unlock wenn nicht gesperrt: Fehler",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Unlock fehlgeschlagen: ErrorUnlockTransactionLoggingFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

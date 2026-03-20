@@ -1,0 +1,35 @@
+graph TD
+    Start([Start: Cash register/<br/>Taxameter/Distance<br/>counter acquired])
+    
+    Start --> Check{Reporting required<br/>per §146a para. 4<br/>AO?}
+    
+    Check -->|No| NotRelevant[No notification<br/>required]
+    Check -->|Yes| Collect[Collect required<br/>data]
+    
+    Collect --> Data[Record data:<br/>- Tax number<br/>- System serial number<br/>- Type of TSE<br/>- TSE serial number<br/>- Business location<br/>- Number of systems<br/>- Acquisition date]
+    
+    Data --> Deadline{Within 1 month<br/>after acquisition?}
+    
+    Deadline -->|No| Late[WARNING:<br/>Deadline exceeded!]
+    Deadline -->|Yes| Submit[Submit notification<br/>electronically via ELSTER]
+    
+    Late --> Submit
+    
+    Submit --> Confirmation{Confirmation<br/>received?}
+    
+    Confirmation -->|No| Verify[Verify transmission<br/>repeat if necessary]
+    Confirmation -->|Yes| Archive[Archive<br/>confirmation]
+    
+    Verify --> Submit
+    
+    Archive --> End([End: Reporting<br/>obligation fulfilled])
+    NotRelevant --> End2([End])
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style End2 fill:#FFB6C1
+    style Check fill:#FFE4B5
+    style Deadline fill:#FFE4B5
+    style Confirmation fill:#FFE4B5
+    style Late fill:#FF6B6B
+    style Submit fill:#87CEEB

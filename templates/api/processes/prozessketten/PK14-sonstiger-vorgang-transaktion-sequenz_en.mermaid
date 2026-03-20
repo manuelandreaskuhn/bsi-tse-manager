@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant U as User/Staff
+    participant A as Application
+    participant T as TSE
+
+    Note over U,T: SonstigerVorgang: Flexible transaction for special use cases
+    
+    U->>A: Initiate operation (e.g. cash count, training, repair)
+    
+    A->>A: Prepare processData (free-form, application-specific)
+    
+    Note over A,T: Start transaction
+    A->>T: startTransaction(clientId, processData: application-specific or empty, processType: "SonstigerVorgang")
+    T->>T: Generate transaction number
+    T-->>A: transactionNumber, logTime, signatureCounter
+    
+    opt Operation execution
+        U->>A: Perform operation
+        A->>A: Collect/process data
+    end
+    
+    Note over A: processData format is freely definable: Can be text, JSON, CSV etc., No DSFinV-K format requirement, Application defines structure
+    
+    A->>A: Create final processData
+    Note right of A: Example: CashCount, ACTUAL 1234.56 EUR, TARGET 1234.56 EUR
+    
+    Note over A,T: Complete transaction
+    A->>T: finishTransaction(clientId, transactionNumber, processData: final application-specific content, processType: "SonstigerVorgang")
+    T->>T: Create signature
+    T->>T: Save transaction log
+    T-->>A: logTime, signatureValue, signatureCounter
+    
+    A->>A: Optional: Create documentation
+    A->>U: Operation completed, signature available
+    
+    Note over U,T: Transaction closed, Data is tamper-proof stored

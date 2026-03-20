@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="exportSerialNumbers" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>exportSerialNumbers</name>
+  <category>Logging</category>
+  <description>
+    <text xml:lang="en">Exports the serial number(s) of the SE API. A serial number is a hash value of a public key that belongs to a key pair whose private key was used to sign log messages.</text>
+    <text xml:lang="de">Exportiert die Seriennummer(n) der SE API. Eine Seriennummer ist ein Hash-Wert eines öffentlichen Schlüssels, der zu einem Schlüsselpaar gehört, dessen privater Schlüssel zum Signieren von Log-Nachrichten verwendet wurde.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  RAISE ErrorUserNotAuthenticated
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  RAISE ErrorUserNotAuthorized
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function exportSerialNumbers SHALL collect the serial number(s) of the device. If the collection of serial numbers fails, the function SHALL raise the exception ErrorExportSerialNumbersFailed and exit the function.</text>
+        <text xml:lang="de">Sammelt Seriennummer(n). Bei Fehler: Exception ErrorExportSerialNumbersFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  COLLECT serial numbers of the device
+ON_ERROR
+  RAISE ErrorExportSerialNumbersFailed
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SAMMELE Seriennummern des Geräts
+BEI_FEHLER
+  WERFE ErrorExportSerialNumbersFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorExportSerialNumbersFailed</exception>
+        <trigger>
+          <text xml:lang="en">The collection of serial numbers fails</text>
+          <text xml:lang="de">Die Erfassung der Seriennummern schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the collection of the serial number(s) has been successful, the function SHALL return the determined serial number(s) over the output parameter serialNumbers. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt Seriennummer(n) zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN serial numbers (serialNumbers parameter)
+RETURN without exception</text>
+        <text xml:lang="de">GEBE Seriennummern zurück (serialNumbers Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The serial numbers were successfully collected</text>
+          <text xml:lang="de">Die Seriennummern wurden erfolgreich erfasst</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return serial numbers and function returns without exception</text>
+          <text xml:lang="de">Gibt Seriennummern zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>byte[]</type>
+    <description>
+      <text xml:lang="en">The serial numbers of the public keys used by the Secure Element.</text>
+      <text xml:lang="de">Die Seriennummern der öffentlichen Schlüssel, die vom Secure Element verwendet werden.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorExportSerialNumbersFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

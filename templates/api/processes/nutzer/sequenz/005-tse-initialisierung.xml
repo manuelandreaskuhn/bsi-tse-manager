@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>005</processId>
+    <processName>
+        <text xml:lang="en">TSE Initialization</text>
+        <text xml:lang="de">TSE-Initialisierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Initial commissioning of the TSE by the taxpayer or administrator. Generation of the signature key and initialization of counters.</text>
+        <text xml:lang="de">Erstmalige Inbetriebnahme der TSE durch den Steuerpflichtigen bzw. Administrator. Generierung des Signaturschlüssels und Initialisierung der Zähler.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Taxpayer/Admin</text>
+            <text xml:lang="de">Steuerpflichtiger/Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">PKI</text>
+            <text xml:lang="de">PKI</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Key</text>
+            <text xml:lang="de">Signaturschlüssel</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Counter</text>
+            <text xml:lang="de">Transaktionszähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">TSE Certificate</text>
+            <text xml:lang="de">TSE-Zertifikat</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>authenticateUser</function>
+        <function>initialize</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (initialize)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+        <dataObject>TSE-Certificate</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceAlreadyInitialized</exception>
+        <exception>ErrorInitializationFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorCertificateRequestFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+        <reference>BSI TR-03153-1 Chapter 7.3</reference>
+        <reference>BSI TR-03153-1 Chapter 9.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only an admin user is allowed to perform initialization. The TSE can only be initialized once. After initialization, the TSE is operational and ready to use.</text>
+        <text xml:lang="de">Nur ein Admin-Nutzer darf die Initialisierung durchführen. Die TSE kann nur einmal initialisiert werden. Nach Initialisierung ist die TSE betriebsbereit.</text>
+    </notes>
+</process>

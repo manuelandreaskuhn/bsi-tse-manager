@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getTotalMemory" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getTotalMemory</name>
+  <category>Speicherverwaltung</category>
+  <description>
+    <text xml:lang="en">The function getTotalMemory can be used to get the total capacity of the storage medium.</text>
+    <text xml:lang="de">Die Funktion getTotalMemory kann verwendet werden, um die Gesamtkapazität des Speichermediums zu ermitteln.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+    <role>timeadmin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL determine the capacity of the storage medium. If the determination of the capacity of the storage medium fails, the function SHALL raise the exception ErrorGetTotalMemoryFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt die Gesamtkapäzität des Speichermediums. Bei Fehler: Exception ErrorGetTotalMemoryFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  DETERMINE storage medium capacity
+CATCH error
+  THROW ErrorGetTotalMemoryFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  ERMITTLE Speichermedium-Kapazität
+BEI_FEHLER
+  WERFE ErrorGetTotalMemoryFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetTotalMemoryFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of storage capacity fails</text>
+          <text xml:lang="de">Die Ermittlung der Speicherkapazität schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of the capacity of the storage medium has been successful, the function SHALL return the capacity of the storage medium by usage of the output parameter totalMemory. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Bei Erfolg der Ermittlung: Gibt Speicherkapazität via Parameter totalMemory zurück. Keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN totalMemory without exception</text>
+        <text xml:lang="de">GEBE Gesamtspeichergröße zurück (totalMemory Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The determination of storage capacity has been successful</text>
+          <text xml:lang="de">Ermittlung der Speicherkapazität erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the storage capacity without raising an exception</text>
+          <text xml:lang="de">Gibt Speicherkapazität via Parameter zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>long</type>
+    <description>
+      <text xml:lang="en">the capacity of the storage medium in bytes.</text>
+      <text xml:lang="de">die Kapazität des Speichermediums in Bytes.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetTotalMemoryFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

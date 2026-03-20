@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorDeregisterClientFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorDeregisterClientFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function deregisterClient fails to disable the invocation of startTransaction, updateTransaction, and finishTransaction for the specified clientId. The exception represents a critical failure in the device's client lifecycle management system during the deregistration phase. ErrorDeregisterClientFailed is raised when the device attempts to remove a registered client from its active client registry and disable all transaction operations for that client, but encounters an internal error that prevents the state transition from completing successfully. This exception indicates that the device's client management subsystem has encountered a persistence failure, state inconsistency, or system-level error that prevents the client from being properly deregistered. The exception is raised after the deregistration request has been validated and the deregistration log entry has been created, but before the client's active status has been successfully removed from the internal registry.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion deregisterClient nicht in der Lage ist, den Aufruf von startTransaction, updateTransaction und finishTransaction für die angegebene clientId zu deaktivieren. Die Ausnahme stellt einen kritischen Fehler im Client-Lebenszyklus-Management-System des Geräts während der Abmeldungsphase dar. ErrorDeregisterClientFailed wird ausgelöst, wenn das Gerät versucht, einen registrierten Client aus seiner aktiven Client-Registry zu entfernen und alle Transaktionsvorgänge für diesen Client zu deaktivieren, aber auf einen internen Fehler stößt, der die Statusumstellung vom erfolgreichen Abschluss verhindert. Diese Ausnahme zeigt an, dass das Client-Management-Subsystem des Geräts auf einen Persistenzfehler, eine Statusinkonsistenz oder einen Fehler auf Systemebene gestoßen ist, der die ordnungsgemäße Abmeldung des Clients verhindert. Die Ausnahme wird ausgelöst, nachdem die Abmeldungsanforderung validiert und der Abmeldungs-Log-Eintrag erstellt wurde, aber bevor der aktive Status des Clients erfolgreich aus der internen Registry entfernt wurde.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Deregistration</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorDeregisterClientFailed that is thrown if the SE API function deregisterClient fails to disable the invocation of startTransaction, updateTransaction and finishTransaction for the specified clientId.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorDeregisterClientFailed, die ausgelöst wird, wenn die SE-API-Funktion deregisterClient nicht in der Lage ist, den Aufruf von startTransaction, updateTransaction und finishTransaction für die angegebene clientId zu deaktivieren.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The deregistration operation of a client application from the device encountered a failure condition. This exception indicates that the deregisterClient function was unable to successfully disable the ability for the specified client to invoke transaction functions. This failure may occur due to internal state management issues, persistence failures, or system-level errors during the deregistration process.</text>
+      <text xml:lang="de">Der Abmeldungsvorgang einer Client-Anwendung vom Gerät ist auf eine Fehlerbedingung gestoßen. Diese Ausnahme zeigt an, dass die Funktion deregisterClient die Fähigkeit des angegebenen Clients, Transaktionsfunktionen aufzurufen, nicht erfolgreich deaktivieren konnte. Dieser Fehler kann auf Probleme bei der internen Statusverwaltung, Persistenzfehler oder Fehler auf Systemebene während des Abmeldungsvorgangs zurückzuführen sein.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.7.4.4</section>
+    <requirement>
+      <text xml:lang="en">SHALL be raised when the deregistration of the client fails. If the disabling of the function invocation using the clientId fails, the function SHALL raise the exception ErrorDeregisterClientFailed and exit the function.</text>
+      <text xml:lang="de">Soll ausgelöst werden, wenn die Abmeldung des Clients fehlschlägt. Falls die Deaktivierung des Funktionsaufrufs mit der clientId fehlschlägt, soll die Funktion die Ausnahme ErrorDeregisterClientFailed auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client deregistration operations when disabling client access fails</text>
+      <text xml:lang="de">Client-Abmeldungsvorgänge, wenn die Deaktivierung des Client-Zugriffs fehlschlägt</text>
+    </applicability>
+    <reference>deregisterClient – Exceptions (3.7.4.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>deregisterClient</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify client exists using getRegisteredClients</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der Client mit getRegisteredClients vorhanden ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure no open transactions exist for this client before deregistration</text>
+      <text xml:lang="de">Stellen Sie sicher, dass keine offenen Transaktionen für diesen Client vorhanden sind, bevor die Abmeldung erfolgt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry deregistration after cleaning up client transactions</text>
+      <text xml:lang="de">Wiederholen Sie die Abmeldung nach dem Bereinigen von Client-Transaktionen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device state and storage conditions</text>
+      <text xml:lang="de">Prüfen Sie den Gerätezustand und Speicherbedingungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify user has authorization to deregister clients</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der Benutzer berechtigt ist, Clients abzumelden</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorClientNotRegistered</exception>
+    <exception>ErrorRegisterClientFailed</exception>
+    <exception>ErrorClientAlreadyRegistered</exception>
+    <exception>ErrorClientLimitReached</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached with clientId parameter specifying the client to be deregistered</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird mit dem clientId-Parameter erreicht, der den abzumeldenden Client angibt</text>
+    </step>
+    <step number="2" name="Parameter Validation">
+      <text xml:lang="en">The Secure Element validates that clientId is non-null and properly formatted for internal client registry lookups</text>
+      <text xml:lang="de">Das Secure Element validiert, dass clientId nicht null ist und ordnungsgemäß für interne Client-Registry-Suchabfragen formatiert ist</text>
+    </step>
+    <step number="3" name="Client Existence Check">
+      <text xml:lang="en">The device verifies that the specified clientId is currently registered in the active client registry</text>
+      <text xml:lang="de">Das Gerät stellt sicher, dass die angegebene clientId derzeit in der aktiven Client-Registry registriert ist</text>
+    </step>
+    <step number="4" name="Transaction Completion Check">
+      <text xml:lang="en">The device checks whether any open or incomplete transactions are associated with the client. If found, execution branches to step 5b; if none found, execution continues to step 6</text>
+      <text xml:lang="de">Das Gerät prüft, ob offene oder unvollständige Transaktionen mit dem Client verbunden sind. Falls vorhanden, wird die Ausführung zu Schritt 5b verzweigt; falls nicht vorhanden, wird die Ausführung zu Schritt 6 fortgesetzt</text>
+    </step>
+    <step number="5a" name="No Blocking Transactions">
+      <text xml:lang="en">No open transactions exist for the client, and deregistration may proceed</text>
+      <text xml:lang="de">Keine offenen Transaktionen existieren für den Client, und die Abmeldung kann fortgesetzt werden</text>
+    </step>
+    <step number="5b" name="Blocking Transactions Exist">
+      <text xml:lang="en">Open transactions exist; depending on implementation, deregistration may be blocked or transactions may need to be force-closed</text>
+      <text xml:lang="de">Offene Transaktionen vorhanden; je nach Implementierung kann die Abmeldung blockiert werden oder Transaktionen müssen zwangsweise geschlossen werden</text>
+    </step>
+    <step number="6" name="Deregistration Log Entry Creation">
+      <text xml:lang="en">A deregistration event is created and stored in the device's audit trail and logging subsystem to record the deregistration attempt</text>
+      <text xml:lang="de">Ein Abmeldungsereignis wird erstellt und im Audit-Trail und Protokoll-Subsystem des Geräts gespeichert, um den Abmeldungsversuch zu dokumentieren</text>
+    </step>
+    <step number="7" name="Client Registry Update Attempt">
+      <text xml:lang="en">The device attempts to remove the clientId from the active client registry and update all state data structures to reflect the client's inactive status</text>
+      <text xml:lang="de">Das Gerät versucht, die clientId aus der aktiven Client-Registry zu entfernen und alle Zustandsdatenstrukturen zu aktualisieren, um den inaktiven Status des Clients anzuzeigen</text>
+    </step>
+    <step number="8a" name="Registry Update Success">
+      <text xml:lang="en">If registry update completes successfully, execution continues to function completion (not taken in this exception case)</text>
+      <text xml:lang="de">Falls die Registry-Aktualisierung erfolgreich abgeschlossen ist, wird die Ausführung zur Funktionsvollendung fortgesetzt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="8b" name="Registry Update Failure">
+      <text xml:lang="en">If the registry update fails due to persistence error, state inconsistency, or subsystem malfunction, execution branches to step 9</text>
+      <text xml:lang="de">Falls die Registry-Aktualisierung aufgrund eines Persistenzfehlers, einer Statusinkonsistenz oder einer Subsystem-Funktionsstörung fehlschlägt, wird die Ausführung zu Schritt 9 verzweigt</text>
+    </step>
+    <step number="9" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including clientId, deregistration log entry that was created, current client registry state, and error details from the client management subsystem</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich clientId, erstelltem Abmeldungs-Log-Eintrag, aktuellem Client-Registry-Status und Fehlerdetails aus dem Client-Management-Subsystem</text>
+    </step>
+    <step number="10" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorDeregisterClientFailed exception instance is created with appropriate error message indicating the client deregistration failure</text>
+      <text xml:lang="de">ErrorDeregisterClientFailed-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die den Client-Abmeldungsfehler anzeigt</text>
+    </step>
+    <step number="11" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, leaving the client in a potentially inconsistent state</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, wobei der Client in einem möglicherweise inkonsistenten Zustand verbleibt</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorDeregisterClientFailed exception has been created and raised, containing clientId, deregistration log information, and client management subsystem error details</text>
+      <text xml:lang="de">Eine ErrorDeregisterClientFailed-Ausnahme wurde erstellt und ausgelöst, die clientId, Abmeldungs-Log-Informationen und Client-Management-Subsystem-Fehlerdetails enthält</text>
+    </state>
+    <state name="Deregistration Log State">
+      <text xml:lang="en">A deregistration event has been successfully recorded in the device's audit trail and logging subsystem. This log entry documents the deregistration attempt even though it failed to complete.</text>
+      <text xml:lang="de">Ein Abmeldungsereignis wurde erfolgreich im Audit-Trail und Protokoll-Subsystem des Geräts aufgezeichnet. Dieser Log-Eintrag dokumentiert den Abmeldungsversuch, obwohl dieser nicht abgeschlossen wurde.</text>
+    </state>
+    <state name="Client Registry State">
+      <text xml:lang="en">The client remains in an inconsistent state. The deregistration log entry exists, but the client may still be present in the active registry or in a partially deregistered state. The client's transaction access may or may not be disabled.</text>
+      <text xml:lang="de">Der Client bleibt in einem inkonsistenten Zustand. Der Abmeldungs-Log-Eintrag existiert, aber der Client kann immer noch in der aktiven Registry oder in einem teilweise abgemeldeten Zustand vorhanden sein. Der Transaktionszugriff des Clients kann aktiv sein oder nicht.</text>
+    </state>
+    <state name="Transaction Capability State">
+      <text xml:lang="en">The ability to invoke startTransaction, updateTransaction, and finishTransaction with this clientId remains unchanged or is in an indeterminate state. Applications cannot rely on the client being disabled.</text>
+      <text xml:lang="de">Die Fähigkeit, startTransaction, updateTransaction und finishTransaction mit dieser clientId aufzurufen, bleibt unverändert oder ist in einem unbestimmten Zustand. Anwendungen können sich nicht auf den deaktivierten Client verlassen.</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">The device remains operational, but the client management subsystem has encountered an error condition. Subsequent client registration and deregistration operations may also fail or may succeed depending on whether the underlying issue is transient.</text>
+      <text xml:lang="de">Das Gerät bleibt betriebsbereit, aber das Client-Management-Subsystem ist auf eine Fehlerbedingung gestoßen. Nachfolgende Client-Registrierungs- und Abmeldungsvorgänge können auch fehlschlagen oder erfolgreich sein, je nachdem, ob das zugrunde liegende Problem vorübergehend ist.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits abnormally via exception propagation without completing the client deregistration operation</text>
+      <text xml:lang="de">Die Funktion wird abnormal über Ausnahmepropagation beendet, ohne den Client-Abmeldungsvorgang abzuschließen</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Deregistration of a client failed - client remains registered</text>
+      <text xml:lang="de">Anzeichen: Abmeldung eines Clients fehlgeschlagen - Client bleibt registriert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Deregistration, Client Lifecycle, Registry Operations</text>
+      <text xml:lang="de">Themen: Client-Verwaltung, Abmeldung, Client-Lebenszyklus, Registry-Vorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by deregisterClient when client removal from registry fails</text>
+      <text xml:lang="de">Wird von deregisterClient ausgelöst, wenn die Entfernung des Clients aus der Registry fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Client lifecycle management includes deregistration of inactive clients</text>
+      <text xml:lang="de">Das Client-Lebenszyklus-Management umfasst die Abmeldung inaktiver Clients</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device removes client from active registry and associated resources</text>
+      <text xml:lang="de">Das Gerät entfernt den Client aus der aktiven Registry und zugeordneten Ressourcen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Deregistration failure prevents client cleanup and resource release</text>
+      <text xml:lang="de">Abmeldungsfehler verhindert Client-Bereinigung und Ressourcenfreigabe</text>
+    </note>
+  </implementationContext>
+</exception>
+

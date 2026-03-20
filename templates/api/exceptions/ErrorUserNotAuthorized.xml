@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUserNotAuthorized" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUserNotAuthorized</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if an authenticated user attempts to invoke a restricted SE API function but lacks the authorization/permissions required to execute that function. The device implements role-based access control where different users have different authorization levels. Certain functions (configuration, management, logging control, PIN operations) require specific authorization roles or permissions. ErrorUserNotAuthorized is raised when an authenticated user attempts a restricted function they are not authorized to perform. ErrorUserNotAuthorized is a High severity exception because it indicates an access control violation and potential security policy breach. The authenticated user is known but does not have sufficient permissions for the requested operation.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn ein authentifizierter Benutzer versucht, eine eingeschränkte SE-API-Funktion aufzurufen, ihm aber die erforderlichen Autorisierungen/Berechtigungen zum Ausführen dieser Funktion fehlen. Das Gerät implementiert rollenbasierte Zugriffskontrolle, bei der verschiedene Benutzer unterschiedliche Autorisierungsstufen haben. Bestimmte Funktionen (Konfiguration, Verwaltung, Protokollierungskontrolle, PIN-Operationen) erfordern spezifische Autorisierungsrollen oder Berechtigungen. ErrorUserNotAuthorized wird ausgelöst, wenn ein authentifizierter Benutzer versucht, eine eingeschränkte Funktion auszuführen, für die er nicht autorisiert ist. ErrorUserNotAuthorized ist eine Ausnahme mit hohem Schweregrad, da sie einen Verstoß gegen die Zugriffskontrolle und einen möglichen Verstoß gegen die Sicherheitsrichtlinie anzeigt. Der authentifizierte Benutzer ist bekannt, hat aber nicht genügend Berechtigungen für die angeforderte Operation.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>Authorization Control</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>exportSerialNumbers</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getCurrentSeTime</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getDescription</function>
+    <function>getDeviceHealth</function>
+    <function>getEndOfUsageDate</function>
+    <function>getFreeMemory</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getOpenTransactions</function>
+    <function>getRegisteredClients</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getTimeSyncVariant</function>
+    <function>getTotalMemory</function>
+    <function>getTransactionState</function>
+    <function>getUsedMemory</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUserNotAuthorized that is thrown if an authenticated user lacks authorization to execute a restricted SE API function.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUserNotAuthorized, die ausgelöst wird, wenn ein authentifizierter Benutzer nicht berechtigt ist, eine eingeschränkte SE-API-Funktion auszuführen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when an authenticated user attempts to invoke a restricted SE API function they are not authorized to execute. The device implements role-based access control with different authorization levels for different users. Functions like updateDevice, configureLogging, registerClient require specific authorization roles or permissions. If an authenticated user lacking required authorization attempts such a function, ErrorUserNotAuthorized is raised. This indicates the user is authenticated but does not have sufficient permissions. ErrorUserNotAuthorized is a High severity exception because it represents an access control violation. The caller must have their authorization role upgraded or use an account with appropriate permissions to execute the restricted function.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn ein authentifizierter Benutzer versucht, eine eingeschränkte SE-API-Funktion aufzurufen, die er nicht ausführen darf. Das Gerät implementiert rollenbasierte Zugriffskontrolle mit unterschiedlichen Autorisierungsstufen für verschiedene Benutzer. Funktionen wie updateDevice, configureLogging, registerClient erfordern spezifische Autorisierungsrollen oder Berechtigungen. Wenn ein authentifizierter Benutzer ohne erforderliche Autorisierung versucht, eine solche Funktion aufzurufen, wird ErrorUserNotAuthorized ausgelöst. Dies zeigt an, dass der Benutzer authentifiziert ist, aber nicht über ausreichende Berechtigungen verfügt. ErrorUserNotAuthorized ist eine Ausnahme mit hohem Schweregrad, da sie einen Verstoß gegen die Zugriffskontrolle darstellt. Der Aufrufer muss seine Autorisierungsrolle aktualisiert haben oder ein Konto mit entsprechenden Berechtigungen verwenden, um die eingeschränkte Funktion auszuführen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.1 Authentication - Authorization and Role-Based Access Control</section>
+    <requirement>
+      <text xml:lang="en">The SE API implements role-based access control where users have different authorization levels that determine which functions they can execute. Restricted functions (configuration, logging management, device management, PIN operations, client management) require specific authorization roles or permissions. When an authenticated user attempts a restricted function they are not authorized to perform, the Secure Element SHALL raise ErrorUserNotAuthorized. This indicates the user is authenticated but lacks required permissions. ErrorUserNotAuthorized is a High severity exception because it represents an access control violation and security policy breach. Users must have appropriate authorization role or permissions to execute restricted functions. Authorization is distinct from authentication - users can be authenticated but not authorized.</text>
+      <text xml:lang="de">Die SE-API implementiert rollenbasierte Zugriffskontrolle, bei der Benutzer unterschiedliche Autorisierungsstufen haben, die bestimmen, welche Funktionen sie ausführen können. Eingeschränkte Funktionen (Konfiguration, Protokollierungsverwaltung, Geräteverwaltung, PIN-Operationen, Clientverwaltung) erfordern spezifische Autorisierungsrollen oder Berechtigungen. Wenn ein authentifizierter Benutzer versucht, eine eingeschränkte Funktion auszuführen, die er nicht ausführen darf, MUSS das Secure Element ErrorUserNotAuthorized auslösen. Dies zeigt an, dass der Benutzer authentifiziert ist, aber die erforderlichen Berechtigungen nicht hat. ErrorUserNotAuthorized ist eine Ausnahme mit hohem Schweregrad, da sie einen Verstoß gegen die Zugriffskontrolle und einen Verstoß gegen die Sicherheitsrichtlinie darstellt. Benutzer müssen die entsprechende Autorisierungsrolle oder Berechtigungen haben, um eingeschränkte Funktionen auszuführen. Autorisierung unterscheidet sich von Authentifizierung - Benutzer können authentifiziert sein, aber nicht berechtigt.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All restricted API functions with role-based access control: logOut, unblockPin, setDescription, selfTest, updateDevice, disableSecureElement, updateTime, configureLogging, deleteLogMessages, restoreLogsFromBackup, registerClient, deregisterClient, lockTransactionLogging, unlockTransactionLogging</text>
+      <text xml:lang="de">Alle eingeschränkten API-Funktionen mit rollenbasierter Zugriffskontrolle: logOut, unblockPin, setDescription, selfTest, updateDevice, disableSecureElement, updateTime, configureLogging, deleteLogMessages, restoreLogsFromBackup, registerClient, deregisterClient, lockTransactionLogging, unlockTransactionLogging</text>
+    </applicability>
+    <reference>Authentication (3.5.1), Authorization and Role-Based Access Control (3.5.1), User Permissions (3.5.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">Authenticated user calls restricted SE API function (e.g., updateDevice, configureLogging, registerClient)</text>
+      <text xml:lang="de">Authentifizierter Benutzer ruft eine eingeschränkte SE-API-Funktion auf (z. B. updateDevice, configureLogging, registerClient)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks if operation requires authorization check</text>
+      <text xml:lang="de">Funktion prüft, ob der Vorgang eine Autorisierungsprüfung erfordert</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If operation unrestricted → proceed with execution</text>
+      <text xml:lang="de">Wenn Vorgang unbeschränkt → Ausführung fortsetzen</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If operation restricted → proceed to step 4</text>
+      <text xml:lang="de">Wenn Vorgang eingeschränkt → zu Schritt 4 übergehen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function retrieves user authorization/permissions</text>
+      <text xml:lang="de">Funktion ruft Benutzerautorisierung/Berechtigungen ab</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks user has required authorization for function</text>
+      <text xml:lang="de">Funktion überprüft, ob der Benutzer die erforderliche Autorisierung für die Funktion hat</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If authorization insufficient → ErrorUserNotAuthorized raised, operation aborted</text>
+      <text xml:lang="de">Wenn Autorisierung unzureichend → ErrorUserNotAuthorized wird ausgelöst, Operation wird abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If authorization valid → proceed to step 6</text>
+      <text xml:lang="de">Wenn Autorisierung gültig → zu Schritt 6 übergehen</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function validates authorization has not expired</text>
+      <text xml:lang="de">Funktion überprüft, dass die Autorisierung nicht abgelaufen ist</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If authorization expired → ErrorUserNotAuthorized raised</text>
+      <text xml:lang="de">Wenn Autorisierung abgelaufen → ErrorUserNotAuthorized wird ausgelöst</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If authorization current → proceed to step 7</text>
+      <text xml:lang="de">Wenn Autorisierung aktuell → zu Schritt 7 übergehen</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert die Kommunikation mit dem Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element receives restricted operation request</text>
+      <text xml:lang="de">Secure Element empfängt eine Anforderung für eine eingeschränkte Operation</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element verifies user authorization</text>
+      <text xml:lang="de">Secure Element überprüft die Benutzerautorisierung</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If authorization insufficient → ErrorUserNotAuthorized raised</text>
+      <text xml:lang="de">Wenn Autorisierung unzureichend → ErrorUserNotAuthorized wird ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If authorization valid → proceed with operation</text>
+      <text xml:lang="de">Wenn Autorisierung gültig → Vorgang fortsetzen</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Operation executes with authorization verified</text>
+      <text xml:lang="de">Vorgang wird mit überprüfter Autorisierung ausgeführt</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify user has required permissions for operation</text>
+      <text xml:lang="de">Überprüfen Sie, ob der Benutzer die erforderlichen Berechtigungen für die Operation hat</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check role-based access control configuration</text>
+      <text xml:lang="de">Überprüfen Sie die Konfiguration der rollenbasierten Zugriffskontrolle</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use user account with necessary authorization</text>
+      <text xml:lang="de">Verwenden Sie ein Benutzerkonto mit der erforderlichen Autorisierung</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact administrator if permissions need updating</text>
+      <text xml:lang="de">Wenden Sie sich an den Administrator, wenn die Berechtigungen aktualisiert werden müssen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUnknownUserId</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Restricted Operation Not Executed">
+      <text xml:lang="en">Restricted function does not execute due to authorization failure.</text>
+      <text xml:lang="de">Eingeschränkte Funktion wird aufgrund eines Autorisierungsfehlers nicht ausgeführt.</text>
+    </state>
+    <state name="User Authorization Insufficient">
+      <text xml:lang="en">User lacks required permissions for operation.</text>
+      <text xml:lang="de">Benutzer hat nicht die erforderlichen Berechtigungen für die Operation.</text>
+    </state>
+    <state name="Operation Not Permitted">
+      <text xml:lang="en">Operation is blocked by authorization policy.</text>
+      <text xml:lang="de">Vorgang wird durch die Autorisierungsrichtlinie blockiert.</text>
+    </state>
+    <state name="User State Not Modified">
+      <text xml:lang="en">No state changes from attempted operation.</text>
+      <text xml:lang="de">Keine Zustandsänderungen durch den versuchten Vorgang.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUserNotAuthorized High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die Ausnahme ErrorUserNotAuthorized High an den Aufrufer zurück.</text>
+    </state>
+    <state name="Caller Must Obtain Authorization">
+      <text xml:lang="en">Caller must receive authorization upgrade to execute operation.</text>
+      <text xml:lang="de">Der Aufrufer muss eine Autorisierungsaktualisierung erhalten, um die Operation auszuführen.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: User is not authorized for this operation - insufficient permissions</text>
+      <text xml:lang="de">Hinweis: Benutzer ist für diese Operation nicht autorisiert - unzureichende Berechtigungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authorization, User Management, Access Control, Permissions</text>
+      <text xml:lang="de">Themen: Autorisierung, Benutzerverwaltung, Zugriffskontrolle, Berechtigungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions with authorization requirements when access denied</text>
+      <text xml:lang="de">Wird von Funktionen mit Autorisierungsanforderungen ausgelöst, wenn der Zugriff verweigert wird</text>
+    </note>
+    <note>
+      <text xml:lang="en">Authorization validation checks user role/permissions</text>
+      <text xml:lang="de">Die Autorisierungsvalidierung überprüft die Benutzerrolle/Berechtigungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device enforces role-based access control</text>
+      <text xml:lang="de">Gerät erzwingt rollenbasierte Zugriffskontrolle</text>
+    </note>
+    <note>
+      <text xml:lang="en">Insufficient authorization prevents operation execution</text>
+      <text xml:lang="de">Unzureichende Autorisierung verhindert die Ausführung der Operation</text>
+    </note>
+  </implementationContext>
+</exception>
+

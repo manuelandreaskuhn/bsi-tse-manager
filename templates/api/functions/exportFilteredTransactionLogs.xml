@@ -1,0 +1,544 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="exportFilteredTransactionLogs" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>exportFilteredTransactionLogs</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">This function can be used to export the &lt;ul&gt; &lt;li&gt;log messages containing the certified data and protocol data,&lt;/li&gt; &lt;li&gt;certificates that are necessary for the verification of the log messages and&lt;/li&gt; &lt;li&gt;device information&lt;/li&gt; &lt;/ul&gt; possibly limited by maximumNumberRecords.</text>
+    <text xml:lang="de">Diese Funktion kann verwendet werden, um Log-Nachrichten mit zertifizierten Daten und Protokolldaten, erforderliche Zertifikate und Geräteinformationen zu exportieren, möglicherweise begrenzt durch maximumNumberRecords.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  RAISE ErrorUserNotAuthenticated
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  RAISE ErrorUserNotAuthorized
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL check the input parameters for validity. If any of the checks fails, the function SHALL raise the exception ErrorParameterMismatch and exit the function. This specifically includes the following checks:</text>
+        <text xml:lang="de">Prüft Eingabeparameter auf Gültigkeit. Bei Fehler: Exception ErrorParameterMismatch, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  CHECK input parameters for validity
+ON_ERROR
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">VERSUCHE
+  PRÜFE Eingabeparameter auf Gültigkeit
+BEI_FEHLER
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">One or more input parameters are invalid</text>
+          <text xml:lang="de">Ein oder mehrere Eingabeparameter sind ungültig</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If transactionNumber has been provided, neither startDate nor endDate SHALL be provided.</text>
+        <text xml:lang="de">Wenn transactionNumber gesetzt, dann kein startDate oder endDate erlaubt.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF transactionNumber set AND (startDate OR endDate) set THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN transactionNumber gesetzt UND (startDate ODER endDate) gesetzt DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">transactionNumber and startDate/endDate were provided simultaneously</text>
+          <text xml:lang="de">transactionNumber und startDate/endDate wurden gleichzeitig bereitgestellt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <description>
+        <text xml:lang="en">If firstTransactionNumber and lastTransactionNumber have been provided, neither startDate nor endDate SHALL be provided.</text>
+        <text xml:lang="de">Wenn firstTransactionNumber und lastTransactionNumber gesetzt, dann kein startDate oder endDate erlaubt.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF (firstTransactionNumber OR lastTransactionNumber) set AND (startDate OR endDate) set THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN (firstTransactionNumber ODER lastTransactionNumber) gesetzt UND (startDate ODER endDate) gesetzt DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">firstTransactionNumber/lastTransactionNumber and startDate/endDate were provided simultaneously</text>
+          <text xml:lang="de">firstTransactionNumber/lastTransactionNumber und startDate/endDate wurden gleichzeitig bereitgestellt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>6</number>
+      <description>
+        <text xml:lang="en">If firstTransactionNumber has been provided, lastTransactionNumber must have been provided as well and vice versa.</text>
+        <text xml:lang="de">firstTransactionNumber und lastTransactionNumber müssen gemeinsam gesetzt sein.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF (firstTransactionNumber set AND lastTransactionNumber NOT set) OR (lastTransactionNumber set AND firstTransactionNumber NOT set) THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN (firstTransactionNumber gesetzt UND lastTransactionNumber NICHT gesetzt) ODER (lastTransactionNumber gesetzt UND firstTransactionNumber NICHT gesetzt) DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">Only one of firstTransactionNumber or lastTransactionNumber was provided</text>
+          <text xml:lang="de">Nur eines von firstTransactionNumber oder lastTransactionNumber wurde bereitgestellt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>7</number>
+      <description>
+        <text xml:lang="en">If provided, startDate and/or endDate MUST be valid date/time values.</text>
+        <text xml:lang="de">startDate und endDate müssen gültige Datums-/Zeitwerte sein.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF (startDate set AND startDate invalid) OR (endDate set AND endDate invalid) THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN (startDate gesetzt UND startDate ungültig) ODER (endDate gesetzt UND endDate ungültig) DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">startDate or endDate are not valid date/time values</text>
+          <text xml:lang="de">startDate oder endDate sind keine gültigen Datums-/Zeitwerte</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>8</number>
+      <description>
+        <text xml:lang="en">If startDate and endDate have been provided, endDate MUST lay after startDate.</text>
+        <text xml:lang="de">Wenn startDate und endDate gesetzt, muss endDate nach startDate liegen.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF (startDate set AND endDate set AND endDate &lt;= startDate) THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN (startDate gesetzt UND endDate gesetzt UND endDate &lt;= startDate) DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">endDate does not lay after startDate</text>
+          <text xml:lang="de">endDate liegt nicht nach startDate</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>9</number>
+      <description>
+        <text xml:lang="en">If a startDate and/or endDate have been provided, transactionNumber MUST NOT be provided.</text>
+        <text xml:lang="de">Wenn startDate oder endDate gesetzt, darf transactionNumber nicht bereitgestellt sein.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF (startDate OR endDate) set AND transactionNumber set THEN
+  RAISE ErrorParameterMismatch
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN (startDate ODER endDate) gesetzt UND transactionNumber gesetzt DANN
+  WERFE ErrorParameterMismatch
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorParameterMismatch</exception>
+        <trigger>
+          <text xml:lang="en">startDate/endDate and transactionNumber were provided simultaneously</text>
+          <text xml:lang="de">startDate/endDate und transactionNumber wurden gleichzeitig bereitgestellt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>10</number>
+      <description>
+        <text xml:lang="en">If clientId has been provided, only transactions should be exported, in which the clientId was involved. The device MAY export the complete transaction, or just the transaction log message files, where the clientId is identical to the provided one.</text>
+        <text xml:lang="de">Wenn clientId gesetzt, nur Transaktionen exportieren, in denen die clientId beteiligt war.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF clientId set THEN
+  FILTER transactions by clientId
+END</text>
+        <text xml:lang="de">WENN clientId gesetzt DANN
+  FILTERUNG Transaktionen nach clientId
+ENDE</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">clientId is validly set</text>
+          <text xml:lang="de">clientId ist gültig gesetzt</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Filter transactions by clientId</text>
+          <text xml:lang="de">Transaktionen nach clientId filtern</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>clientId</name>
+      <type>String</type>
+      <description>
+        <text xml:lang="en">Filter by client ID (optional, multiple overloaded versions exist).</text>
+        <text xml:lang="de">Filtern nach Client-ID (optional, mehrere Überlastungen vorhanden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>transactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">Filter by transaction number (optional, multiple overloaded versions exist).</text>
+        <text xml:lang="de">Filtern nach Transaktionsnummer (optional, mehrere Überlastungen vorhanden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>firstTransactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">Defines the transaction number (inclusive) regarding the start of the interval of relevant log messages (conditional, must be provided together with lastTransactionNumber).</text>
+        <text xml:lang="de">Definiert die Transaktionsnummer (inklusive) bezüglich des Beginns des Intervalls relevanter Log-Nachrichten (bedingt, muss zusammen mit lastTransactionNumber angegeben werden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>lastTransactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">Defines the transaction number (inclusive) regarding the end of the interval of relevant log messages (conditional, must be provided together with firstTransactionNumber).</text>
+        <text xml:lang="de">Definiert die Transaktionsnummer (inklusive) bezüglich des Endes des Intervalls relevanter Log-Nachrichten (bedingt, muss zusammen mit firstTransactionNumber angegeben werden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>startDate</name>
+      <type>ZonedDateTime</type>
+      <description>
+        <text xml:lang="en">Filter by start date (optional, multiple overloaded versions exist).</text>
+        <text xml:lang="de">Filtern nach Startdatum (optional, mehrere Überlastungen vorhanden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>endDate</name>
+      <type>ZonedDateTime</type>
+      <description>
+        <text xml:lang="en">Filter by end date (optional, multiple overloaded versions exist).</text>
+        <text xml:lang="de">Filtern nach Enddatum (optional, mehrere Überlastungen vorhanden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>maximumNumberRecords</name>
+      <type>int</type>
+      <description>
+        <text xml:lang="en">Maximum number of records to return (optional, multiple overloaded versions exist).</text>
+        <text xml:lang="de">Maximale Anzahl der zurückzugebenden Datensätze (optional, mehrere Überlastungen vorhanden).</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>ExportDataResult</type>
+    <description>
+      <text xml:lang="en">An ExportDataResult which contains an InputStream delivering a TAR archive with the filtered transaction log messages and certificates, and the filename of the TAR archive.</text>
+      <text xml:lang="de">Ein ExportDataResult, das einen InputStream mit einem TAR-Archiv enthält, das die gefilterten Transaktionsprotokollnachrichten und Zertifikate sowie den Dateinamen des TAR-Archivs enthält.</text>
+    </description>
+  </returnValue>
+  <overloads>
+    <overload id="1">
+      <signature>ExportDataResult exportFilteredTransactionLogs()</signature>
+      <description>
+        <text xml:lang="en">Exports all available log messages without any filter.</text>
+        <text xml:lang="de">Exportiert alle verfügbaren Log-Nachrichten ohne Filter.</text>
+      </description>
+      <parameters/>
+    </overload>
+    <overload id="2">
+      <signature>ExportDataResult exportFilteredTransactionLogs(int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports all logs, limited by maximumNumberRecords.</text>
+        <text xml:lang="de">Exportiert alle Logs, begrenzt durch maximumNumberRecords.</text>
+      </description>
+      <parameters>
+        <param>maximumNumberRecords</param>
+      </parameters>
+    </overload>
+    <overload id="3">
+      <signature>ExportDataResult exportFilteredTransactionLogs(long transactionNumber)</signature>
+      <description>
+        <text xml:lang="en">Exports all logs for a specific transaction.</text>
+        <text xml:lang="de">Exportiert alle Logs für eine bestimmte Transaktion.</text>
+      </description>
+      <parameters>
+        <param>transactionNumber</param>
+      </parameters>
+    </overload>
+    <overload id="4">
+      <signature>ExportDataResult exportFilteredTransactionLogs(long transactionNumber, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs for a specific transaction, limited by maximumNumberRecords.</text>
+        <text xml:lang="de">Exportiert Logs für eine bestimmte Transaktion, begrenzt durch maximumNumberRecords.</text>
+      </description>
+      <parameters>
+        <param>transactionNumber</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+    </overload>
+    <overload id="5">
+      <signature>ExportDataResult exportFilteredTransactionLogs(long firstTransactionNumber, long lastTransactionNumber, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs in the range [firstTransactionNumber, lastTransactionNumber] (inclusive).</text>
+        <text xml:lang="de">Exportiert Logs im Bereich [firstTransactionNumber, lastTransactionNumber] (inklusive).</text>
+      </description>
+      <parameters>
+        <param>firstTransactionNumber</param>
+        <param>lastTransactionNumber</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+      <note>
+        <text xml:lang="en">firstTransactionNumber and lastTransactionNumber must always be provided together.</text>
+        <text xml:lang="de">firstTransactionNumber und lastTransactionNumber müssen immer zusammen angegeben werden.</text>
+      </note>
+    </overload>
+    <overload id="6">
+      <signature>ExportDataResult exportFilteredTransactionLogs(String clientId, long firstTransactionNumber, long lastTransactionNumber, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs for a specific client ID in the transaction number range.</text>
+        <text xml:lang="de">Exportiert Logs für eine bestimmte Client-ID im Transaktionsnummer-Bereich.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>firstTransactionNumber</param>
+        <param>lastTransactionNumber</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+    </overload>
+    <overload id="7">
+      <signature>ExportDataResult exportFilteredTransactionLogs(ZonedDateTime startDate, ZonedDateTime endDate, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs in the time range [startDate, endDate] (inclusive).</text>
+        <text xml:lang="de">Exportiert Logs im Zeitbereich [startDate, endDate] (inklusive).</text>
+      </description>
+      <parameters>
+        <param>startDate</param>
+        <param>endDate</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+      <note>
+        <text xml:lang="en">If both startDate and endDate are set, endDate must be after startDate. At least one of the two parameters must be set.</text>
+        <text xml:lang="de">Wenn startDate und endDate beide gesetzt sind, muss endDate nach startDate liegen. Mindestens einer der beiden Parameter muss gesetzt sein.</text>
+      </note>
+    </overload>
+    <overload id="8">
+      <signature>ExportDataResult exportFilteredTransactionLogs(String clientId, ZonedDateTime startDate, ZonedDateTime endDate, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs for a specific client ID in the time range.</text>
+        <text xml:lang="de">Exportiert Logs für eine bestimmte Client-ID im Zeitbereich.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>startDate</param>
+        <param>endDate</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+    </overload>
+    <overload id="9">
+      <signature>ExportDataResult exportFilteredTransactionLogs(String clientId)</signature>
+      <description>
+        <text xml:lang="en">Exports all logs for a specific client ID.</text>
+        <text xml:lang="de">Exportiert alle Logs für eine bestimmte Client-ID.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+      </parameters>
+    </overload>
+    <overload id="10">
+      <signature>ExportDataResult exportFilteredTransactionLogs(String clientId, int maximumNumberRecords)</signature>
+      <description>
+        <text xml:lang="en">Exports logs for a specific client ID, limited by maximumNumberRecords.</text>
+        <text xml:lang="de">Exportiert Logs für eine bestimmte Client-ID, begrenzt durch maximumNumberRecords.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>maximumNumberRecords</param>
+      </parameters>
+    </overload>
+    <overload id="11">
+      <signature>ExportDataResult exportFilteredTransactionLogs(String clientId, long transactionNumber)</signature>
+      <description>
+        <text xml:lang="en">Exports logs for a specific client ID and transaction number.</text>
+        <text xml:lang="de">Exportiert Logs für eine bestimmte Client-ID und Transaktionsnummer.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>transactionNumber</param>
+      </parameters>
+    </overload>
+  </overloads>
+  <mutualExclusions>
+    <exclusion>
+      <text xml:lang="en">transactionNumber AND (startDate OR endDate) cannot be used together</text>
+      <text xml:lang="de">transactionNumber UND (startDate ODER endDate) können nicht zusammen verwendet werden</text>
+    </exclusion>
+    <exclusion>
+      <text xml:lang="en">(firstTransactionNumber OR lastTransactionNumber) AND (startDate OR endDate) cannot be used together</text>
+      <text xml:lang="de">(firstTransactionNumber ODER lastTransactionNumber) UND (startDate ODER endDate) können nicht zusammen verwendet werden</text>
+    </exclusion>
+    <exclusion>
+      <text xml:lang="en">firstTransactionNumber must be provided together with lastTransactionNumber (and vice versa)</text>
+      <text xml:lang="de">firstTransactionNumber muss zusammen mit lastTransactionNumber angegeben werden (und umgekehrt)</text>
+    </exclusion>
+  </mutualExclusions>
+  <exceptions>
+    <exception>ErrorClientIdNotFound</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterTooLong</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorTooManyRecords</exception>
+    <exception>ErrorTransactionNumberNotFound</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

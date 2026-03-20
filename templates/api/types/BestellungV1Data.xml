@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="BestellungV1Data" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>BestellungV1Data</name>
+  <category>TransactionData</category>
+  <source>DSFinV-K</source>
+  <description>
+    <text xml:lang="en">Structure for processType 'Bestellung-V1' in CSV format. Order items are represented in CSV format with columns: Quantity, Description, Price. Line separator: "\r" (carriage return, Unicode U+000D), column separator: ";" (semicolon, Unicode U+003B).</text>
+    <text xml:lang="de">Struktur für processType 'Bestellung-V1' im CSV-Format. Die einzelnen Bestellpositionen werden in CSV-Darstellung mit den Spalten Menge, Bezeichnung und Preis abgebildet. Als Zeilentrennzeichen ist "\r" (Wagenrücklauf, Unicode U+000D) und als Spaltentrennzeichen ";" (Semikolon, Unicode U+003B) zu verwenden.</text>
+    <text xml:lang="en">
+      *** DSFinV-K specific usage: ***
+      This data structure is used for order transactions at ordering stations (e.g., in restaurants). Unlike Kassenbeleg-V1, UpdateTransaction may be used with Bestellung-V1 to incrementally secure order items during the ordering process. The processData can be populated at both UpdateTransaction and FinishTransaction operations, transmitted in UTF-8 or ASCII encoding.
+    </text>
+    <text xml:lang="de">
+      *** DSFinV-K-spezifische Verwendung: ***
+      Diese Datenstruktur wird für Bestellvorgänge an Bestellstationen verwendet (z.B. in der Gastronomie). Anders als bei Kassenbeleg-V1 kann bei Bestellung-V1 auch UpdateTransaction genutzt werden, um Bestellpositionen während des Bestellvorgangs schrittweise abzusichern. Die processData können sowohl bei UpdateTransaction als auch bei FinishTransaction befüllt werden und werden in UTF-8- oder ASCII-Codierung übertragen.
+    </text>
+  </description>
+  <asn1Definition>BestellungV1Data ::= SEQUENCE OF SEQUENCE {
+  menge  PrintableString,
+  bezeichnung  PrintableString,
+  preis  PrintableString
+}</asn1Definition>
+  <fields>
+    <field>
+      <name>menge</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Menge mit minimal möglichen Dezimalstellen (Punkt als Trenner). z.B. ein Stück als "1", ½ als "0.5" oder 0.451 kg als "0.451". Die Mengeneinheit wird nicht mit übergeben. Ist das Feld FAKTOR aus der Datei Bonpos.csv ungleich 1, ergibt sich &lt;Menge&gt; aus dem Quotienten MENGE durch FAKTOR mit maximal drei Dezimalstellen ohne Rundung.</description>
+    </field>
+    <field>
+      <name>bezeichnung</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Artikelname in doppelten Anführungszeichen (Unicode U+0022). Jedes Anführungszeichen in der Beschreibung selbst ist durch zwei Anführungszeichen zu ersetzen. z.B.: Schnitzel "Wiener Art" wird zu "Schnitzel ""Wiener Art""".</description>
+    </field>
+    <field>
+      <name>preis</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Brutto-Einzelpreis der Bestellzeile mit exakt zwei Dezimalstellen, alle anderen Dezimalstellen werden ggf. abgeschnitten.</description>
+    </field>
+  </fields>
+</type>

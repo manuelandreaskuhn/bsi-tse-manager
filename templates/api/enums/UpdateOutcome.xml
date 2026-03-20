@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="UpdateOutcome" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+  <name>UpdateOutcome</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Enumeration used in system log event data for UpdateOutcome.</description>
+  <values>
+    <value>
+      <name>success</name>
+      <numericValue>0</numericValue>
+      <description>success (0)</description>
+    </value>
+    <value>
+      <name>failed</name>
+      <numericValue>1</numericValue>
+      <description>failed (1)</description>
+    </value>
+    <value>
+      <name>partlyFailed</name>
+      <numericValue>2</numericValue>
+      <description>partlyFailed (2)</description>
+    </value>
+  </values>
+</enum>

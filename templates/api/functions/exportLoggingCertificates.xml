@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="exportLoggingCertificates" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>exportLoggingCertificates</name>
+  <category>Logging</category>
+  <description>
+    <text xml:lang="en">The function exportLoggingCertificates exports the certificates of the certificate chains. These certificates belong to the public keys of the key pairs that are used for the creation of signature values in log messages stored on the device. This includes the higher level certificates that form the complete certificate chain.</text>
+    <text xml:lang="de">Die Funktion exportLoggingCertificates exportiert die Zertifikate der Zertifikatsketten. Diese Zertifikate gehören zu den öffentlichen Schlüsseln der Schlüsselpaare, die für die Erstellung von Signaturwerten in Log-Nachrichten auf dem Gerät verwendet werden. Dies schließt die Zertifikate höherer Ebene ein, die die vollständige Zertifikatskette bilden.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  RAISE ErrorUserNotAuthenticated
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  RAISE ErrorUserNotAuthorized
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">This function SHALL collect the certificates of the certificate chains. These certificates belong to the key pairs that are used to create signature values contained in log messages. If the collection of the certificates fails, the function SHALL raise the exception ErrorExportLoggingCertificateFailed and exit the function.</text>
+        <text xml:lang="de">Sammelt Zertifikate. Bei Fehler: Exception ErrorExportLoggingCertificateFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  COLLECT certificates from certificate chains
+ON_ERROR
+  RAISE ErrorExportLoggingCertificateFailed
+  EXIT_FUNCTION
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SAMMELE Zertifikate der Zertifikatsketten
+BEI_FEHLER
+  WERFE ErrorExportLoggingCertificateFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorExportLoggingCertificateFailed</exception>
+        <trigger>
+          <text xml:lang="en">The collection of the certificates fails</text>
+          <text xml:lang="de">Die Erfassung der Zertifikate schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit the function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL return the collected certificates in a TAR archive by the output parameter certificates. The function SHALL return the file name for the TAR archive by fileName. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt Zertifikate als TAR-Archiv zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN certificates in TAR archive (certificates parameter)
+RETURN filename of TAR archive (fileName parameter)
+RETURN without exception</text>
+        <text xml:lang="de">GEBE Zertifikate als TAR-Archiv zurück (certificates Parameter)
+GEBE Dateinamen des TAR-Archivs zurück (fileName Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Execution was successful</text>
+          <text xml:lang="de">Ausführung war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Function returns without exception</text>
+          <text xml:lang="de">Funktion kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>ExportDataResult</type>
+    <description>
+      <text xml:lang="en">An ExportDataResult which contains an InputStream delivering a TAR archive with all certificates necessary for log message verification, and the filename of the TAR archive.</text>
+      <text xml:lang="de">Ein ExportDataResult, das einen InputStream mit einem TAR-Archiv enthält, das alle Zertifikate enthält, die für die Überprüfung von Log-Nachrichten erforderlich sind, und den Dateinamen des TAR-Archivs.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

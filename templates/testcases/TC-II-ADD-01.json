@@ -1,0 +1,75 @@
+{
+  "testcase_id": "TC-II-ADD-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Prüfung: Keine herstellerspezifischen Zusatzfunktionen (NO_ADDITIONAL_FUNCTIONALITIES)",
+  "description": "Formelle Prüfung, ob die Einbindungsschnittstelle ausschließlich BSI TR-03153-1 Standardfunktionen bereitstellt.",
+  "purpose": "Prüfung, ob die Einbindungsschnittstelle neben den Funktionen der Einheitlichen Digitalen Schnittstelle gemäß der BSI TR-03153-1 weitere Funktionen unterstützt.",
+  "module": "Integration Interface",
+  "submodule": "II_ADD",
+  "function": "alle",
+  "test_type": "FP",
+  "priority": "conditional",
+  "profiles": [
+    "NO_ADDITIONAL_FUNCTIONALITIES"
+  ],
+  "source_tests": [
+    "II_ADD_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation und ausgefülltes ICS liegen vollständig vor.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "TSE implementiert keine Zusatzfunktionen laut ICS",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "VERIFY",
+      "title": "ICS-Deklaration prüfen",
+      "result": null,
+      "instruction": "ICS-Deklaration prüfen",
+      "checks": [
+        {
+          "description": "ICS deklariert: Keine über BSI TR-03153-1 hinausgehenden Funktionen implementiert",
+          "expected": "Deklariert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Schnittstellenimplementierung enthält keine nicht-spezifizierten Funktionen",
+          "expected": "Bestätigt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6"
+  ]
+}

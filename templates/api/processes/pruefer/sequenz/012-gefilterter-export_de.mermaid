@@ -1,0 +1,46 @@
+sequenceDiagram
+    participant Prüfer as Finanzbehörde/Prüfer
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+
+    Note over Prüfer: Gezielte Prüfung<br/>bestimmter Transaktionen
+
+    Prüfer->>TSE: exportFilteredTransactionLogs(<br/>Filter-Parameter)
+    activate TSE
+    
+    Note over TSE: Mögliche Filter:<br/>- transactionNumber<br/>- firstTransactionNumber & lastTransactionNumber<br/>- startDate & endDate<br/>- clientId<br/>- maximumNumberRecords
+    
+    TSE->>TSE: Prüfe Filter-Parameter
+    
+    alt Nur transactionNumber
+        TSE->>Speicher: Hole alle Logs zu Transaktion
+        Speicher-->>TSE: Transaction-Logs + System-Logs + Audit-Logs
+    else Transaktionsnummer-Bereich
+        TSE->>Speicher: Hole Logs im Bereich<br/>[firstTransactionNumber, lastTransactionNumber]
+        Speicher-->>TSE: Gefilterte Logs
+    else Zeitbereich
+        TSE->>Speicher: Hole Logs im Zeitbereich<br/>[startDate, endDate]
+        Speicher-->>TSE: Gefilterte Logs
+    end
+    
+    opt ClientId Filter
+        TSE->>TSE: Filtere nach clientId
+    end
+    
+    opt MaximumNumberRecords
+        TSE->>TSE: Prüfe Anzahl <= maximumNumberRecords
+        alt Zu viele Records
+            TSE-->>Prüfer: Exception:<br/>ErrorTooManyRecords
+        end
+    end
+    
+    TSE->>TSE: Hole zugehörige Zertifikate
+    
+    TSE->>TSE: Packe TAR-Archiv:<br/>- Gefilterte Log-Nachrichten<br/>- Zertifikate<br/>- info.csv
+    
+    TSE->>TSE: Generiere Dateinamen
+    
+    TSE-->>Prüfer: TAR-Archiv + Dateiname
+    deactivate TSE
+    
+    Note over Prüfer: Kleineres TAR-Archiv<br/>nur mit relevanten Daten

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>013</processId>
+    <processName>
+        <text xml:lang="en">Update Time</text>
+        <text xml:lang="de">Zeitaktualisierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Update of the time in the TSE security module by admin or timeadmin. The updated time is used for all subsequent timestamps.</text>
+        <text xml:lang="de">Aktualisierung der Zeitführung im Sicherheitsmodul der TSE durch admin oder timeadmin. Die Zeit wird für alle nachfolgenden Zeitstempel verwendet.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin/TimeAdmin</text>
+            <text xml:lang="de">Admin/TimeAdmin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">NTP Server (optional)</text>
+            <text xml:lang="de">NTP-Server (optional)</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Time System</text>
+            <text xml:lang="de">Zeitführung</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>updateTime</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>newTime</name>
+            <type>GeneralizedTime</type>
+            <description>
+                <text xml:lang="en">New time in UTC format</text>
+                <text xml:lang="de">Neue Zeit im UTC-Format</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (updateTime)</dataObject>
+        <dataObject>UpdateTimeEventData</dataObject>
+        <dataObject>GeneralizedTime</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUpdateTimeFailed</exception>
+        <exception>ErrorTimeNotSet</exception>
+        <exception>ErrorInvalidTime</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.5</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+        <reference>BSI TR-03153-1 Chapter 4 (Time Synchronization)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin or timeadmin (if present) are allowed to update the time. Time updates must occur in the cryptographic core of the security module. If central time provisioning occurs via remote-connected security module, the timeadmin must not be logged in via the integration interface. The updateTime log message contains both old and new time.</text>
+        <text xml:lang="de">Nur admin oder timeadmin (falls vorhanden) dürfen die Zeit aktualisieren. Die Zeitführung muss im Krypto-Kern des Sicherheitsmoduls erfolgen. Bei zentraler Zeitstellung über fernverbundenes Sicherheitsmodul darf der timeadmin nicht über die Einbindungsschnittstelle angemeldet werden. Die updateTime Log-Nachricht enthält alte und neue Zeit.</text>
+    </notes>
+</process>

@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="restoreLogsFromBackup" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>restoreLogsFromBackup</name>
+  <category>Logging</category>
+  <description>
+    <text xml:lang="en">Restores the logs and the certificate from a backup.</text>
+    <text xml:lang="de">Diese Funktion stellt die Protokolle und das Zertifikat aus einem Backup wieder her.</text>
+  </description>
+  <authorizedRoles>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL process the passed data and store the data of the passed log messages in the storage. If the passed data contains log messages not created by the device, the function SHALL reject the import of the logs, raise the exception ErrorRestoreFailed, and exit the function. In case file names of log files are stored by the device prior to an export and an imported log message has a file name that already exists in the storage, a counter SHALL be appended to the file name of the imported log message (see chapter 2.5.5). If the storing of the passed log message data fails, the function SHALL raise the exception ErrorRestoreFailed and exit the function.</text>
+        <text xml:lang="de">Verarbeite die übergebenen Daten und speichere die Log-Nachrichten. Bei Fehler oder ungültigen Log-Nachrichten: Exception ErrorRestoreFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  STORE log message data
+CATCH error
+  THROW ErrorRestoreFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SPEICHERE Log-Nachrichtendaten
+BEI_FEHLER
+  WERFE ErrorRestoreFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRestoreFailed</exception>
+        <trigger>
+          <text xml:lang="en">Storing of log message data fails</text>
+          <text xml:lang="de">Das Speichern der Log-Nachrichtendaten schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If no certificate of the same file name already exists, the function SHALL store the passed certificates. If a certificate has not been stored successfully, the function SHALL raise the exception ErrorRestoreFailed and exit the function.</text>
+        <text xml:lang="de">Falls kein Zertifikat mit gleichem Dateinamen vorhanden ist: Speichere die Zertifikate. Bei Fehler: Exception ErrorRestoreFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  STORE certificates
+CATCH error
+  THROW ErrorRestoreFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SPEICHERE Zertifikate
+BEI_FEHLER
+  WERFE ErrorRestoreFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRestoreFailed</exception>
+        <trigger>
+          <text xml:lang="en">A certificate was not stored successfully</text>
+          <text xml:lang="de">Ein Zertifikat wurde nicht erfolgreich gespeichert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the restoring has been successful, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Bei erfolgreicher Wiederherstellung: Gebe ohne Exception zurück.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN without exception
+END SUCCESSFULLY</text>
+        <text xml:lang="de">RETURN ohne Exception
+BEENDE_ERFOLGREICH</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Restore successful</text>
+          <text xml:lang="de">Wiederherstellung erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Returns success without exception</text>
+          <text xml:lang="de">Gibt Erfolg ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>restoreData</name>
+      <type>InputStream</type>
+      <description>
+        <text xml:lang="en">the backup data to be restored.</text>
+        <text xml:lang="de">die Sicherungsdaten, die wiederhergestellt werden sollen.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>void</type>
+    <description>
+      <text xml:lang="en">This function does not return a value.</text>
+      <text xml:lang="de">Diese Funktion gibt keinen Wert zurück.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterTooLong</exception>
+    <exception>ErrorRestoreFailed</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

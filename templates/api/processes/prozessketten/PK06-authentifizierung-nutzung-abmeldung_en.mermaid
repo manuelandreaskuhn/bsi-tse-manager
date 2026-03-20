@@ -1,0 +1,65 @@
+sequenceDiagram
+    actor User as User (Admin/Logger/Timeadmin)
+    participant TSE as TSE
+    participant SM as Security Module
+
+    Note over User,SM: User Session
+
+    User->>TSE: authenticateUser(userId, PIN)
+    activate TSE
+    TSE->>SM: Check PIN
+    activate SM
+    alt PIN correct
+        SM->>SM: Set Status: "authenticated"
+        SM->>SM: Set Error Counter = 0
+        SM->>SM: Signature Counter++
+        SM->>SM: Create authenticateUser Log
+        SM-->>TSE: OK + Log Parts
+        TSE-->>User: Authentication successful
+    else PIN incorrect
+        SM->>SM: Error Counter++
+        SM-->>TSE: Error: ErrorAuthenticationFailed
+        alt Error Counter >= Limit
+            SM->>SM: Block PIN
+            TSE-->>User: Error: ErrorPinBlocked
+        else
+            TSE-->>User: Error: ErrorAuthenticationFailed
+        end
+    end
+    deactivate SM
+    deactivate TSE
+
+    rect rgb(200, 255, 200)
+    Note over User,SM: WORK PHASE - User uses TSE Functions
+
+    loop Multiple Function Calls
+        User->>TSE: Call Function (e.g. setDescription,<br/>registerClient, exportLogMessages, ...)
+        TSE->>TSE: Check: User authenticated?
+        TSE->>TSE: Check: User authorized for Function?
+        TSE->>TSE: Execute Function
+        TSE-->>User: Result
+    end
+    end
+
+    alt Manual Logout
+        User->>TSE: logOut()
+        activate TSE
+        TSE->>SM: Create logOut Log
+        activate SM
+        SM->>SM: Signature Counter++
+        SM->>SM: Set Status: "not authenticated"
+        SM-->>TSE: Log Parts
+        deactivate SM
+        TSE-->>User: Logout successful
+        deactivate TSE
+    else Automatic Logout (Timeout)
+        Note over TSE: No activity for X minutes
+        TSE->>SM: Create automatic logOut Log
+        activate SM
+        SM->>SM: Signature Counter++
+        SM->>SM: Set Status: "not authenticated"
+        SM-->>TSE: Log Parts
+        deactivate SM
+    end
+
+    Note over User,SM: Session ended - User no longer authenticated

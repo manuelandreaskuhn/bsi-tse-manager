@@ -1,0 +1,1190 @@
+{
+  "testcase_id": "TC-II-TIME-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Zeitaktualisierung und Zeitabfragen: updateTime, getTimeSyncVariant, getCurrentSeTime",
+  "description": "Prüft die Zeitaktualisierungsfunktion (mit/ohne Parameter), Abfrage der unterstützten Variante und Abfrage der aktuellen Zeit sowie alle Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls die Zeit mit übergebenen Werten (newDateTime) aktualisiert und ob eine Log-Message erzeugt wird.\nZusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird und, ob die Log-Nachricht korrekt erstellt wird.",
+  "module": "Integration Interface",
+  "submodule": "II_UDT/II_TSV/II_GCT",
+  "function": "updateTime/getTimeSyncVariant/getCurrentSeTime",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_UPDATETIME"
+  ],
+  "source_tests": [
+    "II_UDT_01",
+    "II_UDT_02",
+    "II_UDT_03",
+    "II_UDT_04",
+    "II_UDT_05",
+    "II_UDT_06",
+    "II_UDT_07",
+    "II_TSV_01",
+    "II_TSV_02",
+    "II_GCT_01",
+    "II_GCT_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer timeadmin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die API-Implementierung der Funktionalität zur Aktualisierun",
+      "result": null,
+      "instruction": "Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls ermöglicht einen Aufruf ohne Parameter."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die API-Implementierung der Funktionalität zur Aktualisierun",
+      "result": null,
+      "instruction": "Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls ermöglicht einen Aufruf mit mindestens einem Parameter."
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde auf die zum Zeitpunkt der Aktualisierung aktuelle offizielle Zeit aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "logOut aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Abmelden von Nutzern. Für den Aufruf wird der Funktionsname logOut verwendet.",
+      "function": "logOut",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der aktuelle Nutzer ist der Nutzer unauthenticated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2.3"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht updateTime.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht timeadmin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds seTimeBeforeUpdate entspricht einem plausiblen Wert.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds seTimeAfterUpdate entspricht dem Zeitpunkt, der der Funktionalität übergeben wurde.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Falls clock slewing verwendet wird, sind die Datenfelder slewStepMicroSeconds und slewRateMicroSecondsPerSecond in slewSettings vorhanden und enthalten plausible Werte.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Falls clock slewing nicht verwendet wird, ist das Datenfelde slewSettings nicht vorhanden.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Der Aufruf erfolgt ohne Eingabeparameter.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Der übergebene Wert stellt keinen gültigen Zeitpunkt nach einem Zeitformat dar, das in der BSI TR-03151-1 vorgegeben wird. Ein Beispiel für einen ungültigen Zeitpunkt ist ein Zeitpunkt im UTC-Format, der die Angabe einer von der Zulu-Zeit abweichenden Zeitzone enthält.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUpdateTimeFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es wird die Zeit in einem laut ICS nicht unterstützten Format übergeben. Der übergebene Zeitpunkt unterscheidet sich von der aktuell eingestellten Zeit.",
+      "function": "updateTime",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorParameterMismatch\n ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "Nutzer timeadmin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.",
+      "function": "authenticateUser",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers timeadmin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds signatureCreationTime korrespondiert zu der ursprünglich eingestellten Zeit und nicht zu der in Schritt 1 übergebenen Zeit.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Der übergebene Zeitpunkt unterscheided sich von der aktuell eingestellten Zeit.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es werden keine Zeitwerte als Parameter übergeben.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorUnsupportedTimeSyncVariant  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 21,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 22,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds signatureCreationTime korrespondiert zu der in Schritt 1 übergebenen Zeit.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 23,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es werden Zeitwerte als Parameter übergeben.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung  ErrorUnsupportedTimeSyncVariant ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 24,
+      "type": "SETUP",
+      "title": "getTimeSyncVariant aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen.",
+      "function": "getTimeSyncVariant",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert des Parameters \"supportedSyncVariant\" entspricht der unterstützten Variante zur Aktualisierung der Zeit.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 25,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen. Es wird ein Fehler provoziert, der bewirkt, dass die unterstützte Variante zur Aktualisierung der Zeit nicht festgestellt werden kann.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetTimeSyncVariantFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 26,
+      "type": "SETUP",
+      "title": "getCurrentSeTime aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit.",
+      "function": "getCurrentSeTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert des Parameters \"currentSeTime\" entspricht der offiziellen Zeit, welche zum Zeitpunkt des Aufrufs der Funktionalität, zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit, vorlag.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 27,
+      "type": "SETUP",
+      "title": "getCurrentSeTime aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit. Es wird ein Fehler provoziert, der bewirkt, dass die aktuelle Zeit nicht vom Sicherheitsmodul bezogen werden kann.",
+      "function": "getCurrentSeTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 28,
+      "type": "VERIFY",
+      "title": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)",
+      "result": null,
+      "instruction": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "parameters": {
+        "newDateTime": "<gültiger Zeitwert im ICS-deklarierten Format>"
+      },
+      "checks": [
+        {
+          "description": "Zeit wird aktualisiert, kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog updateTime erstellt",
+          "expected": "STOR_EVT_UPDATETIME_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "seTimeAfterUpdate in eventData vorhanden",
+          "expected": "EVDATA_UPDATETIME",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_UPDATETIME",
+          "title": "seTimeAfterUpdate in updateTime-Ereignissen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_UPDATETIME_PRESENT",
+          "title": "Mindestens ein updateTime-SystemLog vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 29,
+      "type": "ACTION",
+      "title": "updateTime ohne Parameter (TIME_SYNC)",
+      "result": null,
+      "instruction": "updateTime ohne Parameter (TIME_SYNC)\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "parameters": {
+        "newDateTime": null
+      },
+      "checks": [
+        {
+          "description": "Zeit automatisch synchronisiert; Log erstellt",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01",
+      "notes": "Nur wenn Profil TIME_SYNC aktiv"
+    },
+    {
+      "step": 30,
+      "type": "NEGATIVE",
+      "title": "Fehler: Ungültiges Zeitformat",
+      "result": null,
+      "instruction": "Fehler: Ungültiges Zeitformat [NT]\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "parameters": {
+        "newDateTime": "<falsches Format>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeit NICHT aktualisiert",
+          "expected": "Zeitwert im SM unverändert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein SystemLog erstellt",
+          "expected": "Kein neues updateTime-Log",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 31,
+      "type": "VERIFY",
+      "title": "Zeitmonotonie und Zeitformat-Konsistenz im Export prüfen",
+      "result": null,
+      "instruction": "Zeitmonotonie und Zeitformat-Konsistenz im Export prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Zeitstempel in allen Log-Nachrichten monoton steigend",
+          "expected": "CROSS_LOG_TIME_MONO",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur ein Zeitformat im gesamten Archiv",
+          "expected": "CROSS_LOG_TIMEFMT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "seTimeAfterUpdate in allen updateTime-Logs vorhanden",
+          "expected": "EVDATA_UPDATETIME",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle Transaktions-Logs zeitlich nach erstem updateTime",
+          "expected": "TIMESET_TXN_AFTER_UPDATETIME",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_UNIQUE",
+          "title": "Keine doppelten signatureCounter-Werte",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_GAPS",
+          "title": "Keine Lücken in der signatureCounter-Sequenz",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIMEFMT",
+          "title": "Einheitliches Zeitformat im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TIMESET_TXN_AFTER_UPDATETIME",
+          "title": "Alle TransactionLog-Einträge nach erstem updateTime",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TIMESET_SYSLOG_WRITES_AFTER_UPDATETIME",
+          "title": "Zeitabhängige SystemLog-Ereignisse nach updateTime",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_UPDATETIME",
+          "title": "seTimeAfterUpdate in updateTime-Ereignissen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 32,
+      "type": "NEGATIVE",
+      "title": "Fehler: Falsche updateTime-Variante",
+      "result": null,
+      "instruction": "Fehler: Falsche updateTime-Variante [NT]\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "ErrorUnsupportedTimeSyncVariant zurückgegeben",
+          "expected": "errorCode = ErrorUnsupportedTimeSyncVariant",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01"
+    },
+    {
+      "step": 33,
+      "type": "ACTION",
+      "title": "getTimeSyncVariant",
+      "result": null,
+      "instruction": "getTimeSyncVariant\n\nAufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen.",
+      "function": "getTimeSyncVariant",
+      "user": "logger",
+      "expected_return": {
+        "timeSyncVariant": {
+          "type": "ENUM",
+          "constraint": "Unterstützte Variante"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe stimmt mit ICS und tatsächlichem Verhalten überein",
+          "expected": "Konsistent",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlerfall: ErrorGetTimeSyncVariantFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_TSV_01"
+    },
+    {
+      "step": 34,
+      "type": "ACTION",
+      "title": "getCurrentSeTime (II_CURRENTTIME)",
+      "result": null,
+      "instruction": "getCurrentSeTime (II_CURRENTTIME)\n\nAufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit.",
+      "function": "getCurrentSeTime",
+      "user": "logger",
+      "expected_return": {
+        "currentSeTime": {
+          "type": "TIMESTAMP",
+          "constraint": "Aktuelle SM-Zeit"
+        }
+      },
+      "checks": [
+        {
+          "description": "Aktuelle SM-Zeit zurückgegeben (konsistent mit Log-Zeitstempeln)",
+          "expected": "Plausibel",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlerfall: ErrorGetCurrentSeTimeFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GCT_01",
+      "notes": "Nur wenn Profil II_CURRENTTIME aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>009</processId>
+    <processName>
+        <text xml:lang="en">TSE Update</text>
+        <text xml:lang="de">TSE-Update</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Update of TSE software/firmware by manufacturer or administrator. Logging of the update process is mandatory.</text>
+        <text xml:lang="de">Aktualisierung der TSE-Software/Firmware durch den Hersteller oder Administrator. Protokollierung des Update-Vorgangs ist verpflichtend.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin/Manufacturer</text>
+            <text xml:lang="de">Admin/Hersteller</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Update Package</text>
+            <text xml:lang="de">Update-Paket</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>updateDevice</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>updateData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Update package with new firmware/software and signature</text>
+                <text xml:lang="de">Update-Paket mit neuer Firmware/Software und Signatur</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (updateDevice)</dataObject>
+        <dataObject>System-Log (updateDeviceCompleted)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUpdateFailed</exception>
+        <exception>ErrorInvalidUpdatePackage</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.4</reference>
+        <reference>BSI TR-03153-1 Chapter 9.10</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">When updating, updateDevice and updateDeviceCompleted log messages MUST be created, regardless of whether the function was called via the interface or the update occurred in another way. Transactions started before the update MUST NOT be continued or closed after the update. The update package must be signed by the manufacturer.</text>
+        <text xml:lang="de">Bei Aktualisierung MÜSSEN die updateDevice und updateDeviceCompleted Log-Nachrichten erstellt werden, unabhängig davon ob die Funktion über die Schnittstelle aufgerufen wurde oder das Update auf anderem Wege erfolgt. Vor dem Update gestartete Transaktionen DÜRFEN nach dem Update NICHT mehr weiter ergänzt oder geschlossen werden. Das Update-Paket muss vom Hersteller signiert sein.</text>
+    </notes>
+</process>

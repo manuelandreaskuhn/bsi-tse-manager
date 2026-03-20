@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorStorageMediumDisconnected" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorStorageMediumDisconnected</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the storage medium is disconnected or not available to the Secure Element. The Secure Element uses storage for device data, transaction logs, configuration, and audit trail information. If the storage medium becomes disconnected or unavailable, the device cannot read from or write to storage, preventing critical operations. ErrorStorageMediumDisconnected indicates a hardware failure or connection issue affecting storage accessibility. Common causes include: physical connector disconnection, storage device failure, communication interface failure, power loss to storage, or storage medium removal. ErrorStorageMediumDisconnected is a Critical condition that affects all storage-dependent operations and requires immediate attention.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Speichermedium nicht verbunden oder für das Secure Element nicht verfügbar ist. Das Secure Element nutzt Speicher für Gerätedaten, Transaktionsprotokolle, Konfiguration und Audit-Trail-Informationen. Falls das Speichermedium unterbrochen wird oder nicht verfügbar ist, kann das Gerät nicht aus dem Speicher lesen oder darin schreiben, was kritische Operationen verhindert. ErrorStorageMediumDisconnected zeigt einen Hardwarefehler oder ein Verbindungsproblem an, das die Speicherzugriffsbarkeit beeinträchtigt. Häufige Ursachen sind: physische Stecker-Trennung, Speichergerätefehler, Fehler der Kommunikationsschnittstelle, Stromverlust zum Speicher oder Entfernung des Speichermediums. ErrorStorageMediumDisconnected ist ein kritischer Zustand, der alle speicherabhängigen Operationen beeinträchtigt und sofortige Aufmerksamkeit erfordert.</text>
+  </description>
+  <category>Storage</category>
+  <subcategory>Storage Medium - Disconnection/Unavailable</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>exportSerialNumbers</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getDescription</function>
+    <function>getDeviceHealth</function>
+    <function>getFreeMemory</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getOpenTransactions</function>
+    <function>getTotalMemory</function>
+    <function>getTransactionState</function>
+    <function>getUsedMemory</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorStorageMediumDisconnected that is thrown if the storage medium is disconnected or unavailable.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorStorageMediumDisconnected, die ausgelöst wird, wenn das Speichermedium nicht verbunden oder nicht verfügbar ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the Secure Element detects that its storage medium is disconnected or not available. The storage medium is critical for all device operations including storing transaction logs, configuration, user data, and audit trail information. ErrorStorageMediumDisconnected indicates that the device cannot access its storage, preventing read and write operations. Common causes include: physical connector disconnection, storage device hardware failure, storage interface malfunction, power loss to storage subsystem, or storage medium removal. ErrorStorageMediumDisconnected is a Critical severity exception because it blocks virtually all SE API operations that depend on storage access. The device is effectively unusable when storage is unavailable. Recovery requires addressing the hardware connectivity issue and restoring storage accessibility.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Secure Element erkennt, dass sein Speichermedium nicht verbunden oder nicht verfügbar ist. Das Speichermedium ist für alle Geräteoperationen kritisch, einschließlich Speicherung von Transaktionsprotokollen, Konfiguration, Benutzerdaten und Audit-Trail-Informationen. ErrorStorageMediumDisconnected zeigt an, dass das Gerät nicht auf seinen Speicher zugreifen kann, wodurch Lese- und Schreibvorgänge verhindern werden. Häufige Ursachen sind: physische Stecker-Trennung, Hardware-Fehler des Speichergeräts, Fehler der Speicherschnittstelle, Stromverlust zum Speichersubsystem oder Entfernung des Speichermediums. ErrorStorageMediumDisconnected ist eine Ausnahme mit kritischer Schweregrad, da sie praktisch alle SE-API-Operationen blockiert, die von Speicherzugriff abhängen. Das Gerät ist praktisch unbrauchbar, wenn der Speicher nicht verfügbar ist. Die Wiederherstellung erfordert die Behebung des Hardware-Konnektivitätsproblems und die Wiederherstellung der Speicherzugriffsbarkeit.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2 Secure Element Storage and 3.3 SE API Functions - Storage Access Requirements</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element uses storage medium for storing transaction logs, configuration, user data, and audit trail information. All operations requiring storage access (read or write) SHALL verify that the storage medium is connected and available before proceeding. If the storage medium is disconnected or not available, any operation requiring storage access SHALL raise ErrorStorageMediumDisconnected. The storage must be accessible for transaction processing, logging, data export, and configuration operations. Storage disconnection is a hardware failure that makes the device unusable for most operations.</text>
+      <text xml:lang="de">Das Secure Element nutzt Speichermedium zum Speichern von Transaktionsprotokollen, Konfiguration, Benutzerdaten und Audit-Trail-Informationen. Alle Operationen, die Speicherzugriff erfordern (Lesen oder Schreiben), SOLLEN überprüfen, ob das Speichermedium verbunden und verfügbar ist, bevor fortgefahren wird. Falls das Speichermedium nicht verbunden oder nicht verfügbar ist, SOLL jede Operation, die Speicherzugriff erfordert, ErrorStorageMediumDisconnected auslösen. Der Speicher muss für Transaktionsverarbeitung, Protokollierung, Datenexport und Konfigurationsoperationen zugreifbar sein. Eine Speichertrennung ist ein Hardwarefehler, der das Gerät für die meisten Operationen unbrauchbar macht.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All operations requiring storage access: setDescription, getDescription, getTotalMemory, getUsedMemory, getFreeMemory, exportLogMessages, deleteLogMessages, exportSerialNumbers, restoreLogsFromBackup, getLastLogMessage, startTransaction, updateTransaction, finishTransaction, exportFilteredTransactionLogs, getLastTransactionLogMessage</text>
+      <text xml:lang="de">Alle Operationen, die Speicherzugriff erfordern: setDescription, getDescription, getTotalMemory, getUsedMemory, getFreeMemory, exportLogMessages, deleteLogMessages, exportSerialNumbers, restoreLogsFromBackup, getLastLogMessage, startTransaction, updateTransaction, finishTransaction, exportFilteredTransactionLogs, getLastTransactionLogMessage</text>
+    </applicability>
+    <reference>Secure Element Storage (3.2), SE API Functions (3.3)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function that requires storage access (e.g., startTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE-API-Funktion auf, die Speicherzugriff erfordert (z.B. startTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives request</text>
+      <text xml:lang="de">Secure Element empfängt Anfrage</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks storage medium availability and connectivity</text>
+      <text xml:lang="de">Secure Element prüft die Verfügbarkeit und Konnektivität des Speichermediums</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If storage medium disconnected or unavailable → ErrorStorageMediumDisconnected raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speichermedium nicht verbunden oder nicht verfügbar → ErrorStorageMediumDisconnected ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If storage medium available → proceed to step 6</text>
+      <text xml:lang="de">Wenn Speichermedium verfügbar → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element performs requested storage operation (read or write)</text>
+      <text xml:lang="de">Secure Element führt angeforderte Speicheroperation aus (Lesen oder Schreiben)</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If storage communication fails → ErrorStorageMediumDisconnected raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speicherkommunikation fehlschlägt → ErrorStorageMediumDisconnected ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If storage operation succeeds → proceed to step 7</text>
+      <text xml:lang="de">Wenn Speicheroperation erfolgreich ist → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an die Funktion zurück</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function processes result and returns to caller</text>
+      <text xml:lang="de">Funktion verarbeitet Ergebnis und kehrt zum Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify storage medium is connected and accessible</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Speichermedium verbunden und zugreifbar ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Power cycle device if connection issue is temporary</text>
+      <text xml:lang="de">Führen Sie einen Neubeginn des Geräts durch, wenn das Verbindungsproblem vorübergehend ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage hardware status</text>
+      <text xml:lang="de">Prüfen Sie den Status der Speicherhardware</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device vendor if storage remains disconnected</text>
+      <text xml:lang="de">Kontaktieren Sie den Gerätehersteller, wenn der Speicher nicht verbunden bleibt</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+    <exception>ErrorNoDataAvailable</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Storage Operation Not Executed">
+      <text xml:lang="en">The requested storage operation is not executed.</text>
+      <text xml:lang="de">Die angeforderte Speicheroperation wird nicht ausgeführt.</text>
+    </state>
+    <state name="Storage Medium Inaccessible">
+      <text xml:lang="en">The storage cannot be read from or written to.</text>
+      <text xml:lang="de">Der Speicher kann nicht aus gelesen oder in geschrieben werden.</text>
+    </state>
+    <state name="Data Not Retrieved">
+      <text xml:lang="en">Any data retrieval operation cannot access storage data.</text>
+      <text xml:lang="de">Jede Datenabrufoperation kann nicht auf Speicherdaten zugreifen.</text>
+    </state>
+    <state name="Data Not Stored">
+      <text xml:lang="en">Any data storage operation cannot write to storage.</text>
+      <text xml:lang="de">Jede Datenspeicheroperation kann nicht in den Speicher schreiben.</text>
+    </state>
+    <state name="Device Functionally Unusable">
+      <text xml:lang="en">Most device operations require storage access - device is effectively unusable.</text>
+      <text xml:lang="de">Die meisten Geräteoperationen erfordern Speicherzugriff - das Gerät ist praktisch unbrauchbar.</text>
+    </state>
+    <state name="Hardware Intervention Required">
+      <text xml:lang="en">Physical repair or reconnection of storage is necessary.</text>
+      <text xml:lang="de">Physikalische Reparatur oder Wiederverbindung des Speichers ist notwendig.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Storage medium is disconnected and inaccessible</text>
+      <text xml:lang="de">Anzeichen: Speichermedium ist getrennt und nicht zugreifbar</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Storage Operations, Device Hardware, Storage Status, Device Connectivity</text>
+      <text xml:lang="de">Themen: Speicheroperationen, Gerätehardware, Speicherstatus, Gerätekonnektivität</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when storage hardware is disconnected</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn die Speicherhardware unterbrochen ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Storage hardware connectivity validation detects disconnection</text>
+      <text xml:lang="de">Validierung der Speicherhardware-Konnektivität erkennt Trennung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device cannot access storage medium for data persistence</text>
+      <text xml:lang="de">Das Gerät kann nicht auf das Speichermedium für Datenbeständigkeit zugreifen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Disconnection prevents data write operations</text>
+      <text xml:lang="de">Die Trennung verhindert Datenschreibvorgänge</text>
+    </note>
+  </implementationContext>
+</exception>
+

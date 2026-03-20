@@ -1,0 +1,39 @@
+flowchart TD
+    Start([Admin: deleteLogMessages<br/>aufrufen])
+    Start --> CheckAuth{Admin<br/>authentifiziert?}
+    
+    CheckAuth -->|Nein| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Ja| CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| CreateLog[Erstelle System-Log-Nachricht<br/>deleteLogMessages]
+    
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere deleteLogMessages Log]
+    
+    SaveLog --> DeleteLogs{Lösche alle Logs<br/>AUSSER:}
+    
+    DeleteLogs --> Keep1[- Noch nicht exportierte Logs]
+    Keep1 --> Keep2[- deleteLogMessages Log selbst]
+    Keep2 --> Keep3[- Optional: Logs offener<br/>nicht-verwaister Transaktionen]
+    
+    Keep3 --> CheckDelete{Löschen<br/>erfolgreich?}
+    
+    CheckDelete -->|Nein| ErrorDelete[Exception:<br/>ErrorDeleteLogMessagesFailed]
+    CheckDelete -->|Ja| Return[Rückgabe: Erfolg]
+    
+    Return --> End([Ende - Logs gelöscht])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorDelete --> End
+    
+    style CreateLog fill:#FFD700
+    style DeleteLogs fill:#FFB6C1
+    style Keep1 fill:#90EE90
+    style Keep2 fill:#90EE90
+    style Keep3 fill:#90EE90
+    
+    Note1[WICHTIG: Nur bereits<br/>exportierte Logs dürfen<br/>gelöscht werden!]
+    DeleteLogs -.-> Note1

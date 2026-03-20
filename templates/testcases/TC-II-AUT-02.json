@@ -1,0 +1,834 @@
+{
+  "testcase_id": "TC-II-AUT-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Authentifizierung: Fehlversuche, Sperrung, PIN-Entsperrung und Fehlerfälle",
+  "description": "Prüft Fehlverhalten bei falscher PIN, Dekrement des Fehlbedienungszählers, Sperrung, PUK-Entsperrung und alle zugehörigen Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität zum Entsperren der PIN eines autorisierten Nutzers Gegenmaßnahmen gegen Angriffe in Bezug auf das Erraten der PUK implementiert.",
+  "module": "Integration Interface",
+  "submodule": "II_AUT/II_UBP",
+  "function": "authenticateUser / unblockPin",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_AUT_03_Template",
+    "II_AUT_04_Template",
+    "II_UBP_01_Template",
+    "II_UBP_02_Template",
+    "II_UBP_03",
+    "II_UBP_04",
+    "II_UBP_05",
+    "II_UBP_06"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung eines Nutzers ist ",
+      "result": null,
+      "instruction": "Die PIN-Eingabe für die Authentifizierung eines Nutzers ist blockiert (Wert für den Wiederholungszähler ist 0)."
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des admin ist bloc",
+      "result": null,
+      "instruction": "Die PIN-Eingabe für die Authentifizierung des admin ist blockiert (Wert für den Wiederholungszähler ist 0)."
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des timeadmin ist ",
+      "result": null,
+      "instruction": "Die PIN-Eingabe für die Authentifizierung des timeadmin ist blockiert (Wert für den Wiederholungszähler ist 0)."
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Wiederholter Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Der Funktionsaufruf wird so oft wiederholt, dass sicher darauf geschlossen werden kann, dass die Maßnahme den Erfolg von andauernden Rateversuchen verhindert bzw. erkennbar ist, dass das Erraten der PUK unterbunden wird.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die korrekte Gegenmaßnahmen kann eindeutig als vorhanden und korrekt funktionierend erkannt werden.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Das Erraten der PUK wird durch die im ICS genannten Gegenmaßnahmen effektiv verhindert.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Aufruf wird mehrere Male wiederholt. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Die Funktionalität wird aufgerufen, bis der Mechanismus zum Schutz vor der Password Guessing Attack greift.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorIncorrectPuk ausgelöst, wenn der Mechanismus zum Schutz vor der Password Guessing Attack noch nicht greift.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorPukTemporarilyBlocked ausgelöst, sobald der Mechanismus zum Schutz vor der Password Guessing Attack greift.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorPukTemporarilyBlocked ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung von Nutzern. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und die im vorherigen Schrit neu zu setzen versuchte PIN übergeben.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorPinBlocked ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachrichten für die Versuche zum Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden die Aufrufe aus Testschritt 1 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält die Log-Nachrichten für die Entsperrversuche der PIN des Nutzers.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für das Entsperren der PIN des Nutzers in dem TAR-Container. Es werden die Aufrufe aus Testschritt 1 betrachtet, welche vor dem Greifen des Schutzes vor Password Guessing Attack erstellt wurden.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht unblockPin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht unauthenticated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds userToUnblock entspricht dem in Testschritt 1 übergebenen Namen.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds unblockResult entspricht incorrectPuk.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird der letzte Aufruf aus Schritt 1 (bei dem die Password Guessing Attack detekiert wurde) und die Aufrufe aus Testschritt 2 und Testschritt 3 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält jeweils eine Log-Nachricht für jedes Entsperren der PIN des Nutzers.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Entsperren der PIN des Nutzers admin. Der Funktion wird ein korrekter Wert für die User-ID und der leere String als neue PIN übergeben. Die übergebene PUK ist korrekt.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSettingNewPinFailed oder ErrorUnblockingPinFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für das Entsperren der PIN des Nutzers admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht unblockPin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht logger.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds userToUnblock entspricht admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds unblockResult entspricht errorSettingNewPinFailed oder resettingError.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Entsperren der PIN des Nutzers timeadmin. Der Funktion wird ein korrekter Wert für die User-ID und der leere String als neue PIN übergeben. Die übergebene PUK ist korrekt.",
+      "function": "unblockPin",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSettingNewPinFailed oder ErrorUnblockingPinFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 21,
+      "type": "SETUP",
+      "title": "unblockPin aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin in dem TAR-Container.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht unblockPin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds userToUnblock entspricht timeadmin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds unblockResult entspricht errorSettingNewPinFailed oder resettingError.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_AUT_03_Template"
+    },
+    {
+      "step": 22,
+      "type": "NEGATIVE",
+      "title": "Authentifizierung mit falscher PIN",
+      "result": null,
+      "instruction": "Authentifizierung mit falscher PIN [NT]\n\nWiederholter Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Der Funktionsaufruf wird so oft wiederholt, dass sicher darauf geschlossen werden kann, dass die Maßnahme den Erfolg von andauernden Rateversuchen verhindert bzw. erkennbar ist, dass das Erraten der PUK unterbunden wird.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<falscher PIN>"
+      },
+      "expected_return": {
+        "authenticationResult": {
+          "constraint": "failed"
+        },
+        "remainingRetries": {
+          "constraint": "< ICS-Maximum"
+        }
+      },
+      "checks": [
+        {
+          "description": "authenticationResult = failed",
+          "expected": "EVDATA_AUTH_RESULT_VALUES",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries um 1 dekrementiert",
+          "expected": "EVDATA_AUTH_RETRIES_DECREMENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Log-Nachricht korrekt erstellt",
+          "expected": "EVDATA_AUTH_RESULT + EVDATA_AUTH_RETRIES",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_AUTH_RESULT",
+          "title": "authenticationResult bei Authentifizierungsereignissen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES",
+          "title": "remainingRetries bei fehlgeschlagener Authentifizierung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES_DECREMENT",
+          "title": "remainingRetries dekrementiert bei Fehler",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RESULT_VALUES",
+          "title": "Zulässige Werte für authenticationResult",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UBP_03"
+    },
+    {
+      "step": 23,
+      "type": "NEGATIVE",
+      "title": "Wiederholte Fehlversuche bis zur Sperrung",
+      "result": null,
+      "instruction": "Wiederholte Fehlversuche bis zur Sperrung [NT]\n\nWiederholter Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Der Funktionsaufruf wird so oft wiederholt, dass sicher darauf geschlossen werden kann, dass die Maßnahme den Erfolg von andauernden Rateversuchen verhindert bzw. erkennbar ist, dass das Erraten der PUK unterbunden wird.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Nach Erschöpfung: Nutzer gesperrt",
+          "expected": "Sperrzustand eingetreten",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries = 0 bei Sperrung im Log",
+          "expected": "EVDATA_AUTH_RETRIES_ZERO_BLOCKED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlermeldung (pinBlocked oder äquivalent) zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_AUTH_RETRIES_ZERO_BLOCKED",
+          "title": "remainingRetries = 0 bei pinBlocked",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UBP_03"
+    },
+    {
+      "step": 24,
+      "type": "ACTION",
+      "title": "PIN-Entsperrung mit korrekter PUK [PT]",
+      "result": null,
+      "instruction": "PIN-Entsperrung mit korrekter PUK [PT]\n\nIdentifikation der Log-Nachrichten für die Versuche zum Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden die Aufrufe aus Testschritt 1 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "puk": "<korrekter PUK>",
+        "newPin": "<neuer gültiger PIN>"
+      },
+      "checks": [
+        {
+          "description": "Entsperrung erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Neuer PIN akzeptiert",
+          "expected": "Authentifizierung mit neuem PIN möglich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UBP_04"
+    },
+    {
+      "step": 25,
+      "type": "NEGATIVE",
+      "title": "Entsperrung mit falschem PUK",
+      "result": null,
+      "instruction": "Entsperrung mit falschem PUK [NT]\n\nIdentifikation der Log-Nachrichten für die Versuche zum Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden die Aufrufe aus Testschritt 1 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "puk": "<falscher PUK>",
+        "newPin": "<beliebig>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UBP_04"
+    },
+    {
+      "step": 26,
+      "type": "NEGATIVE",
+      "title": "Leerer String als neuer PIN abgelehnt",
+      "result": null,
+      "instruction": "Leerer String als neuer PIN abgelehnt [NT]\n\nIdentifikation der Log-Nachrichten für die Versuche zum Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden die Aufrufe aus Testschritt 1 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "puk": "<korrekter PUK>",
+        "newPin": ""
+      },
+      "checks": [
+        {
+          "description": "Leerer PIN abgelehnt",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UBP_04"
+    },
+    {
+      "step": 27,
+      "type": "ACTION",
+      "title": "Gegenmaßnahmen gegen PUK-Raten (PUK_BLOCKABLE)",
+      "result": null,
+      "instruction": "Gegenmaßnahmen gegen PUK-Raten (PUK_BLOCKABLE)\n\nIdentifikation der Log-Nachrichten für die Versuche zum Entsperren der PIN des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden die Aufrufe aus Testschritt 1 betrachtet.",
+      "function": "unblockPin",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Temporäre Sperrung nach wiederholten Fehlversuchen eingetreten",
+          "expected": "Sperre bestätigt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ErrorPukIsTemporarilyBlocked oder äquivalent zurückgegeben",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UBP_04",
+      "notes": "Nur wenn Profil PUK_BLOCKABLE aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.2",
+    "BSI TR-03151-1 §6"
+  ]
+}

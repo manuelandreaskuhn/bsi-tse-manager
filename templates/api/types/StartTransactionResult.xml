@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resultType id="StartTransactionResult" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+    <name>StartTransactionResult</name>
+    <category>Transaction Management Types</category>
+    <source>BSI TR-03151</source>
+    <description>This class defines a container that enables the SE-API function startTransaction to return informations about the newly created transaction.</description>
+    <fields>
+        <field>
+            <name>transactionNumber</name>
+            <type>long</type>
+            <description>The value of this parameter represents a transaction number that has been assigned to the process by the Secure Element.</description>
+            <getter>getTransactionNumber()</getter>
+        </field>
+        <field>
+            <name>signatureCreationTime</name>
+            <type>ZonedDateTime</type>
+            <description>The value represents the point in time of the Secure Element when the log message was signed.</description>
+            <getter>getSignatureCreationTime()</getter>
+        </field>
+        <field>
+            <name>serialNumber</name>
+            <type>byte[]</type>
+            <description>This field contains the hash value over the public key of the key pair that is used for the signature creation for transaction logs.</description>
+            <getter>getSerialNumber()</getter>
+        </field>
+        <field>
+            <name>signatureCounter</name>
+            <type>long</type>
+            <description>The value of the signature counter of the created log message.</description>
+            <getter>getSignatureCounter()</getter>
+        </field>
+        <field>
+            <name>signatureValue</name>
+            <type>byte[]</type>
+            <description>The signature value of the created log message.</description>
+            <getter>getSignatureValue()</getter>
+        </field>
+    </fields>
+</resultType>

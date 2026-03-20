@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="LogOutCause" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+  <name>LogOutCause</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Enumeration used in system log event data for LogOutCause.</description>
+  <values>
+    <value>
+      <name>userCalledLogOut</name>
+      <numericValue>0</numericValue>
+      <description>userCalledLogOut (0)</description>
+    </value>
+    <value>
+      <name>differentUserLoggedIn</name>
+      <numericValue>1</numericValue>
+      <description>differentUserLoggedIn (1)</description>
+    </value>
+    <value>
+      <name>timeout</name>
+      <numericValue>2</numericValue>
+      <description>timeout (2)</description>
+    </value>
+  </values>
+</enum>

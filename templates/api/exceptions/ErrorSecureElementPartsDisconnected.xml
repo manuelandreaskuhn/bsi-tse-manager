@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSecureElementPartsDisconnected" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSecureElementPartsDisconnected</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if logical or physical components of the Secure Element become disconnected during operation. The Secure Element may consist of multiple physical components or logical subsystems (cryptographic module, storage subsystem, communication interface, security processor) that must remain connected and communicating. If any critical component becomes disconnected or unreachable, the Secure Element cannot operate safely. ErrorSecureElementPartsDisconnected indicates that the Secure Element integrity has been compromised due to component disconnection. This is a hardware or communication failure requiring immediate attention. Common causes include: physical connector failure, communication channel loss, hardware malfunction, or component removal during operation.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn logische oder physikalische Komponenten des Secure Element während des Betriebs die Verbindung trennen. Das Secure Element kann aus mehreren physikalischen Komponenten oder logischen Subsystemen (Kryptografie-Modul, Speicher-Subsystem, Kommunikationsschnittstelle, Sicherheitsprozessor) bestehen, die verbunden und kommunizierend bleiben müssen. Wenn eine kritische Komponente die Verbindung trennt oder nicht erreichbar wird, kann das Secure Element nicht sicher betrieben werden. ErrorSecureElementPartsDisconnected zeigt an, dass die Secure Element-Integrität durch die Trennverbindung der Komponenten beeinträchtigt wurde. Dies ist ein Hardware- oder Kommunikationsfehler, der sofortige Aufmerksamkeit erfordert. Häufige Ursachen sind: physikalischer Steckerausfall, Kommunikationskanalverlust, Hardwarefehler oder Komponentenentfernung während des Betriebs.</text>
+  </description>
+  <category>Secure Element Hardware</category>
+  <subcategory>Component Disconnection</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSecureElementPartsDisconnected that is thrown if components of the Secure Element become disconnected.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSecureElementPartsDisconnected, die ausgelöst wird, wenn Komponenten des Secure Element die Verbindung trennen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when logical or physical parts of the Secure Element lose connectivity during operation. A modern Secure Element may consist of multiple hardware components (cryptographic processor, storage, interfaces) that must communicate and coordinate. ErrorSecureElementPartsDisconnected indicates that component connectivity has been lost or degraded, preventing safe operation. Common causes include: physical connector disconnection, communication interface failure, hardware component malfunction, or component removal during operation. ErrorSecureElementPartsDisconnected is a Critical severity exception because it indicates hardware failure and device is no longer trustworthy. Operations cannot safely continue when component connectivity is lost. Recovery requires hardware inspection, diagnosis, or component replacement. The device should not be trusted for security-sensitive operations until component connectivity is restored and verified.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn logische oder physikalische Teile des Secure Element während des Betriebs die Verbindungskonnektivität verlieren. Ein modernes Secure Element kann aus mehreren Hardwarekomponenten (Kryptografieprocessor, Speicher, Schnittstellen) bestehen, die kommunizieren und koordinieren müssen. ErrorSecureElementPartsDisconnected zeigt an, dass die Komponentenverbindung verloren gegangen ist oder sich verschlechtert hat, was einen sicheren Betrieb verhindert. Häufige Ursachen sind: physikalische Steckerentrennung, Kommunikationsschnittstellenfehler, Hardwarekomponentenausfall oder Komponentenentfernung während des Betriebs. ErrorSecureElementPartsDisconnected ist eine Ausnahme mit kritischem Schweregrad, da sie einen Hardwareausfall anzeigt und das Gerät nicht mehr vertrauenswürdig ist. Operationen können nicht sicher fortgesetzt werden, wenn die Komponentenverbindung verloren geht. Die Wiederherstellung erfordert Hardwareuntersuchung, Diagnose oder Komponentenaustausch. Das Gerät sollte nicht für sicherheitsrelevante Operationen verwendet werden, bis die Komponentenverbindung wiederhergestellt und verifiziert ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2 Secure Element Architecture and Component Connectivity</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element may consist of multiple physical or logical components that must remain connected and communicating. If any critical component becomes disconnected, the Secure Element cannot operate safely and SHALL raise ErrorSecureElementPartsDisconnected. This includes failures of cryptographic processors, storage subsystems, communication interfaces, or security logic components. Component disconnection is a hardware failure that indicates the device integrity may be compromised. SE API operations SHALL not proceed when component connectivity is lost.</text>
+      <text xml:lang="de">Das Secure Element kann aus mehreren physikalischen oder logischen Komponenten bestehen, die verbunden und kommunizierend bleiben müssen. Wenn eine kritische Komponente die Verbindung trennt, kann das Secure Element nicht sicher betrieben werden und MUSS ErrorSecureElementPartsDisconnected auslösen. Dies umfasst Fehler von Kryptografieprozessoren, Speicher-Subsystemen, Kommunikationsschnittstellen oder Sicherheitslogik-Komponenten. Die Trennverbindung der Komponenten ist ein Hardwarefehler, der anzeigt, dass die Geräteintegrität beeinträchtigt sein kann. SE-API-Operationen dürfen NICHT fortgesetzt werden, wenn die Komponentenverbindung verloren gegangen ist.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All SE API operations that depend on complete Secure Element component connectivity: authenticateUser, logOut, unblockPin, initialize, selfTest, updateDevice, disableSecureElement, updateTime, getCurrentSeTime, startTransaction, updateTransaction, finishTransaction</text>
+      <text xml:lang="de">Alle SE-API-Operationen, die von vollständiger Secure Element-Komponentenverbindung abhängen: authenticateUser, logOut, unblockPin, initialize, selfTest, updateDevice, disableSecureElement, updateTime, getCurrentSeTime, startTransaction, updateTransaction, finishTransaction</text>
+    </applicability>
+    <reference>Secure Element Architecture (3.2)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function that requires component connectivity (e.g., authenticateUser)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE-API-Funktion auf, die Komponentenverbindung erfordert (z. B. authenticateUser)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives request and verifies internal component connectivity</text>
+      <text xml:lang="de">Secure Element empfängt Anfrage und verifiziert die interne Komponentenverbindung</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If component disconnection detected → ErrorSecureElementPartsDisconnected raised, operation aborted</text>
+      <text xml:lang="de">Wenn Komponententrennverbindung erkannt → ErrorSecureElementPartsDisconnected ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If all components connected → proceed to step 5</text>
+      <text xml:lang="de">Wenn alle Komponenten verbunden → Fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element processes operation request</text>
+      <text xml:lang="de">Secure Element verarbeitet Operationsanfrage</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Operation may require communication between multiple internal components</text>
+      <text xml:lang="de">Operation kann Kommunikation zwischen mehreren internen Komponenten erfordern</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If inter-component communication fails → ErrorSecureElementPartsDisconnected raised, operation aborted</text>
+      <text xml:lang="de">Wenn Zwischenkomponenten-Kommunikation fällt → ErrorSecureElementPartsDisconnected ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If inter-component communication succeeds → proceed to step 7</text>
+      <text xml:lang="de">Wenn Zwischenkomponenten-Kommunikation erfolgreich → Fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element completes operation execution</text>
+      <text xml:lang="de">Secure Element schließt die Operationsausführung ab</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an Funktion zurück</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function processes result and returns to caller</text>
+      <text xml:lang="de">Funktion verarbeitet Ergebnis und kehrt zum Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify SE component connections and hardware status</text>
+      <text xml:lang="de">Vergewissern Sie sich, dass die SE-Komponentenverbindungen und der Hardwarestatus</text>
+    </step>
+    <step>
+      <text xml:lang="en">Power cycle device if temporary connection issue</text>
+      <text xml:lang="de">Neustart des Geräts, wenn temporäres Verbindungsproblem vorliegt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Perform self-test to diagnose SE status</text>
+      <text xml:lang="de">Führen Sie Selbsttest durch, um SE-Status zu diagnostizieren</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device vendor if components remain disconnected</text>
+      <text xml:lang="de">Kontaktieren Sie den Gerätehersteller, wenn Komponenten getrennt bleiben</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorSecureElementNotInitialized</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Operation Aborted">
+      <text xml:lang="en">The requested operation is not completed due to component disconnection.</text>
+      <text xml:lang="de">Die angeforderte Operation wird nicht abgeschlossen, da die Komponente die Verbindung trennt.</text>
+    </state>
+    <state name="Device State Uncertain">
+      <text xml:lang="en">The device state after component disconnection is uncertain and should not be trusted.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Komponententrennverbindung ist unsicher und sollte nicht vertraut werden.</text>
+    </state>
+    <state name="Component Communication Lost">
+      <text xml:lang="en">Communication between Secure Element components cannot be established.</text>
+      <text xml:lang="de">Die Kommunikation zwischen Secure Element-Komponenten kann nicht hergestellt werden.</text>
+    </state>
+    <state name="Data Integrity Unknown">
+      <text xml:lang="en">The integrity of data and operations cannot be verified when components are disconnected.</text>
+      <text xml:lang="de">Die Integrität von Daten und Operationen kann nicht verifiziert werden, wenn Komponenten getrennt sind.</text>
+    </state>
+    <state name="Device No Longer Trustworthy">
+      <text xml:lang="en">The device should not be used for security operations until component connectivity is restored and verified.</text>
+      <text xml:lang="de">Das Gerät sollte nicht für Sicherheitsoperationen verwendet werden, bis die Komponentenverbindung wiederhergestellt und verifiziert ist.</text>
+    </state>
+    <state name="Hardware Intervention Required">
+      <text xml:lang="en">Hardware inspection and repair may be required to restore component connectivity.</text>
+      <text xml:lang="de">Hardwareuntersuchung und Reparatur können erforderlich sein, um die Komponentenverbindung wiederherzustellen.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Parts of the Secure Element are disconnected - component communication failed</text>
+      <text xml:lang="de">Anzeige: Teile des Secure Element sind getrennt - Komponentenkommunikation fehlgeschlagen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Secure Element Management, Hardware, Component Communication, Device Status</text>
+      <text xml:lang="de">Themen: Secure Element Verwaltung, Hardware, Komponentenkommunikation, Gerätestatus</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when SE component communication fails</text>
+      <text xml:lang="de">Ausgelöst durch Funktionen, wenn SE-Komponentenkommunikation fällt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Hardware component connectivity validation detects disconnection</text>
+      <text xml:lang="de">Hardwarekomponentenverbindungsvalidierung erkennt Trennverbindung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device SE components communicate via internal bus</text>
+      <text xml:lang="de">Gerät SE-Komponenten kommunizieren über internen Bus</text>
+    </note>
+    <note>
+      <text xml:lang="en">Disconnection prevents cryptographic operations</text>
+      <text xml:lang="de">Trennverbindung verhindert kryptografische Operationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

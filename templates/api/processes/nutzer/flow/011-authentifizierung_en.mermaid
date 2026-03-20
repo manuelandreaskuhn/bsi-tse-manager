@@ -1,0 +1,48 @@
+flowchart TD
+    Start([User: authenticateUser call])
+    Start --> CheckParams{Parameters<br/>complete?}
+    
+    CheckParams -->|No| ErrorParam[Exception:<br/>ErrorParameterSyntax]
+    CheckParams -->|Yes| CheckUser{UserId<br/>exists?}
+    
+    CheckUser -->|No| ErrorUser[Exception:<br/>ErrorInvalidUserId]
+    CheckUser -->|Yes| CheckBlocked{PIN input<br/>blocked?}
+    
+    CheckBlocked -->|Yes| ErrorBlocked[Exception:<br/>ErrorPinIsBlocked]
+    CheckBlocked -->|No| CheckPIN{PIN<br/>correct?}
+    
+    CheckPIN -->|No| IncrError[Error counter++]
+    IncrError --> CheckMaxErrors{Errors >=<br/>Maximum?}
+    
+    CheckMaxErrors -->|Yes| BlockPIN[Block PIN input]
+    BlockPIN --> ErrorPIN[Exception:<br/>ErrorPinIsBlocked]
+    
+    CheckMaxErrors -->|No| ErrorWrongPIN[Exception:<br/>ErrorWrongPin]
+    
+    CheckPIN -->|Yes| CheckPrevAuth{Other user<br/>logged in?}
+    
+    CheckPrevAuth -->|Yes| Logout["Logout previous user:<br/>logOut()"]
+    CheckPrevAuth -->|No| Authenticate
+    
+    Logout --> Authenticate["Set User Status:<br/>AUTHENTICATED"]
+    
+    Authenticate --> ResetCounter[Set Error Counter = 0]
+    
+    ResetCounter --> CreateLog[Create System Log Message<br/>authenticateUser]
+    
+    CreateLog --> IncrSig[SM: Signature Counter++]
+    IncrSig --> CalcSig[SM: Create Signature]
+    CalcSig --> SaveLog[Save Log Message]
+    
+    SaveLog --> Return[Return: Success]
+    Return --> End([End - User authenticated])
+    
+    ErrorParam --> End
+    ErrorUser --> End
+    ErrorBlocked --> End
+    ErrorPIN --> End
+    ErrorWrongPIN --> End
+    
+    style Authenticate fill:#90EE90
+    style CheckPIN fill:#FFE4B5
+    style BlockPIN fill:#FFB6C1

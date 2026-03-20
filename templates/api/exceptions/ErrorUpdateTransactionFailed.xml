@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUpdateTransactionFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUpdateTransactionFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the execution of the Secure Element functionality for updating a transaction fails. The updateTransaction function modifies or extends an in-progress transaction after it has been started with startTransaction. UpdateTransaction records intermediate data, status changes, or additional information within an active transaction. ErrorUpdateTransactionFailed is raised when the Secure Element's transaction update functionality encounters failures during execution, which may occur due to invalid transaction state, hardware errors, counter issues, storage failures, or other operational problems. ErrorUpdateTransactionFailed is a High severity exception because transaction integrity is compromised if updates cannot be recorded.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Ausführung der Secure Element-Funktionalität zum Aktualisieren einer Transaktion fehlschlägt. Die Funktion updateTransaction ändert oder erweitert eine laufende Transaktion, nachdem sie mit startTransaction gestartet wurde. UpdateTransaction zeichnet Zwischendaten, Statusnderungen oder zusätzliche Informationen innerhalb einer aktiven Transaktion auf. ErrorUpdateTransactionFailed wird ausgelöst, wenn die Secure Element-Transaktionsaktualisierungsfunktionalität während der Ausführung Fehler aufweist, die durch ungültigen Transaktionsstatus, Hardwarefehler, Zählerfragen, Speicherfehler oder andere Betriebsprobleme verursacht werden können. ErrorUpdateTransactionFailed ist eine Ausnahme mit hohem Schweregrad, da die Transaktionsintegrität beeinträchtigt ist, wenn Aktualisierungen nicht aufgezeichnet werden können.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Update Failure</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUpdateTransactionFailed that is thrown if the Secure Element transaction update functionality fails during execution.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUpdateTransactionFailed, die ausgelöst wird, wenn die Secure Element-Transaktionsaktualisierungsfunktionalität während der Ausführung fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the updateTransaction function fails to successfully update an active transaction in the Secure Element. The updateTransaction function modifies or extends in-progress transactions with intermediate data or status changes. Transaction updates are recorded in the audit trail and transaction counter. If the Secure Element transaction update functionality encounters errors during execution, verification fails, hardware issues prevent completion, transaction state is invalid, or other issues block the operation, ErrorUpdateTransactionFailed is raised. This indicates the transaction update could not be successfully completed. The transaction may be left in inconsistent state. ErrorUpdateTransactionFailed is a High severity exception because transaction integrity is critical. Recovery requires investigating the failure and potentially rolling back the transaction.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion updateTransaction eine aktive Transaktion im Secure Element nicht erfolgreich aktualisieren kann. Die Funktion updateTransaction ändert oder erweitert laufende Transaktionen mit Zwischendaten oder Statusnderungen. Transaktionsaktualisierungen werden im Audit-Trail aufgezeichnet und der Transaktionszähler wird erhöht. Wenn die Secure Element-Transaktionsaktualisierungsfunktionalität während der Ausführung Fehler aufweist, die Verifizierung fehlschlägt, Hardwareprobleme den Abschluss verhindern, der Transaktionsstatus ungültig ist oder andere Probleme den Vorgang blockieren, wird ErrorUpdateTransactionFailed ausgelöst. Dies zeigt an, dass die Transaktionsaktualisierung nicht erfolgreich abgeschlossen werden konnte. Die Transaktion kann in einem inkonsistenten Zustand belassen werden. ErrorUpdateTransactionFailed ist eine Ausnahme mit hohem Schweregrad, da die Transaktionsintegrität kritisch ist. Die Wiederherstellung erfordert Untersuchung des Fehlers und möglicherweise Zurücksetzen der fehlgeschlagenen Transaktion.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.2 Transaction Management - Transaction Update Operations</section>
+    <requirement>
+      <text xml:lang="en">The updateTransaction function modifies or extends an active transaction that has been started with startTransaction. UpdateTransaction records intermediate data, status changes, or other information within an active transaction. The transaction is recorded in the audit trail and transaction counter is incremented. If the Secure Element transaction update functionality encounters failures during execution (invalid transaction state, hardware errors, counter issues, storage failures, logging failures), the Secure Element SHALL raise ErrorUpdateTransactionFailed. This indicates the transaction update could not be successfully completed. The transaction state may be undefined or inconsistent. ErrorUpdateTransactionFailed is a High severity exception because transaction integrity is compromised. Recovery requires investigating the failure and potentially rolling back the failed transaction.</text>
+      <text xml:lang="de">Die Funktion updateTransaction ändert oder erweitert eine aktive Transaktion, die mit startTransaction gestartet wurde. UpdateTransaction zeichnet Zwischendaten, Statusnderungen oder andere Informationen innerhalb einer aktiven Transaktion auf. Die Transaktion wird im Audit-Trail aufgezeichnet und der Transaktionszähler wird erhöht. Wenn die Secure Element-Transaktionsaktualisierungsfunktionalität während der Ausführung Ausfallfälle aufweist (ungültiger Transaktionsstatus, Hardwarefehler, Zählerfragen, Speicherfehler, Protokollierungsfehler), MUSS das Secure Element ErrorUpdateTransactionFailed auslösen. Dies zeigt an, dass die Transaktionsaktualisierung nicht erfolgreich abgeschlossen werden konnte. Der Transaktionsstatus kann undefiniert oder inkonsistent sein. ErrorUpdateTransactionFailed ist eine Ausnahme mit hohem Schweregrad, da die Transaktionsintegrität beeinträchtigt ist. Die Wiederherstellung erfordert Untersuchung des Fehlers und möglicherweise Zurücksetzen der fehlgeschlagenen Transaktion.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction update operations: updateTransaction</text>
+      <text xml:lang="de">Transaktionsaktualisierungsvorgänge: updateTransaction</text>
+    </applicability>
+    <reference>Transaction Management (3.2.2), Transaction Operations (3.2.2), updateTransaction – Function (3.2.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls updateTransaction function with transaction data</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion updateTransaction mit Transaktionsdaten auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including transaction data format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich des Transaktionsdatenformats</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If parameters invalid → may raise ErrorParameterSyntax or ErrorParameterMismatch</text>
+      <text xml:lang="de">Wenn Parameter ungültig → kann ErrorParameterSyntax oder ErrorParameterMismatch auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If parameters valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Parameter gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction update request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsaktualisierungsanforderung</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element validates active transaction exists</text>
+      <text xml:lang="de">Secure Element validiert, dass aktive Transaktion vorhanden ist</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If no active transaction → ErrorUpdateTransactionFailed raised</text>
+      <text xml:lang="de">Wenn keine aktive Transaktion → ErrorUpdateTransactionFailed ausgelöst</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If active transaction exists → proceed to step 6</text>
+      <text xml:lang="de">Wenn aktive Transaktion vorhanden → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element validates transaction data format and range</text>
+      <text xml:lang="de">Secure Element validiert Transaktionsdatenformat und -bereich</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If data invalid → ErrorUpdateTransactionFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Daten ungültig → ErrorUpdateTransactionFailed ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If data valid → proceed to step 7</text>
+      <text xml:lang="de">Wenn Daten gültig → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element prepares transaction update record</text>
+      <text xml:lang="de">Secure Element bereitet Transaktionsaktualisierungsdatensatz vor</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element increments transaction counter</text>
+      <text xml:lang="de">Secure Element erhöht den Transaktionszähler</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If counter update fails → ErrorUpdateTransactionFailed raised</text>
+      <text xml:lang="de">Wenn Zähleraktualisierung fehlschlägt → ErrorUpdateTransactionFailed ausgelöst</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If counter succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Zähler erfolgreich → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element writes transaction update to storage</text>
+      <text xml:lang="de">Secure Element schreibt Transaktionsaktualisierung in den Speicher</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If storage write fails → ErrorUpdateTransactionFailed raised</text>
+      <text xml:lang="de">Wenn Speicherschreibfehler → ErrorUpdateTransactionFailed ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If storage succeeds → proceed to step 10</text>
+      <text xml:lang="de">Wenn Speicher erfolgreich → fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element logs update to transaction audit trail</text>
+      <text xml:lang="de">Secure Element protokolliert die Aktualisierung im Transaktions-Audit-Trail</text>
+    </step>
+    <step number="10a">
+      <text xml:lang="en">If logging fails → ErrorUpdateTransactionFailed raised</text>
+      <text xml:lang="de">Wenn Protokollierung fehlschlägt → ErrorUpdateTransactionFailed ausgelöst</text>
+    </step>
+    <step number="10b">
+      <text xml:lang="en">If logging succeeds → proceed to step 11</text>
+      <text xml:lang="de">Wenn Protokollierung erfolgreich → fahren Sie mit Schritt 11 fort</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns to caller indicating transaction successfully updated</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück und zeigt an, dass die Transaktion erfolgreich aktualisiert wurde</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify transaction exists and is still open</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Transaktion vorhanden ist und noch offen ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm transaction update parameters are valid</text>
+      <text xml:lang="de">Bestätigen Sie, dass die Transaktionsaktualisierungsparameter gültig sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check transaction state allows update</text>
+      <text xml:lang="de">Prüfen Sie, ob der Transaktionsstatus die Aktualisierung zulässt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry update after confirming transaction state</text>
+      <text xml:lang="de">Versuchen Sie die Aktualisierung nach Bestätigung des Transaktionsstatus erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorStartTransactionFailed</exception>
+    <exception>ErrorFinishTransactionFailed</exception>
+    <exception>ErrorTransactionCounterExhausted</exception>
+    <exception>ErrorStorageMemoryFull</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Update Not Completed">
+      <text xml:lang="en">Transaction update operation does not complete successfully.</text>
+      <text xml:lang="de">Die Transaktionsaktualisierungsoperation wird nicht erfolgreich abgeschlossen.</text>
+    </state>
+    <state name="Transaction State Undefined">
+      <text xml:lang="en">Transaction state may be undefined or inconsistent after failure.</text>
+      <text xml:lang="de">Der Transaktionsstatus kann nach dem Fehler undefiniert oder inkonsistent sein.</text>
+    </state>
+    <state name="Transaction Not Modified">
+      <text xml:lang="en">Transaction is not updated with new data.</text>
+      <text xml:lang="de">Die Transaktion wird nicht mit neuen Daten aktualisiert.</text>
+    </state>
+    <state name="Counter Not Incremented">
+      <text xml:lang="en">Transaction counter may not be incremented.</text>
+      <text xml:lang="de">Der Transaktionszähler wird möglicherweise nicht erhöht.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUpdateTransactionFailed High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorUpdateTransactionFailed an den Aufrufer zurück.</text>
+    </state>
+    <state name="Audit Trail Incomplete">
+      <text xml:lang="en">Audit trail entry not recorded for this transaction update.</text>
+      <text xml:lang="de">Audit-Trail-Eintrag nicht für diese Transaktionsaktualisierung aufgezeichnet.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Update of transaction data failed - transaction could not be modified</text>
+      <text xml:lang="de">Anzeichen: Aktualisierung der Transaktionsdaten fehlgeschlagen - Transaktion konnte nicht geändert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Transaction Updates, Data Modification, Logging Operations</text>
+      <text xml:lang="de">Themen: Transaktionsverwaltung, Transaktionsaktualisierungen, Datennderung, Protokollierungsvorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by updateTransaction when transaction update operation fails</text>
+      <text xml:lang="de">Wird von updateTransaction ausgelöst, wenn die Transaktionsaktualisierungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Update function modifies transaction data and state</text>
+      <text xml:lang="de">Die Aktualisierungsfunktion ändert Transaktionsdaten und -status</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device applies transaction state changes</text>
+      <text xml:lang="de">Das Gerät wendet Änderungen des Transaktionsstatus an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Update failure prevents transaction modification</text>
+      <text xml:lang="de">Aktualisierungsfehlschlag verhindert Transaktionsänderung</text>
+    </note>
+  </implementationContext>
+</exception>
+

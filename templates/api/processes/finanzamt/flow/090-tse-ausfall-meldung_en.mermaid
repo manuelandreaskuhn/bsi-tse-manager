@@ -1,0 +1,31 @@
+graph TD
+    Start([Start: TSE failure<br/>detected])
+    
+    Start --> Detect[Detect TSE failure]
+    Detect --> Document[Document downtime<br/>and reason]
+    
+    Document --> Check{Can system continue<br/>operation without<br/>TSE?}
+    
+    Check -->|Yes| Mark[Mark failure<br/>on receipt]
+    Check -->|No| Stop[Stop system]
+    
+    Mark --> Continue[Continue operation<br/>until resolution]
+    
+    Continue --> Resolve[Immediately take<br/>measures to resolve]
+    Stop --> Resolve
+    
+    Resolve --> Test[Test TSE<br/>functionality]
+    
+    Test --> Working{TSE working<br/>again?}
+    
+    Working -->|No| Resolve
+    Working -->|Yes| Resume[Resume normal<br/>operation]
+    
+    Resume --> End([End: TSE<br/>operational again])
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style Check fill:#FFE4B5
+    style Working fill:#FFE4B5
+    style Mark fill:#87CEEB
+    style Document fill:#87CEEB

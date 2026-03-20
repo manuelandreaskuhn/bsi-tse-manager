@@ -1,0 +1,330 @@
+{
+  "testcase_id": "TC-SM-KRY-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Kryptographie: Algorithmenkonformität, externe Signaturverifikation und Seriennummernberechnung",
+  "description": "Prüft Kryptographie-Konformität mit BSI TR-03116-5, externe Verifizierbarkeit der Signaturen und SHA-256-Hash-Seriennummer.",
+  "purpose": "Prüfung, ob die kryptographischen Angaben aus der Herstellererklärung und dem ICS den Vorgaben der [BSI TR-03116] entsprechen bzgl.:\n• Signaturverfahren,\n• Signaturformat,\n• Verwendung elliptischer Kurven,\n• Schlüssellänge\n• Hashfunktion,\n• Hashwertlänge,\n• EC-Domainparameter,\n• Klasse des Zufallzahlengenerators.",
+  "module": "Security Module",
+  "submodule": "SM_KRY",
+  "function": "exportLogMessages / exportSerialNumbers",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_KRY_01",
+    "SM_KRY_02",
+    "SM_KRY_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Kryptographische Details sind aus dem ICS und den Herstellerdokumenten bekannt.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Signaturverfahren ist aus dem ICS bekannt.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Es wird die Signatur der erstellten Log-Nachricht zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_KRY_01"
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "ICS-Kryptographieangaben gegen BSI TR-03116-5 prüfen (FP, SM_KRY_01)",
+      "result": null,
+      "instruction": "ICS-Kryptographieangaben gegen BSI TR-03116-5 prüfen (FP, SM_KRY_01)",
+      "checks": [
+        {
+          "description": "Signaturverfahren BSI TR-03116-5 konform (ECDSA)",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturformat BSI TR-03116-5 konform",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Verwendete elliptische Kurve konform (bevorzugt brainpoolP384r1)",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Schlüssellänge BSI TR-03116-5 konform",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Hashfunktion und Hashwertlänge BSI TR-03116-5 konform",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "EC-Domainparameter BSI TR-03116-5 konform",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Klasse des Zufallszahlengenerators BSI TR-03116-5 konform",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "CERT_SIG_ALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CURVE",
+          "title": "Schlüsselkurve",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "type": "VERIFY",
+      "title": "Externe Signaturverifikation (SM_KRY_02)",
+      "result": null,
+      "instruction": "Externe Signaturverifikation (SM_KRY_02)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages → externe Verifikation einer Log-Nachricht",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Signatur der Log-Nachricht extern mit angegebenem Verfahren und öffentlichem Schlüssel verifizierbar",
+          "expected": "Verifikation erfolgreich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Konkatenation der zu signierenden Felder korrekt",
+          "expected": "SIG_VERIFY_CONCAT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_KRY_02"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Seriennummernberechnung prüfen (SM_KRY_03)",
+      "result": null,
+      "instruction": "Seriennummernberechnung prüfen (SM_KRY_03)",
+      "function": "exportSerialNumbers",
+      "checks": [
+        {
+          "description": "SHA-256(DER(SubjectPublicKeyInfo)) == Seriennummer der TSE",
+          "expected": "ESN_CERT_HASH_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer identisch in Logs, Zertifikat-CN und exportSerialNumbers",
+          "expected": "ESN_CROSS_CERT und ESN_CROSS_LOG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "ESN_CERT_HASH_MATCH",
+          "title": "serialNumber entspricht Hash über öffentlichen Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_LOG",
+          "title": "Seriennummer entspricht serialNumber in Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_CERT",
+          "title": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.16",
+        "BSI TR-03151-1 §6.3"
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03116-5",
+    "BSI TR-03153-1 §9.3.2"
+  ]
+}

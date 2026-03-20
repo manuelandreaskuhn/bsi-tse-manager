@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processMap>
+    <metadata>
+        <title>
+            <text xml:lang="en">TSE Process Landscape</text>
+            <text xml:lang="de">TSE Prozesslandkarte</text>
+        </title>
+        <version>1.0.0</version>
+        <date>2026-01-03</date>
+        <description>
+            <text xml:lang="en">Complete overview of all TSE processes and process chains according to BSI TR-03151-1 and BSI TR-03153-1</text>
+            <text xml:lang="de">Vollständige Übersicht aller TSE-Prozesse und Prozessketten gemäß BSI TR-03151-1 und BSI TR-03153-1</text>
+        </description>
+        <standards>
+            <standard>BSI TR-03151-1</standard>
+            <standard>BSI TR-03153-1</standard>
+        </standards>
+    </metadata>
+
+    <mainCategories>
+        <category>
+            <id>lifecycle</id>
+            <name>
+                <text xml:lang="en">Lifecycle Management</text>
+                <text xml:lang="de">Lebenszyklusmanagement</text>
+            </name>
+            <description>
+                <text xml:lang="en">Management of the TSE lifecycle from commissioning to decommissioning</text>
+                <text xml:lang="de">Verwaltung des TSE-Lebenszyklus von Inbetriebnahme bis Außerbetriebnahme</text>
+            </description>
+            <icon>🔄</icon>
+            <color>#4A90E2</color>
+            <subCategories>
+                <subCategory>
+                    <id>lifecycle.initialization</id>
+                    <name>
+                        <text xml:lang="en">Initialization &amp; Commissioning</text>
+                        <text xml:lang="de">Initialisierung &amp; Inbetriebnahme</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>005</id>
+                            <name>
+                                <text xml:lang="en">TSE Initialization</text>
+                                <text xml:lang="de">TSE-Initialisierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                        </process>
+                        <process>
+                            <id>017</id>
+                            <name>
+                                <text xml:lang="en">Set Description</text>
+                                <text xml:lang="de">Beschreibung setzen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>018</id>
+                            <name>
+                                <text xml:lang="en">Read Description</text>
+                                <text xml:lang="de">Beschreibung auslesen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>013</id>
+                            <name>
+                                <text xml:lang="en">Time Update</text>
+                                <text xml:lang="de">Zeitaktualisierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK03</id>
+                            <name>
+                                <text xml:lang="en">TSE Initialization and Commissioning</text>
+                                <text xml:lang="de">TSE-Initialisierung und Inbetriebnahme</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>lifecycle.operation</id>
+                    <name>
+                        <text xml:lang="en">Operation &amp; Maintenance</text>
+                        <text xml:lang="de">Betrieb &amp; Wartung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>009</id>
+                            <name>
+                                <text xml:lang="en">TSE Update</text>
+                                <text xml:lang="de">TSE-Update</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>010</id>
+                            <name>
+                                <text xml:lang="en">Self Test</text>
+                                <text xml:lang="de">Selbsttest</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>031</id>
+                            <name>
+                                <text xml:lang="en">Configure Logging</text>
+                                <text xml:lang="de">Logging konfigurieren</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>lifecycle.decommission</id>
+                    <name>
+                        <text xml:lang="en">Decommissioning</text>
+                        <text xml:lang="de">Außerbetriebnahme</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>006</id>
+                            <name>
+                                <text xml:lang="en">TSE Decommissioning</text>
+                                <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK08</id>
+                            <name>
+                                <text xml:lang="en">TSE Decommissioning</text>
+                                <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+            </subCategories>
+        </category>
+
+        <category>
+            <id>transactions</id>
+            <name>
+                <text xml:lang="en">Transaction Management</text>
+                <text xml:lang="de">Transaktionsmanagement</text>
+            </name>
+            <description>
+                <text xml:lang="en">Core processes for logging business transactions</text>
+                <text xml:lang="de">Kernprozesse für die Protokollierung von Geschäftsvorgängen</text>
+            </description>
+            <icon>💳</icon>
+            <color>#50C878</color>
+            <subCategories>
+                <subCategory>
+                    <id>transactions.core</id>
+                    <name>
+                        <text xml:lang="en">Core Transaction Processes</text>
+                        <text xml:lang="de">Kern-Transaktionsprozesse</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>001</id>
+                            <name>
+                                <text xml:lang="en">Transaction Start</text>
+                                <text xml:lang="de">Transaktionsstart</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">daily</text>
+                                <text xml:lang="de">täglich</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>002</id>
+                            <name>
+                                <text xml:lang="en">Transaction Update</text>
+                                <text xml:lang="de">Transaktionsaktualisierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">daily</text>
+                                <text xml:lang="de">täglich</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>003</id>
+                            <name>
+                                <text xml:lang="en">Transaction Completion</text>
+                                <text xml:lang="de">Transaktionsabschluss</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">daily</text>
+                                <text xml:lang="de">täglich</text>
+                            </frequency>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK01</id>
+                            <name>
+                                <text xml:lang="en">Complete Transaction Flow</text>
+                                <text xml:lang="de">Vollständiger Transaktionsverlauf</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>transactions.client</id>
+                    <name>
+                        <text xml:lang="en">Client Management</text>
+                        <text xml:lang="de">Client-Verwaltung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>004</id>
+                            <name>
+                                <text xml:lang="en">Client Registration</text>
+                                <text xml:lang="de">Client-Registrierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>014</id>
+                            <name>
+                                <text xml:lang="en">Client Deregistration</text>
+                                <text xml:lang="de">Client-Deregistrierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK02</id>
+                            <name>
+                                <text xml:lang="en">Client Lifecycle</text>
+                                <text xml:lang="de">Client-Lebenszyklus</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>transactions.dsfinvk</id>
+                    <name>
+                        <text xml:lang="en">DSFinV-K Transaction Types</text>
+                        <text xml:lang="de">DSFinV-K Transaktionstypen</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">Specific transaction patterns according to DSFinV-K standard with different processTypes</text>
+                        <text xml:lang="de">Spezifische Transaktionsmuster nach DSFinV-K Standard mit verschiedenen processTypes</text>
+                    </description>
+                    <processes/>
+                    <processChains>
+                        <processChain>
+                            <id>PK09</id>
+                            <name>
+                                <text xml:lang="en">Kassenbeleg Transaction (DSFinV-K)</text>
+                                <text xml:lang="de">Kassenbeleg-Transaktion (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Standard receipt transaction - Flowchart view</text>
+                                <text xml:lang="de">Standard-Belegvorgang - Ablaufdiagramm</text>
+                            </description>
+                        </processChain>
+                        <processChain>
+                            <id>PK10</id>
+                            <name>
+                                <text xml:lang="en">Bestellung Transaction (DSFinV-K)</text>
+                                <text xml:lang="de">Bestellung-Transaktion (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Order transaction with incremental updates - Flowchart view</text>
+                                <text xml:lang="de">Bestellvorgang mit schrittweisen Updates - Ablaufdiagramm</text>
+                            </description>
+                        </processChain>
+                        <processChain>
+                            <id>PK11</id>
+                            <name>
+                                <text xml:lang="en">SonstigerVorgang Transaction (DSFinV-K)</text>
+                                <text xml:lang="de">SonstigerVorgang-Transaktion (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Other transaction with free-form data - Flowchart view</text>
+                                <text xml:lang="de">Sonstiger Vorgang mit freien Daten - Ablaufdiagramm</text>
+                            </description>
+                        </processChain>
+                        <processChain>
+                            <id>PK12</id>
+                            <name>
+                                <text xml:lang="en">Kassenbeleg Transaction Sequence (DSFinV-K)</text>
+                                <text xml:lang="de">Kassenbeleg-Transaktion Sequenzdiagramm (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Standard receipt transaction - Sequence diagram view</text>
+                                <text xml:lang="de">Standard-Belegvorgang - Sequenzdiagramm</text>
+                            </description>
+                        </processChain>
+                        <processChain>
+                            <id>PK13</id>
+                            <name>
+                                <text xml:lang="en">Bestellung Transaction Sequence (DSFinV-K)</text>
+                                <text xml:lang="de">Bestellung-Transaktion Sequenzdiagramm (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Order transaction with incremental updates - Sequence diagram view</text>
+                                <text xml:lang="de">Bestellvorgang mit schrittweisen Updates - Sequenzdiagramm</text>
+                            </description>
+                        </processChain>
+                        <processChain>
+                            <id>PK14</id>
+                            <name>
+                                <text xml:lang="en">SonstigerVorgang Transaction Sequence (DSFinV-K)</text>
+                                <text xml:lang="de">SonstigerVorgang-Transaktion Sequenzdiagramm (DSFinV-K)</text>
+                            </name>
+                            <description>
+                                <text xml:lang="en">Other transaction with free-form data - Sequence diagram view</text>
+                                <text xml:lang="de">Sonstiger Vorgang mit freien Daten - Sequenzdiagramm</text>
+                            </description>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>transactions.info</id>
+                    <name>
+                        <text xml:lang="en">Transaction Information</text>
+                        <text xml:lang="de">Transaktions-Informationen</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>022</id>
+                            <name>
+                                <text xml:lang="en">Get Transaction Counter</text>
+                                <text xml:lang="de">Transaktionszähler abrufen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>023</id>
+                            <name>
+                                <text xml:lang="en">Get Open Transactions</text>
+                                <text xml:lang="de">Offene Transaktionen abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>036</id>
+                            <name>
+                                <text xml:lang="en">Get Last Transaction Log</text>
+                                <text xml:lang="de">Letzte Transaktions-Log abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>037</id>
+                            <name>
+                                <text xml:lang="en">Get Update Variants</text>
+                                <text xml:lang="de">Update-Varianten abrufen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>041</id>
+                            <name>
+                                <text xml:lang="en">Get Current Number of Transactions</text>
+                                <text xml:lang="de">Aktuelle Anzahl Transaktionen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>042</id>
+                            <name>
+                                <text xml:lang="en">Get Maximum Number of Transactions</text>
+                                <text xml:lang="de">Maximale Anzahl Transaktionen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>043</id>
+                            <name>
+                                <text xml:lang="en">Get Transaction Status</text>
+                                <text xml:lang="de">Transaktionsstatus abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>transactions.client_info</id>
+                    <name>
+                        <text xml:lang="en">Client Information</text>
+                        <text xml:lang="de">Client-Informationen</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>038</id>
+                            <name>
+                                <text xml:lang="en">Get Current Number of Clients</text>
+                                <text xml:lang="de">Aktuelle Anzahl Clients</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>039</id>
+                            <name>
+                                <text xml:lang="en">Get Maximum Number of Clients</text>
+                                <text xml:lang="de">Maximale Anzahl Clients</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>040</id>
+                            <name>
+                                <text xml:lang="en">Get Registered Clients</text>
+                                <text xml:lang="de">Registrierte Clients</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>transactions.locking</id>
+                    <name>
+                        <text xml:lang="en">Transaction Locking</text>
+                        <text xml:lang="de">Transaktionssperrung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>019</id>
+                            <name>
+                                <text xml:lang="en">Lock Transaction Logging</text>
+                                <text xml:lang="de">Transaktionsprotokollierung sperren</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>020</id>
+                            <name>
+                                <text xml:lang="en">Unlock Transaction Logging</text>
+                                <text xml:lang="de">Transaktionsprotokollierung entsperren</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+            </subCategories>
+        </category>
+
+        <category>
+            <id>security</id>
+            <name>
+                <text xml:lang="en">Authentication &amp; Security</text>
+                <text xml:lang="de">Authentifizierung &amp; Sicherheit</text>
+            </name>
+            <description>
+                <text xml:lang="en">User authentication, PIN management, and access control</text>
+                <text xml:lang="de">Nutzerauthentifizierung, PIN-Verwaltung und Zugriffskontrolle</text>
+            </description>
+            <icon>🔐</icon>
+            <color>#E74C3C</color>
+            <subCategories>
+                <subCategory>
+                    <id>security.auth</id>
+                    <name>
+                        <text xml:lang="en">Authentication</text>
+                        <text xml:lang="de">Authentifizierung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>011</id>
+                            <name>
+                                <text xml:lang="en">User Authentication</text>
+                                <text xml:lang="de">Nutzer-Authentifizierung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">daily</text>
+                                <text xml:lang="de">täglich</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>015</id>
+                            <name>
+                                <text xml:lang="en">User Logout</text>
+                                <text xml:lang="de">Nutzer-Abmeldung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">daily</text>
+                                <text xml:lang="de">täglich</text>
+                            </frequency>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK06</id>
+                            <name>
+                                <text xml:lang="en">Authentication-Usage-Logout</text>
+                                <text xml:lang="de">Authentifizierung-Nutzung-Abmeldung</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>security.pin</id>
+                    <name>
+                        <text xml:lang="en">PIN Management</text>
+                        <text xml:lang="de">PIN-Verwaltung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>016</id>
+                            <name>
+                                <text xml:lang="en">Unblock PIN</text>
+                                <text xml:lang="de">PIN entsperren</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK07</id>
+                            <name>
+                                <text xml:lang="en">PIN Unblock</text>
+                                <text xml:lang="de">PIN-Entsperrung</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+            </subCategories>
+        </category>
+
+        <category>
+            <id>data</id>
+            <name>
+                <text xml:lang="en">Data &amp; Export</text>
+                <text xml:lang="de">Daten &amp; Export</text>
+            </name>
+            <description>
+                <text xml:lang="en">Export, backup, restoration, and deletion of log data</text>
+                <text xml:lang="de">Export, Backup, Wiederherstellung und Löschung von Log-Daten</text>
+            </description>
+            <icon>💾</icon>
+            <color>#9B59B6</color>
+            <subCategories>
+                <subCategory>
+                    <id>data.export</id>
+                    <name>
+                        <text xml:lang="en">Data Export</text>
+                        <text xml:lang="de">Datenexport</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>007</id>
+                            <name>
+                                <text xml:lang="en">Data Export</text>
+                                <text xml:lang="de">Datenexport</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <frequency>
+                                <text xml:lang="en">weekly</text>
+                                <text xml:lang="de">wöchentlich</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>012</id>
+                            <name>
+                                <text xml:lang="en">Filtered Export</text>
+                                <text xml:lang="de">Gefilterter Export</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>021</id>
+                            <name>
+                                <text xml:lang="en">Export Certificate</text>
+                                <text xml:lang="de">Zertifikatsexport</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>032</id>
+                            <name>
+                                <text xml:lang="en">Export Serial Numbers</text>
+                                <text xml:lang="de">Seriennummern exportieren</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK04</id>
+                            <name>
+                                <text xml:lang="en">Export and Delete Workflow</text>
+                                <text xml:lang="de">Export-und-Lösch-Workflow</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>data.backup</id>
+                    <name>
+                        <text xml:lang="en">Backup &amp; Restoration</text>
+                        <text xml:lang="de">Backup &amp; Wiederherstellung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>035</id>
+                            <name>
+                                <text xml:lang="en">Restore Logs</text>
+                                <text xml:lang="de">Logs wiederherstellen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains>
+                        <processChain>
+                            <id>PK05</id>
+                            <name>
+                                <text xml:lang="en">Backup and Restoration Workflow</text>
+                                <text xml:lang="de">Backup-und-Wiederherstellungs-Workflow</text>
+                            </name>
+                        </processChain>
+                    </processChains>
+                </subCategory>
+                <subCategory>
+                    <id>data.management</id>
+                    <name>
+                        <text xml:lang="en">Data Management</text>
+                        <text xml:lang="de">Datenverwaltung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>034</id>
+                            <name>
+                                <text xml:lang="en">Delete Logs</text>
+                                <text xml:lang="de">Logs löschen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                            <frequency>
+                                <text xml:lang="en">weekly</text>
+                                <text xml:lang="de">wöchentlich</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>030</id>
+                            <name>
+                                <text xml:lang="en">Get Last Log Message</text>
+                                <text xml:lang="de">Letzte Log-Nachricht abrufen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>033</id>
+                            <name>
+                                <text xml:lang="en">Get Signature Counter</text>
+                                <text xml:lang="de">Signaturzähler abrufen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>data.verification</id>
+                    <name>
+                        <text xml:lang="en">Verification</text>
+                        <text xml:lang="de">Verifikation</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>008</id>
+                            <name>
+                                <text xml:lang="en">Log Verification</text>
+                                <text xml:lang="de">Log-Verifikation</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+            </subCategories>
+        </category>
+
+        <category>
+            <id>monitoring</id>
+            <name>
+                <text xml:lang="en">Monitoring &amp; Information</text>
+                <text xml:lang="de">Monitoring &amp; Information</text>
+            </name>
+            <description>
+                <text xml:lang="en">System status, storage, versions, and time management</text>
+                <text xml:lang="de">Systemstatus, Speicher, Versionen und Zeitverwaltung</text>
+            </description>
+            <icon>📊</icon>
+            <color>#F39C12</color>
+            <subCategories>
+                <subCategory>
+                    <id>monitoring.system</id>
+                    <name>
+                        <text xml:lang="en">System Status</text>
+                        <text xml:lang="de">Systemstatus</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>024</id>
+                            <name>
+                                <text xml:lang="en">Get Device Status</text>
+                                <text xml:lang="de">Gerätestatus abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>026</id>
+                            <name>
+                                <text xml:lang="en">Get Version Information</text>
+                                <text xml:lang="de">Versionsinformationen abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                        <process>
+                            <id>027</id>
+                            <name>
+                                <text xml:lang="en">Get End-of-Life Date</text>
+                                <text xml:lang="de">Nutzungsende-Datum abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>monitoring.storage</id>
+                    <name>
+                        <text xml:lang="en">Storage Management</text>
+                        <text xml:lang="de">Speicherverwaltung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>025</id>
+                            <name>
+                                <text xml:lang="en">Get Storage Information</text>
+                                <text xml:lang="de">Speicherabfragen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>monitoring.time</id>
+                    <name>
+                        <text xml:lang="en">Time Management</text>
+                        <text xml:lang="de">Zeitverwaltung</text>
+                    </name>
+                    <processes>
+                        <process>
+                            <id>028</id>
+                            <name>
+                                <text xml:lang="en">Get Time Synchronization Variant</text>
+                                <text xml:lang="de">Zeitsynchronisations-Variante abrufen</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                        </process>
+                        <process>
+                            <id>029</id>
+                            <name>
+                                <text xml:lang="en">Get Current Time</text>
+                                <text xml:lang="de">Aktuelle Zeit abrufen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+            </subCategories>
+        </category>
+
+        <category>
+            <id>compliance</id>
+            <name>
+                <text xml:lang="en">Compliance &amp; Reporting</text>
+                <text xml:lang="de">Compliance &amp; Meldewesen</text>
+            </name>
+            <description>
+                <text xml:lang="en">Legal obligations, reporting requirements, and receipt issuance according to § 146a AO</text>
+                <text xml:lang="de">Gesetzliche Pflichten, Meldepflichten und Belegausgabe gemäß § 146a AO</text>
+            </description>
+            <icon>⚖️</icon>
+            <color>#E74C3C</color>
+            <subCategories>
+                <subCategory>
+                    <id>compliance.reporting</id>
+                    <name>
+                        <text xml:lang="en">Reporting Obligations</text>
+                        <text xml:lang="de">Meldepflichten</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">Mandatory notifications to tax authorities according to § 146a para. 4 AO</text>
+                        <text xml:lang="de">Verpflichtende Meldungen an das Finanzamt gemäß § 146a Abs. 4 AO</text>
+                    </description>
+                    <processes>
+                        <process>
+                            <id>091</id>
+                            <name>
+                                <text xml:lang="en">Reporting Obligation for Acquisition</text>
+                                <text xml:lang="de">Mitteilungspflicht bei Anschaffung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                            <deadline>
+                                <text xml:lang="en">1 month after acquisition</text>
+                                <text xml:lang="de">1 Monat nach Anschaffung</text>
+                            </deadline>
+                        </process>
+                        <process>
+                            <id>092</id>
+                            <name>
+                                <text xml:lang="en">Reporting Obligation for Decommissioning</text>
+                                <text xml:lang="de">Mitteilungspflicht bei Außerbetriebnahme</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                            <deadline>
+                                <text xml:lang="en">1 month after decommissioning</text>
+                                <text xml:lang="de">1 Monat nach Außerbetriebnahme</text>
+                            </deadline>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>compliance.receipts</id>
+                    <name>
+                        <text xml:lang="en">Receipt Obligations</text>
+                        <text xml:lang="de">Belegpflichten</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">Receipt issuance obligations and exemptions according to § 146a para. 2 AO</text>
+                        <text xml:lang="de">Belegausgabepflichten und Befreiungen gemäß § 146a Abs. 2 AO</text>
+                    </description>
+                    <processes>
+                        <process>
+                            <id>093</id>
+                            <name>
+                                <text xml:lang="en">Receipt Issuance Obligation</text>
+                                <text xml:lang="de">Belegausgabepflicht</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                            <frequency>
+                                <text xml:lang="en">per transaction</text>
+                                <text xml:lang="de">pro Transaktion</text>
+                            </frequency>
+                        </process>
+                        <process>
+                            <id>094</id>
+                            <name>
+                                <text xml:lang="en">Apply for Exemption from Receipt Obligation</text>
+                                <text xml:lang="de">Befreiung von Belegausgabepflicht beantragen</text>
+                            </name>
+                            <mandatory>false</mandatory>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+                <subCategory>
+                    <id>compliance.failure</id>
+                    <name>
+                        <text xml:lang="en">Failure Handling</text>
+                        <text xml:lang="de">Ausfallbehandlung</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">Handling of TSE failures and emergency operations according to AEAO to § 146a</text>
+                        <text xml:lang="de">Behandlung von TSE-Ausfällen und Notbetrieb gemäß AEAO zu § 146a</text>
+                    </description>
+                    <processes>
+                        <process>
+                            <id>090</id>
+                            <name>
+                                <text xml:lang="en">TSE Failure Handling</text>
+                                <text xml:lang="de">TSE-Ausfall Behandlung</text>
+                            </name>
+                            <mandatory>true</mandatory>
+                            <critical>true</critical>
+                        </process>
+                    </processes>
+                    <processChains/>
+                </subCategory>
+            </subCategories>
+        </category>
+    </mainCategories>
+
+    <actors>
+        <actor>
+            <id>kassensystem</id>
+            <name>
+                <text xml:lang="en">Point of Sale System / Client</text>
+                <text xml:lang="de">Kassensystem/Client</text>
+            </name>
+            <description>
+                <text xml:lang="en">Recording system that logs transactions</text>
+                <text xml:lang="de">Aufzeichnungssystem, das Transaktionen protokolliert</text>
+            </description>
+            <icon>🖥️</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </process>
+                <process>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Transaction Update</text>
+                        <text xml:lang="de">Transaktionsaktualisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </process>
+                <process>
+                    <id>004</id>
+                    <name>
+                        <text xml:lang="en">Client Registration</text>
+                        <text xml:lang="de">Client-Registrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>014</id>
+                    <name>
+                        <text xml:lang="en">Client Deregistration</text>
+                        <text xml:lang="de">Client-Deregistrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>022</id>
+                    <name>
+                        <text xml:lang="en">Get Transaction Counter</text>
+                        <text xml:lang="de">Transaktionszähler abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>023</id>
+                    <name>
+                        <text xml:lang="en">Get Open Transactions</text>
+                        <text xml:lang="de">Offene Transaktionen abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>036</id>
+                    <name>
+                        <text xml:lang="en">Get Last Transaction Log</text>
+                        <text xml:lang="de">Letzte Transaktions-Log abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>037</id>
+                    <name>
+                        <text xml:lang="en">Get Update Variants</text>
+                        <text xml:lang="de">Update-Varianten abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>038</id>
+                    <name>
+                        <text xml:lang="en">Get Current Number of Clients</text>
+                        <text xml:lang="de">Aktuelle Anzahl Clients</text>
+                    </name>
+                </process>
+                <process>
+                    <id>039</id>
+                    <name>
+                        <text xml:lang="en">Get Maximum Number of Clients</text>
+                        <text xml:lang="de">Maximale Anzahl Clients</text>
+                    </name>
+                </process>
+                <process>
+                    <id>040</id>
+                    <name>
+                        <text xml:lang="en">Get Registered Clients</text>
+                        <text xml:lang="de">Registrierte Clients</text>
+                    </name>
+                </process>
+                <process>
+                    <id>041</id>
+                    <name>
+                        <text xml:lang="en">Get Current Number of Transactions</text>
+                        <text xml:lang="de">Aktuelle Anzahl Transaktionen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>042</id>
+                    <name>
+                        <text xml:lang="en">Get Maximum Number of Transactions</text>
+                        <text xml:lang="de">Maximale Anzahl Transaktionen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>043</id>
+                    <name>
+                        <text xml:lang="en">Get Transaction Status</text>
+                        <text xml:lang="de">Transaktionsstatus abrufen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>admin</id>
+            <name>
+                <text xml:lang="en">Administrator</text>
+                <text xml:lang="de">Administrator</text>
+            </name>
+            <description>
+                <text xml:lang="en">Responsible for TSE management and maintenance</text>
+                <text xml:lang="de">Verantwortlich für Verwaltung und Wartung der TSE</text>
+            </description>
+            <icon>👤</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>005</id>
+                    <name>
+                        <text xml:lang="en">TSE Initialization</text>
+                        <text xml:lang="de">TSE-Initialisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>006</id>
+                    <name>
+                        <text xml:lang="en">TSE Decommissioning</text>
+                        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                    </name>
+                </process>
+                <process>
+                    <id>009</id>
+                    <name>
+                        <text xml:lang="en">TSE Update</text>
+                        <text xml:lang="de">TSE-Update</text>
+                    </name>
+                </process>
+                <process>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>013</id>
+                    <name>
+                        <text xml:lang="en">Time Update</text>
+                        <text xml:lang="de">Zeitaktualisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>016</id>
+                    <name>
+                        <text xml:lang="en">Unblock PIN</text>
+                        <text xml:lang="de">PIN entsperren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>017</id>
+                    <name>
+                        <text xml:lang="en">Set Description</text>
+                        <text xml:lang="de">Beschreibung setzen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>018</id>
+                    <name>
+                        <text xml:lang="en">Read Description</text>
+                        <text xml:lang="de">Beschreibung auslesen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>019</id>
+                    <name>
+                        <text xml:lang="en">Lock Transaction Logging</text>
+                        <text xml:lang="de">Transaktionsprotokollierung sperren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>020</id>
+                    <name>
+                        <text xml:lang="en">Unlock Transaction Logging</text>
+                        <text xml:lang="de">Transaktionsprotokollierung entsperren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>031</id>
+                    <name>
+                        <text xml:lang="en">Configure Logging</text>
+                        <text xml:lang="de">Logging konfigurieren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>034</id>
+                    <name>
+                        <text xml:lang="en">Delete Logs</text>
+                        <text xml:lang="de">Logs löschen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>035</id>
+                    <name>
+                        <text xml:lang="en">Restore Logs</text>
+                        <text xml:lang="de">Logs wiederherstellen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>logger</id>
+            <name>
+                <text xml:lang="en">Logger</text>
+                <text xml:lang="de">Logger</text>
+            </name>
+            <description>
+                <text xml:lang="en">Role for transaction management</text>
+                <text xml:lang="de">Rolle für Transaktionsverwaltung</text>
+            </description>
+            <icon>📝</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </process>
+                <process>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Transaction Update</text>
+                        <text xml:lang="de">Transaktionsaktualisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </process>
+                <process>
+                    <id>004</id>
+                    <name>
+                        <text xml:lang="en">Client Registration</text>
+                        <text xml:lang="de">Client-Registrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>014</id>
+                    <name>
+                        <text xml:lang="en">Client Deregistration</text>
+                        <text xml:lang="de">Client-Deregistrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>pruefer</id>
+            <name>
+                <text xml:lang="en">Auditor / Inspector</text>
+                <text xml:lang="de">Prüfer/Auditor</text>
+            </name>
+            <description>
+                <text xml:lang="en">Responsible for export and verification</text>
+                <text xml:lang="de">Verantwortlich für Export und Verifikation</text>
+            </description>
+            <icon>🔍</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>007</id>
+                    <name>
+                        <text xml:lang="en">Data Export</text>
+                        <text xml:lang="de">Datenexport</text>
+                    </name>
+                </process>
+                <process>
+                    <id>008</id>
+                    <name>
+                        <text xml:lang="en">Log Verification</text>
+                        <text xml:lang="de">Log-Verifikation</text>
+                    </name>
+                </process>
+                <process>
+                    <id>012</id>
+                    <name>
+                        <text xml:lang="en">Filtered Export</text>
+                        <text xml:lang="de">Gefilterter Export</text>
+                    </name>
+                </process>
+                <process>
+                    <id>021</id>
+                    <name>
+                        <text xml:lang="en">Export Certificate</text>
+                        <text xml:lang="de">Zertifikatsexport</text>
+                    </name>
+                </process>
+                <process>
+                    <id>030</id>
+                    <name>
+                        <text xml:lang="en">Get Last Log Message</text>
+                        <text xml:lang="de">Letzte Log-Nachricht abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>032</id>
+                    <name>
+                        <text xml:lang="en">Export Serial Numbers</text>
+                        <text xml:lang="de">Seriennummern exportieren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>033</id>
+                    <name>
+                        <text xml:lang="en">Get Signature Counter</text>
+                        <text xml:lang="de">Signaturzähler abrufen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>timeadmin</id>
+            <name>
+                <text xml:lang="en">Time Administrator</text>
+                <text xml:lang="de">Zeitadministrator</text>
+            </name>
+            <description>
+                <text xml:lang="en">Responsible for time updates</text>
+                <text xml:lang="de">Verantwortlich für Zeitaktualisierung</text>
+            </description>
+            <icon>⏰</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>013</id>
+                    <name>
+                        <text xml:lang="en">Time Update</text>
+                        <text xml:lang="de">Zeitaktualisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>028</id>
+                    <name>
+                        <text xml:lang="en">Get Time Synchronization Variant</text>
+                        <text xml:lang="de">Zeitsynchronisations-Variante abrufen</text>
+                    </name>
+                </process>
+                <process>
+                    <id>029</id>
+                    <name>
+                        <text xml:lang="en">Get Current Time</text>
+                        <text xml:lang="de">Aktuelle Zeit abrufen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>hersteller</id>
+            <name>
+                <text xml:lang="en">Manufacturer</text>
+                <text xml:lang="de">Hersteller</text>
+            </name>
+            <description>
+                <text xml:lang="en">TSE manufacturer for updates and maintenance</text>
+                <text xml:lang="de">TSE-Hersteller für Updates und Wartung</text>
+            </description>
+            <icon>🏭</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>009</id>
+                    <name>
+                        <text xml:lang="en">TSE Update</text>
+                        <text xml:lang="de">TSE-Update</text>
+                    </name>
+                </process>
+                <process>
+                    <id>010</id>
+                    <name>
+                        <text xml:lang="en">Self Test</text>
+                        <text xml:lang="de">Selbsttest</text>
+                    </name>
+                </process>
+                <process>
+                    <id>031</id>
+                    <name>
+                        <text xml:lang="en">Configure Logging</text>
+                        <text xml:lang="de">Logging konfigurieren</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>finanzamt</id>
+            <name>
+                <text xml:lang="en">Tax Authority</text>
+                <text xml:lang="de">Finanzamt</text>
+            </name>
+            <description>
+                <text xml:lang="en">Tax authority responsible for compliance monitoring and receiving notifications</text>
+                <text xml:lang="de">Finanzbehörde zuständig für Compliance-Überwachung und Meldungsempfang</text>
+            </description>
+            <icon>🏛️</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>090</id>
+                    <name>
+                        <text xml:lang="en">TSE Failure Handling</text>
+                        <text xml:lang="de">TSE-Ausfall Behandlung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>091</id>
+                    <name>
+                        <text xml:lang="en">Reporting Obligation for Acquisition</text>
+                        <text xml:lang="de">Mitteilungspflicht bei Anschaffung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>092</id>
+                    <name>
+                        <text xml:lang="en">Reporting Obligation for Decommissioning</text>
+                        <text xml:lang="de">Mitteilungspflicht bei Außerbetriebnahme</text>
+                    </name>
+                </process>
+                <process>
+                    <id>093</id>
+                    <name>
+                        <text xml:lang="en">Receipt Issuance Obligation</text>
+                        <text xml:lang="de">Belegausgabepflicht</text>
+                    </name>
+                </process>
+                <process>
+                    <id>094</id>
+                    <name>
+                        <text xml:lang="en">Apply for Exemption from Receipt Obligation</text>
+                        <text xml:lang="de">Befreiung von Belegausgabepflicht beantragen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+        <actor>
+            <id>unternehmer</id>
+            <name>
+                <text xml:lang="en">Entrepreneur / Business Owner</text>
+                <text xml:lang="de">Unternehmer / Geschäftsinhaber</text>
+            </name>
+            <description>
+                <text xml:lang="en">Business owner responsible for compliance with legal obligations</text>
+                <text xml:lang="de">Geschäftsinhaber verantwortlich für Einhaltung gesetzlicher Pflichten</text>
+            </description>
+            <icon>👔</icon>
+            <responsibleProcesses>
+                <process>
+                    <id>090</id>
+                    <name>
+                        <text xml:lang="en">TSE Failure Handling</text>
+                        <text xml:lang="de">TSE-Ausfall Behandlung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>091</id>
+                    <name>
+                        <text xml:lang="en">Reporting Obligation for Acquisition</text>
+                        <text xml:lang="de">Mitteilungspflicht bei Anschaffung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>092</id>
+                    <name>
+                        <text xml:lang="en">Reporting Obligation for Decommissioning</text>
+                        <text xml:lang="de">Mitteilungspflicht bei Außerbetriebnahme</text>
+                    </name>
+                </process>
+                <process>
+                    <id>093</id>
+                    <name>
+                        <text xml:lang="en">Receipt Issuance Obligation</text>
+                        <text xml:lang="de">Belegausgabepflicht</text>
+                    </name>
+                </process>
+                <process>
+                    <id>094</id>
+                    <name>
+                        <text xml:lang="en">Apply for Exemption from Receipt Obligation</text>
+                        <text xml:lang="de">Befreiung von Belegausgabepflicht beantragen</text>
+                    </name>
+                </process>
+            </responsibleProcesses>
+        </actor>
+    </actors>
+
+    <usageScenarios>
+        <scenario>
+            <id>daily_operations</id>
+            <name>
+                <text xml:lang="en">Daily Operations</text>
+                <text xml:lang="de">Täglicher Betrieb</text>
+            </name>
+            <description>
+                <text xml:lang="en">Processes used daily</text>
+                <text xml:lang="de">Prozesse die täglich genutzt werden</text>
+            </description>
+            <frequency>
+                <text xml:lang="en">daily</text>
+                <text xml:lang="de">täglich</text>
+            </frequency>
+            <processes>
+                <process>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </process>
+                <process>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Transaction Update</text>
+                        <text xml:lang="de">Transaktionsaktualisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </process>
+                <process>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </process>
+            </processes>
+            <processChains>
+                <processChain>
+                    <id>PK01</id>
+                    <name>
+                        <text xml:lang="en">Complete Transaction Flow</text>
+                        <text xml:lang="de">Vollständiger Transaktionsverlauf</text>
+                    </name>
+                </processChain>
+                <processChain>
+                    <id>PK06</id>
+                    <name>
+                        <text xml:lang="en">Authentication-Usage-Logout</text>
+                        <text xml:lang="de">Authentifizierung-Nutzung-Abmeldung</text>
+                    </name>
+                </processChain>
+            </processChains>
+        </scenario>
+        <scenario>
+            <id>weekly_maintenance</id>
+            <name>
+                <text xml:lang="en">Weekly Maintenance</text>
+                <text xml:lang="de">Wöchentliche Wartung</text>
+            </name>
+            <description>
+                <text xml:lang="en">Regular maintenance tasks</text>
+                <text xml:lang="de">Regelmäßige Wartungsaufgaben</text>
+            </description>
+            <frequency>
+                <text xml:lang="en">weekly</text>
+                <text xml:lang="de">wöchentlich</text>
+            </frequency>
+            <processes>
+                <process>
+                    <id>007</id>
+                    <name>
+                        <text xml:lang="en">Data Export</text>
+                        <text xml:lang="de">Datenexport</text>
+                    </name>
+                </process>
+                <process>
+                    <id>034</id>
+                    <name>
+                        <text xml:lang="en">Delete Logs</text>
+                        <text xml:lang="de">Logs löschen</text>
+                    </name>
+                </process>
+            </processes>
+            <processChains>
+                <processChain>
+                    <id>PK04</id>
+                    <name>
+                        <text xml:lang="en">Export and Delete Workflow</text>
+                        <text xml:lang="de">Export-und-Lösch-Workflow</text>
+                    </name>
+                </processChain>
+            </processChains>
+        </scenario>
+        <scenario>
+            <id>monthly_tasks</id>
+            <name>
+                <text xml:lang="en">Monthly Tasks</text>
+                <text xml:lang="de">Monatliche Aufgaben</text>
+            </name>
+            <description>
+                <text xml:lang="en">Monthly administrative tasks</text>
+                <text xml:lang="de">Monatliche Verwaltungsaufgaben</text>
+            </description>
+            <frequency>
+                <text xml:lang="en">monthly</text>
+                <text xml:lang="de">monatlich</text>
+            </frequency>
+            <processes>
+                <process>
+                    <id>004</id>
+                    <name>
+                        <text xml:lang="en">Client Registration</text>
+                        <text xml:lang="de">Client-Registrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>014</id>
+                    <name>
+                        <text xml:lang="en">Client Deregistration</text>
+                        <text xml:lang="de">Client-Deregistrierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>026</id>
+                    <name>
+                        <text xml:lang="en">Get Version Information</text>
+                        <text xml:lang="de">Versionsinformationen abrufen</text>
+                    </name>
+                </process>
+            </processes>
+            <processChains>
+                <processChain>
+                    <id>PK02</id>
+                    <name>
+                        <text xml:lang="en">Client Lifecycle</text>
+                        <text xml:lang="de">Client-Lebenszyklus</text>
+                    </name>
+                </processChain>
+            </processChains>
+        </scenario>
+        <scenario>
+            <id>emergency</id>
+            <name>
+                <text xml:lang="en">Emergency Processes</text>
+                <text xml:lang="de">Notfallprozesse</text>
+            </name>
+            <description>
+                <text xml:lang="en">Processes for incidents or problems</text>
+                <text xml:lang="de">Prozesse bei Störungen oder Problemen</text>
+            </description>
+            <frequency>
+                <text xml:lang="en">as needed</text>
+                <text xml:lang="de">bei Bedarf</text>
+            </frequency>
+            <processes>
+                <process>
+                    <id>016</id>
+                    <name>
+                        <text xml:lang="en">Unblock PIN</text>
+                        <text xml:lang="de">PIN entsperren</text>
+                    </name>
+                </process>
+                <process>
+                    <id>035</id>
+                    <name>
+                        <text xml:lang="en">Restore Logs</text>
+                        <text xml:lang="de">Logs wiederherstellen</text>
+                    </name>
+                </process>
+            </processes>
+            <processChains>
+                <processChain>
+                    <id>PK05</id>
+                    <name>
+                        <text xml:lang="en">Backup and Restoration Workflow</text>
+                        <text xml:lang="de">Backup-und-Wiederherstellungs-Workflow</text>
+                    </name>
+                </processChain>
+                <processChain>
+                    <id>PK07</id>
+                    <name>
+                        <text xml:lang="en">PIN Unblock</text>
+                        <text xml:lang="de">PIN-Entsperrung</text>
+                    </name>
+                </processChain>
+            </processChains>
+        </scenario>
+        <scenario>
+            <id>lifecycle_events</id>
+            <name>
+                <text xml:lang="en">Lifecycle Events</text>
+                <text xml:lang="de">Lebenszyklus-Ereignisse</text>
+            </name>
+            <description>
+                <text xml:lang="en">One-time events in TSE lifecycle</text>
+                <text xml:lang="de">Einmalige Ereignisse im TSE-Lebenszyklus</text>
+            </description>
+            <frequency>
+                <text xml:lang="en">one-time</text>
+                <text xml:lang="de">einmalig</text>
+            </frequency>
+            <processes>
+                <process>
+                    <id>005</id>
+                    <name>
+                        <text xml:lang="en">TSE Initialization</text>
+                        <text xml:lang="de">TSE-Initialisierung</text>
+                    </name>
+                </process>
+                <process>
+                    <id>006</id>
+                    <name>
+                        <text xml:lang="en">TSE Decommissioning</text>
+                        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                    </name>
+                </process>
+            </processes>
+            <processChains>
+                <processChain>
+                    <id>PK03</id>
+                    <name>
+                        <text xml:lang="en">TSE Initialization and Commissioning</text>
+                        <text xml:lang="de">TSE-Initialisierung und Inbetriebnahme</text>
+                    </name>
+                </processChain>
+                <processChain>
+                    <id>PK08</id>
+                    <name>
+                        <text xml:lang="en">TSE Decommissioning</text>
+                        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                    </name>
+                </processChain>
+            </processChains>
+        </scenario>
+    </usageScenarios>
+
+    <criticalProcesses>
+        <process>
+            <id>005</id>
+            <name>
+                <text xml:lang="en">TSE Initialization</text>
+                <text xml:lang="de">TSE-Initialisierung</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Can only be executed ONCE - irreversible</text>
+                <text xml:lang="de">Kann nur EINMAL ausgeführt werden - irreversibel</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+        <process>
+            <id>006</id>
+            <name>
+                <text xml:lang="en">TSE Decommissioning</text>
+                <text xml:lang="de">TSE-Außerbetriebnahme</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Permanent deactivation - irreversible</text>
+                <text xml:lang="de">Permanente Deaktivierung - irreversibel</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+        <process>
+            <id>034</id>
+            <name>
+                <text xml:lang="en">Delete Logs</text>
+                <text xml:lang="de">Logs löschen</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Only exported logs may be deleted</text>
+                <text xml:lang="de">Nur exportierte Logs dürfen gelöscht werden</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">high</text>
+                <text xml:lang="de">hoch</text>
+            </severity>
+        </process>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Core of business logic - legally mandatory</text>
+                <text xml:lang="de">Kern der Geschäftslogik - gesetzlich verpflichtend</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">high</text>
+                <text xml:lang="de">hoch</text>
+            </severity>
+        </process>
+        <process>
+            <id>090</id>
+            <name>
+                <text xml:lang="en">TSE Failure Handling</text>
+                <text xml:lang="de">TSE-Ausfall Behandlung</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Legally mandated documentation and immediate action required</text>
+                <text xml:lang="de">Gesetzlich vorgeschriebene Dokumentation und unverzügliches Handeln erforderlich</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+        <process>
+            <id>091</id>
+            <name>
+                <text xml:lang="en">Reporting Obligation for Acquisition</text>
+                <text xml:lang="de">Mitteilungspflicht bei Anschaffung</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Legally mandated notification to tax authority within 1 month - § 146a para. 4 AO</text>
+                <text xml:lang="de">Gesetzlich vorgeschriebene Meldung an Finanzamt innerhalb 1 Monat - § 146a Abs. 4 AO</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+        <process>
+            <id>092</id>
+            <name>
+                <text xml:lang="en">Reporting Obligation for Decommissioning</text>
+                <text xml:lang="de">Mitteilungspflicht bei Außerbetriebnahme</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Legally mandated notification to tax authority within 1 month - § 146a para. 4 AO</text>
+                <text xml:lang="de">Gesetzlich vorgeschriebene Meldung an Finanzamt innerhalb 1 Monat - § 146a Abs. 4 AO</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+        <process>
+            <id>093</id>
+            <name>
+                <text xml:lang="en">Receipt Issuance Obligation</text>
+                <text xml:lang="de">Belegausgabepflicht</text>
+            </name>
+            <reason>
+                <text xml:lang="en">Legally mandated receipt obligation per transaction - § 146a para. 2 AO</text>
+                <text xml:lang="de">Gesetzlich vorgeschriebene Belegausgabe pro Transaktion - § 146a Abs. 2 AO</text>
+            </reason>
+            <severity>
+                <text xml:lang="en">critical</text>
+                <text xml:lang="de">kritisch</text>
+            </severity>
+        </process>
+    </criticalProcesses>
+
+    <navigation>
+        <recommendedStartingPoints>
+            <startingPoint>
+                <role>
+                    <text xml:lang="en">Initial Commissioning</text>
+                    <text xml:lang="de">Erstinbetriebnahme</text>
+                </role>
+                <start>PK03</start>
+                <description>
+                    <text xml:lang="en">Deploy new TSE into operation</text>
+                    <text xml:lang="de">Neue TSE in Betrieb nehmen</text>
+                </description>
+            </startingPoint>
+            <startingPoint>
+                <role>
+                    <text xml:lang="en">Daily Usage</text>
+                    <text xml:lang="de">Tägliche Nutzung</text>
+                </role>
+                <start>PK01</start>
+                <description>
+                    <text xml:lang="en">Perform transactions</text>
+                    <text xml:lang="de">Transaktionen durchführen</text>
+                </description>
+            </startingPoint>
+            <startingPoint>
+                <role>
+                    <text xml:lang="en">Maintenance</text>
+                    <text xml:lang="de">Wartung</text>
+                </role>
+                <start>PK04</start>
+                <description>
+                    <text xml:lang="en">Export data and free up storage</text>
+                    <text xml:lang="de">Daten exportieren und Speicher freigeben</text>
+                </description>
+            </startingPoint>
+            <startingPoint>
+                <role>
+                    <text xml:lang="en">Troubleshooting</text>
+                    <text xml:lang="de">Problembehebung</text>
+                </role>
+                <start>PK07</start>
+                <description>
+                    <text xml:lang="en">Unblock PIN after lockout</text>
+                    <text xml:lang="de">PIN entsperren nach Sperrung</text>
+                </description>
+            </startingPoint>
+        </recommendedStartingPoints>
+        <learningPaths>
+            <learningPath>
+                <name>
+                    <text xml:lang="en">Basic Learning Path for Administrators</text>
+                    <text xml:lang="de">Basis-Lernpfad für Administratoren</text>
+                </name>
+                <targetAudience>
+                    <text xml:lang="en">New Administrators</text>
+                    <text xml:lang="de">Neue Administratoren</text>
+                </targetAudience>
+                <steps>
+                    <step>
+                        <id>PK03</id>
+                        <description>
+                            <text xml:lang="en">Initialize TSE</text>
+                            <text xml:lang="de">TSE initialisieren</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>PK06</id>
+                        <description>
+                            <text xml:lang="en">Understand login</text>
+                            <text xml:lang="de">Anmeldung verstehen</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>PK02</id>
+                        <description>
+                            <text xml:lang="en">Manage clients</text>
+                            <text xml:lang="de">Clients verwalten</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>PK04</id>
+                        <description>
+                            <text xml:lang="en">Export data</text>
+                            <text xml:lang="de">Daten exportieren</text>
+                        </description>
+                    </step>
+                </steps>
+            </learningPath>
+            <learningPath>
+                <name>
+                    <text xml:lang="en">Point of Sale Staff Learning Path</text>
+                    <text xml:lang="de">Kassenpersonal-Lernpfad</text>
+                </name>
+                <targetAudience>
+                    <text xml:lang="en">Point of Sale Staff</text>
+                    <text xml:lang="de">Kassenpersonal</text>
+                </targetAudience>
+                <steps>
+                    <step>
+                        <id>PK06</id>
+                        <description>
+                            <text xml:lang="en">Login and logout</text>
+                            <text xml:lang="de">Anmelden und abmelden</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>PK01</id>
+                        <description>
+                            <text xml:lang="en">Perform transactions</text>
+                            <text xml:lang="de">Transaktionen durchführen</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>PK07</id>
+                        <description>
+                            <text xml:lang="en">PIN unblock if needed</text>
+                            <text xml:lang="de">PIN-Entsperrung bei Bedarf</text>
+                        </description>
+                    </step>
+                </steps>
+            </learningPath>
+            <learningPath>
+                <name>
+                    <text xml:lang="en">Auditor Learning Path</text>
+                    <text xml:lang="de">Prüfer-Lernpfad</text>
+                </name>
+                <targetAudience>
+                    <text xml:lang="en">Auditors / Inspectors</text>
+                    <text xml:lang="de">Prüfer/Auditoren</text>
+                </targetAudience>
+                <steps>
+                    <step>
+                        <id>007</id>
+                        <description>
+                            <text xml:lang="en">Export data</text>
+                            <text xml:lang="de">Daten exportieren</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>008</id>
+                        <description>
+                            <text xml:lang="en">Verify logs</text>
+                            <text xml:lang="de">Logs verifizieren</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>012</id>
+                        <description>
+                            <text xml:lang="en">Filtered exports</text>
+                            <text xml:lang="de">Gefilterte Exports</text>
+                        </description>
+                    </step>
+                    <step>
+                        <id>021</id>
+                        <description>
+                            <text xml:lang="en">Export certificates</text>
+                            <text xml:lang="de">Zertifikate exportieren</text>
+                        </description>
+                    </step>
+                </steps>
+            </learningPath>
+        </learningPaths>
+    </navigation>
+</processMap>

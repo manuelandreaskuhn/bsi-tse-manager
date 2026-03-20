@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUpdateDeviceFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUpdateDeviceFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown by the updateDevice function when the device update operation fails. The updateDevice function performs firmware, configuration, or component updates to the Secure Element. Updates may include firmware patches, security updates, configuration changes, or other device modifications. ErrorUpdateDeviceFailed is raised when the update operation cannot be completed successfully, which may occur due to verification failures, hardware errors, corrupted update data, device state incompatibility, or other operational failures. ErrorUpdateDeviceFailed is a Critical severity exception because device updates are essential for security and functionality. A failed update leaves the device in potentially unstable state and requires investigation and recovery procedures.</text>
+    <text xml:lang="de">Diese Ausnahme wird von der Funktion updateDevice ausgelöst, wenn die Geräteaktualisierungsoperation fehlschlägt. Die Funktion updateDevice führt Firmware-, Konfigurations- oder Komponentenaktualisierungen des Secure Element durch. Aktualisierungen können Firmware-Patches, Sicherheitsaktualisierungen, Konfigurationsiänderungen oder andere Geräteverfünderungen umfassen. ErrorUpdateDeviceFailed wird ausgelöst, wenn die Aktualisierungsoperation nicht erfolgreich abgeschlossen werden kann, was durch Verifizierungsfehlschlag, Hardwarefehler, beschädigte Aktualisierungsdaten, Gerätestatusinkompatibilität oder andere Betriebsfehler verursacht werden kann. ErrorUpdateDeviceFailed ist eine Ausnahme mit kritischem Schweregrad, da Geräteaktualisierungen für Sicherheit und Funktionalität unerlaulich sind. Eine fehlgeschlagene Aktualisierung lässt das Gerät in einem potenziell instabilen Zustand und erfordert Untersuchungs- und Wiederherstellungsverfahren.</text>
+  </description>
+  <category>Device Management</category>
+  <subcategory>Update Operations</subcategory>
+  <severity>Critical</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUpdateDeviceFailed that is thrown by the updateDevice function when the device update operation fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUpdateDeviceFailed, die von der Funktion updateDevice ausgelöst wird, wenn die Geräteaktualisierungsoperation fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the updateDevice function fails to complete a device update operation. The updateDevice function performs firmware, configuration, or component updates to the Secure Element. Updates are essential for security patches, feature enhancements, and operational improvements. If update verification fails, data corruption is detected, hardware errors occur, or device issues prevent completion, ErrorUpdateDeviceFailed is raised. This indicates the update could not be successfully completed. The device state after update failure is undefined and requires investigation. ErrorUpdateDeviceFailed is a Critical severity exception because update failure affects device security and functionality. Recovery requires investigating the failure cause, potentially retrying the update, or restoring device state.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion updateDevice eine Geräteaktualisierungsoperation nicht abschließen kann. Die Funktion updateDevice führt Firmware-, Konfigurations- oder Komponentenaktualisierungen des Secure Element durch. Aktualisierungen sind für Sicherheits-Patches, Funktionserweiterungen und betriebliche Verbesserungen unerlaulich. Wenn die Aktualisierungsverifizierung fehlschlägt, Datenbeschadigungen erkannt werden, Hardwarefehler auftreten oder Geräteprobleme den Abschluss verhindern, wird ErrorUpdateDeviceFailed ausgelöst. Dies zeigt an, dass die Aktualisierung nicht erfolgreich abgeschlossen werden konnte. Der Gerätestatus nach dem Aktualisierungsfehlschlag ist nicht definiert und erfordert Untersuchung. ErrorUpdateDeviceFailed ist eine Ausnahme mit kritischem Schweregrad, da ein Aktualisierungsfehlschlag die Gerätesicherheit und -funktionalität beeinträchtigt. Die Wiederherstellung erfordert Untersuchung der Fehlerursache, potenzielles Wiederholen der Aktualisierung oder Wiederherstellung des Gerätestatus.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.7.1 Device Management - Device Update Operations</section>
+    <requirement>
+      <text xml:lang="en">The updateDevice function performs firmware, configuration, and component updates to the Secure Element. Updates are essential for security patches, feature enhancements, and operational improvements. The update process includes data verification, compatibility checking, and safe installation procedures. If update verification fails, data integrity issues are detected, hardware errors occur, device state is incompatible, or other operational issues prevent successful completion, the Secure Element SHALL raise ErrorUpdateDeviceFailed. This indicates the update could not be successfully completed. ErrorUpdateDeviceFailed is a Critical severity exception because device updates directly affect security and functionality. Device state after update failure requires investigation and potential recovery procedures.</text>
+      <text xml:lang="de">Die Funktion updateDevice führt Firmware-, Konfigurations- und Komponentenaktualisierungen des Secure Element durch. Aktualisierungen sind für Sicherheits-Patches, Funktionserweiterungen und betriebliche Verbesserungen unerlaulich. Der Aktualisierungsprozess umfasst Datenvärifikation, Kompatibilitätsprüfung und sichere Installationsvorgehen. Wenn die Aktualisierungsverifizierung fehlschlägt, Datenintegritätsfragen erkannt werden, Hardwarefehler auftreten, der Gerätestatus nicht kompatibel ist oder andere betriebliche Probleme den erfolgreichen Abschluss verhindern, MUSS das Secure Element ErrorUpdateDeviceFailed auslösen. Dies zeigt an, dass die Aktualisierung nicht erfolgreich abgeschlossen werden konnte. ErrorUpdateDeviceFailed ist eine Ausnahme mit kritischem Schweregrad, da Geräteaktualisierungen die Sicherheit und Funktionalität direkt beeinflussen. Der Gerätestatus nach dem Aktualisierungsfehlschlag erfordert Untersuchung und potenzielle Wiederherstellungsverfahren.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device update operations: updateDevice</text>
+      <text xml:lang="de">Geräteaktualisierungsvorgänge: updateDevice</text>
+    </applicability>
+    <reference>Device Management (3.7.1), Device Update Operations (3.7.1), updateDevice – Function (3.7.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>updateDevice</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls updateDevice function with update data/package</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion updateDevice mit Aktualisierungsdaten/Paket auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including update data format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich des Aktualisierungsdatenformats</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If parameters invalid → may raise ErrorParameterSyntax or ErrorParameterMismatch</text>
+      <text xml:lang="de">Wenn Parameter ungültig → kann ErrorParameterSyntax oder ErrorParameterMismatch auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If parameters valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Parameter gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives update request with update package</text>
+      <text xml:lang="de">Secure Element empfängt Aktualisierungsanforderung mit Aktualisierungspaket</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element performs cryptographic verification of update package</text>
+      <text xml:lang="de">Secure Element führt kryptographische Verifizierung des Aktualisierungspakets durch</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If verification fails → ErrorUpdateDeviceFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Verifizierung fehlschlägt → ErrorUpdateDeviceFailed ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If verification succeeds → proceed to step 6</text>
+      <text xml:lang="de">Wenn Verifizierung erfolgreich → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element checks update data integrity</text>
+      <text xml:lang="de">Secure Element prüft die Aktualisierungsdatenintegrität</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If integrity check fails → ErrorUpdateDeviceFailed raised</text>
+      <text xml:lang="de">Wenn Integritätsprüfung fehlschlägt → ErrorUpdateDeviceFailed ausgelöst</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If integrity valid → proceed to step 7</text>
+      <text xml:lang="de">Wenn Integrität gültig → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element verifies compatibility with current device</text>
+      <text xml:lang="de">Secure Element verifiziert Kompatibilität mit aktuellem Gerät</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If incompatibility detected → ErrorUpdateDeviceFailed raised</text>
+      <text xml:lang="de">Wenn Inkompatibilität erkannt → ErrorUpdateDeviceFailed ausgelöst</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If compatible → proceed to step 8</text>
+      <text xml:lang="de">Wenn kompatibel → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element validates device state for update</text>
+      <text xml:lang="de">Secure Element validiert den Gerätestatus für die Aktualisierung</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If device state incompatible → ErrorUpdateDeviceFailed raised</text>
+      <text xml:lang="de">Wenn Gerätestatus nicht kompatibel → ErrorUpdateDeviceFailed ausgelöst</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If state compatible → proceed to step 9</text>
+      <text xml:lang="de">Wenn Status kompatibel → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element begins update installation</text>
+      <text xml:lang="de">Secure Element beginnt die Aktualisierungsinstallation</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If hardware error during installation → ErrorUpdateDeviceFailed raised</text>
+      <text xml:lang="de">Wenn Hardwarefehler während der Installation → ErrorUpdateDeviceFailed ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If installation proceeds → step 10</text>
+      <text xml:lang="de">Wenn Installation fortfährt → Schritt 10</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element completes update and verifies installation</text>
+      <text xml:lang="de">Secure Element schließt die Aktualisierung ab und verifiziert die Installation</text>
+    </step>
+    <step number="10a">
+      <text xml:lang="en">If post-install verification fails → ErrorUpdateDeviceFailed raised</text>
+      <text xml:lang="de">Wenn Nach-Installationsverifizierung fehlschlägt → ErrorUpdateDeviceFailed ausgelöst</text>
+    </step>
+    <step number="10b">
+      <text xml:lang="en">If verification succeeds → proceed to step 11</text>
+      <text xml:lang="de">Wenn Verifizierung erfolgreich → fahren Sie mit Schritt 11 fort</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns to caller indicating device update completed</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück und zeigt an, dass die Geräteaktualisierung abgeschlossen ist</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized and ready</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert und bereit ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure no open transactions exist</text>
+      <text xml:lang="de">Stellen Sie sicher, dass keine offenen Transaktionen vorhanden sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device update package validity</text>
+      <text xml:lang="de">Prüfen Sie die Gültigkeitsvalidität des Geräteaktualisierungspakets</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry update after confirming preconditions</text>
+      <text xml:lang="de">Versuchen Sie die Aktualisierung nach Bestätigung der Vorbedingungen erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Update Not Completed">
+      <text xml:lang="en">Device update operation does not complete successfully.</text>
+      <text xml:lang="de">Die Geräteaktualisierungsoperation wird nicht erfolgreich abgeschlossen.</text>
+    </state>
+    <state name="Device State Undefined">
+      <text xml:lang="en">Device state after failed update is potentially undefined.</text>
+      <text xml:lang="de">Der Gerätestatus nach fehlgeschlagener Aktualisierung ist möglicherweise nicht definiert.</text>
+    </state>
+    <state name="Firmware Not Updated">
+      <text xml:lang="en">Firmware is not updated to new version.</text>
+      <text xml:lang="de">Die Firmware wird nicht auf die neue Version aktualisiert.</text>
+    </state>
+    <state name="Configuration Not Applied">
+      <text xml:lang="en">Configuration changes not applied to device.</text>
+      <text xml:lang="de">Konfigurationsiänderungen werden nicht auf das Gerät angewendet.</text>
+    </state>
+    <state name="Critical Exception Returned">
+      <text xml:lang="en">Function returns ErrorUpdateDeviceFailed Critical exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die kritische Ausnahme ErrorUpdateDeviceFailed an den Aufrufer zurück.</text>
+    </state>
+    <state name="Device Requires Investigation">
+      <text xml:lang="en">Device requires diagnostics and investigation after update failure.</text>
+      <text xml:lang="de">Das Gerät erfordert Diagnose und Untersuchung nach dem Aktualisierungsfehlschlag.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Device update operation failed - device could not be updated</text>
+      <text xml:lang="de">Anzeichen: Geräteaktualisierungsoperation fehlgeschlagen - Gerät konnte nicht aktualisiert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Updates, Update Operations, Device Management, Software Updates</text>
+      <text xml:lang="de">Themen: Geräteaktualisierungen, Aktualisierungsvorgänge, Geräteverwaltung, Softwareaktualisierungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by updateDevice when device update operation fails</text>
+      <text xml:lang="de">Wird von updateDevice ausgelöst, wenn die Geräteaktualisierungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Update function applies device firmware or configuration changes</text>
+      <text xml:lang="de">Die Aktualisierungsfunktion wendet Geräte-Firmware- oder Konfigurationsiänderungen an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device performs update process and validation</text>
+      <text xml:lang="de">Das Gerät führt den Aktualisierungsprozess und die Validierung durch</text>
+    </note>
+    <note>
+      <text xml:lang="en">Update failure prevents firmware upgrade</text>
+      <text xml:lang="de">Aktualisierungsfehlschlag verhindert Firmware-Upgrade</text>
+    </note>
+  </implementationContext>
+</exception>
+

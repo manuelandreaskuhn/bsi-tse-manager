@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetOpenTransactionsFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetOpenTransactionsFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getOpenTransactions fails to retrieve the list of currently open transactions being managed by the Secure Element. The function attempts to obtain detailed information about all active transactions in progress, but the retrieval process fails before the transaction list can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getOpenTransactions fehlschlägt, um die Liste der aktuell offenen Transaktionen abzurufen, die vom Secure Element verwaltet werden. Die Funktion versucht, detaillierte Informationen über alle laufenden aktiven Transaktionen zu erhalten, aber der Abrufprozess schlägt fehl, bevor die Transaktionsliste bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Active Transaction Enumeration</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetOpenTransactionsFailed that is thrown if the determination of open transactions that are currently managed by the device failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetOpenTransactionsFailed, die ausgelöst wird, wenn die Bestimmung der offenen Transaktionen, die derzeit vom Gerät verwaltet werden, fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getOpenTransactions function cannot retrieve the list of open transactions from the Secure Element. Open transactions information provides detailed enumeration of all currently active transactions in progress, including transaction IDs and status information. ErrorGetOpenTransactionsFailed indicates that the Secure Element cannot provide the transaction list due to hardware failure, storage corruption, internal transaction management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no transaction list is returned and applications cannot enumerate or inspect active transactions. Recovery typically involves device verification, transaction management subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getOpenTransactions die Liste der offenen Transaktionen nicht vom Secure Element abrufen kann. Die Informationen zu offenen Transaktionen bieten eine detaillierte Aufzählung aller derzeit aktiven Transaktionen, einschließlich Transaktions-IDs und Statusinformationen. ErrorGetOpenTransactionsFailed zeigt an, dass das Secure Element die Transaktionsliste aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Transaktions-Management-Systemfehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird keine Transaktionsliste zurückgegeben und Anwendungen können aktive Transaktionen nicht aufzählen oder untersuchen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Transaktions-Management-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.4.6 Transaction Management - getOpenTransactions</section>
+    <requirement>
+      <text xml:lang="en">The function getOpenTransactions SHALL query the Secure Element to determine the list of all currently open transactions being managed. If the Secure Element cannot provide or return the required transaction list, the function SHALL raise the exception ErrorGetOpenTransactionsFailed and exit without returning any transaction data. The open transaction retrieval failure indicates the Secure Element's transaction enumeration query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getOpenTransactions soll das Secure Element abfragen, um die Liste aller derzeit offenen Transaktionen zu bestimmen, die verwaltet werden. Falls das Secure Element die erforderliche Transaktionsliste nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetOpenTransactionsFailed auslösen und beenden, ohne Transaktionsdaten zurückzugeben. Der Fehler beim Abrufen der offenen Transaktionen zeigt an, dass die Abfragefunktionalität der Transaktionsenumeration des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction management operations - getOpenTransactions function only</text>
+      <text xml:lang="de">Transaktions-Management-Operationen - nur Funktion getOpenTransactions</text>
+    </applicability>
+    <reference>getOpenTransactions – Function (3.4.6)</reference>
+  </specification>
+  <thrownBy>
+    <function>getOpenTransactions</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getOpenTransactions function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getOpenTransactions auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for transaction information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Transaktionsinformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and transaction management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Transaktions-Management betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares transaction enumeration query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Transaktionsenumerations-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits transaction query command to Secure Element requesting list of all open transactions</text>
+      <text xml:lang="de">Funktion übersendet Transaktionsabfrage-Befehl zu Secure Element und fordert Liste aller offenen Transaktionen an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (registry error, transaction enumeration error, management error) → ErrorGetOpenTransactionsFailed raised, function exits without transaction list</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Verwaltungsfehler, Transaktionsenumerationsfehler, Management-Fehler) → ErrorGetOpenTransactionsFailed ausgelöst, Funktion beendet ohne Transaktionsliste</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetOpenTransactionsFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetOpenTransactionsFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives open transaction list from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion offene Transaktionsliste von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates transaction list for correctness (format, transaction ID validity, state consistency)</text>
+      <text xml:lang="de">Funktion validiert Transaktionsliste auf Korrektheit (Format, Transaktions-ID-Gültigkeit, Zustandskonsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid open transaction list to caller</text>
+      <text xml:lang="de">Funktion gibt gültige offene Transaktionsliste an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry transaction list query</text>
+      <text xml:lang="de">Wiederholen Sie die Transaktionslisten-Abfrage</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check logging system status</text>
+      <text xml:lang="de">Prüfen Sie den Status des Protokollierungssystems</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorStartTransactionFailed</exception>
+    <exception>ErrorGetCurrentNumberOfTransactionsFailed</exception>
+    <exception>ErrorGetMaxNumberTransactionsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve open transactions list does not affect device initialization state, transaction operations, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs der offenen Transaktionsliste wirkt sich nicht auf den Geräteinitialisierungszustand, Transaktionsoperationen, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Transaction List Return Status">
+      <text xml:lang="en">No transaction list is returned to the caller. The function exits without providing any open transaction information. Applications must not assume default transaction lists or cached information; they must handle the exception as indicating transaction enumeration is unavailable.</text>
+      <text xml:lang="de">Es wird keine Transaktionsliste an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne offene Transaktionsinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Transaktionslisten oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Transaktionsenumeration nicht verfügbar ist.</text>
+    </state>
+    <state name="Secure Element Transaction Management State">
+      <text xml:lang="en">Secure Element transaction management subsystem remains unchanged by the failed query. No state modifications, transaction changes, or transaction management configuration changes occur. Transaction management operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Transaktions-Management-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Transaktionsänderungen oder Transaktions-Management-Konfigurationsiänderungen vorgenommen. Transaktions-Management-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Active Transaction Continuity">
+      <text xml:lang="en">Active transactions continue to progress and be managed internally in the Secure Element. The failure to retrieve the transaction list does not affect ongoing transaction operations or state. Transaction queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Aktive Transaktionen setzen fort, in Fortschritt zu gehen und intern im Secure Element verwaltet zu werden. Das Fehlschlagen des Abrufs der Transaktionsliste wirkt sich nicht auf laufende Transaktionsoperationen oder den Zustand aus. Transaktionsabfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the transaction query failure. Device internal consistency is maintained. Other SE API functions and transaction operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Transaktionsabfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Transaktionsoperationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, management system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Management-Systemfehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of open transactions failed - cannot determine transaction state</text>
+      <text xml:lang="de">Anzeichen: Abruf der offenen Transaktionen fehlgeschlagen - kann den Transaktionszustand nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Information Retrieval, Transaction State, Logging Operations</text>
+      <text xml:lang="de">Themen: Transaktions-Management, Informationsabruf, Transaktionszustand, Protokollierungsoperationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getOpenTransactions when open transaction list retrieval fails</text>
+      <text xml:lang="de">Wird von getOpenTransactions ausgelöst, wenn der Abruf der offenen Transaktionsliste fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Query function retrieves information about currently open transactions</text>
+      <text xml:lang="de">Abfragefunktion ruft Informationen über derzeit offene Transaktionen ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains transaction state for each open transaction</text>
+      <text xml:lang="de">Das Gerät verwaltet den Transaktionszustand für jede offene Transaktion</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents open transaction state access</text>
+      <text xml:lang="de">Abruffehler verhindert den Zugriff auf offenen Transaktionszustand</text>
+    </note>
+  </implementationContext>
+</exception>
+

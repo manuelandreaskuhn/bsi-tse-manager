@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SetDescriptionEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SetDescriptionEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type SetDescriptionEventData.</description>
+  <asn1Definition>SetDescriptionEventData ::= SEQUENCE {
+  newDeviceDescription  PrintableString (SIZE (0..64))
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>newDeviceDescription</name>
+      <type>PrintableString (SIZE (0..64))</type>
+      <optional>false</optional>
+      <description>Field newDeviceDescription of type PrintableString (SIZE (0..64))</description>
+    </field>
+  </fields>
+</type>

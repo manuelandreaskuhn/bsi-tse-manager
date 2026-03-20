@@ -1,0 +1,25 @@
+flowchart TD
+    Start([Nutzer: getCurrentSeTime<br/>aufrufen])
+    Start --> CheckTime{Zeit<br/>gesetzt?}
+    
+    CheckTime -->|Nein| ErrorTime[Exception:<br/>ErrorTimeNotSet]
+    CheckTime -->|Ja| GetTime[SM: Hole aktuelle Zeit<br/>aus Sicherheitsmodul]
+    
+    GetTime --> CheckGet{Abruf<br/>erfolgreich?}
+    
+    CheckGet -->|Nein| ErrorGet[Exception:<br/>ErrorGetCurrentSeTimeFailed]
+    CheckGet -->|Ja| Return[Rückgabe:<br/>currentSeTime DateTime]
+    
+    Return --> End([Ende])
+    
+    ErrorTime --> End
+    ErrorGet --> End
+    
+    style GetTime fill:#87CEEB
+    style Return fill:#90EE90
+    
+    Note1["Diese Zeit wird für<br/>Signaturen in Log-Nachrichten<br/>verwendet (signature creation time)"]
+    Return -.-> Note1
+    
+    Note2["Verwendung:<br/>- Zeitkonsistenz prüfen<br/>- Uhrzeit-Abweichung erkennen<br/>- Debugging"]
+    Return -.-> Note2

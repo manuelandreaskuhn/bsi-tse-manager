@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorConfigureLoggingFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorConfigureLoggingFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the invocation of SE API function configureLogging failed to set the logging configuration for a specific event in a component. The exception represents a critical failure in the Secure Element's ability to apply event-based logging policies to its internal components and modules. ErrorConfigureLoggingFailed is raised when the Secure Element attempts to configure logging for a specified component and event pair, but encounters an internal error that prevents the configuration from being successfully applied. This exception indicates that the device's logging subsystem has rejected the configuration request due to device-level constraints, internal state inconsistencies, memory limitations, or Secure Element hardware/firmware errors. The exception is raised after the Secure Element has validated the configuration parameters but failed during the actual application of the logging settings to the component.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der Aufruf der SE-API-Funktion configureLogging die Protokollierungskonfiguration für ein bestimmtes Ereignis in einer Komponente nicht setzen konnte. Die Ausnahme stellt einen kritischen Fehler in der Fähigkeit des Secure Elements dar, ereignisbasierte Protokollierungsrichtlinien auf seine internen Komponenten und Module anzuwenden. ErrorConfigureLoggingFailed wird ausgelöst, wenn das Secure Element versucht, die Protokollierung für ein bestimmtes Komponenten- und Ereignispaar zu konfigurieren, aber auf einen internen Fehler trifft, der verhindert, dass die Konfiguration erfolgreich angewendet wird. Diese Ausnahme zeigt an, dass das Protokollierungssubsystem des Geräts die Konfigurationsanforderung wegen Geräteebenen-Einschränkungen, interner Statusinkonsistenzen, Speicherbegrenzungen oder Secure Element Hardware-/Firmware-Fehlern abgelehnt hat. Die Ausnahme wird ausgelöst, nachdem das Secure Element die Konfigurationsparameter validiert hat, aber während der tatsächlichen Anwendung der Protokollierungseinstellungen auf der Komponente fehlgeschlagen ist.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Configuration</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorConfigureLoggingFailed that is thrown if the invokation of SE API function configureLogging failed to set the configuration.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorConfigureLoggingFailed, die ausgelöst wird, wenn der Aufruf der SE-API-Funktion configureLogging die Konfiguration nicht setzen konnte.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The configuration of the logging of device events failed. This exception is raised when the attempt to set the logging configuration for a specific event in a component fails due to an error in the Secure Element or device functionality.</text>
+      <text xml:lang="de">Die Konfiguration der Protokollierung von Geräteereignissen ist fehlgeschlagen. Diese Ausnahme wird ausgelöst, wenn der Versuch, die Protokollierungskonfiguration für ein bestimmtes Ereignis in einer Komponente zu setzen, aufgrund eines Fehlers im Secure Element oder in der Gerätefunktionalität fehlschlägt.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.6.1.4</section>
+    <requirement>
+      <text xml:lang="en">SHALL be raised when setting the logging of an event in a component fails. If the execution fails, the function SHALL raise the exception ErrorConfigureLoggingFailed and exit the function.</text>
+      <text xml:lang="de">Sollte ausgelöst werden, wenn das Setzen der Protokollierung eines Ereignisses in einer Komponente fehlschlägt. Falls die Ausführung fehlschlägt, sollte die Funktion die Ausnahme ErrorConfigureLoggingFailed auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Logging configuration operations when event logging cannot be applied</text>
+      <text xml:lang="de">Protokollierungskonfigurationsvorgänge, wenn Ereignisprotokollierung nicht angewendet werden kann</text>
+    </applicability>
+    <reference>configureLogging – Exceptions (3.6.1.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>configureLogging</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized before configuration attempts</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät vor Konfigurationsversuchen initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check which events can be configured - some may not be configurable</text>
+      <text xml:lang="de">Prüfen Sie, welche Ereignisse konfiguriert werden können - einige sind möglicherweise nicht konfigurierbar</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry configuration with valid event types</text>
+      <text xml:lang="de">Wiederholen Sie die Konfiguration mit gültigen Ereignistypen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review logging configuration requirements in specification</text>
+      <text xml:lang="de">Prüfen Sie die Anforderungen zur Protokollierungskonfiguration in der Spezifikation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device support if configuration remains unavailable</text>
+      <text xml:lang="de">Wenden Sie sich an den Gerätesupport, wenn die Konfiguration nicht verfügbar bleibt</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorLoggingOfEventNotConfigurable</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached with parameters for component name, event type, and desired logging level provided by the caller</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird mit Parametern für Komponentenname, Ereignistyp und gewünschte Protokollierungsebene erreicht, die vom Aufrufer bereitgestellt werden</text>
+    </step>
+    <step number="2" name="Parameter Validation">
+      <text xml:lang="en">The Secure Element validates that component name and event type are valid and correspond to known logging targets in the device configuration</text>
+      <text xml:lang="de">Das Secure Element validiert, dass Komponentenname und Ereignistyp gültig sind und den bekannten Protokollierungszielen in der Gerätekonfiguration entsprechen</text>
+    </step>
+    <step number="3" name="Logging Level Validation">
+      <text xml:lang="en">The logging level parameter is validated to ensure it is within the supported range and is appropriate for the specified component and event</text>
+      <text xml:lang="de">Der Protokollierungsebenen-Parameter wird validiert, um sicherzustellen, dass er im unterstützten Bereich liegt und für die angegebene Komponente und das Ereignis angemessen ist</text>
+    </step>
+    <step number="4" name="Device State Check">
+      <text xml:lang="en">The device verifies that it is in a state suitable for configuration updates (initialized, not in error state, and logging subsystem responsive)</text>
+      <text xml:lang="de">Das Gerät stellt sicher, dass es sich in einem Zustand befindet, der für Konfigurationsaktualisierungen geeignet ist (initialisiert, nicht in Fehlerzustand und Protokollierungssubsystem reaktiv)</text>
+    </step>
+    <step number="5" name="Resource Availability Check">
+      <text xml:lang="en">The device checks available memory and logging resource capacity to ensure sufficient space for the new configuration entry</text>
+      <text xml:lang="de">Das Gerät prüft verfügbaren Speicher und Protokollierungsressourcenkapazität, um ausreichend Platz für den neuen Konfigurationseintrag sicherzustellen</text>
+    </step>
+    <step number="6" name="Configuration Application Attempt">
+      <text xml:lang="en">The device attempts to apply the logging configuration to the target component, creating or updating the configuration entry in the device's logging settings table</text>
+      <text xml:lang="de">Das Gerät versucht, die Protokollierungskonfiguration auf die Zielkomponente anzuwenden, wobei der Konfigurationseintrag in der Protokollierungseinstellungstabelle des Geräts erstellt oder aktualisiert wird</text>
+    </step>
+    <step number="7a" name="Configuration Success">
+      <text xml:lang="en">If configuration is successfully applied, execution continues to complete the function normally and return to caller with success status</text>
+      <text xml:lang="de">Falls die Konfiguration erfolgreich angewendet wird, wird die Ausführung fortgesetzt, um die Funktion normal abzuschließen und zum Aufrufer mit Erfolgsstatus zurückzukehren</text>
+    </step>
+    <step number="7b" name="Configuration Failure">
+      <text xml:lang="en">If the application of configuration fails due to hardware error, firmware limitation, or subsystem state issue, execution branches to step 8</text>
+      <text xml:lang="de">Falls die Anwendung der Konfiguration aufgrund von Hardwarefehler, Firmware-Einschränkung oder Subsystem-Statusfehler fehlschlägt, wird die Ausführung zu Schritt 8 verzweigt</text>
+    </step>
+    <step number="8" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including the component name, event type, logging level being configured, device state information, and error details from the logging subsystem</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich Komponentenname, Ereignistyp, konfigurierter Protokollierungsebene, Gerätestatusinformationen und Fehlerdetails vom Protokollierungssubsystem</text>
+    </step>
+    <step number="9" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorConfigureLoggingFailed exception instance is created with appropriate error message detailing the configuration failure</text>
+      <text xml:lang="de">ErrorConfigureLoggingFailed-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die den Konfigurationsfehler detailliert beschreibt</text>
+    </step>
+    <step number="10" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, allowing error handling at application level</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, was Fehlerbehandlung auf Anwendungsebene ermöglicht</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorConfigureLoggingFailed exception has been created and raised, containing the failed component name, event type, logging level, and diagnostic timestamp</text>
+      <text xml:lang="de">Eine ErrorConfigureLoggingFailed-Ausnahme wurde erstellt und ausgelöst, enthält den Namen der fehlgeschlagenen Komponente, Ereignistyp, Protokollierungsebene und einen Diagnostic-Zeitstempel</text>
+    </state>
+    <state name="Device Logging State">
+      <text xml:lang="en">The device's logging configuration remains in its previous state. The configuration update has not been successfully applied. Depending on implementation, the logging subsystem may have created a partial entry or left configuration unchanged.</text>
+      <text xml:lang="de">Die Protokollierungskonfiguration des Geräts bleibt in ihrem vorherigen Zustand. Die Konfigurationsaktualisierung wurde nicht erfolgreich angewendet. Je nach Implementierung kann das Protokollierungssubsystem einen teilweisen Eintrag erstellt oder die Konfiguration unverändert gelassen haben.</text>
+    </state>
+    <state name="Logging Subsystem State">
+      <text xml:lang="en">The logging subsystem may be in a degraded or inconsistent state. Subsequent logging configuration attempts may fail or succeed with reduced capability. The subsystem may require reinitialization to restore full functionality.</text>
+      <text xml:lang="de">Das Protokollierungssubsystem kann sich in einem abgestuften oder inkonsistenten Zustand befinden. Nachfolgende Protokollierungskonfigurationsversuche können mit reduzierter Kapazität fehlschlagen oder erfolgreich sein. Das Subsystem kann eine Neuinitialisierung erfordern, um volle Funktionalität wiederherzustellen.</text>
+    </state>
+    <state name="Resource State">
+      <text xml:lang="en">Device resources (memory, configuration table slots) remain unchanged. No resources have been allocated for the failed configuration. If configuration was partially attempted, some resources may be in an indeterminate state.</text>
+      <text xml:lang="de">Geräteressourcen (Speicher, Konfigurationstabellenplätze) bleiben unverändert. Für die fehlgeschlagene Konfiguration wurden keine Ressourcen zugeordnet. Falls die Konfiguration teilweise versucht wurde, können sich einige Ressourcen in einem unbestimmten Zustand befinden.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits abnormally via exception propagation without completing its intended configuration operation</text>
+      <text xml:lang="de">Die Funktion wird abnormal über Ausnahmepropagation beendet, ohne ihren beabsichtigten Konfigurationsvorgang abzuschließen</text>
+    </state>
+    <state name="Device Availability">
+      <text xml:lang="en">The Secure Element remains available for subsequent API calls, although the logging subsystem may have limited or degraded functionality. The device itself has not failed; only the specific logging configuration operation was rejected.</text>
+      <text xml:lang="de">Das Secure Element bleibt für nachfolgende API-Aufrufe verfügbar, obwohl das Protokollierungssubsystem möglicherweise eingeschränkte oder abgestufte Funktionalität hat. Das Gerät selbst ist nicht fehlgeschlagen; nur die spezifische Protokollierungskonfigurationsoperation wurde abgelehnt.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Configuration of logging events failed during a configureLogging operation</text>
+      <text xml:lang="de">Anzeichen: Konfiguration von Protokollierungsereignissen ist während eines configureLogging-Vorgangs fehlgeschlagen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Configuration, Event Management, System Configuration, SE API Settings</text>
+      <text xml:lang="de">Themen: Protokollierungskonfiguration, Ereignisverwaltung, Systemkonfiguration, SE-API-Einstellungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by configureLogging when event configuration operation fails</text>
+      <text xml:lang="de">Wird von configureLogging ausgelöst, wenn die Ereigniskonfigurationsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Logging configuration subsystem applies settings for specific event types</text>
+      <text xml:lang="de">Protokollierungskonfigurationssubsystem wendet Einstellungen für spezifische Ereignistypen an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device attempts to enable/disable logging of configured events</text>
+      <text xml:lang="de">Gerät versucht, die Protokollierung konfigurierter Ereignisse zu aktivieren/deaktivieren</text>
+    </note>
+    <note>
+      <text xml:lang="en">Configuration failure prevents logging behavior changes</text>
+      <text xml:lang="de">Konfigurationsfehler verhindert Änderungen des Protokollierungsverhaltens</text>
+    </note>
+  </implementationContext>
+</exception>
+

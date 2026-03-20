@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resultType id="UpdateTransactionResult" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+    <name>UpdateTransactionResult</name>
+    <category>Transaction Management Types</category>
+    <source>BSI TR-03151</source>
+    <description>This class defines a container that enables the SE-API function updateTransaction to return informations about the updated transaction(s).</description>
+    <fields>
+        <field>
+            <name>performedUpdateProtection</name>
+            <type>UpdateProtectionVariants</type>
+            <description>Represents the performed protections action (noPrevPassedInMem, noPrevPassedProtected, prevAndPassedInMem, prevAndPassedProtected, prevProtectedPassedInMem, prevProtectedPassedProtected).</description>
+            <getter>getPerformedUpdateProtection()</getter>
+        </field>
+        <field>
+            <name>firstLogSignatureCreationTime</name>
+            <type>ZonedDateTime</type>
+            <description>If one or two log messages were created, the value represents the point in time of the Secure Element when the first created log message was signed.</description>
+            <getter>getFirstLogSignatureCreationTime()</getter>
+            <optional>true</optional>
+        </field>
+        <field>
+            <name>firstLogSignatureValue</name>
+            <type>byte[]</type>
+            <description>If one or two log messages were created, the value represents the signature value of the first created log message.</description>
+            <getter>getFirstLogSignatureValue()</getter>
+            <optional>true</optional>
+        </field>
+        <field>
+            <name>firstLogSignatureCounter</name>
+            <type>long</type>
+            <description>If one or two log messages were created, the value represents the value of the signature counter of the first created log message.</description>
+            <getter>getFirstLogSignatureCounter()</getter>
+            <optional>true</optional>
+        </field>
+        <field>
+            <name>secondLogSignatureCreationTime</name>
+            <type>ZonedDateTime</type>
+            <description>If two log messages were created, the value represents the point in time of the Secure Element when the second created log message was signed.</description>
+            <getter>getSecondLogSignatureCreationTime()</getter>
+            <optional>true</optional>
+        </field>
+        <field>
+            <name>secondLogSignatureValue</name>
+            <type>byte[]</type>
+            <description>If two log messages were created, the value represents the signature value of the second created log message.</description>
+            <getter>getSecondLogSignatureValue()</getter>
+            <optional>true</optional>
+        </field>
+        <field>
+            <name>secondLogSignatureCounter</name>
+            <type>long</type>
+            <description>If two log messages were created, the value represents the value of the signature counter of the second created log message.</description>
+            <getter>getSecondLogSignatureCounter()</getter>
+            <optional>true</optional>
+        </field>
+    </fields>
+</resultType>

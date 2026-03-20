@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorTimeNotSet" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorTimeNotSet</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if a time-dependent SE API function is invoked but the time in the Secure Element has not been properly set. The Secure Element maintains an internal time that is used to timestamp transactions and log messages for audit trail integrity. After device initialization or after a period of power loss or absence of current to the Secure Element, the internal time must be explicitly set via updateTime before time-dependent operations can proceed. ErrorTimeNotSet indicates the device time is not synchronized or has not been initialized. Common causes include: time not set after device initialization, device time reset due to power loss, or time synchronization required after long offline period. Time-dependent operations cannot proceed safely without accurate time.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine zeitabhängige SE-API-Funktion aufgerufen wird, aber die Zeit im Secure Element nicht ordnungsgemäß eingestellt wurde. Das Secure Element verwaltet eine interne Zeit, die zum Zeitstempel von Transaktionen und Log-Messages für die Audit-Trail-Integrität verwendet wird. Nach der Geräteinitialisierung oder nach einer Phase von Stromausfallen oder Stromausfallen des Secure Elements muss die interne Zeit explizit über updateTime festgelegt werden, bevor zeitabhängige Operationen fortgesetzt werden können. ErrorTimeNotSet zeigt an, dass die Gerätezeit nicht synchronisiert ist oder nicht initialisiert wurde. Häufige Ursachen sind: Zeit nicht nach Geräteinitialisierung eingestellt, Gerätezeit wegen Stromausfalls zurückgesetzt oder Zeitsynchronisierung erforderlich nach langer Offline-Zeit. Zeitabhängige Operationen können ohne genaue Zeit nicht sicher fortgesetzt werden.</text>
+  </description>
+  <category>Time Synchronization</category>
+  <subcategory>Time Not Initialized</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>getCurrentSeTime</function>
+    <function>lockTransactionLogging</function>
+    <function>registerClient</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorTimeNotSet that is thrown if time-dependent operations are invoked without time being set.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorTimeNotSet, die ausgelöst wird, wenn zeitabhängige Operationen ohne festgelegte Zeit aufgerufen werden.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when a time-dependent SE API function (such as transaction operations) is invoked but the Secure Element's internal time has not been properly initialized or synchronized. The Secure Element maintains an internal clock that is used to timestamp transactions, log messages, and audit trail events. After device initialization or after a period of power loss or disconnection, the internal time must be explicitly set via the updateTime function before time-dependent operations can proceed. ErrorTimeNotSet indicates the internal time is not set or not synchronized. Common causes include: time not initialized after device startup, device time lost due to power failure or battery discharge, or time synchronization required before transaction processing. ErrorTimeNotSet is a High severity exception because operations requiring accurate timestamps cannot proceed safely. Recovery requires using updateTime to set the device time synchronously with the current system time.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine zeitabhängige SE-API-Funktion (wie Transaktionsoperationen) aufgerufen wird, aber die interne Zeit des Secure Elements nicht ordnungsgemäß initialisiert oder synchronisiert wurde. Das Secure Element verwaltet eine interne Uhr, die zum Zeitstempel von Transaktionen, Log-Messages und Audit-Trail-Ereignissen verwendet wird. Nach der Geräteinitialisierung oder nach einer Phase von Stromausfallen oder Trennung muss die interne Zeit explizit über die updateTime-Funktion festgelegt werden, bevor zeitabhängige Operationen fortgesetzt werden können. ErrorTimeNotSet zeigt an, dass die interne Zeit nicht festgelegt oder nicht synchronisiert ist. Häufige Ursachen sind: Zeit nicht nach dem Gerätestart initialisiert, Gerätezeit aufgrund von Stromausfallen oder Batterieentladung verloren oder Zeitsynchronisierung erforderlich vor der Transaktionsverarbeitung. ErrorTimeNotSet ist eine Ausnahme mit hohem Schweregrad, da Operationen, die genaue Zeitstempel erfordern, nicht sicher fortgesetzt werden können. Die Wiederherstellung erfordert die Verwendung von updateTime, um die Gerätezeit synchron mit der aktuellen Systemzeit festzulegen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.7 Time Management - updateTime and 3.3.2 Transaction Operations - Time Requirement</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element maintains an internal time that is used to timestamp transactions and log messages. After device initialization or after a period of power loss, the internal time must be explicitly synchronized via the updateTime function. All time-dependent operations (startTransaction, updateTransaction, finishTransaction) require that the Secure Element time has been properly set and synchronized. If time has not been set or is out of sync, the function SHALL raise ErrorTimeNotSet. Time accuracy is essential for audit trail integrity and compliance. Operations cannot proceed safely without accurate time to prevent timestamp manipulation.</text>
+      <text xml:lang="de">Das Secure Element verwaltet eine interne Zeit, die zum Zeitstempel von Transaktionen und Log-Messages verwendet wird. Nach der Geräteinitialisierung oder nach einer Phase von Stromausfällen muss die interne Zeit explizit über die updateTime-Funktion synchronisiert werden. Alle zeitabhängigen Operationen (startTransaction, updateTransaction, finishTransaction) erfordern, dass die Secure-Element-Zeit ordnungsgemäß eingestellt und synchronisiert wurde. Falls die Zeit nicht festgelegt wurde oder nicht synchronisiert ist, SOLL die Funktion ErrorTimeNotSet auslösen. Die Zeitgenauigkeit ist für die Audit-Trail-Integrität und Compliance unbedingt erforderlich. Operationen können ohne genaue Zeit nicht sicher fortgesetzt werden, um Zeitstempel-Manipulation zu verhindern.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time-dependent transaction operations: startTransaction, updateTransaction, finishTransaction. Also requires updateTime to be called first during initialization.</text>
+      <text xml:lang="de">Zeitabhängige Transaktionsoperationen: startTransaction, updateTransaction, finishTransaction. Erfordert auch, dass updateTime zuerst bei der Initialisierung aufgerufen wird.</text>
+    </applicability>
+    <reference>Time Management (3.2.7), updateTime – Function (3.2.7), Transaction Operations (3.3.2)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls a time-dependent transaction operation (e.g., startTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine zeitabhängige Transaktionsoperation auf (z.B. startTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and transaction context</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und Transaktionskontext</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsanforderung</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks internal time validity and synchronization</text>
+      <text xml:lang="de">Secure Element prüft interne Zeitgültigkeit und Synchronisierung</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If time not set or invalid → ErrorTimeNotSet raised, operation aborted</text>
+      <text xml:lang="de">Falls Zeit nicht eingestellt oder ungültig → ErrorTimeNotSet ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If time valid and synchronized → proceed to step 6</text>
+      <text xml:lang="de">Falls Zeit gültig und synchronisiert → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element creates transaction with current timestamp</text>
+      <text xml:lang="de">Secure Element erstellt Transaktion mit aktuellem Zeitstempel</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element processes transaction operation</text>
+      <text xml:lang="de">Secure Element verarbeitet Transaktionsoperation</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element creates digitally signed log message with timestamp</text>
+      <text xml:lang="de">Secure Element erstellt digital signierte Log-Message mit Zeitstempel</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element stores transaction in audit trail with timestamp</text>
+      <text xml:lang="de">Secure Element speichert Transaktion im Audit-Trail mit Zeitstempel</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an die Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns successfully</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Set device time using updateTime before time-dependent operations</text>
+      <text xml:lang="de">Stellen Sie die Gerätezeit mithilfe von updateTime vor zeitabhängigen Operationen ein</text>
+    </step>
+    <step>
+      <text xml:lang="en">Synchronize time to accurate external source</text>
+      <text xml:lang="de">Synchronisieren Sie die Zeit mit einer genauen externen Quelle</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify time synchronization succeeded</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Zeitsynchronisierung erfolgreich war</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry operation after confirming valid time</text>
+      <text xml:lang="de">Wiederholen Sie die Operation nach Bestätigung einer gültigen Zeit</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorTimeUpdateFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Not Created">
+      <text xml:lang="en">The transaction is not created because time is not available for timestamping.</text>
+      <text xml:lang="de">Die Transaktion wird nicht erstellt, da die Zeit zum Zeitstempel nicht verfügbar ist.</text>
+    </state>
+    <state name="Timestamp Not Generated">
+      <text xml:lang="en">Transaction timestamp is not generated due to invalid time.</text>
+      <text xml:lang="de">Der Transaktionszeitstempel wird aufgrund ungültiger Zeit nicht generiert.</text>
+    </state>
+    <state name="Operation Not Completed">
+      <text xml:lang="en">The transaction operation is not completed due to time requirement.</text>
+      <text xml:lang="de">Die Transaktionsoperation wird aufgrund der Zeitanforderung nicht abgeschlossen.</text>
+    </state>
+    <state name="Audit Trail Not Updated">
+      <text xml:lang="en">The transaction is not recorded in the audit trail without valid timestamp.</text>
+      <text xml:lang="de">Die Transaktion wird im Audit-Trail ohne gültigen Zeitstempel nicht aufgezeichnet.</text>
+    </state>
+    <state name="Device Time Still Not Set">
+      <text xml:lang="en">The device time remains unset until updateTime is called.</text>
+      <text xml:lang="de">Die Gerätezeit bleibt uneingestellt, bis updateTime aufgerufen wird.</text>
+    </state>
+    <state name="Manual Time Synchronization Required">
+      <text xml:lang="en">The user must call updateTime to set device time before operations can proceed.</text>
+      <text xml:lang="de">Der Benutzer muss updateTime aufrufen, um die Gerätezeit festzulegen, bevor Operationen fortgesetzt werden können.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Time has not been set on the device - time synchronization required</text>
+      <text xml:lang="de">Anzeichen: Zeit wurde nicht auf dem Gerät eingestellt - Zeitsynchronisierung erforderlich</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Device Initialization, Time Synchronization, System Setup</text>
+      <text xml:lang="de">Themen: Zeitverwaltung, Geräteinitialisierung, Zeitsynchronisierung, Systemkonfiguration</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when device time not initialized</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn Gerätezeit nicht initialisiert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Functions requiring valid time detect unset condition</text>
+      <text xml:lang="de">Funktionen, die gültige Zeit erfordern, erkennen ungesetzte Bedingung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device requires time synchronization before time-dependent operations</text>
+      <text xml:lang="de">Gerät erfordert Zeitsynchronisierung vor zeitabhängigen Operationen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unset time prevents time-dependent function execution</text>
+      <text xml:lang="de">Ungelegte Zeit verhindert die Aus führung zeitabhängiger Funktionen</text>
+    </note>
+  </implementationContext>
+</exception>
+

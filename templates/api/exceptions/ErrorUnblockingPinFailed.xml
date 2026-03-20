@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUnblockingPinFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUnblockingPinFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the unblockPin function fails to unblock a PIN. The unblockPin function is used to restore PIN functionality after too many incorrect attempts have caused the PIN to be locked. Unblocking requires providing the correct unblock PIN (PUK - Personal Unblock Key) to verify authorization. ErrorUnblockingPinFailed is raised when the unblock operation cannot be completed successfully, which may occur due to invalid unblock PIN, hardware errors, device state issues, or other failures. ErrorUnblockingPinFailed is a High severity exception because it prevents restoration of PIN functionality. Users remain locked out of PIN-protected operations until the unblock succeeds.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion unblockPin fehlschlägt, eine PIN zu entsperren. Die Funktion unblockPin wird verwendet, um die PIN-Funktionalität wiederherzustellen, nachdem zu viele fehlerhafte Versuche die PIN gesperrt haben. Das Entsperren erfordert die Bereitstellung der korrekten Entsperr-PIN (PUK - Personal Unblock Key) zur Autorisierungsüberprüfung. ErrorUnblockingPinFailed wird ausgelöst, wenn die Entsperrungsoperation nicht erfolgreich abgeschlossen werden kann, was aufgrund von ungültiger Entsperr-PIN, Hardwarefehlern, Gerätestatusfragen oder anderen Fehlern auftreten kann. ErrorUnblockingPinFailed ist eine Ausnahme mit hohem Schweregrad, da sie die Wiederherstellung der PIN-Funktionalität verhindert. Benutzer bleiben für PIN-geschützte Operationen gesperrt, bis die Entsperrung erfolgreich ist.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PIN Management Failure</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUnblockingPinFailed that is thrown if the unblockPin function fails to unblock a PIN.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUnblockingPinFailed, die ausgelöst wird, wenn die Funktion unblockPin fehlschlägt, eine PIN zu entsperren.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the unblockPin function fails to unblock a locked PIN. PINs can be locked after too many incorrect authentication attempts. The unblockPin function restores PIN functionality by verifying the correct unblock PIN (PUK). If unblock verification fails, hardware errors occur, or device issues prevent completion, ErrorUnblockingPinFailed is raised. This indicates the unblock operation could not be successfully completed. The PIN remains locked and inaccessible. ErrorUnblockingPinFailed is a High severity exception because PIN-protected operations remain unavailable until unblocking succeeds. Recovery requires retrying unblock with correct PUK or investigating device state issues.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion unblockPin fehlschlägt, eine gesperrte PIN zu entsperren. PINs können nach zu vielen fehlerhaften Authentifizierungsversuchen gesperrt werden. Die Funktion unblockPin stellt die PIN-Funktionalität wieder her, indem sie die korrekte Entsperr-PIN (PUK) überprüft. Wenn die Entsperrungsüberprüfung fehlschlägt, Hardwarefehler auftreten oder Geräteprobleme den Abschluss verhindern, wird ErrorUnblockingPinFailed ausgelöst. Dies zeigt an, dass die Entsperrungsoperation nicht erfolgreich abgeschlossen werden konnte. Die PIN bleibt gesperrt und unzugänglich. ErrorUnblockingPinFailed ist eine Ausnahme mit hohem Schweregrad, da PIN-geschützte Operationen nicht verfügbar bleiben, bis die Entsperrung erfolgreich ist. Die Wiederherstellung erfordert eine Wiederholung der Entsperrung mit korrektem PUK oder Untersuchung von Gerätestatusfragen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.1 Authentication - PIN Management and Unblock Operations</section>
+    <requirement>
+      <text xml:lang="en">The unblockPin function restores PIN functionality after the PIN has been locked due to too many incorrect authentication attempts. Unblocking requires providing the correct unblock PIN (PUK - Personal Unblock Key) and optionally setting a new PIN. If the unblock operation fails due to incorrect PUK, hardware errors, device state issues, or other factors, the Secure Element SHALL raise ErrorUnblockingPinFailed. The exception indicates the unblock operation could not be completed and the PIN remains locked. ErrorUnblockingPinFailed is a High severity exception because PIN-protected operations remain unavailable until unblocking succeeds. The caller must retry with correct credentials or investigate device state issues.</text>
+      <text xml:lang="de">Die Funktion unblockPin stellt die PIN-Funktionalität wieder her, nachdem die PIN aufgrund zu vieler fehlerhafter Authentifizierungsversuche gesperrt wurde. Das Entsperren erfordert die Bereitstellung der korrekten Entsperr-PIN (PUK - Personal Unblock Key) und optional das Festlegen einer neuen PIN. Wenn die Entsperrungsoperation aufgrund einer falschen PUK, Hardwarefehlern, Gerätestatusfragen oder anderen Faktoren fehlschlägt, MUSS das Secure Element ErrorUnblockingPinFailed auslösen. Die Ausnahme zeigt an, dass die Entsperrungsoperation nicht abgeschlossen werden konnte und die PIN gesperrt bleibt. ErrorUnblockingPinFailed ist eine Ausnahme mit hohem Schweregrad, da PIN-geschützte Operationen nicht verfügbar bleiben, bis die Entsperrung erfolgreich ist. Der Aufrufer muss mit korrekten Anmeldedaten erneut versuchen oder Gerätestatusfragen untersuchen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">PIN unblock operations: unblockPin</text>
+      <text xml:lang="de">PIN-Entsperrungsoperationen: unblockPin</text>
+    </applicability>
+    <reference>Authentication (3.5.1), PIN Management (3.5.1), Unblock Operations (3.5.1), unblockPin – Function (3.5.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>unblockPin</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls unblockPin function with PUK and optional new PIN parameter</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion unblockPin mit PUK und optionalem neuen PIN-Parameter auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PUK format and new PIN (if provided)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PUK-Format und neuer PIN (falls vorhanden)</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If parameters invalid → may raise ErrorParameterSyntax or ErrorParameterMismatch</text>
+      <text xml:lang="de">Wenn Parameter ungültig → kann ErrorParameterSyntax oder ErrorParameterMismatch auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If parameters valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Parameter gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function validates PIN is actually locked (not already operational)</text>
+      <text xml:lang="de">Funktion validiert, dass die PIN tatsächlich gesperrt ist (nicht bereits betriebsbereit)</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If PIN not locked → may raise different exception</text>
+      <text xml:lang="de">Wenn PIN nicht gesperrt → kann eine andere Ausnahme auslösen</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If PIN locked → proceed to step 4</text>
+      <text xml:lang="de">Wenn PIN gesperrt → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element receives unblock request with PUK and new PIN</text>
+      <text xml:lang="de">Secure Element empfängt Entsperranforderung mit PUK und neuer PIN</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element verifies PUK against stored unblock credential</text>
+      <text xml:lang="de">Secure Element überprüft PUK gegen gespeicherten Entsperr-Berechtigungsnachweis</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If PUK incorrect → ErrorUnblockingPinFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn PUK falsch → ErrorUnblockingPinFailed ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PUK correct → proceed to step 7</text>
+      <text xml:lang="de">Wenn PUK korrekt → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element validates new PIN (if provided) against security policy</text>
+      <text xml:lang="de">Secure Element validiert neue PIN (falls vorhanden) gegen Sicherheitsrichtlinie</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If new PIN invalid → ErrorUnblockingPinFailed raised</text>
+      <text xml:lang="de">Wenn neue PIN ungültig → ErrorUnblockingPinFailed ausgelöst</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If new PIN valid or not provided → proceed to step 8</text>
+      <text xml:lang="de">Wenn neue PIN gültig oder nicht vorhanden → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element updates PIN storage: clears lock flag, sets new PIN if provided</text>
+      <text xml:lang="de">Secure Element aktualisiert PIN-Speicher: löscht Sperrkennzeichen, legt neue PIN fest, falls vorhanden</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If storage update fails → ErrorUnblockingPinFailed raised</text>
+      <text xml:lang="de">Wenn Speicheraktualisierung fehlschlägt → ErrorUnblockingPinFailed ausgelöst</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If storage update succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Speicheraktualisierung erfolgreich ist → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element logs unblock event for audit trail</text>
+      <text xml:lang="de">Secure Element protokolliert Entsperrereignis für Audit-Protokoll</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns to caller indicating PIN successfully unblocked</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück und zeigt an, dass PIN erfolgreich entsperrt wurde</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify correct PUK is provided</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der korrekte PUK bereitgestellt wird</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass Secure Element betriebsbereit ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check new PIN meets format requirements</text>
+      <text xml:lang="de">Überprüfen Sie, dass neue PIN Formatanforderungen erfüllt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry unblock operation after confirming preconditions</text>
+      <text xml:lang="de">Versuchen Sie die Entsperrungsoperation erneut, nachdem Sie die Vorbedingungen bestätigt haben</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="PIN Remains Locked">
+      <text xml:lang="en">PIN is not unblocked - remains locked and inaccessible.</text>
+      <text xml:lang="de">PIN ist nicht entsperrt - bleibt gesperrt und unzugänglich.</text>
+    </state>
+    <state name="Unblock Operation Not Completed">
+      <text xml:lang="en">Unblock operation does not complete successfully.</text>
+      <text xml:lang="de">Entsperrungsoperation wird nicht erfolgreich abgeschlossen.</text>
+    </state>
+    <state name="PIN Credentials Unchanged">
+      <text xml:lang="en">PIN credentials remain unchanged - old PIN (or locked state) persists.</text>
+      <text xml:lang="de">PIN-Anmeldedaten bleiben unverändert - alte PIN (oder gesperrter Zustand) bleibt bestehen.</text>
+    </state>
+    <state name="New PIN Not Set">
+      <text xml:lang="en">If new PIN was requested, it is not applied due to failure.</text>
+      <text xml:lang="de">Wenn eine neue PIN angefordert wurde, wird sie aufgrund des Fehlers nicht angewendet.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUnblockingPinFailed High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorUnblockingPinFailed an den Aufrufer zurück.</text>
+    </state>
+    <state name="PIN-Protected Operations Remain Blocked">
+      <text xml:lang="en">Operations requiring PIN remain unavailable.</text>
+      <text xml:lang="de">Operationen, die eine PIN erfordern, bleiben nicht verfügbar.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Unblocking of PIN failed - PIN remains blocked</text>
+      <text xml:lang="de">Anzeichen: Entsperrung der PIN ist fehlgeschlagen - PIN bleibt gesperrt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: PIN Management, Authentication, Unblocking, PIN Recovery</text>
+      <text xml:lang="de">Themen: PIN-Verwaltung, Authentifizierung, Entsperrung, PIN-Wiederherstellung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by unblockPin when PIN unblocking operation fails</text>
+      <text xml:lang="de">Wird von unblockPin ausgelöst, wenn die PIN-Entsperrungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">PIN unblock function resets blocked PIN state</text>
+      <text xml:lang="de">Die PIN-Entsperr-Funktion setzt den blockierten PIN-Status zurück</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device performs PIN recovery via PUK verification</text>
+      <text xml:lang="de">Das Gerät führt die PIN-Wiederherstellung durch PUK-Überprüfung durch</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unblock failure prevents PIN recovery</text>
+      <text xml:lang="de">Entsperrungsfehler verhindert die PIN-Wiederherstellung</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>035</processId>
+    <processName>
+        <text xml:lang="en">Restore Logs from Backup</text>
+        <text xml:lang="de">Logs wiederherstellen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Restoration of backed-up log messages and certificates from a TAR archive that was previously created with exportLogMessages. Only logs created by this TSE can be restored.</text>
+        <text xml:lang="de">Wiederherstellung von gesicherten Log-Nachrichten und Zertifikaten aus einem TAR-Archiv, das zuvor mit exportLogMessages erstellt wurde. Nur Logs, die von dieser TSE erstellt wurden, können wiederhergestellt werden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">TAR Archive</text>
+            <text xml:lang="de">TAR-Archiv</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Messages</text>
+            <text xml:lang="de">Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificates</text>
+            <text xml:lang="de">Zertifikate</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>restoreLogsFromBackup</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>restoreData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">TAR archive with log messages and certificates from exportLogMessages</text>
+                <text xml:lang="de">TAR-Archiv mit Log-Nachrichten und Zertifikaten von exportLogMessages</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>TAR-Archive</dataObject>
+        <dataObject>Transaction-Logs</dataObject>
+        <dataObject>System-Logs</dataObject>
+        <dataObject>Audit-Logs</dataObject>
+        <dataObject>X.509-Certificates</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorRestoreFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorParameterSyntax</exception>
+        <exception>ErrorParameterTooLong</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorFunctionFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.7</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This function is OPTIONAL. Only admin is allowed to restore logs. IMPORTANT: Only logs created by this TSE can be imported - foreign logs are rejected. If filename collisions occur, a counter is appended. The info.csv file is NOT imported. Storage must remain in a consistent state even if restoration fails.</text>
+        <text xml:lang="de">Diese Funktion ist OPTIONAL. Nur Admin darf Logs wiederherstellen. WICHTIG: Nur Logs, die von dieser TSE erstellt wurden, können importiert werden - fremde Logs werden abgelehnt. Bei Dateinamen-Kollisionen wird ein Zähler angehängt. Die info.csv wird NICHT importiert. Der Speicher muss auch bei Fehlschlag in konsistentem Zustand bleiben.</text>
+    </notes>
+</process>

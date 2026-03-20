@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>033</processId>
+    <processName>
+        <text xml:lang="en">Get Signature Counters</text>
+        <text xml:lang="de">Signaturzähler abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of current signature counter values for all keys used in the security module for signing log messages. The signature counter is incremented with each signature.</text>
+        <text xml:lang="de">Abruf der aktuellen Signaturzähler-Stände für alle Schlüssel, die im Sicherheitsmodul für Signaturen von Log-Nachrichten verwendet werden. Der Signaturzähler wird bei jeder Signatur inkrementiert.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role except timeadmin)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Key Pairs</text>
+            <text xml:lang="de">Schlüsselpaare</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getCurrentLoggingSignatureCounters</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>signatureCounters</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">ASN.1 DER encoded SignatureCounterSet with serial numbers and current counter values</text>
+                <text xml:lang="de">ASN.1 DER kodiertes SignatureCounterSet mit Seriennummern und aktuellen Zählerständen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>SignatureCounterSet (ASN.1)</dataObject>
+        <dataObject>SignatureCounter</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetCurrentSignatureCounterFailed</exception>
+        <exception>ErrorSecureElementDisabled</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorFunctionFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.6</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This function is MANDATORY. Available to all user roles except timeadmin. The output is ASN.1 DER encoded and contains for each key used the serial number (keySerialNumber) and the current signature counter value (counterValue). Important for monitoring and detecting counter overflow.</text>
+        <text xml:lang="de">Diese Funktion ist verpflichtend. Für alle Nutzerrollen außer timeadmin verfügbar. Die Ausgabe ist ASN.1 DER kodiert und enthält für jeden verwendeten Schlüssel die Seriennummer (keySerialNumber) und den aktuellen Signaturzähler-Stand (counterValue). Wichtig für Monitoring und zur Erkennung von Zählerüberlauf.</text>
+    </notes>
+</process>

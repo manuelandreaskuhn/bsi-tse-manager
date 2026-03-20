@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant Nutzer as Authentifizierter Nutzer
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    Note over Nutzer: Nutzer ist angemeldet<br/>(logger, admin oder timeadmin)
+
+    Nutzer->>TSE: logOut()
+    activate TSE
+    
+    TSE->>TSE: Prüfe: Nutzer authentifiziert?
+    
+    alt Nutzer nicht authentifiziert
+        TSE-->>Nutzer: Exception:<br/>ErrorUserNotAuthenticated
+    else Nutzer authentifiziert
+        TSE->>SM: Erstelle logOut System-Log
+        activate SM
+        SM->>SM: Log-Daten:<br/>- eventTriggeredByUser<br/>- logoutResult
+        SM->>SM: signatureCounter++
+        SM->>SM: Erstelle Signatur
+        SM-->>TSE: Log-Nachricht + Signatur
+        deactivate SM
+        
+        TSE->>Speicher: Speichere logOut Log
+        activate Speicher
+        Speicher-->>TSE: OK
+        deactivate Speicher
+        
+        TSE->>TSE: Setze Nutzer-Status:<br/>UNAUTHENTICATED
+        
+        TSE->>TSE: Optional: Starte Auto-Logout-Timer<br/>zurücksetzen
+        
+        TSE-->>Nutzer: Abmeldung erfolgreich
+    end
+    deactivate TSE
+    
+    Note over Nutzer,Speicher: Nutzer ist nun abgemeldet<br/>Zugriff nur auf unauthenticated-Funktionen

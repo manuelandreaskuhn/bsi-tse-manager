@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>004</processId>
+    <processName>
+        <text xml:lang="en">Client Registration</text>
+        <text xml:lang="de">Client-Registrierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Registration of a recording system (client) with the TSE so that it can record transactions</text>
+        <text xml:lang="de">Registrierung eines Aufzeichnungssystems (Client) bei der TSE, damit es Transaktionen aufzeichnen kann</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Recording System (ERS)</text>
+            <text xml:lang="de">Aufzeichnungssystem (ERS)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Client List</text>
+            <text xml:lang="de">Client-Liste</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>registerClient</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Serial number of the recording system to be registered</text>
+                <text xml:lang="de">Seriennummer des zu registrierenden Aufzeichnungssystems</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (registerClient)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorClientAlreadyRegistered</exception>
+        <exception>ErrorTooManyClients</exception>
+        <exception>ErrorRegisterClientFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only users with role 'admin' or 'logger' are allowed to register clients. The maximum number of simultaneous clients is TSE-specific.</text>
+        <text xml:lang="de">Nur Nutzer mit Rolle 'admin' oder 'logger' dürfen Clients registrieren. Die maximale Anzahl gleichzeitiger Clients ist TSE-spezifisch.</text>
+    </notes>
+</process>

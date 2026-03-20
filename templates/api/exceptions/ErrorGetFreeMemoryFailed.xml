@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetFreeMemoryFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetFreeMemoryFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getFreeMemory fails to retrieve the amount of currently free memory available in the Secure Element. The function attempts to obtain the current available memory capacity for storing data and processing operations, but the retrieval process fails before the memory value can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getFreeMemory fehlschlägt, um die Menge des aktuell verfügbaren freien Speichers im Secure Element abzurufen. Die Funktion versucht, die aktuelle verfügbare Speicherkapazität zum Speichern von Daten und Verarbeitung von Operationen zu erhalten, aber der Abrufprozess schlägt fehl, bevor der Speicherwert bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Resource Management</category>
+  <subcategory>Memory Status</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetFreeMemoryFailed that is thrown if the SE API function getFreeMemory fails to determine the amount of currently free memory in the device.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetFreeMemoryFailed, die ausgelöst wird, wenn die SE API Funktion getFreeMemory fehlschlägt, um die Menge des aktuell verfügbaren freien Speichers im Gerät zu bestimmen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getFreeMemory function cannot retrieve the current available memory from the Secure Element. Free memory information indicates the amount of memory capacity that is currently available for storing data and processing operations. ErrorGetFreeMemoryFailed indicates that the Secure Element cannot provide the memory status information due to hardware failure, memory management system errors, storage corruption, communication failures, or Secure Element state restrictions. When this exception occurs, no memory data is returned and applications cannot determine available memory capacity or assess resource availability. Recovery typically involves device verification, memory management subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getFreeMemory den aktuell verfügbaren Speicher nicht vom Secure Element abrufen kann. Die Informationen über freien Speicher zeigen die Menge der Speicherkapazität an, die aktuell zum Speichern von Daten und zur Verarbeitung von Operationen verfügbar ist. ErrorGetFreeMemoryFailed zeigt an, dass das Secure Element die Speicherstatusinformationen aufgrund eines Hardware-Ausfalls, Speichermanagement-Systemfehler, Speicherbeschädigung, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Speicherdaten zurückgegeben und Anwendungen können die verfügbare Speicherkapazität nicht bestimmen oder die Ressourcenverfügbarkeit nicht bewerten. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Speichermanagement-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.1 Resource Management - getFreeMemory</section>
+    <requirement>
+      <text xml:lang="en">The function getFreeMemory SHALL retrieve the amount of currently free memory available in the Secure Element for data storage and processing operations. If the Secure Element cannot provide or return the required memory information, the function SHALL raise the exception ErrorGetFreeMemoryFailed and exit without returning any memory data. The free memory retrieval failure indicates the Secure Element's memory status query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getFreeMemory soll die Menge des aktuell verfügbaren freien Speichers im Secure Element für Datenspeicherung und Verarbeitung von Operationen abrufen. Falls das Secure Element die erforderlichen Speicherinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetFreeMemoryFailed auslösen und beenden, ohne Speicherdaten zurückzugeben. Der Fehler beim Abrufen von freiem Speicher zeigt an, dass die Speicherstatus-Abfragefunktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Resource management operations - getFreeMemory function only</text>
+      <text xml:lang="de">Ressourcenverwaltungsoperationen - nur Funktion getFreeMemory</text>
+    </applicability>
+    <reference>getFreeMemory – Function (3.5.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>getFreeMemory</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getFreeMemory function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getFreeMemory auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for resource information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Ressourceninformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and memory management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und die Speicherverwaltung betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares memory status query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Speicherstatus-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits memory query command to Secure Element requesting current free memory amount</text>
+      <text xml:lang="de">Funktion übersendet Speicherabfrage-Befehl zu Secure Element und fordert aktuelle freie Speichermenge an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (hardware error, management error, memory retrieval error) → ErrorGetFreeMemoryFailed raised, function exits without memory data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Hardware-Fehler, Verwaltungsfehler, Speicherabruffehler) → ErrorGetFreeMemoryFailed ausgelöst, Funktion beendet ohne Speicherdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetFreeMemoryFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetFreeMemoryFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives free memory amount from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion freie Speichermenge von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates memory value for correctness (format, numeric range, logical consistency with total memory)</text>
+      <text xml:lang="de">Funktion validiert Speicherwert auf Korrektheit (Format, numerischer Bereich, logische Konsistenz mit Gesamtspeicher)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid free memory value to caller</text>
+      <text xml:lang="de">Funktion gibt gültigen freien Speicherwert an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry memory query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Speicherabfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage medium status</text>
+      <text xml:lang="de">Prüfen Sie den Speichermedium-Status</text>
+    </step>
+    <step>
+      <text xml:lang="en">Monitor storage capacity in application</text>
+      <text xml:lang="de">Beobachten Sie die Speicherkapazität in der Anwendung</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorGetTotalMemoryFailed</exception>
+    <exception>ErrorInsufficientMemory</exception>
+    <exception>ErrorMemoryAllocationFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve free memory information does not affect device initialization state, internal memory contents, memory allocation, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs von freien Speicherinformationen wirkt sich nicht auf den Geräteinitialisierungszustand, den internen Speicherinhalt, die Speicherallokation oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Memory Data Return Status">
+      <text xml:lang="en">No memory value is returned to the caller. The function exits without providing any available memory information. Applications must not assume default memory values or cached information; they must handle the exception as indicating memory status is unavailable.</text>
+      <text xml:lang="de">Es wird kein Speicherwert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne verfügbare Speicherinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Speicherwerten oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Speicherstatus nicht verfügbar ist.</text>
+    </state>
+    <state name="Secure Element Memory State">
+      <text xml:lang="en">Secure Element memory remains unchanged by the failed memory query. No memory deallocation, allocation changes, or memory management modifications occur. Memory contents and allocation state continue unchanged regardless of the retrieval failure.</text>
+      <text xml:lang="de">Der Speicher des Secure Element bleibt durch die fehlgeschlagene Speicherabfrage unverändert. Es werden keine Speicherfreigaben, Allokationsänderungen oder Speicherverwaltungsänderungen vorgenommen. Die Speicherinhalte und der Allokationszustand bleiben unverändert, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Memory Availability Continuity">
+      <text xml:lang="en">The Secure Element continues to maintain accurate memory tracking and allocation internally. The failure to retrieve free memory status does not affect the actual available memory or memory management operations. Memory queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Das Secure Element setzt fort, die Speicherverfolgung und Allokation intern genau zu verwalten. Das Fehlschlagen des Abrufs des freien Speicherstatus wirkt sich nicht auf den tatsächlich verfügbaren Speicher oder die Speicherverwaltungsoperationen aus. Speicherabfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the memory query failure. Device internal consistency is maintained. Other SE API functions and memory operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Speicherabfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Speicheroperationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, management system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Verwaltungssystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of free memory information failed - cannot determine available memory</text>
+      <text xml:lang="de">Anzeichen: Abruf der freien Speicherinformationen fehlgeschlagen - kann verfügbaren Speicher nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Memory Management, Device Resources, Information Retrieval, Storage Status</text>
+      <text xml:lang="de">Themen: Speicherverwaltung, Geräteressourcen, Informationsabruf, Speicherstatus</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getFreeMemory when free memory information retrieval fails</text>
+      <text xml:lang="de">Wird von getFreeMemory ausgelöst, wenn die Abfrage von freien Speicherinformationen fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Memory function queries available device storage</text>
+      <text xml:lang="de">Speicherfunktion fragt verfügbaren Gerätespeicher ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device tracks storage usage and available capacity</text>
+      <text xml:lang="de">Das Gerät verfolgt die Speicherauslastung und verfügbare Kapazität</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents available memory information</text>
+      <text xml:lang="de">Abruffehler verhindert verfügbare Speicherinformationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

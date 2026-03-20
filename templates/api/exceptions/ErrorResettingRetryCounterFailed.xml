@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorResettingRetryCounterFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorResettingRetryCounterFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function unblockPin fails to reset the PIN retry counter as part of the PIN unblocking operation. The function successfully unblocks the PIN and sets a new PIN, but fails when attempting to reset the failed attempt counter to zero. ErrorResettingRetryCounterFailed indicates that while the PIN is unblocked, the retry counter was not properly reset, potentially leaving the account in an inconsistent state where the PIN is usable but the retry counter is not reset.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion unblockPin fehlschlägt beim Zurücksetzen des PIN-Wiederholungszählers als Teil der PIN-Entsperrungsoperation. Die Funktion entsperrt die PIN erfolgreich und setzt eine neue PIN, schlägt aber fehl, wenn versucht wird, den Fehlerversuchzähler auf Null zurückzusetzen. ErrorResettingRetryCounterFailed zeigt an, dass während die PIN entsperrt ist, der Wiederholungszähler nicht ordnungsgemäß zurückgesetzt wurde, was das Konto möglicherweise in einem inkonsistenten Zustand hinterlässt, in dem die PIN nutzbar ist, aber der Wiederholungszähler nicht zurückgesetzt ist.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>Retry Counter Management</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorResettingRetryCounterFailed that is thrown if the PIN retry counter reset fails during PIN unblocking.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorResettingRetryCounterFailed, die ausgelöst wird, wenn das Zurücksetzen des PIN-Wiederholungszählers während der PIN-Entsperrung fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the unblockPin function successfully unblocks the user's PIN and sets a new PIN but fails to reset the failed PIN attempt counter to zero. When a PIN is unblocked via the unblockPin function, the device should perform two operations: 1) Unblock the PIN and set a new PIN, and 2) Reset the failed attempt counter to zero. ErrorResettingRetryCounterFailed indicates that operation 1 succeeded but operation 2 failed. The result is that the PIN is now unblocked and can be used for authentication, but the retry counter still reflects the previous failed attempts. This leaves the account in a potentially inconsistent state - the next failed PIN attempt may immediately trigger a re-block if the counter still shows high failed attempts. ErrorResettingRetryCounterFailed is a High severity exception that indicates a partial failure in the PIN unblocking process. Recovery requires ensuring the retry counter is properly reset so the account is in a consistent state.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die unblockPin-Funktion die PIN des Benutzers erfolgreich entsperrt und eine neue PIN setzt, aber fehlschlägt beim Zurücksetzen des Fehlerversuchzählers auf Null. Wenn eine PIN über die unblockPin-Funktion entsperrt wird, sollte das Gerät zwei Operationen ausführen: 1) PIN entsperren und neue PIN setzen, und 2) Fehlerversuchzähler auf Null zurücksetzen. ErrorResettingRetryCounterFailed zeigt an, dass Operation 1 erfolgreich war, aber Operation 2 fehlgeschlagen ist. Das Ergebnis ist, dass die PIN jetzt entsperrt ist und für die Authentifizierung verwendet werden kann, aber der Wiederholungszähler immer noch die vorherigen fehlgeschlagenen Versuche widerspiegelt. Dies hinterlässt das Konto in einem möglicherweise inkonsistenten Zustand - der nächste fehlgeschlagene PIN-Versuch kann sofort eine Neu-Sperre auslösen, wenn der Zähler immer noch hohe fehlgeschlagene Versuche anzeigt. ErrorResettingRetryCounterFailed ist eine Ausnahme mit hohem Schweregrad, die einen teilweisen Fehler im PIN-Entsperrungsprozess anzeigt. Die Wiederherstellung erfordert, dass der Wiederholungszähler ordnungsgemäß zurückgesetzt wird, damit das Konto in einem konsistenten Zustand ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2 PIN Unblocking - unblockPin</section>
+    <requirement>
+      <text xml:lang="en">The function unblockPin SHALL unblock a user's blocked PIN by verifying the provided PUK and creating a new PIN. The unblock operation consists of multiple steps: verification of PUK, creation of new PIN, and reset of the failed PIN attempt counter to zero. If the PUK verification and new PIN creation succeed but the retry counter reset fails, the function SHALL raise the exception ErrorResettingRetryCounterFailed. In this partial failure scenario, the PIN is unblocked and the new PIN is set, but the retry counter remains at its previous value. The device should ensure transaction consistency - if the retry counter reset fails, the entire unblock operation should either be rolled back or explicitly noted as partially complete.</text>
+      <text xml:lang="de">Die unblockPin-Funktion MUSS eine blockierte PIN des Benutzers durch Überprüfung der bereitgestellten PUK und Erstellung einer neuen PIN entsperren. Die Entsperrungsoperation besteht aus mehreren Schritten: Überprüfung der PUK, Erstellung der neuen PIN und Zurücksetzen des Fehlerversuchzählers auf Null. Wenn die PUK-Überprüfung und die Erstellung der neuen PIN erfolgreich sind, aber das Zurücksetzen des Wiederholungszählers fehlschlägt, MUSS die Funktion die Ausnahme ErrorResettingRetryCounterFailed auslösen. In diesem teilweisen Fehlerszenario ist die PIN entsperrt und die neue PIN ist gesetzt, aber der Wiederholungszähler bleibt bei seinem vorherigen Wert. Das Gerät sollte Transaktionskohärenz gewährleisten - wenn das Zurücksetzen des Wiederholungszählers fehlschlägt, sollte die gesamte Entsperrungsoperation entweder zurückgerollt oder explizit als teilweise abgeschlossen gekennzeichnet werden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">PIN unblocking operations - unblockPin function only, when retry counter reset fails</text>
+      <text xml:lang="de">PIN-Entsperrungsoperationen - nur unblockPin-Funktion, wenn das Zurücksetzen des Wiederholungszählers fehlschlägt</text>
+    </applicability>
+    <reference>unblockPin – Function (3.1.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>unblockPin</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls unblockPin function with user ID and PUK</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft unblockPin-Funktion mit Benutzer-ID und PUK auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PUK format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PUK-Format</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function transmits unblock command with PUK to Secure Element</text>
+      <text xml:lang="de">Funktion überträgt Entsperrungsbefehl mit PUK an Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element verifies the provided PUK</text>
+      <text xml:lang="de">Secure Element überprüft die bereitgestellte PUK</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element unblocks the PIN and sets the new PIN value</text>
+      <text xml:lang="de">Secure Element entsperrt die PIN und setzt den neuen PIN-Wert</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If PIN unblock/set fails → ErrorUnblockPinFailed raised, function exits</text>
+      <text xml:lang="de">Wenn PIN-Entsperrung/Einstellung schlägt fehl → ErrorUnblockPinFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PIN unblock/set succeeds → proceed to step 7</text>
+      <text xml:lang="de">Wenn PIN-Entsperrung/Einstellung erfolgreich → Fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element attempts to reset the failed PIN attempt counter to zero</text>
+      <text xml:lang="de">Secure Element versucht, den fehlgeschlagenen PIN-Versuchzähler auf Null zurückzusetzen</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If counter reset succeeds → proceed to step 8</text>
+      <text xml:lang="de">Wenn Zähler-Zurücksetzen erfolgreich → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If counter reset fails → ErrorResettingRetryCounterFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Zähler-Zurücksetzen schlägt fehl → ErrorResettingRetryCounterFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function receives acknowledgment confirming both operations complete</text>
+      <text xml:lang="de">Funktion empfängt Bestätigung, die Bestätigt, dass beide Operationen abgeschlossen sind</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns successfully with PIN unblocked and counter reset</text>
+      <text xml:lang="de">Funktion gibt erfolgreich mit entsperrter PIN und zurückgesetztem Zähler zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify PUK verification succeeded</text>
+      <text xml:lang="de">Überprüfen Sie, ob die PUK-Überprüfung erfolgreich war</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element in Betrieb ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry retry counter reset operation</text>
+      <text xml:lang="de">Wiederholen Sie die Wiederholungszähler-Zurücksetzen-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device support if reset unavailable</text>
+      <text xml:lang="de">Kontaktieren Sie den Geräte-Support, wenn das Zurücksetzen nicht verfügbar ist</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorUnblockPinFailed</exception>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorIncorrectPuk</exception>
+    <exception>ErrorPukBlocked</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="PIN Successfully Unblocked">
+      <text xml:lang="en">The user's PIN is now unblocked and can be used for authentication. The PIN is no longer in blocked state.</text>
+      <text xml:lang="de">Die PIN des Benutzers ist jetzt entsperrt und kann für die Authentifizierung verwendet werden. Die PIN ist nicht mehr im gesperrten Zustand.</text>
+    </state>
+    <state name="New PIN Set">
+      <text xml:lang="en">A new PIN value is set on the user's account. The old PIN (which was blocked) is replaced with the new PIN.</text>
+      <text xml:lang="de">Ein neuer PIN-Wert ist auf dem Benutzerkonto gesetzt. Die alte PIN (die blockiert war) wird durch die neue PIN ersetzt.</text>
+    </state>
+    <state name="Retry Counter Not Reset">
+      <text xml:lang="en">The failed PIN attempt counter is NOT reset to zero. It retains its previous value indicating multiple failed attempts.</text>
+      <text xml:lang="de">Der fehlgeschlagene PIN-Versuchzähler wird NICHT auf Null zurückgesetzt. Er behält seinen vorherigen Wert bei, der mehrere fehlgeschlagene Versuche anzeigt.</text>
+    </state>
+    <state name="Account State Inconsistent">
+      <text xml:lang="en">The account is in a potentially inconsistent state - PIN is unblocked but retry counter is not reset, which may cause unintended re-blocking.</text>
+      <text xml:lang="de">Das Konto ist in einem möglicherweise inkonsistenten Zustand - PIN ist entsperrt, aber der Wiederholungszähler ist nicht zurückgesetzt, was zu unbeabsichtigter Neu-Sperrung führen kann.</text>
+    </state>
+    <state name="Authentication Possible">
+      <text xml:lang="en">User authentication with the new PIN is immediately possible - they can log in right away.</text>
+      <text xml:lang="de">Die Benutzerauthentifizierung mit der neuen PIN ist sofort möglich - sie können sich sofort anmelden.</text>
+    </state>
+    <state name="Potential Rapid Re-block">
+      <text xml:lang="en">If the user makes another failed PIN attempt, they may be re-blocked more quickly than expected due to the unreset counter.</text>
+      <text xml:lang="de">Wenn der Benutzer einen weiteren fehlgeschlagenen PIN-Versuch macht, können sie aufgrund des nicht zurückgesetzten Zählers schneller als erwartet erneut blockiert werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Resetting of retry counter failed - counter could not be reset</text>
+      <text xml:lang="de">Anzeige: Zurücksetzen des Wiederholungszählers ist fehlgeschlagen - Zähler konnte nicht zurückgesetzt werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: PIN Management, Counter Operations, Retry Operations, Authentication</text>
+      <text xml:lang="de">Themen: PIN-Verwaltung, Zähler-Operationen, Wiederholungs-Operationen, Authentifizierung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by unblockPin when retry counter reset fails</text>
+      <text xml:lang="de">Ausgelöst von unblockPin, wenn das Zurücksetzen des Wiederholungszählers fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Counter reset function reinitializes PIN retry attempts</text>
+      <text xml:lang="de">Die Zähler-Zurücksetzen-Funktion initialisiert PIN-Wiederholungsversuche neu</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device updates retry counter after successful PUK verification</text>
+      <text xml:lang="de">Gerät aktualisiert Wiederholungszähler nach erfolgreicher PUK-Überprüfung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Reset failure prevents PIN unblocking completion</text>
+      <text xml:lang="de">Zurücksetzen-Fehler verhindert die Vervollständigung der PIN-Entsperrung</text>
+    </note>
+  </implementationContext>
+</exception>
+

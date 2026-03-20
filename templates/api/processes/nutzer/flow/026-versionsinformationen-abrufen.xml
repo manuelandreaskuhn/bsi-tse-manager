@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>026</processId>
+    <processName>
+        <text xml:lang="en">Query Version Information</text>
+        <text xml:lang="de">Versionsinformationen abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying version information from the TSE device. Returns an ASN.1 DER encoded structure containing manufacturer, model, and all component versions.</text>
+        <text xml:lang="de">Abfrage von Versionsinformationen vom TSE-Gerät. Gibt eine ASN.1-kodierte Struktur zurück, die Hersteller, Modell und alle Komponentenversionen enthält.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Device Information</text>
+            <text xml:lang="de">Geräteinformation</text>
+        </object>
+        <object>
+            <text xml:lang="en">Version Information</text>
+            <text xml:lang="de">Versionsinformation</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getDeviceInformationSet</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>deviceInformationSet</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">ASN.1 DER encoded device information containing manufacturer, model, and component versions</text>
+                <text xml:lang="de">ASN.1-DER-kodierte Geräteinformation mit Hersteller, Modell und Komponentenversionen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>DeviceInformationSet</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingVersionInformationFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.4</reference>
+        <reference>BSI TR-03151-1 Annex D</reference>
+        <reference>BSI TR-03153-1 Chapter 5.6.4</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This is an optional function accessible to all users. The returned information is encoded as ASN.1 DER and must be decoded accordingly. It contains comprehensive version information for all hardware and software components, necessary for upgrade planning and maintenance.</text>
+        <text xml:lang="de">Dies ist eine optionale Funktion, die für alle Nutzer zugänglich ist. Die zurückgegebenen Informationen sind ASN.1-DER-codiert und müssen entsprechend dekodiert werden. Sie enthalten umfassende Versionsinformationen für alle Hardware- und Softwarekomponenten, die für Upgrade-Planung und Wartung erforderlich sind.</text>
+    </notes>
+</process>

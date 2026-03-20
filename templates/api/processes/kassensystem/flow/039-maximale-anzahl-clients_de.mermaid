@@ -1,0 +1,9 @@
+flowchart TD
+    Start([Nutzer: getMaxNumberOfClients])
+    Start --> Get[Bestimme maximale Anzahl<br/>gleichzeitiger Clients]
+    Get --> CheckUnlimited{Unbegrenzte<br/>Anzahl?}
+    CheckUnlimited -->|Ja| ReturnMax[Rückgabe: Höchster Wert<br/>des Datentyps unsigned long]
+    CheckUnlimited -->|Nein| ReturnActual[Rückgabe: Tatsächliches Maximum]
+    ReturnMax --> End([Ende])
+    ReturnActual --> End
+    style Get fill:#87CEEB

@@ -1,0 +1,92 @@
+{
+  "testcase_id": "TC-ADD-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Herstellerspezifische Funktionalitäten: Methoden-Konformität und BSI-Freigabe",
+  "description": "Prüft, ob zusätzliche Funktionalitäten den vorgegebenen Methoden und Sicherheitsvorgaben entsprechen und mit dem BSI abgestimmt/freigegeben wurden.",
+  "purpose": "Prüfung, ob die zusätzlichen Funktionalitäten der Einbindungsschnittstelle den in den Technischen Richtlinien und Schutzprofilen vorgegeben Methoden, Abläufen, Grundideen und Sicherheitsvorgaben entsprechen.",
+  "module": "Integration Interface",
+  "submodule": "ADD",
+  "function": "herstellerspezifische Funktionen",
+  "test_type": "FP",
+  "priority": "conditional",
+  "profiles": [
+    "ADDITIONAL_FUNCTIONALITIES"
+  ],
+  "source_tests": [
+    "ADD_DOC_02",
+    "ADD_DOC_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation und ausgefülltes ICS liegen vollständig vor.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: TSE implementiert herstellerspezifische Funktionalitäten",
+      "result": null,
+      "instruction": "TSE implementiert herstellerspezifische Funktionalitäten"
+    },
+    {
+      "step": 3,
+      "type": "VERIFY",
+      "title": "Methoden-Konformität und BSI-Abstimmung der Zusatzfunktionen prüfen",
+      "result": null,
+      "instruction": "Methoden-Konformität und BSI-Abstimmung der Zusatzfunktionen prüfen",
+      "checks": [
+        {
+          "description": "ADD_DOC_02: Zusatzfunktionen entsprechen Methoden, Abläufen und Sicherheitsvorgaben der TRs und Schutzprofile",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ADD_DOC_03: Zusatzfunktionen mit zuständigem BSI-Referat abgestimmt und freigegeben",
+          "expected": "Freigabe dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "Korrektheit der Abweichungen dokumentiert",
+      "result": null,
+      "instruction": "Korrektheit der Abweichungen dokumentiert",
+      "checks": [
+        {
+          "description": "Alle Abweichungen von Standardfunktionen vollständig begründet und BSI-freigegeben",
+          "expected": "Dokumentiert und freigegeben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6"
+  ]
+}

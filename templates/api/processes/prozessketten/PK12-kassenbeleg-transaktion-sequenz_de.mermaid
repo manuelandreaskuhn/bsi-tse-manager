@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant K as Kunde
+    participant Ka as Kassierer
+    participant P as Kassensystem
+    participant T as TSE
+
+    K->>Ka: Artikel zur Kasse bringen
+    Ka->>P: Ersten Artikel scannen
+    
+    Note over P,T: Transaktion wird SOFORT gestartet
+    P->>T: startTransaction(clientId, processData: leer, processType: leer)
+    T->>T: Transaktionsnummer generieren
+    T-->>P: transactionNumber, logTime, signatureCounter
+    
+    loop Weitere Artikel
+        Ka->>P: Artikel scannen
+        P->>P: Preis aufaddieren
+    end
+    
+    Note over P: Keine updateTransaction-Aufrufe! Alle Daten bleiben im System
+    
+    K->>Ka: Zahlung durchführen
+    Ka->>P: Zahlungsart eingeben
+    
+    Note over P: processData erstellen: Vorgangstyp^Steuern^Zahlungen, z.B. "Beleg^10.50_2.30_0.00_0.00_0.00^12.80:Bar"
+    
+    P->>T: finishTransaction(clientId, transactionNumber, processData: KassenbelegV1Data, processType: "Kassenbeleg-V1")
+    T->>T: Signatur erstellen
+    T->>T: Transaction-Log speichern
+    T-->>P: logTime, signatureValue, signatureCounter
+    
+    P->>P: QR-Code mit Signaturdaten generieren
+    P->>Ka: Beleg mit QR-Code drucken
+    Ka->>K: Beleg aushändigen
+    
+    Note over K,T: Transaktion geschlossen - sofort verifizierbar

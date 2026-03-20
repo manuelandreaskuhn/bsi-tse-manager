@@ -1,0 +1,49 @@
+graph TD
+    Start([Start: Business<br/>transaction completed])
+    
+    Start --> ThirdParty{Third party<br/>involved in<br/>transaction?}
+    
+    ThirdParty -->|No| NoReceipt[No receipt issuance<br/>required<br/>e.g. withdrawals, deposits]
+    ThirdParty -->|Yes| Exemption{Exemption per<br/>§148 AO exists?}
+    
+    Exemption -->|Yes| Optional[Receipt only upon<br/>customer request<br/>§368 BGB applies!]
+    Exemption -->|No| Format{Electronic or<br/>paper receipt?}
+    
+    Format -->|Electronic| Consent{Customer consents<br/>to electronic<br/>receipt?}
+    Format -->|Paper| PreparePrint[Prepare receipt<br/>for printing]
+    
+    Consent -->|No| PreparePrint
+    Consent -->|Yes| Electronic[Provide electronic<br/>receipt:<br/>- QR code<br/>- Email<br/>- Download<br/>- NFC]
+    
+    PreparePrint --> Print[Print receipt]
+    
+    Print --> Offer[Offer receipt]
+    
+    Offer --> Accept{Customer accepts<br/>receipt?}
+    
+    Accept -->|Yes| Handover[Hand over<br/>receipt]
+    Accept -->|No| Dispose[Non-accepted<br/>receipt may be<br/>disposed]
+    
+    Electronic --> Timely{Immediately after<br/>transaction end?}
+    Handover --> Timely
+    Dispose --> Timely
+    
+    Timely -->|No| Warning[WARNING:<br/>Receipt obligation<br/>not fulfilled!]
+    Timely -->|Yes| End([End: Receipt<br/>obligation fulfilled])
+    
+    NoReceipt --> End2([End])
+    Optional --> End2
+    Warning --> End
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style End2 fill:#FFB6C1
+    style ThirdParty fill:#FFE4B5
+    style Exemption fill:#FFE4B5
+    style Format fill:#FFE4B5
+    style Consent fill:#FFE4B5
+    style Accept fill:#FFE4B5
+    style Timely fill:#FFE4B5
+    style Warning fill:#FF6B6B
+    style Electronic fill:#87CEEB
+    style Print fill:#87CEEB

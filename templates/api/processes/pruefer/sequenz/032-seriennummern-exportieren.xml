@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>032</processId>
+    <processName>
+        <text xml:lang="en">Export Serial Numbers</text>
+        <text xml:lang="de">Seriennummern exportieren</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Export of the TSE serial number(s). A serial number is a hash over a public key of a key pair whose private key is used for signing. Different keys can be used for different log types.</text>
+        <text xml:lang="de">Export der Seriennummer(n) der TSE. Eine Seriennummer ist ein Hash über einen Public Key eines Schlüsselpaares, dessen Private Key für Signaturen verwendet wird. Verschiedene Keys können für verschiedene Log-Typen verwendet werden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role except timeadmin)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Key Pairs</text>
+            <text xml:lang="de">Schlüsselpaare</text>
+        </object>
+        <object>
+            <text xml:lang="en">Public Keys</text>
+            <text xml:lang="de">Public Keys</text>
+        </object>
+        <object>
+            <text xml:lang="en">Serial Numbers</text>
+            <text xml:lang="de">Seriennummern</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>exportSerialNumbers</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>serialNumbers</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">ASN.1 DER encoded SerialNumberSet with all serial numbers and log type mappings</text>
+                <text xml:lang="de">ASN.1 DER kodiertes SerialNumberSet mit allen Seriennummern und Log-Typ-Zuordnungen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>SerialNumberSet (ASN.1)</dataObject>
+        <dataObject>SerialNumber</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorExportSerialNumbersFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorFunctionFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.5</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This function is MANDATORY. Available to all user roles except timeadmin. The serial number is a hash over the public key. Different keys can be used for Transaction-Logs, System-Logs, and Audit-Logs. The output is ASN.1 DER encoded and contains the mapping of serial numbers to log types.</text>
+        <text xml:lang="de">Diese Funktion ist verpflichtend. Für alle Nutzerrollen außer timeadmin verfügbar. Die Seriennummer ist ein Hash über den Public Key. Es können verschiedene Keys für Transaction-Logs, System-Logs und Audit-Logs verwendet werden. Die Ausgabe ist ASN.1 DER kodiert und enthält die Zuordnung von Seriennummern zu Log-Typen.</text>
+    </notes>
+</process>

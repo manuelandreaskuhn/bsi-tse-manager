@@ -1,0 +1,253 @@
+{
+  "testcase_id": "TC-EXP-INF-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "info.csv: Vorhandensein, Inhalt und Pflichtfelder",
+  "description": "Prüft das Vorhandensein der info.csv, korrekte Benennung, Komponenten-Bezeichner, Pflichtfelder und Beschreibungszeile.",
+  "purpose": "Prüfung der exportierten Datei info.csv.\nDer Test prüft den Dateinamen.",
+  "module": "Export",
+  "submodule": "EXP_INF",
+  "function": "exportLogMessages",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "STORAGE_BASIC"
+  ],
+  "source_tests": [
+    "EXP_INF_01",
+    "EXP_INF_02",
+    "EXP_INF_03",
+    "EXP_INF_04",
+    "EXP_INF_05"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Beschreibung der TSE wurde durch den Nutzer nicht gesetz",
+      "result": null,
+      "instruction": "Die Beschreibung der TSE wurde durch den Nutzer nicht gesetzt."
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Es wird eine neue Beschreibung der TSE beim Funktionsaufruf übergeben.",
+      "function": "setDescription",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "EXP_INF_01"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "info.csv im TAR-Container identifizieren und Basis-Pflichtfelder prüfen",
+      "result": null,
+      "instruction": "info.csv im TAR-Container identifizieren und Basis-Pflichtfelder prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages → info.csv aus TAR extrahieren",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Genau eine Datei 'info.csv' im TAR vorhanden",
+          "expected": "EXP_INF_01 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname exakt 'info.csv' (Kleinschreibung)",
+          "expected": "EXP_INF_01b bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle component:-Bezeichner gültig (device/storage/integration-interface/CSP/SMA)",
+          "expected": "EXP_INF_02a bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Pflichtfelder in jeder component:-Zeile: manufacturer, model, version, certification-id",
+          "expected": "EXP_INF_02b bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "description:-Zeile vorhanden",
+          "expected": "EXP_INF_02c bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine unbekannten Zeilen vorhanden",
+          "expected": "EXP_INF_05 bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "EXP_INF_01"
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "info.csv bei verschiedenen Beschreibungszuständen prüfen",
+      "result": null,
+      "instruction": "info.csv bei verschiedenen Beschreibungszuständen prüfen",
+      "checks": [
+        {
+          "description": "DESCRIPTION_NOT_SET: description:-Zeile leer oder fehlend",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "DESCRIPTION_SET: description:-Zeile enthält Herstellerwert",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nach setDescription: description:-Zeile enthält gesetzten Nutzerwert",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Prüfung bei: keine Beschreibung, Hersteller-Beschreibung, Nutzer-Beschreibung"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.4.2"
+  ]
+}

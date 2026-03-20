@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant Prüfer as Finanzbehörde/Prüfer
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+    participant ERS as Aufzeichnungssystem
+
+    Note over Prüfer: Kassen-Nachschau oder<br/>Außenprüfung
+
+    Prüfer->>TSE: exportLogMessages()<br/>(keine Authentifizierung erforderlich)
+    activate TSE
+    
+    TSE->>TSE: Prüfe: Daten verfügbar?
+    
+    TSE->>Speicher: Lese alle Log-Nachrichten
+    activate Speicher
+    Speicher-->>TSE: Transaction-Logs<br/>System-Logs<br/>Audit-Logs
+    deactivate Speicher
+    
+    TSE->>TSE: Hole Zertifikatskette
+    TSE->>TSE: Erstelle TSE-Informationen (info.csv)
+    
+    TSE->>TSE: Packe TAR-Archiv:<br/>- Log-Nachrichten (*.log)<br/>- Zertifikate<br/>- info.csv
+    
+    TSE->>TSE: Generiere Dateinamen nach Schema:<br/>[SERIENNUMMER]_[TIMESTAMP].tar
+    
+    TSE-->>Prüfer: TAR-Archiv + Dateiname
+    deactivate TSE
+    
+    Note over Prüfer: Speichere TAR-Archiv lokal
+    
+    Prüfer->>Prüfer: Öffne TAR-Archiv
+    Prüfer->>Prüfer: Lese info.csv
+    Prüfer->>Prüfer: Extrahiere Zertifikate
+    Prüfer->>Prüfer: Extrahiere Log-Nachrichten
+    
+    Note over Prüfer: Weitere Verarbeitung:<br/>Verifikation, Prüfung

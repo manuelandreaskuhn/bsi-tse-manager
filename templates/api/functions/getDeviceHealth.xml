@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getDeviceHealth" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getDeviceHealth</name>
+  <category>Gerätewartung</category>
+  <description>
+    <text xml:lang="en">The function getDeviceHealth can be used to determine the health of the device or the components that form the device.</text>
+    <text xml:lang="de">Die Funktion getDeviceHealth kann verwendet werden, um die Gesundheit des Geräts oder der Komponenten, die das Gerät bilden, zu bestimmen.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+    <role>timeadmin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to a subset of authenticated users, the function SHALL check if the user that has invoked the function is authorized to use the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer autorisiert. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht autorisiert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL determine the health of the device or the components that form the device. If the determination of the health information fails, the function SHALL raise the exception ErrorGetDeviceHealthFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt Gerätezustand. Bei Fehler: Exception ErrorGetDeviceHealthFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  DETERMINE device health
+CATCH error
+  THROW ErrorGetDeviceHealthFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  ERMITTLE Gerätezustand
+BEI_FEHLER
+  WERFE ErrorGetDeviceHealthFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetDeviceHealthFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of the health information fails</text>
+          <text xml:lang="de">Die Ermittlung der Integritätsinformationen schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of the health information has been successful, the function SHALL return the information by usage of the output parameter healthInformationSet. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt Gerätezustand zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN healthInformationSet without exception</text>
+        <text xml:lang="de">GEBE Gerätezustandsinformationen zurück (healthInformationSet Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The determination of the health information has been successful</text>
+          <text xml:lang="de">Die Ermittlung der Gerätezustandsinformationen war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return health information without raising an exception</text>
+          <text xml:lang="de">Gibt Zustandsinformationen zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>byte[]</type>
+    <description>
+      <text xml:lang="en">the health state of the device.</text>
+      <text xml:lang="de">der Gesundheitszustand des Geräts.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetDeviceHealthFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

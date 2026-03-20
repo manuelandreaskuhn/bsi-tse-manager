@@ -1,0 +1,57 @@
+sequenceDiagram
+    actor Admin as Admin
+    participant TSE as TSE
+    participant Storage as Storage Medium
+    participant Backup as Backup System
+
+    rect rgb(255, 240, 200)
+    Note over Admin,Backup: PHASE 1: CREATE BACKUP
+    
+    Admin->>TSE: exportLogMessages()
+    TSE->>Storage: Collect all Logs + Certificates
+    Storage-->>TSE: Data
+    TSE->>TSE: Create TAR Archive
+    TSE-->>Admin: TAR Archive
+    Admin->>Backup: Save TAR Archive
+    Backup-->>Admin: Secured
+    
+    Note over Admin,Backup: Backup created and secured externally
+    end
+
+    Note over Admin,Backup: ... time passes ...<br/>Data Loss or Migration
+
+    rect rgb(255, 200, 200)
+    Note over Admin,Backup: PHASE 2: RESTORE
+    
+    Admin->>Backup: Load saved TAR Archive
+    Backup-->>Admin: TAR Archive
+    
+    Admin->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Admin: Authenticated
+    
+    Admin->>TSE: restoreLogsFromBackup(tarArchive)
+    activate TSE
+    TSE->>TSE: Validate TAR Archive
+    TSE->>TSE: Check: Logs from THIS TSE?
+    alt Logs from this TSE
+        TSE->>Storage: Unpack TAR Archive
+        activate Storage
+        loop For each Log File
+            TSE->>Storage: Save Log File
+            alt Filename already exists
+                Storage->>Storage: Append Counter (file_1.log)
+            end
+        end
+        loop For each Certificate
+            TSE->>Storage: Save Certificate (if not present)
+        end
+        Storage-->>TSE: Restore completed
+        deactivate Storage
+        TSE-->>Admin: Success
+    else Logs from different TSE
+        TSE-->>Admin: Error: ErrorRestoreFailed<br/>(Logs not from this TSE)
+    end
+    deactivate TSE
+    end
+
+    Note over Admin,Backup: RESULT: Logs restored,<br/>Data loss fixed or Data migrated

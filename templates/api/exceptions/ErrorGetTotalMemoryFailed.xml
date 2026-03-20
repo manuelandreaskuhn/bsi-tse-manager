@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetTotalMemoryFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetTotalMemoryFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getTotalMemory fails to retrieve the total storage capacity of the Secure Element. The function attempts to determine the complete storage capacity available on the device, but the retrieval process fails before the total memory information can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getTotalMemory fehlschlägt, um die gesamte Speicherkapazität des Secure Element abzurufen. Die Funktion versucht, die gesamte auf dem Gerät verfügbare Speicherkapazität zu bestimmen, aber der Abrufprozess schlägt fehl, bevor die Gesamtspeicherinformation bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Resource Management</category>
+  <subcategory>Memory Capacity Query</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetTotalMemoryFailed that is thrown if the determination of the total storage capacity failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetTotalMemoryFailed, die ausgelöst wird, wenn die Bestimmung der gesamten Speicherkapazität fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getTotalMemory function cannot retrieve the total storage capacity from the Secure Element. Total memory information describes the complete storage capacity available on the Secure Element. ErrorGetTotalMemoryFailed indicates that the Secure Element cannot provide the total memory information due to hardware failure, memory information storage corruption, internal resource management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no total memory value is returned and applications cannot determine the complete storage capacity of the device. Recovery typically involves device verification, resource management subsystem diagnostics, and hardware inspection if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getTotalMemory die gesamte Speicherkapazität nicht vom Secure Element abrufen kann. Die Gesamtspeicherinformation beschreibt die gesamte auf dem Secure Element verfügbare Speicherkapazität. ErrorGetTotalMemoryFailed zeigt an, dass das Secure Element die Gesamtspeicherinformation aufgrund eines Hardware-Ausfalls, Speicherbeschädigung von Speicherinformationen, interner Ressourcenmanagement-Systemfehler, Kommunikationsfehler oder Secure Element Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird kein Gesamtspeicherwert zurückgegeben und Anwendungen können nicht die gesamte Speicherkapazität des Geräts bestimmen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Ressourcenmanagement-Subsystem-Diagnose und Hardware-Untersuchung, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.4.3 Resource Management - getTotalMemory</section>
+    <requirement>
+      <text xml:lang="en">The function getTotalMemory SHALL query the Secure Element to determine the total storage capacity. If the Secure Element cannot provide or return the required total memory information, the function SHALL raise the exception ErrorGetTotalMemoryFailed and exit without returning any memory capacity data. The total memory retrieval failure indicates the Secure Element's resource management query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getTotalMemory soll das Secure Element abfragen, um die gesamte Speicherkapazität zu bestimmen. Falls das Secure Element die erforderlichen Gesamtspeicherinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetTotalMemoryFailed auslösen und beenden, ohne Speicherkapazitätsdaten zurückzugeben. Der Abruffehler für die Gesamtspeichergröße zeigt an, dass die Abfragefunktionalität des Ressourcenmanagements des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Resource management operations - getTotalMemory function only</text>
+      <text xml:lang="de">Ressourcenmanagement-Operationen - nur Funktion getTotalMemory</text>
+    </applicability>
+    <reference>getTotalMemory – Function (3.4.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>getTotalMemory</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getTotalMemory function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getTotalMemory auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for resource information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Ressourcen-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and resource management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Ressourcenmanagement betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares memory capacity query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Memory-Kapazitäts-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits memory capacity query command to Secure Element requesting the total storage capacity</text>
+      <text xml:lang="de">Funktion übersendet Memory-Kapazitäts-Abfrage-Befehl zu Secure Element und fordert die gesamte Speicherkapazität an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (resource error, memory error, capacity error) → ErrorGetTotalMemoryFailed raised, function exits without capacity value</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Ressourcenfehler, Memory-Fehler, Kapazitätsfehler) → ErrorGetTotalMemoryFailed ausgelöst, Funktion beendet ohne Kapazitätswert</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetTotalMemoryFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetTotalMemoryFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives total memory capacity value from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Gesamtspeicherkapazitäts-Wert von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates total memory value for correctness (format, value range, consistency with device specifications)</text>
+      <text xml:lang="de">Funktion validiert Gesamtspeicherwert auf Korrektheit (Format, Wertebereich, Konsistenz mit Gerätespezifikationen)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid total memory capacity value to caller</text>
+      <text xml:lang="de">Funktion gibt gültige Gesamtspeicherkapazitäts-Wert an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry total memory query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Gesamtspeicher-Abfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage medium status</text>
+      <text xml:lang="de">Überprüfen Sie den Status des Speichermediums</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review device memory specifications</text>
+      <text xml:lang="de">Überprüfen Sie die Speicherspezifikationen des Geräts</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorGetFreeMemoryFailed</exception>
+    <exception>ErrorGetMaxNumberOfClientsFailed</exception>
+    <exception>ErrorGetMaxNumberTransactionsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve total memory does not affect device initialization state, storage capacity, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs des Gesamtspeichers wirkt sich nicht auf den Geräteinitialierungszustand, die Speicherkapazität, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Total Memory Return Status">
+      <text xml:lang="en">No total memory value is returned to the caller. The function exits without providing storage capacity information. Applications must not assume default memory sizes or cached information; they must handle the exception as indicating memory capacity information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Gesamtspeicherwert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Speicherkapazitätsinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Speichergrößen oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Speicherkapazitätsinformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element Resource State">
+      <text xml:lang="en">Secure Element resource management subsystem remains unchanged by the failed query. No state modifications, capacity changes, or resource accounting changes occur. Resource management operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Ressourcenmanagement-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Kapazitätsänderungen oder Ressourcen-Accounting-Änderungen vorgenommen. Ressourcenmanagement-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Storage Capacity Continuity">
+      <text xml:lang="en">Total storage capacity continues to be maintained internally in the Secure Element. The failure to retrieve the total memory value does not affect storage capacity or resource availability. Capacity queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Die Gesamtspeicherkapazität wird intern im Secure Element weiterhin verwaltet. Das Fehlschlagen des Abrufs des Gesamtspeicherwerts wirkt sich nicht auf die Speicherkapazität oder Ressourcenverfügbarkeit aus. Kapazitäts-Abfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the capacity query failure. Device internal consistency is maintained. Other SE API functions and resource management operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Kapazitäts-Abfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Ressourcenmanagement-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, resource management error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Ressourcenmanagement-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of total memory failed - total memory capacity unknown</text>
+      <text xml:lang="de">Anzeichen: Abruf des Gesamtspeichers fehlgeschlagen - Gesamtspeicherkapazität unbekannt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Memory Management, Device Resources, Information Retrieval, Storage Information</text>
+      <text xml:lang="de">Themen: Memory-Management, Geräteressourcen, Informationsabruf, Speicher-Informationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getTotalMemory when total memory information retrieval fails</text>
+      <text xml:lang="de">Wird von getTotalMemory ausgelöst, wenn der Abruf der Gesamtspeicher-Information fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Capacity function queries total device storage size</text>
+      <text xml:lang="de">Kapazitätsfunktion fragt Gesamtgerät-Speichergröße ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device specifies total storage capacity</text>
+      <text xml:lang="de">Gerät spezifiziert Gesamtspeicherkapazität</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents total memory information</text>
+      <text xml:lang="de">Abruffehler verhindert Gesamtspeicher-Informationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

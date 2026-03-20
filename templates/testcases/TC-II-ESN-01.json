@@ -1,0 +1,336 @@
+{
+  "testcase_id": "TC-II-ESN-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "exportSerialNumbers: Format, SHA-256-Korrektheit und Fehlerfall",
+  "description": "Prüft exportSerialNumbers: ASN.1-Format, genau eine Seriennummer, SHA-256-Korrektheit und Fehlerfall.",
+  "purpose": "Prüfung, ob nach einem Aufruf der Funktionalität zur Ausgabe der Seriennummern die Seriennummer der TSE in der ASN.1-Struktur zurückgegeben wird, die in [BSI TR-03151-1] vorgegeben wird. Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_ESN",
+  "function": "exportSerialNumbers",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_ESN_01",
+    "II_ESN_02",
+    "II_ESN_03",
+    "II_ESN_04"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Seriennummern.",
+      "function": "exportSerialNumbers",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert im Rückgabeparameter serialNumbers entspricht der vorgegebenen ASN.1 Definition. Es wird eine DER Kodierung verwendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob die Anzahl für die Seriennummer in der zurückgegebenen ASN.1-Struktur korrekt, d.h. genau 1 ist.",
+      "function": "exportSerialNumbers",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die TLV-Struktur enthält genau eine SEQUENCE serialNumberRecord.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob die Daten der Datenfelder in der SEQUENCE LogMessageUsageTypes für die zurückgegebene Seriennummer korrekt sind.",
+      "function": "exportSerialNumbers",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Daten der Datenfelder systemLog, auditLog und transactionLog enthalten TRUE.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "getCertificate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette.",
+      "function": "getCertificate",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die TSE-Schnittstelle gibt einen TAR-Container zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Seriennummern. Es wird ein Fehler provoziert, der bewirkt, dass die Funktionalität zur Ausgabe der Seriennummer die zu exportierende Seriennummer nicht ausgeben kann.",
+      "function": "exportSerialNumbers",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorExportSerialNumbersFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Seriennummern-Export",
+      "result": null,
+      "instruction": "Seriennummern-Export\n\nAufruf der Funktionalität zur Ausgabe der Seriennummern.",
+      "function": "exportSerialNumbers",
+      "user": "admin",
+      "expected_return": {
+        "serialNumbers": {
+          "type": "ASN.1",
+          "constraint": "Gemäß BSI TR-03151-1; enthält SHA-256-Hash des öffentlichen Schlüssels"
+        }
+      },
+      "checks": [
+        {
+          "description": "ASN.1-Struktur entspricht BSI TR-03151-1",
+          "expected": "ESN_ASN1",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Genau eine Seriennummer zurückgegeben",
+          "expected": "count = 1",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer = SHA-256(SubjectPublicKeyInfo)",
+          "expected": "ESN_CERT_HASH_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer stimmt mit Zertifikat-CN überein",
+          "expected": "ESN_CROSS_CERT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer stimmt mit serialNumber in Log-Nachrichten überein",
+          "expected": "ESN_CROSS_LOG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "ESN_ASN1",
+          "title": "ASN.1-Struktur der Seriennummer korrekt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CERT_HASH_MATCH",
+          "title": "serialNumber entspricht Hash über öffentlichen Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_LOG",
+          "title": "Seriennummer entspricht serialNumber in Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_CERT",
+          "title": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.16",
+        "BSI TR-03151-1 §6.3"
+      ],
+      "source_test": "II_ESN_01"
+    },
+    {
+      "step": 10,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall",
+      "result": null,
+      "instruction": "Fehlerfall [NT]\n\nAufruf der Funktionalität zur Ausgabe der Seriennummern.",
+      "function": "exportSerialNumbers",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "ErrorExportSerialNumbersFailed zurückgegeben",
+          "expected": "errorCode = ErrorExportSerialNumbersFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.16",
+        "BSI TR-03151-1 §6.3"
+      ],
+      "source_test": "II_ESN_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9.3.2",
+    "BSI TR-03151-1"
+  ]
+}

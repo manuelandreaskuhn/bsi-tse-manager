@@ -1,0 +1,26 @@
+flowchart TD
+    Start([User: getSupportedTransactionUpdateVariants])
+    Start --> CheckInit{TSE initialized?}
+    CheckInit -->|No| ErrorInit[Exception: ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| Identify[Identify supported update variants]
+    
+    Identify --> Which{Which Variant?}
+    Which -->|Variant A| ReturnA[Return: alwaysSigned]
+    Which -->|Variant B| ReturnB[Return: aggregating]
+    Which -->|Both| ReturnBoth[Return: alwaysSignedAndAggregating]
+    
+    ReturnA --> End([End])
+    ReturnB --> End
+    ReturnBoth --> End
+    ErrorInit --> End
+    
+    style Identify fill:#87CEEB
+    style ReturnA fill:#90EE90
+    style ReturnB fill:#FFD700
+    style ReturnBoth fill:#87CEEB
+    
+    Note1[alwaysSigned:<br/>Signature with every update]
+    ReturnA -.-> Note1
+    
+    Note2[aggregating:<br/>Collect data,<br/>signature only on finish]
+    ReturnB -.-> Note2

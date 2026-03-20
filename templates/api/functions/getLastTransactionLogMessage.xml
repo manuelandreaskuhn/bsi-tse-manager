@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getLastTransactionLogMessage" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getLastTransactionLogMessage</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">This function returns the last transaction log message that has been produced and processed by the Secure Element filtered by a transaction number.</text>
+    <text xml:lang="de">Diese Funktion gibt die letzte vom Secure Element erzeugte und verarbeitete Transaktionslog-Nachricht gefiltert nach einer Transaktionsnummer zurück.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">If the function is invoked with the parameter transactionNumber, the transaction log to be exported SHALL be the last transaction log created for the transaction number passed by the parameter. If no transaction log for the provided transaction number is found on the device, the exception ErrorNoLogMessageFound SHALL be raised and the function SHALL be exited.</text>
+        <text xml:lang="de">Mit Parameter transactionNumber: Ermittelt letztes Transaktionslog für diese Nummer. Falls nicht gefunden: Exception ErrorNoLogMessageFound, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF parameter transactionNumber provided THEN
+  SEARCH latest transaction log for this number
+  IF not found THEN
+    THROW ErrorNoLogMessageFound
+    EXIT function
+  END
+END</text>
+        <text xml:lang="de">WENN Parameter transactionNumber vorhanden DANN
+  SUCHE letztes Transaktionslog für diese Nummer
+  WENN nicht gefunden DANN
+    WERFE ErrorNoLogMessageFound
+    BEENDE_FUNKTION
+  ENDE
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorNoLogMessageFound</exception>
+        <trigger>
+          <text xml:lang="en">No transaction log for the provided transaction number found</text>
+          <text xml:lang="de">Kein Transaktionslog für die übergebene Nummer gefunden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If the function is invoked without the parameter transactionNumber the transaction log to be exported SHALL be the most recent transaction log message created by the device. If no transaction log messages are found on the device, the exception ErrorNoLogMessageFound SHALL be raised and the function SHALL be exited.</text>
+        <text xml:lang="de">Ohne Parameter transactionNumber: Ermittelt aktuellstes Transaktionslog. Falls nicht gefunden: Exception ErrorNoLogMessageFound, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF no parameter transactionNumber THEN
+  SEARCH most recent transaction log
+  IF not found THEN
+    THROW ErrorNoLogMessageFound
+    EXIT function
+  END
+END</text>
+        <text xml:lang="de">WENN kein Parameter transactionNumber DANN
+  SUCHE aktuellstes Transaktionslog
+  WENN nicht gefunden DANN
+    WERFE ErrorNoLogMessageFound
+    BEENDE_FUNKTION
+  ENDE
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorNoLogMessageFound</exception>
+        <trigger>
+          <text xml:lang="en">No transaction log found on the device</text>
+          <text xml:lang="de">Kein Transaktionslog auf dem Gerät gefunden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <description>
+        <text xml:lang="en">The function SHALL retrieve the transaction log message determined by the function. If the retrieval of the transaction log message fails, the exception ErrorReadingLogMessage SHALL be raised and the function SHALL be exited.</text>
+        <text xml:lang="de">Ruft das ermittelte Transaktionslog ab. Bei Fehler: Exception ErrorReadingLogMessage, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE transaction log
+CATCH error
+  THROW ErrorReadingLogMessage
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Transaktionslog
+BEI_FEHLER
+  WERFE ErrorReadingLogMessage
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorReadingLogMessage</exception>
+        <trigger>
+          <text xml:lang="en">The retrieval of the transaction log fails</text>
+          <text xml:lang="de">Der Abruf des Transaktionslogs schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>6</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The retrieved transaction log message SHALL be returned to the application by the output parameter logMessageContent and logMessageFileName. The function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt Transaktionslog und Dateiname zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN logMessageContent
+RETURN logMessageFileName
+RETURN without exception</text>
+        <text xml:lang="de">GEBE Transaktionslog-Content zurück (logMessageContent Parameter)
+GEBE Dateiname zurück (logMessageFileName Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The transaction log has been successfully retrieved</text>
+          <text xml:lang="de">Das Transaktionslog wurde erfolgreich abgerufen</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the transaction log content and filename without raising an exception</text>
+          <text xml:lang="de">Gibt das Transaktionslog-Content und den Dateinamen zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>transactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">parameter is used to unambiguously identify the transaction.</text>
+        <text xml:lang="de">Parameter wird verwendet, um die Transaktion eindeutig zu identifizieren.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+      <note>This parameter is optional. The function has an overloaded version without parameters.</note>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>ExportDataResult</type>
+    <description>
+      <text xml:lang="en">an ExportDataResult which contains an InputStream delivering the content of the last transaction log message and the filename of the log message.</text>
+      <text xml:lang="de">ein ExportDataResult, das einen InputStream mit dem Inhalt der letzten Transaktionslog-Nachricht und den Dateinamen der Log-Nachricht enthält.</text>
+    </description>
+  </returnValue>
+  <overloads>
+    <overload id="1">
+      <signature>GetLastLogMessageResult getLastTransactionLogMessage()</signature>
+      <description>
+        <text xml:lang="en">Returns the last transaction log message across all transactions.</text>
+        <text xml:lang="de">Gibt die letzte Transaction-Log-Nachricht über alle Transaktionen zurück.</text>
+      </description>
+      <parameters/>
+      <note>
+        <text xml:lang="en">Searches for the most recent transaction log message without filtering by transaction number.</text>
+        <text xml:lang="de">Sucht nach der neuesten Transaktionslog-Nachricht ohne Filterung nach Transaktionsnummer.</text>
+      </note>
+    </overload>
+    <overload id="2">
+      <signature>GetLastLogMessageResult getLastTransactionLogMessage(long transactionNumber)</signature>
+      <description>
+        <text xml:lang="en">Returns the last transaction log message for a specific transaction.</text>
+        <text xml:lang="de">Gibt die letzte Transaction-Log-Nachricht für eine bestimmte Transaktion zurück.</text>
+      </description>
+      <parameters>
+        <param>transactionNumber</param>
+      </parameters>
+      <note>
+        <text xml:lang="en">Filters the transaction log messages by the specified transaction number and returns the most recent one for that transaction.</text>
+        <text xml:lang="de">Filtert die Transaktionslog-Nachrichten nach der angegebenen Transaktionsnummer und gibt die neueste für diese Transaktion zurück.</text>
+      </note>
+    </overload>
+  </overloads>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorNoLogMessageFound</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorReadingLogMessage</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

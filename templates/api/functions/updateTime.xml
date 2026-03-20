@@ -1,0 +1,566 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="updateTime" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>updateTime</name>
+  <category>Zeitverwaltung</category>
+  <description>
+    <text xml:lang="en">The function updateTime updates the current date/time that is maintained by the Secure Element by using the functionality for time synchronization of the Secure Element.</text>
+    <text xml:lang="de">Die Funktion updateTime aktualisiert das aktuelle Datum/Uhrzeit, das vom Secure Element verwaltet wird, unter Verwendung der Zeitsynchronisierungsfunktionalität des Secure Element.</text>
+  </description>
+  <authorizedRoles>
+    <role>admin</role>
+    <role>timeadmin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">If the function updateTime is invoked without an input parameter, the function SHALL instruct the Secure Element to use its time synchronization mechanism to update the local time. If the API implementation of the function allows to call the function without parameters even though no time synchronization function is implemented, the function shall raise the exception ErrorUnsupportedTimeSyncVariant and exit the function. If the execution fails for any other reason, the function SHALL raise the exception ErrorUpdateTimeFailed and exit the function.</text>
+        <text xml:lang="de">Falls updateTime ohne Input-Parameter aufgerufen wird: Instruiere das Secure Element, seine Zeitsynchronisierungsmechanismus zu verwenden. Falls keine Zeitsynchronisierungsfunktion implementiert: Werfe ErrorUnsupportedTimeSyncVariant. Bei sonstigem Fehler: Werfe ErrorUpdateTimeFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF updateTime called without parameters THEN
+  TRY
+    INVOKE SE time synchronization
+  CATCH unsupported
+    THROW ErrorUnsupportedTimeSyncVariant
+    EXIT function
+  CATCH error
+    THROW ErrorUpdateTimeFailed
+    EXIT function
+END</text>
+        <text xml:lang="de">WENN updateTime ohne Parameter aufgerufen DANN
+  VERSUCHE
+    RUFE_AUF Secure-Element-Zeitsynchronisierung
+  BEI_FEHLER_UNSUPPORTED
+    WERFE ErrorUnsupportedTimeSyncVariant
+    BEENDE_FUNKTION
+  BEI_FEHLER
+    WERFE ErrorUpdateTimeFailed
+    BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUnsupportedTimeSyncVariant</exception>
+        <trigger>
+          <text xml:lang="en">Time synchronization function not implemented</text>
+          <text xml:lang="de">Zeitsynchronisierungsfunktion nicht implementiert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+      <errorCase>
+        <exception>ErrorUpdateTimeFailed</exception>
+        <trigger>
+          <text xml:lang="en">Time update function fails</text>
+          <text xml:lang="de">Zeitupdatefunktion fehlgeschlagen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If the function updateTime is invoked with a value for the input parameter newDateTime, the function SHALL invoke the functionality of the Secure Element to set the time with the provided newDateTime. If the API implementation of the function allows to call the function with parameters even though it does not implement the direct update of the time by passing parameters, the function shall raise the exception ErrorUnsupportedTimeSyncVariant and exit the function. If the execution fails for any other reason, the function SHALL raise the exception ErrorUpdateTimeFailed and exit the function.</text>
+        <text xml:lang="de">Falls updateTime mit newDateTime aufgerufen wird: Rufe Secure-Element-Funktionalität auf, um Zeit mit newDateTime zu setzen. Falls direkte Zeit-Updatefunktion nicht implementiert: Werfe ErrorUnsupportedTimeSyncVariant. Bei sonstigem Fehler: Werfe ErrorUpdateTimeFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF updateTime called with newDateTime parameter THEN
+  TRY
+    INVOKE SE time setting function
+    PASS newDateTime
+  CATCH unsupported
+    THROW ErrorUnsupportedTimeSyncVariant
+    EXIT function
+  CATCH error
+    THROW ErrorUpdateTimeFailed
+    EXIT function
+END</text>
+        <text xml:lang="de">WENN updateTime mit newDateTime Parameter aufgerufen DANN
+  VERSUCHE
+    RUFE_AUF Secure-Element-Zeitsetzfunktion
+    ÜBERGEBE newDateTime
+  BEI_FEHLER_UNSUPPORTED
+    WERFE ErrorUnsupportedTimeSyncVariant
+    BEENDE_FUNKTION
+  BEI_FEHLER
+    WERFE ErrorUpdateTimeFailed
+    BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUnsupportedTimeSyncVariant</exception>
+        <trigger>
+          <text xml:lang="en">Direct time update function not implemented</text>
+          <text xml:lang="de">Direkte Zeitupdatefunktion nicht implementiert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+      <errorCase>
+        <exception>ErrorUpdateTimeFailed</exception>
+        <trigger>
+          <text xml:lang="en">Time update function fails</text>
+          <text xml:lang="de">Zeitupdatefunktion fehlgeschlagen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <standardStep number="5">
+        <shortCommand xml:lang="de">SE-Funktionalität Log-Erstellung</shortCommand>
+        <shortCommand xml:lang="en">SE Log Message Creation</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL invoke the functionality of the Secure Element to create the log message parts to log the time change and to pass the relevant data to the Secure Element. If the execution fails, the function SHALL raise the exception ErrorSigningEventDataFailed and exit the function.</text>
+        <text xml:lang="de">Rufe Secure-Element-Funktionalität auf, um Log-Nachricht-Teile für Zeitänderung zu erstellen. Übergebe relevante Daten. Bei Fehler: Werfe ErrorSigningEventDataFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  INVOKE SE functionality to create log message
+  CREATE log message parts for time change
+  PASS relevant data
+CATCH error
+  THROW ErrorSigningEventDataFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  RUFE_AUF Secure-Element-Funktionalität
+  ERSTELLE Log-Nachricht-Teile für Zeitwechsel
+  ÜBERGEBE relevante Daten
+BEI_FEHLER
+  WERFE ErrorSigningEventDataFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorSigningEventDataFailed</exception>
+        <trigger>
+          <text xml:lang="en">SE functionality fails</text>
+          <text xml:lang="de">Secure-Element-Funktionalität fehlgeschlagen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>6</number>
+      <standardStep number="6">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile abrufen</shortCommand>
+        <shortCommand xml:lang="en">Retrieve Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL retrieve the parts of the log message determined by the Secure Element. If the retrieval of the log message parts fails, the function SHALL raise the exception ErrorRetrieveLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Hole die Log-Nachricht-Teile vom Secure Element. Falls Abruf fehlschlägt: Werfe ErrorRetrieveLogMessageFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE log message parts from SE
+CATCH error
+  THROW ErrorRetrieveLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Log-Nachricht-Teile vom Secure Element
+BEI_FEHLER
+  WERFE ErrorRetrieveLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRetrieveLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">Retrieval of log message parts fails</text>
+          <text xml:lang="de">Abruf der Log-Nachricht-Teile fehlgeschlagen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>7</number>
+      <standardStep number="7">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile speichern</shortCommand>
+        <shortCommand xml:lang="en">Store Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL store the data of the previously retrieved log message parts on the storage medium. If the data has not been stored successfully, the function SHALL raise the exception ErrorStoringLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Speichere die Log-Nachricht-Teile auf dem Speichermedium. Falls Speicherung fehlschlägt: Werfe ErrorStoringLogMessageFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  STORE log message parts on storage medium
+CATCH error
+  THROW ErrorStoringLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SPEICHERE Log-Nachricht-Teile auf Speichermedium
+BEI_FEHLER
+  WERFE ErrorStoringLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorStoringLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">Storage on storage medium fails</text>
+          <text xml:lang="de">Speicherung auf Speichermedium fehlgeschlagen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>8</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL return without raising an exception to indicate that the execution of the function updateTime has been successful.</text>
+        <text xml:lang="de">Gebe ohne Exception zurück, um erfolgreiche Aus fürung anzuzeigen.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN without exception
+END SUCCESSFULLY</text>
+        <text xml:lang="de">RETURN ohne Exception
+BEENDE_ERFOLGREICH</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Execution successful</text>
+          <text xml:lang="de">Aus fürung war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Function returns without exception</text>
+          <text xml:lang="de">Funktion kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>newDateTime</name>
+      <type>ZonedDateTime</type>
+      <description>
+        <text xml:lang="en">the new date and time to be set.</text>
+        <text xml:lang="de">das neue Datum und die Uhrzeit, die gesetzt werden soll.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+      <note>
+        <text xml:lang="en">This parameter is optional. The function has an overloaded version without parameters that uses automatic time synchronization.</text>
+        <text xml:lang="de">Dieser Parameter ist optional. Die Funktion hat eine Überlastungsversion ohne Parameter, die automatische Zeitsynchronisierung verwendet.</text>
+      </note>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>void</type>
+    <description>
+      <text xml:lang="en">This function does not return a value.</text>
+      <text xml:lang="de">Diese Funktion gibt keinen Wert zurück.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorCertificateExpired</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorInvalidTime</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+    <exception>ErrorSignatureCounterExhausted</exception>
+    <exception>ErrorSignatureCounterOverflow</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorUnsupportedTimeSyncVariant</exception>
+    <exception>ErrorUpdateTimeFailed</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+  <systemLog>
+    <logType>system</logType>
+    <requirement>MUST</requirement>
+    <asn1Structure>
+      <logMessage>LogMessage ::= SEQUENCE {
+  version                INTEGER (3),
+  certifiedDataType      OBJECT IDENTIFIER (id-SE-API-system-log),
+  certifiedData          SystemLogMessage,  -- embedded system log
+  serialNumber           OCTET STRING (SIZE (32)),
+  signatureAlgorithm     AlgorithmIdentifier,
+  seAuditData            OCTET STRING OPTIONAL,
+  signatureCounter       INTEGER,
+  signatureCreationTime  Time,
+  signatureValue         OCTET STRING
+}</logMessage>
+      <systemLogMessage>SystemLogMessage ::= SEQUENCE {
+  version                    INTEGER (3),
+  certifiedDataType          OBJECT IDENTIFIER (id-SE-API-system-log),
+  eventType                  [0] IMPLICIT PrintableString ("updateTime"),
+  eventOrigin                [1] IMPLICIT PrintableString OPTIONAL,
+  eventTriggeredByUser       [2] IMPLICIT UserId OPTIONAL,
+  eventData                  [3] IMPLICIT UpdateTimeEventData,
+  additionalInternalData     [4] IMPLICIT OCTET STRING OPTIONAL,
+  serialNumber               OCTET STRING (SIZE (32)),
+  signatureAlgorithm         AlgorithmIdentifier,
+  signatureCounter           INTEGER,
+  signatureCreationTime      Time,
+  signatureValue             OCTET STRING
+}
+
+UpdateTimeEventData ::= SEQUENCE {
+    seTimeBeforeUpdate  Time,
+    seTimeAfterUpdate  Time,
+    slewSettings  SlewSettings OPTIONAL
+}</systemLogMessage>
+    </asn1Structure>
+    <structure>
+      <field>
+        <name>version</name>
+        <type>INTEGER (3)</type>
+        <required>true</required>
+        <defaultValue>3</defaultValue>
+        <description>
+          <text xml:lang="en">Version of the log message format. SHALL be set to '3'.</text>
+          <text xml:lang="de">Version des Log-Nachricht-Formats. MUSS auf '3' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>certifiedDataType</name>
+        <type>OBJECT IDENTIFIER</type>
+        <required>true</required>
+        <defaultValue>id-SE-API-system-log</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to the OID id-SE-API-system-log.</text>
+          <text xml:lang="de">MUSS auf die OID id-SE-API-system-log gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventType</name>
+        <type>PrintableString</type>
+        <tag>[0] IMPLICIT</tag>
+        <required>true</required>
+        <defaultValue>updateTime</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to 'updateTime'.</text>
+          <text xml:lang="de">MUSS auf 'updateTime' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventOrigin</name>
+        <type>PrintableString</type>
+        <tag>[1] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">Component that triggered the event (e.g., component name).</text>
+          <text xml:lang="de">Komponente, die das Ereignis ausgelöst hat (z.B. Komponentenname).</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventTriggeredByUser</name>
+        <type>UserId</type>
+        <tag>[2] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">User ID of the user that triggered the event.</text>
+          <text xml:lang="de">Benutzer-ID des Benutzers, der das Ereignis ausgelöst hat.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventData</name>
+        <type>UpdateTimeEventData</type>
+        <tag>[3] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Function-specific event data.</text>
+          <text xml:lang="de">Funktionsspezifische Ereignisdaten.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>additionalInternalData</name>
+        <type>OCTET STRING</type>
+        <tag>[4] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">MUST NOT be present. Reserved for future use.</text>
+          <text xml:lang="de">DARF NICHT vorhanden sein. Für zukünftige Verwendung reserviert.</text>
+        </description>
+        <note>RFU</note>
+        <origin>-</origin>
+      </field>
+      <field>
+        <name>serialNumber</name>
+        <type>OCTET STRING (SIZE (32))</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Serial number of the Secure Element consisting of the hash value of the public key of the certificate used to verify system logs.</text>
+          <text xml:lang="de">Seriennummer des Secure Element bestehend aus dem Hash-Wert des öffentlichen Schlüssels des Zertifikats zur Überprüfung von Systemprotokollen.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureAlgorithm</name>
+        <type>AlgorithmIdentifier</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Information about the signature creation.</text>
+          <text xml:lang="de">Informationen über die Signaturerstellung.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureCounter</name>
+        <type>INTEGER</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Current count of signatures created with the log message signing key protected by the Secure Element.</text>
+          <text xml:lang="de">Aktueller Zähler der mit dem durch das Secure Element geschützten Log-Nachricht-Signaturschlüssel erstellten Signaturen.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureCreationTime</name>
+        <type>Time</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Point in time of the Secure Element when the log message was signed.</text>
+          <text xml:lang="de">Zeitpunkt des Secure Element, als die Log-Nachricht signiert wurde.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureValue</name>
+        <type>OCTET STRING</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Result of the signature computation encoded as octet string.</text>
+          <text xml:lang="de">Ergebnis der Signaturberechnung codiert als Oktettkette.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+    </structure>
+  </systemLog>
+  <overloads>
+    <overload id="1">
+      <signature>void updateTime(ZonedDateTime newDateTime)</signature>
+      <description>
+        <text xml:lang="en">Sets the time of the Secure Element to the specified value (manual synchronization).</text>
+        <text xml:lang="de">Setzt die Zeit des Secure Elements auf den angegebenen Wert (manuelle Synchronisation).</text>
+      </description>
+      <parameters>
+        <param>newDateTime</param>
+      </parameters>
+      <note>
+        <text xml:lang="en">Only available if getTimeSyncVariant() returns manualSync or automaticAndManualSync.</text>
+        <text xml:lang="de">Nur verfügbar, wenn getTimeSyncVariant() manualSync oder automaticAndManualSync zurückgibt.</text>
+      </note>
+    </overload>
+    <overload id="2">
+      <signature>void updateTime()</signature>
+      <description>
+        <text xml:lang="en">Synchronizes the time of the Secure Element with an internal or external time source (automatic synchronization).</text>
+        <text xml:lang="de">Synchronisiert die Zeit des Secure Elements mit einer internen oder externen Zeitquelle (automatische Synchronisation).</text>
+      </description>
+      <parameters/>
+      <note>
+        <text xml:lang="en">Only available if getTimeSyncVariant() returns automaticSync or automaticAndManualSync. The device uses its own method for time synchronization.</text>
+        <text xml:lang="de">Nur verfügbar, wenn getTimeSyncVariant() automaticSync oder automaticAndManualSync zurückgibt. Das Gerät verwendet seine eigene Methode zur Zeitsynchronisation.</text>
+      </note>
+    </overload>
+  </overloads>
+  <note>
+    <text xml:lang="en">Call getTimeSyncVariant() to determine which overload can be used. The time synchronization variant determines the available update methods.</text>
+    <text xml:lang="de">Rufen Sie getTimeSyncVariant() auf, um zu bestimmen, welche Überladung verwendet werden kann. Die Zeitsynchronisationsvariante bestimmt die verfügbaren Aktualisierungsmethoden.</text>
+  </note>
+</function>

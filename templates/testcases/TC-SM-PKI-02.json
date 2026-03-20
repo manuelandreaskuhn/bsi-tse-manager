@@ -1,0 +1,198 @@
+{
+  "testcase_id": "TC-SM-PKI-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "PKI: Verzeichnisdienst-Anleitung und PKI-Übergangsregelung",
+  "description": "Prüft Verzeichnisdienst-Dokumentation und -Funktion sowie PKI-Übergangsregelungs-Anforderungen.",
+  "purpose": "Prüfung, ob der Hersteller eine schlüssige Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können.",
+  "module": "Security Module",
+  "submodule": "SM_PKI",
+  "function": "exportLoggingCertificates",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "DIRECTORY_SERVICES",
+    "INTERIM_PKI_RULING"
+  ],
+  "source_tests": [
+    "SM_PKI_04",
+    "SM_PKI_05",
+    "SM_PKI_06",
+    "SM_PKI_07"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller stellt Informationen über den Verzeichnisdien",
+      "result": null,
+      "instruction": "Der Hersteller stellt Informationen über den Verzeichnisdienst bereit."
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller betreibt einen Test-Verzeichnisdienst, der fu",
+      "result": null,
+      "instruction": "Der Hersteller betreibt einen Test-Verzeichnisdienst, der funktional dem für den Einsatz geplanten Verzeichnisdienst gleicht."
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob der Hersteller eine korrekte Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können. Praktisch wird insbesondere geprüft, ob Technische Sicherheitseinrichtungen über ihre Seriennummern gesucht werden können.",
+      "function": "exportSerialNumbers",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Angaben in der Herstellererklärung, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können, sind korrekt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikate von Technischen Sicherheitseinrichtungen können über ihre Seriennummern gesucht und heruntergeladen werden.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_PKI_04"
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "Verzeichnisdienst-Dokumentation prüfen (SM_PKI_04, FP)",
+      "result": null,
+      "instruction": "Verzeichnisdienst-Dokumentation prüfen (SM_PKI_04, FP)",
+      "checks": [
+        {
+          "description": "Schlüssige Anleitung zur Zertifikatssuche im Verzeichnisdienst vorhanden",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Anleitung zum Herunterladen der Zertifikate vollständig",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil DIRECTORY_SERVICES aktiv"
+    },
+    {
+      "step": 5,
+      "type": "ACTION",
+      "title": "Verzeichnisdienst: Suche per Seriennummer (SM_PKI_05)",
+      "result": null,
+      "instruction": "Verzeichnisdienst: Suche per Seriennummer (SM_PKI_05)",
+      "function": "<Verzeichnisdienst-Abfrage per TSE-Seriennummer>",
+      "checks": [
+        {
+          "description": "TSE über ihre Seriennummer im Verzeichnisdienst auffindbar",
+          "expected": "Auffindbar",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat erfolgreich heruntergeladen",
+          "expected": "Download erfolgreich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil DIRECTORY_SERVICES aktiv"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "PKI-Übergangsregelung: Anforderungen (SM_PKI_06, FP)",
+      "result": null,
+      "instruction": "PKI-Übergangsregelung: Anforderungen (SM_PKI_06, FP)",
+      "checks": [
+        {
+          "description": "Anforderungen der PKI-Übergangsregelung an Verzeichnisdienst eingehalten",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil INTERIM_PKI_RULING aktiv"
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "PKI-Übergangsregelung: Voraussetzungen (SM_PKI_07, FP)",
+      "result": null,
+      "instruction": "PKI-Übergangsregelung: Voraussetzungen (SM_PKI_07, FP)",
+      "checks": [
+        {
+          "description": "TSE wurde nach BSI TR-03153 1.0.1 zertifiziert",
+          "expected": "Zertifizierung nachgewiesen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "PKI-Konzept mit BSI abgestimmt",
+          "expected": "Abstimmung dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "PKI hat Zertifizierung nach BSI TR-03145 Teil 1",
+          "expected": "Zertifizierung nachgewiesen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil INTERIM_PKI_RULING aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03145 Teil 1",
+    "BSI TR-03153 1.0.1"
+  ]
+}

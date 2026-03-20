@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK01</chainId>
+    <name>
+        <text xml:lang="en">Complete Transaction Flow</text>
+        <text xml:lang="de">Vollständiger Transaktionsverlauf</text>
+    </name>
+    <description>
+        <text xml:lang="en">Complete transaction process from start to completion with optional updates. Shows both update variants (A: immediate signature, B: aggregated signature).</text>
+        <text xml:lang="de">Kompletter Ablauf einer Transaktion von Start bis Abschluss mit optionalen Updates. Zeigt beide Update-Varianten (A: sofortige Signatur, B: aggregierte Signatur).</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>002</id>
+            <name>
+                <text xml:lang="en">Transaction Update (0-n times)</text>
+                <text xml:lang="de">Transaktionsaktualisierung (0-n mal)</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized (Process 005)</text>
+            <text xml:lang="de">TSE ist initialisiert (Prozess 005)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Client is registered (Process 004)</text>
+            <text xml:lang="de">Client ist registriert (Prozess 004)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Time is set (Process 013)</text>
+            <text xml:lang="de">Zeit ist gesetzt (Prozess 013)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Transaction logging is not locked</text>
+            <text xml:lang="de">Transaktionsprotokollierung ist nicht gesperrt</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">User/Customer</text>
+            <text xml:lang="de">Nutzer/Kunde</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">POS System/Recording System</text>
+            <text xml:lang="de">Kassensystem/Aufzeichnungssystem</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsbeginn</text>
+            </name>
+            <function>
+                <name>startTransaction</name>
+                <linkedProcess>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Starts transaction, increments transaction counter, creates first log message</text>
+                <text xml:lang="de">Startet Transaktion, inkrementiert Transaktionszähler, erstellt erste Log-Nachricht</text>
+            </description>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Updates</text>
+                <text xml:lang="de">Updates</text>
+            </name>
+            <function>
+                <name>updateTransaction</name>
+                <linkedProcess>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Transaction Update</text>
+                        <text xml:lang="de">Transaktionsaktualisierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Updates ongoing transaction, Variant A (immediately signed) or Variant B (aggregated)</text>
+                <text xml:lang="de">Aktualisiert laufende Transaktion, Variante A (sofort signiert) oder Variante B (aggregiert)</text>
+            </description>
+            <optional>true</optional>
+            <frequency>0-n times</frequency>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+            <function>
+                <name>finishTransaction</name>
+                <linkedProcess>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Completes transaction, creates final log message(s), for Variant B possibly delayed update log</text>
+                <text xml:lang="de">Beendet Transaktion, erstellt finale Log-Nachricht(en), bei Variante B ggf. verzögerte Update-Log</text>
+            </description>
+            <critical>true</critical>
+        </step>
+    </steps>
+    <variants>
+        <variant>
+            <name>
+                <text xml:lang="en">Variant A - Immediate Signature</text>
+                <text xml:lang="de">Variante A - Sofortige Signatur</text>
+            </name>
+            <description>
+                <text xml:lang="en">Each update is immediately signed and stored as a log message</text>
+                <text xml:lang="de">Jedes Update wird sofort signiert und als Log-Nachricht gespeichert</text>
+            </description>
+        </variant>
+        <variant>
+            <name>
+                <text xml:lang="en">Variant B - Aggregated Signature</text>
+                <text xml:lang="de">Variante B - Aggregierte Signatur</text>
+            </name>
+            <description>
+                <text xml:lang="en">Updates are collected, signature only on finish or after timeout</text>
+                <text xml:lang="de">Updates werden gesammelt, Signatur erst bei finish oder nach Timeout</text>
+            </description>
+        </variant>
+    </variants>
+    <outcome>
+        <minimumLogMessages>2</minimumLogMessages>
+        <logTypes>
+            <logType>
+                <text xml:lang="en">Transaction-Log (startTransaction)</text>
+                <text xml:lang="de">Transaction-Log (startTransaction)</text>
+            </logType>
+            <logType>
+                <text xml:lang="en">Transaction-Log (updateTransaction) - optional, 0-n</text>
+                <text xml:lang="de">Transaction-Log (updateTransaction) - optional, 0-n</text>
+            </logType>
+            <logType>
+                <text xml:lang="en">Transaction-Log (finishTransaction)</text>
+                <text xml:lang="de">Transaction-Log (finishTransaction)</text>
+            </logType>
+        </logTypes>
+        <storedData>
+            <dataItem>
+                <text xml:lang="en">Transaction Number</text>
+                <text xml:lang="de">Transaktionsnummer</text>
+            </dataItem>
+            <dataItem>
+                <text xml:lang="en">Timestamp</text>
+                <text xml:lang="de">Zeitstempel</text>
+            </dataItem>
+            <dataItem>
+                <text xml:lang="en">Signature Values</text>
+                <text xml:lang="de">Signaturwerte</text>
+            </dataItem>
+            <dataItem>
+                <text xml:lang="en">Signature Counter</text>
+                <text xml:lang="de">Signaturzähler</text>
+            </dataItem>
+            <dataItem>
+                <text xml:lang="en">Application Data</text>
+                <text xml:lang="de">Anwendungsdaten</text>
+            </dataItem>
+            <dataItem>
+                <text xml:lang="en">Protocol Data</text>
+                <text xml:lang="de">Protokolldaten</text>
+            </dataItem>
+        </storedData>
+    </outcome>
+    <usageScenario>
+        <text xml:lang="en">Typical POS operation: Customer starts shopping, adds items (updates), pays, and completes transaction</text>
+        <text xml:lang="de">Typischer Kassenvorgang: Kunde startet Einkauf, fügt Artikel hinzu (Updates), bezahlt und schließt ab</text>
+    </usageScenario>
+    <references>
+        <reference>BSI TR-03153-1 Chapter 3.5</reference>
+        <reference>BSI TR-03151-1 Chapter 3.7.1</reference>
+    </references>
+</processChain>

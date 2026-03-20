@@ -1,0 +1,1003 @@
+{
+  "testcase_id": "TC-STO-FUN-03",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Speichermedium: System- und Audit-Log-Nachrichten für Systemereignisse",
+  "description": "Prüft, ob SystemLog-Nachrichten für Initialisierung, Zeitaktualisierung, Außerbetriebnahme sowie AuditLog-Nachrichten korrekt erstellt und gespeichert werden.",
+  "purpose": "Prüfung, ob Log-Nachrichten auf dem Speichermedium gespeichert werden. Der Test betrachtet einen Absicherungsschritt nach einer Aktualisierung der Zeitführung innerhalb des Sicherheitsmoduls.",
+  "module": "Storage",
+  "submodule": "STO_FUN",
+  "function": "initialize / updateTime / disableSecureElement / exportLogMessages",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "STORAGE_BASIC"
+  ],
+  "source_tests": [
+    "STO_FUN_07",
+    "STO_FUN_08",
+    "STO_FUN_09",
+    "STO_FUN_10",
+    "STO_FUN_11"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer timeadmin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Ein Nutzer, der entsprechend seiner Rolle eine Funktionalitä",
+      "result": null,
+      "instruction": "Ein Nutzer, der entsprechend seiner Rolle eine Funktionalität ausführen darf, bei deren Ausführung eine Audit-Log-Nachricht erwartet wird, wurde von der Technischen Sicherheitseinrichtung authentifiziert."
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "logOut aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Abmelden von Nutzern. Für den Aufruf wird der Funktionsname logOut verwendet.",
+      "function": "logOut",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der aktuelle Nutzer ist der Nutzer unauthenticated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2.3"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die in Step 6 durchgeführte Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die in Step 6 durchgeführte Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die in Step 9 durchgeführte Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die in Step 9 durchgeführte Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "TSE initialisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Initialisierung der TSE.",
+      "function": "initialize",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "Sicherheitsmodul deaktivieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE.",
+      "function": "disableSecureElement",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.15"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "Sicherheitsmodul deaktivieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "disableSecureElement",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.15"
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "startAudit aufrufen",
+      "result": null,
+      "instruction": "Aufruf einer Funktionalität bei deren Ausführung eine Audit-Log-Nachricht erwartet wird.",
+      "function": "startAudit",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 20,
+      "type": "ACTION",
+      "title": "Zeitaktualisierung durchführen",
+      "result": null,
+      "instruction": "Zeitaktualisierung durchführen\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "parameters": {
+        "newDateTime": "<gültiger Zeitwert im unterstützten Format>"
+      },
+      "checks": [
+        {
+          "description": "Rückgabe ohne Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "STO_FUN_07"
+    },
+    {
+      "step": 21,
+      "type": "ACTION",
+      "title": "Transaktion mit Aktualisierung protokollieren (nach Zeitaktualisierung)",
+      "result": null,
+      "instruction": "Transaktion mit Aktualisierung protokollieren (nach Zeitaktualisierung)\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Alle drei Funktionen ohne Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "STO_FUN_08"
+    },
+    {
+      "step": 22,
+      "type": "VERIFY",
+      "title": "Export und Validierung aller Log-Typen",
+      "result": null,
+      "instruction": "Export und Validierung aller Log-Typen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "SystemLog für initialize vorhanden (eventType=initialize)",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für updateTime vorhanden (eventType=updateTime)",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "AuditLog vorhanden",
+          "expected": "Mindestens eine AuditLog-Datei",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "startAudit ist das erste Ereignis im Archiv",
+          "expected": "SYS_EVT_STARTAUDIT_FIRST bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData bei startAudit ist leere ASN.1-Sequenz",
+          "expected": "EVDATA_STARTAUDIT bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_03",
+          "title": "Keine unspezifizierten Dateien",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_NOEXTRA",
+          "title": "Keine unzulässigen Dateien im TAR-Container",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_PRESENT",
+          "title": "Log-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_03",
+          "title": "Log-Datei Namenskonventionen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TYPE_VALID",
+          "title": "Ausschließlich spezifikationskonforme Log-Nachrichten-Typen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_PRESENT",
+          "title": "Zertifikat-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_NAME",
+          "title": "Zertifikat-Dateinamen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_OPTYPE",
+          "title": "operationType vorhanden und gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_CLIENT",
+          "title": "clientId vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PDATA",
+          "title": "processData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PTYPE",
+          "title": "processType vorhanden, max. 100 Zeichen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_TXNNUM",
+          "title": "transactionNumber vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FMT",
+          "title": "Zeitformat-Präfix",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_NUM",
+          "title": "No-{transactionNumber} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_TYPE",
+          "title": "TYPE stimmt (Start|Update|Finish)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_CLIENT",
+          "title": "Client-{clientId} stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_NO_ADD_INT",
+          "title": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_ADD_EXT_ABSENT",
+          "title": "additionalExternalData nur vorhanden wenn Daten übergeben wurden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_AUDIT_DATA",
+          "title": "seAuditData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_AUDIT_NOTEMPTY",
+          "title": "seAuditData nicht leer",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_AUDIT_NOEVT",
+          "title": "Kein certifiedData-Platzhalter",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_AUDIT_FNAME",
+          "title": "Dateiname-Schema AuditLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_UNIQUE",
+          "title": "Keine doppelten signatureCounter-Werte",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_GAPS",
+          "title": "Keine Lücken in der signatureCounter-Sequenz",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIMEFMT",
+          "title": "Einheitliches Zeitformat im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_CTR_OVERFLOW_CHECK",
+          "title": "Kein signatureCounter am oder über dem Maximalwert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYS_EVT_STARTAUDIT_FIRST",
+          "title": "startAudit ist das erste Ereignis",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_UPDATETIME_PRESENT",
+          "title": "Mindestens ein updateTime-SystemLog vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_SYSLOG_NOT_AGGREGATED",
+          "title": "SystemLog-Nachrichten werden nicht aggregiert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_INIT_UNIQUE",
+          "title": "Genau ein initialize-SystemLog im Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_AUDIT_MIN_ONE",
+          "title": "Mindestens eine AuditLog-Datei vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "STO_FUN_07"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9",
+    "BSI TR-03151-1 §5"
+  ]
+}

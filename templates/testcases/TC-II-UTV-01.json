@@ -1,0 +1,259 @@
+{
+  "testcase_id": "TC-II-UTV-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "getUpdateVariants: Unterstützte Update-Varianten",
+  "description": "Prüft getUpdateVariants auf korrekten Rückgabewert und Übereinstimmung mit ICS und tatsächlichem Verhalten.",
+  "purpose": "Prüfung, ob der Wert, den die Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können, zurückgibt, die unterstützten Varianten für die Aktualisierung von Transaktionen im Sicherheitsmodul repräsentiert. \nDie Prüfung des zurückgegebenen Wertes erfolgt gegen die angegebenen Varianten im ICS und das tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion.\nZusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_UTV",
+  "function": "getUpdateVariants",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_UTV_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "getUpdateVariants aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können.",
+      "function": "getUpdateVariants",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Funktion gibt die unterstützten Varianten für die Aktualisierung von Transaktionen über den Rückgabeparameter supportedUpdateVariants zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UTV_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_UTV_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für forceSignature wird FALSE übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UTV_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob der zurückgegebene Wert für die unterstützten Aktualisierungsvarianten dem tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion entspricht.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der zurückgegebene Wert für die unterstützten Aktualisierungsvarianten entspricht dem tatsächliche Verhalten der Funktionalität für die Aktualisierung der Transaktion.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UTV_01"
+    },
+    {
+      "step": 9,
+      "type": "ACTION",
+      "title": "Update-Varianten abfragen",
+      "result": null,
+      "instruction": "Update-Varianten abfragen\n\nAufruf der Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können.",
+      "function": "getUpdateVariants",
+      "user": "logger",
+      "expected_return": {
+        "supportedUpdateVariants": {
+          "type": "ENUM/SET",
+          "constraint": "Unterstützte Varianten (DIRECT/AGGREGATED)"
+        }
+      },
+      "checks": [
+        {
+          "description": "Zurückgegebene Varianten entsprechen ICS-Angabe",
+          "expected": "= ICS-Deklaration",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zurückgegebene Varianten entsprechen tatsächlichem Verhalten von updateTransaction",
+          "expected": "Verhaltensübereinstimmung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UTV_01"
+    },
+    {
+      "step": 10,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall",
+      "result": null,
+      "instruction": "Fehlerfall [NT]\n\nAufruf der Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können.",
+      "function": "getUpdateVariants",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorGetSupportedUpdateVariantsFailed zurückgegeben",
+          "expected": "errorCode = ErrorGetSupportedUpdateVariantsFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UTV_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

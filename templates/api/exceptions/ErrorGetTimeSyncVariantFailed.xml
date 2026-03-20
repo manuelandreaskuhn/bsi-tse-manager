@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetTimeSyncVariantFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetTimeSyncVariantFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getTimeSyncVariant fails to retrieve the supported time synchronization variant. The function attempts to determine which time synchronization mechanism and configuration the Secure Element supports, but the retrieval process fails before the time sync variant can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getTimeSyncVariant fehlschlägt, um die unterstützte Zeit-Synchronisierungsvariante abzurufen. Die Funktion versucht zu bestimmen, welchen Zeit-Synchronisierungsmechanismus und welche Konfiguration das Secure Element unterstützt, aber der Abrufprozess schlägt fehl, bevor die Zeit-Synchronisierungsvariante bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Time Management</category>
+  <subcategory>Synchronization Variant Query</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetTimeSyncVariantFailed that is thrown if the determination of the supported time synchronization variant failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetTimeSyncVariantFailed, die ausgelöst wird, wenn die Bestimmung der unterstützten Zeit-Synchronisierungsvariante fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getTimeSyncVariant function cannot retrieve the supported time synchronization variant from the Secure Element. Time synchronization variant information describes which time synchronization mechanism and protocol variant the Secure Element supports for time synchronization operations. ErrorGetTimeSyncVariantFailed indicates that the Secure Element cannot provide the synchronization variant due to hardware failure, firmware information storage corruption, internal time management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no time sync variant is returned and applications cannot determine which time synchronization strategy is supported by this device. Recovery typically involves device verification, time management subsystem diagnostics, and firmware inspection if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getTimeSyncVariant die unterstützte Zeit-Synchronisierungsvariante nicht vom Secure Element abrufen kann. Die Informationen zur Zeit-Synchronisierungsvariante beschreiben, welchen Zeit-Synchronisierungsmechanismus und Protokoll-Variante das Secure Element für Zeit-Synchronisierungsoperationen unterstützt. ErrorGetTimeSyncVariantFailed zeigt an, dass das Secure Element die Synchronisierungsvariante aufgrund eines Hardware-Ausfalls, Speicherbeschädigung von Firmware-Informationen, interner Zeit-Management-Systemfehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird keine Zeit-Synchronisierungsvariante zurückgegeben und Anwendungen können nicht bestimmen, welche Zeit-Synchronisierungsstrategie von diesem Gerät unterstützt wird. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Zeit-Management-Subsystem-Diagnose und Firmware-Untersuchung, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.5 Time Management - getTimeSyncVariant</section>
+    <requirement>
+      <text xml:lang="en">The function getTimeSyncVariant SHALL query the Secure Element to determine the supported time synchronization variant. If the Secure Element cannot provide or return the required time sync variant information, the function SHALL raise the exception ErrorGetTimeSyncVariantFailed and exit without returning any variant data. The time sync variant retrieval failure indicates the Secure Element's time management query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getTimeSyncVariant soll das Secure Element abfragen, um die unterstützte Zeit-Synchronisierungsvariante zu bestimmen. Falls das Secure Element die erforderlichen Informationen zur Zeit-Synchronisierungsvariante nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetTimeSyncVariantFailed auslösen und beenden, ohne Variantendaten zurückzugeben. Der Fehler beim Abrufen der Zeit-Synchronisierungsvariante zeigt an, dass die Abfragefunktionalität des Zeit-Managements des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time management operations - getTimeSyncVariant function only</text>
+      <text xml:lang="de">Zeit-Management-Operationen - nur Funktion getTimeSyncVariant</text>
+    </applicability>
+    <reference>getTimeSyncVariant – Function (3.2.5)</reference>
+  </specification>
+  <thrownBy>
+    <function>getTimeSyncVariant</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getTimeSyncVariant function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getTimeSyncVariant auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for time management information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Zeit-Management-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and time management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Zeit-Management betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares time capability query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Zeit-Fähigkeiten-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits capability query command to Secure Element requesting the supported time synchronization variant</text>
+      <text xml:lang="de">Funktion übersendet Fähigkeiten-Abfrage-Befehl zu Secure Element und fordert die unterstützte Zeit-Synchronisierungsvariante an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (time management error, capability error, metadata error) → ErrorGetTimeSyncVariantFailed raised, function exits without variant</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Zeit-Management-Fehler, Fähigkeitsfehler, Metadatenfehler) → ErrorGetTimeSyncVariantFailed ausgelöst, Funktion beendet ohne Variante</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetTimeSyncVariantFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetTimeSyncVariantFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives time sync variant information from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Zeit-Synchronisierungsvarianten-Informationen von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates time sync variant for correctness (format, variant identifier validity, synchronization mechanism validity)</text>
+      <text xml:lang="de">Funktion validiert Zeit-Synchronisierungsvariante auf Korrektheit (Format, Varianten-Bezeichner-Gültigkeit, Synchronisierungsmechanismus-Gültigkeit)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid time sync variant to caller</text>
+      <text xml:lang="de">Funktion gibt gültige Zeit-Synchronisierungsvariante an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry time sync variant query</text>
+      <text xml:lang="de">Wiederholen Sie die Zeit-Synchronisierungsvarianten-Abfrage</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device time synchronization configuration</text>
+      <text xml:lang="de">Prüfen Sie die Zeit-Synchronisierungskonfiguration des Geräts</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review time management procedures</text>
+      <text xml:lang="de">Prüfen Sie die Zeit-Management-Verfahren</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorSetCurrentSeTimeFailed</exception>
+    <exception>ErrorGetCurrentSeTimeFailed</exception>
+    <exception>ErrorGetEndOfUsageDateFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve the time sync variant does not affect device initialization state, time management capabilities, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs der Zeit-Synchronisierungsvariante wirkt sich nicht auf den Geräteinitialisierungszustand, Zeit-Management-Fähigkeiten, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Time Sync Variant Return Status">
+      <text xml:lang="en">No time sync variant is returned to the caller. The function exits without providing any synchronization variant information. Applications must not assume default time sync variants or cached information; they must handle the exception as indicating time synchronization capability enumeration is unavailable.</text>
+      <text xml:lang="de">Es wird keine Zeit-Synchronisierungsvariante an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Synchronisierungs-Varianten-Informationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Zeit-Synchronisierungsvarianten oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Zeit-Synchronisierungs-Fähigkeits-Enumeration nicht verfügbar ist.</text>
+    </state>
+    <state name="Secure Element Time Management State">
+      <text xml:lang="en">Secure Element time management subsystem remains unchanged by the failed query. No state modifications, capability changes, or time configuration changes occur. Time management operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Zeit-Management-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Fähigkeitsänderungen oder Zeit-Konfigurationsiänderungen vorgenommen. Zeit-Management-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Time Synchronization Capability Continuity">
+      <text xml:lang="en">Time synchronization capabilities continue to be maintained internally in the Secure Element. The failure to retrieve the variant does not affect time management or time synchronization operations. Variant queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Zeit-Synchronisierungs-Fähigkeiten werden intern im Secure Element weiterhin verwaltet. Das Fehlschlagen des Abrufs der Variante wirkt sich nicht auf Zeit-Management- oder Zeit-Synchronisierungsoperationen aus. Varianten-Abfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the variant query failure. Device internal consistency is maintained. Other SE API functions and time management operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Varianten-Abfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Zeit-Management-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, time management error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Zeit-Management-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of time synchronization variant failed - time sync method unknown</text>
+      <text xml:lang="de">Anzeichen: Abruf der Zeit-Synchronisierungsvariante fehlgeschlagen - Zeit-Synchronisierungsmethode unbekannt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Time Synchronization, Device Configuration, System Time</text>
+      <text xml:lang="de">Themen: Zeit-Management, Zeit-Synchronisierung, Gerätekonfiguration, Systemzeit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getTimeSyncVariant when time synchronization method retrieval fails</text>
+      <text xml:lang="de">Wird von getTimeSyncVariant ausgelöst, wenn der Abruf der Zeit-Synchronisierungsmethode fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Configuration function queries active time synchronization variant</text>
+      <text xml:lang="de">Konfigurationsfunktion fragt aktive Zeit-Synchronisierungsvariante ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains time sync configuration</text>
+      <text xml:lang="de">Das Gerät verwaltet Zeit-Synchronisierungskonfiguration</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents time sync method access</text>
+      <text xml:lang="de">Abruffehler verhindert Zeit-Synchronisierungs-Methoden-Zugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

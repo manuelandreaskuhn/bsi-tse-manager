@@ -1,0 +1,9 @@
+flowchart TD
+    Start([User: getRegisteredClients])
+    Start --> Get[Determine all registered clients]
+    Get --> Build[Create ClientInfoSet:<br/>For each client:<br/>- clientId<br/>- timeOfRegistration optional]
+    Build --> Encode[Encode as ASN.1 DER]
+    Encode --> Return[Return: registeredClients]
+    Return --> End([End])
+    style Get fill:#87CEEB
+    style Build fill:#DDA0DD

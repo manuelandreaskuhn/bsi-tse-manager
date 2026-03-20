@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant Inspector as Financial Authority/Inspector
+    participant TSE as TSE
+    participant Storage as Storage Medium
+    participant ERS as Recording System
+
+    Note over Inspector: Tax Audit or<br/>Field Inspection
+
+    Inspector->>TSE: exportLogMessages()<br/>(no authentication required)
+    activate TSE
+    
+    TSE->>TSE: Check: Data available?
+    
+    TSE->>Storage: Read all Log Messages
+    activate Storage
+    Storage-->>TSE: Transaction-Logs<br/>System-Logs<br/>Audit-Logs
+    deactivate Storage
+    
+    TSE->>TSE: Get Certificate Chain
+    TSE->>TSE: Create TSE Information (info.csv)
+    
+    TSE->>TSE: Pack TAR Archive:<br/>- Log Messages (*.log)<br/>- Certificates<br/>- info.csv
+    
+    TSE->>TSE: Generate Filename according to Schema:<br/>[SERIALNUMBER]_[TIMESTAMP].tar
+    
+    TSE-->>Inspector: TAR Archive + Filename
+    deactivate TSE
+    
+    Note over Inspector: Save TAR Archive locally
+    
+    Inspector->>Inspector: Open TAR Archive
+    Inspector->>Inspector: Read info.csv
+    Inspector->>Inspector: Extract Certificates
+    Inspector->>Inspector: Extract Log Messages
+    
+    Note over Inspector: Further Processing:<br/>Verification, Audit

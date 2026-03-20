@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK12</chainId>
+    <name>
+        <text xml:lang="en">Kassenbeleg Transaction Sequence (DSFinV-K)</text>
+        <text xml:lang="de">Kassenbeleg-Transaktion Sequenzdiagramm (DSFinV-K)</text>
+    </name>
+    <description>
+        <text xml:lang="en">Sequence diagram view of the DSFinV-K Kassenbeleg-V1 transaction process. Shows the interaction between Customer, Cashier, POS System, and TSE in a time-ordered sequence.</text>
+        <text xml:lang="de">Sequenzdiagramm-Ansicht des DSFinV-K Kassenbeleg-V1 Transaktionsprozesses. Zeigt die Interaktion zwischen Kunde, Kassierer, Kassensystem und TSE in zeitlicher Reihenfolge.</text>
+    </description>
+    <category>
+        <text xml:lang="en">DSFinV-K Transaction Types - Sequence Diagrams</text>
+        <text xml:lang="de">DSFinV-K Transaktionstypen - Sequenzdiagramme</text>
+    </category>
+    <actors>
+        <actor>
+            <text xml:lang="en">Customer</text>
+            <text xml:lang="de">Kunde</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Cashier</text>
+            <text xml:lang="de">Kassierer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">POS System</text>
+            <text xml:lang="de">Kassensystem</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <references>
+        <reference>
+            <text xml:lang="en">PK09: Kassenbeleg Transaction (Flowchart)</text>
+            <text xml:lang="de">PK09: Kassenbeleg-Transaktion (Ablaufdiagramm)</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex I: processType definitions</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang I: processType Definitionen</text>
+        </reference>
+        <reference>Function: startTransaction</reference>
+        <reference>Function: finishTransaction</reference>
+        <reference>Type: KassenbelegV1Data</reference>
+    </references>
+</processChain>

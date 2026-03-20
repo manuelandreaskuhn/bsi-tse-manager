@@ -1,0 +1,621 @@
+{
+  "testcase_id": "TC-II-AUT-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Authentifizierung: Erfolgreiche An-/Abmeldung aller Nutzerrollen, Auto-Logout und Log-Nachrichten",
+  "description": "Prüft erfolgreiche Authentifizierung für logger/admin/timeadmin, korrekte Log-Nachrichteninhalte, automatische Abmeldung nach Timeout.",
+  "purpose": "",
+  "module": "Integration Interface",
+  "submodule": "II_AUT/II_LGO",
+  "function": "authenticateUser / logOut",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_AUT_01_Template",
+    "II_LGO_01",
+    "II_LGO_01_Template",
+    "II_LGO_02",
+    "II_LGO_02_Template"
+  ],
+  "variables": {
+    "$authResult": "Festgehaltener Wert (authResult)",
+    "$retries": "Festgehaltener Wert (retries)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf von authenticateUser mit userId=admin und dem korrekten PIN. Der Rückgabewert authenticationResult wird als $authResult festgehalten, remainingRetries als $retries.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Ausführung ohne Fehler.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticationResult=$authResult zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries=$retries zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_AUT_01_Template"
+    },
+    {
+      "step": 4,
+      "type": "ACTION",
+      "title": "Nutzer 'logger' mit korrekter PIN authentifizieren",
+      "result": null,
+      "instruction": "Nutzer 'logger' mit korrekter PIN authentifizieren",
+      "function": "authenticateUser",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter PIN>"
+      },
+      "expected_return": {
+        "authenticationResult": {
+          "type": "ENUM",
+          "constraint": "ok"
+        },
+        "remainingRetries": {
+          "type": "INTEGER",
+          "constraint": "= ICS-Maximalwert"
+        }
+      },
+      "checks": [
+        {
+          "description": "authenticationResult = ok",
+          "expected": "ok",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries = Maximalwert laut ICS",
+          "expected": "= ICS-Maximum",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "VERIFY",
+      "title": "SystemLog für authenticateUser prüfen",
+      "result": null,
+      "instruction": "SystemLog für authenticateUser prüfen",
+      "function": "exportLogMessages",
+      "checks": [
+        {
+          "description": "SystemLog für authenticateUser erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "role = logger im Log",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticationResult = ok im Log",
+          "expected": "EVDATA_AUTH_RESULT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries = Maximalwert im Log",
+          "expected": "EVDATA_AUTH_RETRIES_MAX",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser korrekt gesetzt",
+          "expected": "EVDATA_AUTH_TRIGGER",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RESULT",
+          "title": "authenticationResult bei Authentifizierungsereignissen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_RETRIES_MAX",
+          "title": "remainingRetries = ICS-Maximalwert nach Erfolg",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_AUTH_TRIGGER",
+          "title": "eventTriggeredByUser in authenticateUser-Logs",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "ACTION",
+      "title": "Nutzer 'logger' explizit abmelden",
+      "result": null,
+      "instruction": "Nutzer 'logger' explizit abmelden",
+      "function": "logOut",
+      "parameters": {
+        "userId": "logger"
+      },
+      "checks": [
+        {
+          "description": "Abmeldung erfolgreich ohne Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "SystemLog für logOut prüfen",
+      "result": null,
+      "instruction": "SystemLog für logOut prüfen",
+      "checks": [
+        {
+          "description": "SystemLog für logOut erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "loggedOutUserId korrekt im Log",
+          "expected": "EVDATA_LOGOUT_USERID",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logOutCase = explicit im Log",
+          "expected": "EVDATA_LOGOUT_CASE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser korrekt (explizit)",
+          "expected": "EVDATA_LOGOUT_TRIGGER_EXPLICIT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_LOGOUT_USERID",
+          "title": "loggedOutUserId im logOut-Log vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_LOGOUT_CASE",
+          "title": "logOutCase-Wert im logOut-Log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_LOGOUT_TRIGGER_EXPLICIT",
+          "title": "eventTriggeredByUser bei expliziter Abmeldung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "type": "ACTION",
+      "title": "Automatische Abmeldung nach Timeout testen (logger)",
+      "result": null,
+      "instruction": "Automatische Abmeldung nach Timeout testen (logger)",
+      "function": "authenticateUser",
+      "checks": [
+        {
+          "description": "Nutzer wird automatisch abgemeldet nach Inaktivität",
+          "expected": "Abmeldung eingetreten",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für automatische Abmeldung erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ]
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "SystemLog für automatische Abmeldung prüfen",
+      "result": null,
+      "instruction": "SystemLog für automatische Abmeldung prüfen",
+      "checks": [
+        {
+          "description": "logOutCase = implicit im Log",
+          "expected": "EVDATA_LOGOUT_CASE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein eventTriggeredByUser bei impliziter Abmeldung",
+          "expected": "EVDATA_LOGOUT_NO_TRIGGER_IMPLICIT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin bei impliziter Abmeldung korrekt",
+          "expected": "EVDATA_LOGOUT_ORIGIN_IMPLICIT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_LOGOUT_CASE",
+          "title": "logOutCase-Wert im logOut-Log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_LOGOUT_NO_TRIGGER_IMPLICIT",
+          "title": "Kein eventTriggeredByUser bei impliziter Abmeldung",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_LOGOUT_ORIGIN_IMPLICIT",
+          "title": "eventOrigin bei impliziter Abmeldung",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "type": "ACTION",
+      "title": "Identische Tests für 'admin' wiederholen",
+      "result": null,
+      "instruction": "Identische Tests für 'admin' wiederholen",
+      "function": "authenticateUser",
+      "checks": [
+        {
+          "description": "Alle Prüfungen für admin bestehen",
+          "expected": "Identisch zu logger-Tests",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "notes": "Gleiche Prüfungen wie Schritte 1-4"
+    },
+    {
+      "step": 11,
+      "type": "ACTION",
+      "title": "Identische Tests für 'timeadmin' wiederholen (nur II_UPDATETIME)",
+      "result": null,
+      "instruction": "Identische Tests für 'timeadmin' wiederholen (nur II_UPDATETIME)",
+      "function": "authenticateUser",
+      "checks": [
+        {
+          "description": "Alle Prüfungen für timeadmin bestehen",
+          "expected": "Identisch zu logger-Tests",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "notes": "Nur wenn Profil II_UPDATETIME aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.2",
+    "BSI TR-03151-1 §6"
+  ]
+}

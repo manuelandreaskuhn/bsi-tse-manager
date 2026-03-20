@@ -1,0 +1,850 @@
+{
+  "testcase_id": "TC-II-REC-DRC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "registerClient / deregisterClient: Vollständiger Test mit Fehlerfällen",
+  "description": "Prüft Registrierung (erlaubte Zeichen, Grenzen, Log), Deregistrierung (Log, Transaktionssperrung) und alle Fehlerfälle.",
+  "purpose": "Prüfung, ob es nach Ausführung der Funktionalität zur Registrierung von Aufzeichnungssystemen möglich ist, die Funktionalitäten für das Starten, für die Aktualisierung und für die Beendigung von Transaktionen mit einer speziellen Seriennummer eines Aufzeichnungssystems auszuführen. Zusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_REC/II_DRC",
+  "function": "registerClient / deregisterClient",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_REC_01",
+    "II_REC_02",
+    "II_REC_03",
+    "II_REC_04",
+    "II_REC_05",
+    "II_REC_06",
+    "II_DRC_01",
+    "II_DRC_02",
+    "II_DRC_03"
+  ],
+  "variables": {
+    "$client1": "Seriennummer des Aufzeichnungssystems (client1)",
+    "$client2": "Seriennummer des Aufzeichnungssystems (client2)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es wurde die maximale Anzahl an Aufzeichnungssystemen registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client1 festgehalten.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientLimitReached  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Als Seriennummer des Aufzeichnungssystems wird ein String verwendet, der unzulässige Zeichen enthält.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorInvalidClientIdCharacter  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Als Seriennummer des Aufzeichnungssystems wird der selbe String wie im vorherigen Aufruf verwendet.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientAlreadyRegistered ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass das Aufzeichnungssystem nicht registriert werden kann.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorRegisterClientFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird die Seriennummer eines Aufzeichnungssystems übergeben, das nicht registriert ist.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass die Deregistrierung nicht erfolgreich durchgeführt werden und die erfolgreiche Ausführung der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion mit der übergebenen Seriennummer eines Aufzeichnungssystems nicht verhindert werden kann.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorDeregisterClientFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 21,
+      "type": "VERIFY",
+      "title": "Client registrieren und Transaktionen testen",
+      "result": null,
+      "instruction": "Client registrieren und Transaktionen testen\n\nAufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client1 festgehalten.",
+      "function": "registerClient",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<gültige Seriennummer mit allen erlaubten Zeichen>"
+      },
+      "checks": [
+        {
+          "description": "Registrierung erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für registerClient erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Transaktionen mit registrierter Seriennummer möglich",
+          "expected": "Start/Update/Finish erfolgreich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle erlaubten Zeichen in clientId akzeptiert",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "REG_LOG_CLIENTID_PRESENT",
+          "title": "clientId des registrierten Systems in Logs vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "REG_LOG_NO_UNKNOWN_CLIENTS",
+          "title": "Keine Transaktionen von nicht registrierten Clients",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 22,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle bei Registrierung",
+      "result": null,
+      "instruction": "Fehlerfälle bei Registrierung [NT]\n\nAufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client1 festgehalten.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Max. Clients erreicht: ErrorClientLimitReached",
+          "expected": "errorCode = ErrorClientLimitReached",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Ungültige Zeichen: ErrorInvalidClientIdCharacter",
+          "expected": "errorCode = ErrorInvalidClientIdCharacter",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Bereits registriert: ErrorClientAlreadyRegistered",
+          "expected": "errorCode = ErrorClientAlreadyRegistered",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Technischer Fehler: ErrorRegisterClientFailed",
+          "expected": "errorCode = ErrorRegisterClientFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 23,
+      "type": "VERIFY",
+      "title": "Client deregistrieren",
+      "result": null,
+      "instruction": "Client deregistrieren\n\nAufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client1 festgehalten.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<registrierter Client>"
+      },
+      "checks": [
+        {
+          "description": "Deregistrierung erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für deregisterClient erstellt",
+          "expected": "DRC_LOG_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "clientId im Log entspricht deregistriertem Client",
+          "expected": "DRC_LOG_CLIENTID",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Transaktionen mit deregistrierter Seriennummer nicht mehr möglich",
+          "expected": "DEREG_LOG_NO_NEW_TXN",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "DEREG_LOG_NO_NEW_TXN",
+          "title": "Kein Transaktionslog nach Deregistrierung",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DRC_LOG_PRESENT",
+          "title": "deregisterClient-Log vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DRC_LOG_EVTYPE",
+          "title": "eventType = deregisterClient",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DRC_LOG_EVORIGIN",
+          "title": "eventOrigin = integration-interface",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DRC_LOG_CLIENTID",
+          "title": "clientId in eventData entspricht deregistriertem Client",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DRC_TXN_ABSENT",
+          "title": "Kein Transaktions-Log für deregistrierten Client",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_REC_01"
+    },
+    {
+      "step": 24,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle bei Deregistrierung",
+      "result": null,
+      "instruction": "Fehlerfälle bei Deregistrierung [NT].",
+      "checks": [
+        {
+          "description": "Nicht registrierter Client: ErrorClientNotRegistered",
+          "expected": "errorCode = ErrorClientNotRegistered",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Deregistrierung technisch fehlgeschlagen: ErrorDeregisterClientFailed",
+          "expected": "errorCode = ErrorDeregisterClientFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

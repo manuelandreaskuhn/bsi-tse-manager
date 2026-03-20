@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetCurrentSeTimeFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetCurrentSeTimeFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getCurrentSeTime fails to obtain the current time of the Secure Element. The function attempts to retrieve the current time maintained by the Secure Element, but the retrieval process fails before the time value can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getCurrentSeTime fehlschlägt, um die aktuelle Zeit des Secure Element zu erhalten. Die Funktion versucht, die aktuellen Zeitwerte, die vom Secure Element verwaltet werden, abzurufen, aber der Abfrufprozess schlägt fehl, bevor der Zeitwert bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Time Management</category>
+  <subcategory>Information Retrieval</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetCurrentSeTimeFailed that is thrown if the SE API function getCurrentSeTime fails to obtain the current time of the Secure Element.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetCurrentSeTimeFailed, die ausgelöst wird, wenn die SE API Funktion getCurrentSeTime fehlschlägt, um die aktuelle Zeit des Secure Element zu erhalten.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getCurrentSeTime function cannot retrieve the current time value from the Secure Element's internal clock. The Secure Element maintains an independent time source that is used for transaction timestamps, event logging, certificate validity checking, and time-based access control decisions. ErrorGetCurrentSeTimeFailed indicates that the Secure Element cannot provide its current time due to hardware clock malfunction, internal time management system errors, storage corruption, communication failures, or Secure Element state restrictions. When this exception occurs, no time data is returned and applications cannot rely on Secure Element time for their operations. Recovery typically involves device verification, communication checks, potential device time synchronization, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getCurrentSeTime den aktuellen Zeitwert von der internen Uhr des Secure Element nicht abrufen kann. Das Secure Element verwaltet eine unabhängige Zeitquelle, die für Transaktionszeitstempel, Ereignisprotokollierung, Überprüfung der Zertifikatsgültigkeit und zeitbasierte Zugriffskontrollentscheidungen verwendet wird. ErrorGetCurrentSeTimeFailed zeigt an, dass das Secure Element seine aktuelle Zeit aufgrund eines Hardware-Uhrenausfalls, interner Fehler des Zeitsystem-Management-Systems, Speicherbeschädigung, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Zeitdaten zurückgegeben und Anwendungen können sich nicht auf die Secure Element Zeit für ihre Operationen verlässigen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Kommunikationschecks, mögliche Synchronisierung der Gerätezeit und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.8 Time Management - getCurrentSeTime</section>
+    <requirement>
+      <text xml:lang="en">The function getCurrentSeTime SHALL query the Secure Element to obtain its current internal time value. If the Secure Element cannot provide or return the required time information, the function SHALL raise the exception ErrorGetCurrentSeTimeFailed and exit without returning any time data. The Secure Element time retrieval failure indicates the Secure Element's time query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getCurrentSeTime soll das Secure Element abfragen, um seinen aktuellen internen Zeitwert zu erhalten. Falls das Secure Element die erforderlichen Zeitinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetCurrentSeTimeFailed auslösen und beendet werden, ohne Zeitdaten zurückzugeben. Der Fehler bei der Secure Element Zeitabruf zeigt an, dass die Zeitabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time management operations - getCurrentSeTime function only</text>
+      <text xml:lang="de">Zeitsystem-Management-Operationen - nur Funktion getCurrentSeTime</text>
+    </applicability>
+    <reference>getCurrentSeTime – Function (3.3.8)</reference>
+  </specification>
+  <thrownBy>
+    <function>getCurrentSeTime</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getCurrentSeTime function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getCurrentSeTime auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for time information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Zeitmiteilungszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares time query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Zeitabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits time query command to Secure Element requesting current time value</text>
+      <text xml:lang="de">Funktion übermättelt Zeitabfrage-Befehl zu Secure Element und fordert aktuellen Zeitwert an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (clock malfunction, storage error, internal error) → ErrorGetCurrentSeTimeFailed raised, function exits without time data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Uhrenausfall, Speicherfehler, interner Fehler) → ErrorGetCurrentSeTimeFailed ausgelöst, Funktion beendet ohne Zeitdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetCurrentSeTimeFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetübertragung oder Antwortempfang auftritt → ErrorGetCurrentSeTimeFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives time value from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Zeitwert von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates time value for correctness (format, range, logical consistency)</text>
+      <text xml:lang="de">Funktion validiert Zeitwert auf Korrektheit (Übersetzung, Bereich, logische Konsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid time value to caller</text>
+      <text xml:lang="de">Funktion gibt gültigen Zeitwert an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify time has been set via updateTime</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Zeit über updateTime gesetzt wurde</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry time query after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie die Zeitabfrage nach Bestätigung der Vorbedingungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Synchronize device time if needed</text>
+      <text xml:lang="de">Synchronisieren Sie die Gerätezeit bei Bedarf</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorTimeSyncVariantNotSupported</exception>
+    <exception>ErrorUpdateTimeFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve time does not affect device initialization state, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschalten beim Zeitserialisierungsabruf wirkt sich nicht auf den Geräteinitialisierungszustand, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Time Data Return Status">
+      <text xml:lang="en">No time value is returned to the caller. The function exits without providing any time information. Applications must not assume a default or cached time value; they must handle the exception as indicating time information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Zeitwert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Zeitmiteilungen bereitzustellen. Anwendungen dürfen nicht mit einer Standardzeitform oder zwischengespeicherten Zeitwert rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Zeitmiteilungen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element State">
+      <text xml:lang="en">Secure Element remains unchanged by the failed time query. No state modifications, data updates, or configuration changes occur. The Secure Element continues to maintain and advance its internal time independently regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Secure Element bleibt durch die fehlgeschlagene Zeitabfrage unverändert. Es werden keine Zustandseränderungen, Datenupdates oder Konfigurationsoderänderungen vorgenommen. Das Secure Element verwaltet weiterhin und vorändert seine interne Zeit unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Time Advancement Continuity">
+      <text xml:lang="en">Secure Element's internal clock continues to advance time independently. The failure to retrieve the current time value does not stop or pause time tracking. Subsequent attempts to query time or operations depending on time may succeed once the underlying issue is resolved.</text>
+      <text xml:lang="de">Die interne Uhr des Secure Element setzt die Zeit unabhängig fort. Das Fehlschalten beim Abruf des aktuellen Zeitwerts stoppt oder pausiert die Zeitzerfolgung nicht. Nachfolgende Versuche, Zeit abzufragen oder Operationen, die von Zeit abhängen, können erfolgreich sein, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the time retrieval failure. Device internal consistency is maintained. Other SE API functions continue to operate normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfallschlösse als Ergebnis des Zeitserialisierungsausfalls auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (clock malfunction, communication error, storage corruption) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Uhrenausfall, Kommunikationsfehler, Speicherbeschädigung) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of current Secure Element time failed - cannot get SE time</text>
+      <text xml:lang="de">Anzeichen: Abruf der aktuellen Secure Element Zeit fehlgeschlagen - kann SE Zeit nicht erhalten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Secure Element, Information Retrieval, System Time</text>
+      <text xml:lang="de">Themen: Zeitsystem-Management, Secure Element, Informationsabfrage, Systemzeit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getCurrentSeTime when SE time retrieval fails</text>
+      <text xml:lang="de">Wird von getCurrentSeTime ausgelöst, wenn der SE Zeitabruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Time function queries Secure Element internal time</text>
+      <text xml:lang="de">Zeitfunktion fragt interne Secure Element Zeit ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains time state in SE</text>
+      <text xml:lang="de">Das Gerät verwaltet Zeitzustand in SE</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents SE time access</text>
+      <text xml:lang="de">Abruffehler verhindert SE Zeitzugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

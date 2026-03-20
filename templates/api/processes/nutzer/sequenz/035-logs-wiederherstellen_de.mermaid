@@ -1,0 +1,44 @@
+sequenceDiagram
+    participant Admin as Admin
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+
+    Note over Admin: Admin hat TAR-Archiv<br/>von vorherigem Export
+
+    Admin->>TSE: restoreLogsFromBackup(restoreData)
+    activate TSE
+    
+    TSE->>TSE: Prüfe: Admin authentifiziert
+    
+    TSE->>TSE: Entpacke TAR-Archiv:<br/>- Log-Nachrichten (*.log)<br/>- Zertifikate (*.crt)<br/>- info.csv (NICHT für Restore)
+    
+    TSE->>TSE: Validiere Log-Nachrichten:<br/>Wurden von DIESER TSE erstellt?
+    
+    alt Logs von anderer TSE
+        TSE-->>Admin: Exception:<br/>ErrorRestoreFailed
+    else Logs von dieser TSE
+        TSE->>Speicher: Speichere Log-Nachrichten
+        activate Speicher
+        
+        alt Dateiname existiert bereits
+            Speicher->>Speicher: Hänge Zähler an:<br/>file_1.log, file_2.log
+        end
+        
+        Speicher-->>TSE: OK
+        deactivate Speicher
+        
+        TSE->>Speicher: Speichere Zertifikate
+        activate Speicher
+        
+        alt Zertifikat existiert bereits
+            Speicher->>Speicher: Überspringe (bereits vorhanden)
+        end
+        
+        Speicher-->>TSE: OK
+        deactivate Speicher
+        
+        TSE-->>Admin: Wiederherstellung erfolgreich
+    end
+    deactivate TSE
+    
+    Note over Admin,Speicher: Speicher muss in<br/>konsistentem Zustand bleiben

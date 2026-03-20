@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SelfTestEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SelfTestEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type SelfTestEventData.</description>
+  <asn1Definition>SelfTestEventData ::= SEQUENCE {
+  selfTestResults  SelfTestResultSet,
+  allTestsArePositive  BOOLEAN
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>selfTestResults</name>
+      <type>SelfTestResultSet</type>
+      <optional>false</optional>
+      <description>Field selfTestResults of type SelfTestResultSet</description>
+    </field>
+    <field>
+      <name>allTestsArePositive</name>
+      <type>BOOLEAN</type>
+      <optional>false</optional>
+      <description>Field allTestsArePositive of type BOOLEAN</description>
+    </field>
+  </fields>
+</type>

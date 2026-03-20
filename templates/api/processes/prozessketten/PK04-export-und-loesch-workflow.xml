@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK04</chainId>
+    <name>
+        <text xml:lang="en">Export and Delete Workflow</text>
+        <text xml:lang="de">Export-und-Lösch-Workflow</text>
+    </name>
+    <description>
+        <text xml:lang="en">Regular cycle: export logs, secure externally, free up storage</text>
+        <text xml:lang="de">Regelmäßiger Zyklus: Logs exportieren, extern sichern, Speicher freigeben</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>007</id>
+            <name>
+                <text xml:lang="en">Data Export (exportLogMessages)</text>
+                <text xml:lang="de">Datenexport (exportLogMessages)</text>
+            </name>
+        </process>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication (authenticateUser)</text>
+                <text xml:lang="de">Nutzer-Authentifizierung (authenticateUser)</text>
+            </name>
+        </process>
+        <process>
+            <id>034</id>
+            <name>
+                <text xml:lang="en">Delete Logs (deleteLogMessages)</text>
+                <text xml:lang="de">Logs löschen (deleteLogMessages)</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is operational</text>
+            <text xml:lang="de">TSE ist in Betrieb</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Logs are available</text>
+            <text xml:lang="de">Logs sind vorhanden</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Admin is authenticated (for deleteLogMessages)</text>
+            <text xml:lang="de">Admin ist authentifiziert (für deleteLogMessages)</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">Auditor/Admin</text>
+            <text xml:lang="de">Prüfer/Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">External Backup System</text>
+            <text xml:lang="de">Externes Sicherungssystem</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Export</text>
+                <text xml:lang="de">Export</text>
+            </name>
+            <function>
+                <name>exportLogMessages</name>
+                <linkedProcess>
+                    <id>007</id>
+                    <name>
+                        <text xml:lang="en">Export Data for Audit</text>
+                        <text xml:lang="de">Datenexport für Prüfung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Export all logs and certificates to TAR archive</text>
+                <text xml:lang="de">Alle Logs und Zertifikate in TAR-Archiv exportieren</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">External Backup</text>
+                <text xml:lang="de">Externe Sicherung</text>
+            </name>
+            <description>
+                <text xml:lang="en">Store TAR archive on external system (backup, archive)</text>
+                <text xml:lang="de">TAR-Archiv auf externem System speichern (Backup, Archiv)</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Authentication</text>
+                <text xml:lang="de">Authentifizierung</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Admin must authenticate</text>
+                <text xml:lang="de">Admin muss sich authentifizieren</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Delete</text>
+                <text xml:lang="de">Löschen</text>
+            </name>
+            <function>
+                <name>deleteLogMessages</name>
+                <linkedProcess>
+                    <id>034</id>
+                    <name>
+                        <text xml:lang="en">Delete Logs</text>
+                        <text xml:lang="de">Logs löschen</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Delete exported logs from storage</text>
+                <text xml:lang="de">Exportierte Logs vom Speicher löschen</text>
+            </description>
+        </step>
+    </steps>
+    <rules>
+        <rule>
+            <text xml:lang="en">ONLY exported logs may be deleted</text>
+            <text xml:lang="de">NUR exportierte Logs dürfen gelöscht werden</text>
+        </rule>
+        <rule>
+            <text xml:lang="en">deleteLogMessages log itself remains</text>
+            <text xml:lang="de">deleteLogMessages-Log selbst bleibt erhalten</text>
+        </rule>
+        <rule>
+            <text xml:lang="en">Logs of open transactions may remain</text>
+            <text xml:lang="de">Logs offener Transaktionen können erhalten bleiben</text>
+        </rule>
+        <rule>
+            <text xml:lang="en">Non-exported logs must remain</text>
+            <text xml:lang="de">Nicht exportierte Logs bleiben zwingend erhalten</text>
+        </rule>
+    </rules>
+    <frequency>
+        <text xml:lang="en">Regular, e.g., monthly or when storage is low</text>
+        <text xml:lang="de">Regelmäßig, z.B. monatlich oder bei Speicherknappheit</text>
+    </frequency>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.2 and 3.6.4</reference>
+    </references>
+</processChain>

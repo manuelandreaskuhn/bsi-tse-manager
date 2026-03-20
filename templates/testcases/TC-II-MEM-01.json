@@ -1,0 +1,414 @@
+{
+  "testcase_id": "TC-II-MEM-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Speicherabfragen: getTotalMemory / getUsedMemory / getFreeMemory",
+  "description": "Prüft alle drei Speicherabfragefunktionen auf korrekte Rückgaben und Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität zur Ausgabe der Gesamtkapazität des Speichermediums die zurückgegebene Gesamtkapazität des Speichermediums in Bytes (im Parameter totalMemory) der Angabe im ICS entspricht. Zusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_GTM/II_GUM/II_GFM",
+  "function": "getTotalMemory / getUsedMemory / getFreeMemory",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_TOTALMEMORY",
+    "II_USEDMEMORY",
+    "II_FREEMEMORY"
+  ],
+  "source_tests": [
+    "II_GTM_01",
+    "II_GTM_02",
+    "II_GUM_01",
+    "II_GUM_02",
+    "II_GFM_01",
+    "II_GFM_02"
+  ],
+  "variables": {
+    "$freeMemory": "Festgehaltener Rückgabewert (freeMemory)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "getTotalMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Gesamtkapazität des Speichermediums.",
+      "function": "getTotalMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Parameters \"totalMemory\" entspricht der Gesamtkapazität des Speichermediums  in Bytes.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "getTotalMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Gesamtkapazität des Speichermediums. Es wird ein Fehler provoziert, der bewirkt, dass die Kapazität des Speichermediums nicht festgestellt werden kann.",
+      "function": "getTotalMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetTotalMemoryFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "getUsedMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität.",
+      "function": "getUsedMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Parameters \"usedMemory\" entspricht der aktuell verwendeten Speicherkapazität in Bytes.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "getUsedMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität. Es wird ein Fehler provoziert, der bewirkt, dass die aktuell verwendete Speicherkapazität nicht festgestellt werden kann.",
+      "function": "getUsedMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetUsedMemoryFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "getFreeMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell nicht verwendeten Speicherkapazität.",
+      "function": "getFreeMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "getFreeMemory aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell nicht verwendeten Speicherkapazität. Es wird ein Fehler provoziert, der bewirkt, dass die aktuell nicht verwendete Speicherkapazität nicht festgestellt werden kann.",
+      "function": "getFreeMemory",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetFreeMemoryFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 11,
+      "type": "ACTION",
+      "title": "Gesamtkapazität abfragen (II_TOTALMEMORY)",
+      "result": null,
+      "instruction": "Gesamtkapazität abfragen (II_TOTALMEMORY)\n\nAufruf der Funktionalität zur Ausgabe der Gesamtkapazität des Speichermediums.",
+      "function": "getTotalMemory",
+      "user": "logger",
+      "expected_return": {
+        "totalMemory": {
+          "type": "INTEGER",
+          "constraint": "Bytes; entspricht ICS-Angabe"
+        }
+      },
+      "checks": [
+        {
+          "description": "totalMemory entspricht ICS-Angabe",
+          "expected": "= ICS-Wert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GTM_01"
+    },
+    {
+      "step": 12,
+      "type": "ACTION",
+      "title": "Verwendeten Speicher abfragen (II_USEDMEMORY)",
+      "result": null,
+      "instruction": "Verwendeten Speicher abfragen (II_USEDMEMORY)\n\nAufruf der Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität.",
+      "function": "getUsedMemory",
+      "user": "logger",
+      "expected_return": {
+        "usedMemory": {
+          "type": "INTEGER",
+          "constraint": "Bytes; ≤ totalMemory"
+        }
+      },
+      "checks": [
+        {
+          "description": "usedMemory > 0 nach Log-Erstellung",
+          "expected": "Plausibel",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GUM_01"
+    },
+    {
+      "step": 13,
+      "type": "ACTION",
+      "title": "Freien Speicher abfragen (II_FREEMEMORY)",
+      "result": null,
+      "instruction": "Freien Speicher abfragen (II_FREEMEMORY)\n\nAufruf der Funktionalität zur Ausgabe der aktuell nicht verwendeten Speicherkapazität.",
+      "function": "getFreeMemory",
+      "user": "logger",
+      "expected_return": {
+        "freeMemory": {
+          "type": "INTEGER",
+          "constraint": "Bytes; plausibel"
+        }
+      },
+      "checks": [
+        {
+          "description": "freeMemory plausibel (≈ totalMemory - usedMemory)",
+          "expected": "Konsistent",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GFM_01"
+    },
+    {
+      "step": 14,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle",
+      "result": null,
+      "instruction": "Fehlerfälle [NT].",
+      "checks": [
+        {
+          "description": "getTotalMemory Fehler: ErrorGetTotalMemoryFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "getUsedMemory Fehler: ErrorGetUsedMemoryFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "getFreeMemory Fehler: ErrorGetFreeMemoryFailed",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

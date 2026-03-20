@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>041</processId>
+    <processName>
+        <text xml:lang="en">Current Number of Transactions</text>
+        <text xml:lang="de">Aktuelle Anzahl Transaktionen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the number of currently open transactions managed by the TSE</text>
+        <text xml:lang="de">Abruf der Anzahl aktuell offener Transaktionen, die von der TSE verwaltet werden</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Open Transactions</text>
+            <text xml:lang="de">Offene Transaktionen</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getCurrentNumberOfTransactions</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>currentNumberTransactions</name>
+            <type>unsigned long</type>
+            <description>
+                <text xml:lang="en">Number of open transactions</text>
+                <text xml:lang="de">Anzahl offener Transaktionen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetCurrentNumberOfTransactionsFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.5</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. For monitoring and capacity planning.</text>
+        <text xml:lang="de">OPTIONAL. Für Monitoring und Kapazitätsplanung.</text>
+    </notes>
+</process>

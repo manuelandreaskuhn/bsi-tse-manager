@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorClientLimitReached" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorClientLimitReached</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the maximum number of clients has been reached. The registerClient function attempts to register a new client but detects that the device has already registered the maximum number of simultaneous clients it can manage. No further client registrations are possible until existing clients are deregistered.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die maximale Anzahl von Clients erreicht wurde. Die Funktion registerClient versucht, einen neuen Client zu registrieren, stellt aber fest, dass das Gerät bereits die maximale Anzahl gleichzeitiger Clients registriert hat, die es verwalten kann. Weitere Client-Registrierungen sind nicht möglich, bis vorhandene Clients abgemeldet werden.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Capacity</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorClientLimitReached that is thrown if the maximum number of clients has been reached.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorClientLimitReached, die ausgelöst wird, wenn die maximale Anzahl von Clients erreicht wurde.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The ErrorClientLimitReached exception indicates that the device has reached its maximum capacity for managing simultaneous clients and cannot accept additional client registrations. This is a resource limitation exception that requires the application to deregister existing clients or implement alternative strategies to proceed. When this exception is raised, the registration operation fails immediately without modifying the client registry. The maximum number of simultaneous clients is a fixed device capability that can be queried using getMaxNumberOfClients.</text>
+      <text xml:lang="de">Die Ausnahme ErrorClientLimitReached zeigt an, dass das Gerät seine maximale Kapazität für die Verwaltung gleichzeitiger Clients erreicht hat und keine zusätzlichen Client-Registrierungen akzeptieren kann. Dies ist eine Ressourcenlimitierungsausnahme, die erfordert, dass die Anwendung vorhandene Clients abmeldet oder alternative Strategien implementiert, um fortzufahren. Wenn diese Ausnahme ausgelöst wird, schlägt der Registrierungsvorgang sofort fehl, ohne die Client-Registry zu ändern. Die maximale Anzahl gleichzeitiger Clients ist eine feste Gerätefähigkeit, die mit getMaxNumberOfClients abgefragt werden kann.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.14 Client Management - registerClient Function (3.3.14.4)</section>
+    <requirement>
+      <text xml:lang="en">The function registerClient SHALL check if the device's maximum number of clients has been reached. If the maximum number has been reached, the function SHALL raise the exception ErrorClientLimitReached and exit the function without registering the new client. This ensures that client registrations do not exceed device capacity limits.</text>
+      <text xml:lang="de">Die Funktion registerClient sollte prüfen, ob die maximale Anzahl von Clients des Geräts erreicht wurde. Falls die maximale Anzahl erreicht wurde, sollte die Funktion die Ausnahme ErrorClientLimitReached auslösen und die Funktion beenden, ohne den neuen Client zu registrieren. Dies stellt sicher, dass Client-Registrierungen die Gerätekapazitätsgrenzen nicht überschreiten.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client registration operations - registerClient function when device client capacity is at maximum</text>
+      <text xml:lang="de">Client-Registrierungsvorgänge - registerClient-Funktion, wenn die Gerätekapaziztät maximal ist</text>
+    </applicability>
+    <reference>registerClient – Function (3.3.14) - Section 3.3.14.4 Exception Specification</reference>
+  </specification>
+  <thrownBy>
+    <function>registerClient</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls registerClient function with a clientId</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die registerClient-Funktion mit einer clientId auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft den Authentifizierungsstatus (falls von der Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung (falls von der Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function checks device initialization status</text>
+      <text xml:lang="de">Funktion prüft den Geräteinitalisierungsstatus</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks if current number of registered clients equals maximum allowed</text>
+      <text xml:lang="de">Funktion prüft, ob die aktuelle Anzahl registrierter Clients gleich dem zulässigen Maximum ist</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If current clients EQUALS maximum → ErrorClientLimitReached raised and function exits</text>
+      <text xml:lang="de">Falls aktuelle Clients GLEICH Maximum → ErrorClientLimitReached wird ausgelöst und Funktion wird beendet</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">If below limit, function checks if clientId is already registered</text>
+      <text xml:lang="de">Falls unter Limit, prüft die Funktion, ob die clientId bereits registriert ist</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If clientId is not registered, function validates clientId format and characters</text>
+      <text xml:lang="de">Falls clientId nicht registriert ist, validiert die Funktion das clientId-Format und die Zeichen</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function adds clientId to device's client registry</text>
+      <text xml:lang="de">Funktion fügt clientId zur Client-Registry des Geräts hinzu</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function returns successfully to the user</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zum Benutzer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check current client count using getCurrentNumberOfClients</text>
+      <text xml:lang="de">Prüfen Sie die aktuelle Client-Anzahl mit getCurrentNumberOfClients</text>
+    </step>
+    <step>
+      <text xml:lang="en">Get maximum capacity using getMaxNumberOfClients</text>
+      <text xml:lang="de">Rufen Sie die maximale Kapazität mit getMaxNumberOfClients ab</text>
+    </step>
+    <step>
+      <text xml:lang="en">Deregister unused clients to free capacity</text>
+      <text xml:lang="de">Melden Sie nicht verwendete Clients ab, um Kapazität freizugeben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan application client usage to stay within device limits</text>
+      <text xml:lang="de">Planen Sie die Anwendungs-Client-Nutzung, um innerhalb der Gerätegrenzen zu bleiben</text>
+    </step>
+    <step>
+      <text xml:lang="en">If necessary, migrate to device with higher client capacity</text>
+      <text xml:lang="de">Migrieren Sie bei Bedarf zu einem Gerät mit höherer Client-Kapaziztät</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorClientAlreadyRegistered</exception>
+    <exception>ErrorClientNotRegistered</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state>
+      <text xml:lang="en">Client registry unchanged - no client was registered</text>
+      <text xml:lang="de">Client-Registry unverändert - kein Client wurde registriert</text>
+    </state>
+    <state>
+      <text xml:lang="en">Current number of clients unchanged - failed registration does not affect client count</text>
+      <text xml:lang="de">Aktuelle Anzahl der Clients unverändert - fehlgeschlagene Registrierung beeinflusst nicht die Client-Anzahl</text>
+    </state>
+    <state>
+      <text xml:lang="en">Device at maximum capacity - no additional clients can be registered until deregistration</text>
+      <text xml:lang="de">Gerät bei maximaler Kapaziztät - keine zusätzlichen Clients können registriert werden, bis Abmeldung erfolgt</text>
+    </state>
+    <state>
+      <text xml:lang="en">Device state unchanged - no modifications made during failed registration attempt</text>
+      <text xml:lang="de">Gerätezustand unverändert - keine Änderungen während des fehlgeschlagenen Registrierungsversuchs vorgenommen</text>
+    </state>
+    <state>
+      <text xml:lang="en">Function exits without creating log message - registration did not succeed</text>
+      <text xml:lang="de">Funktion wird beendet, ohne eine Protokollmeldung zu erstellen - Registrierung war nicht erfolgreich</text>
+    </state>
+    <state>
+      <text xml:lang="en">Capacity constraint remains in effect - device continues to enforce client limit</text>
+      <text xml:lang="de">Kapaziztätsbeschränkung bleibt gültig - Gerät setzt weiterhin Client-Limit durch</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Maximum number of allowed clients has been reached - no additional clients can be registered</text>
+      <text xml:lang="de">Anzeichen: Maximale Anzahl zulässiger Clients wurde erreicht - keine zusätzlichen Clients können registriert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Registration, Resource Limits, Device Constraints</text>
+      <text xml:lang="de">Themen: Client-Verwaltung, Registrierung, Ressourcenlämits, Gerätebeschränkungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by registerClient when maximum registered client count exceeded</text>
+      <text xml:lang="de">Wird von registerClient ausgelöst, wenn die maximale Anzahl registrierter Clients überschritten ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains client registry with configurable capacity limits</text>
+      <text xml:lang="de">Gerät verwaltet Client-Registry mit konfigurierbaren Kapaziztätsgrenzen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Registration fails when adding new client would exceed maximum</text>
+      <text xml:lang="de">Registrierung schlägt fehl, wenn das Hinzufügen eines neuen Clients das Maximum überschreiten würde</text>
+    </note>
+    <note>
+      <text xml:lang="en">Resource constraint prevents registration of additional clients</text>
+      <text xml:lang="de">Ressourcenbeschränkung verhindert die Registrierung zusätzlicher Clients</text>
+    </note>
+  </implementationContext>
+</exception>
+

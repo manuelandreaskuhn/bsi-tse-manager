@@ -1,0 +1,50 @@
+graph TD
+    Start([Start: Befreiung von<br/>Belegausgabepflicht<br/>gewünscht])
+    
+    Start --> Pruefen{Verkauf an Vielzahl<br/>nicht bekannter<br/>Personen?}
+    
+    Pruefen -->|Nein| NichtZulaessig[Befreiung nicht<br/>möglich]
+    Pruefen -->|Ja| Haerte{Sachliche Härte<br/>nachweisbar?}
+    
+    Haerte -->|Nur Kosten| KostenAllein[Kosten allein sind<br/>KEINE sachliche Härte]
+    Haerte -->|Ja| Begruenden[Sachliche Härte<br/>dokumentieren und<br/>begründen]
+    
+    KostenAllein --> NichtZulaessig
+    
+    Begruenden --> Antrag[Antrag nach §148 AO<br/>beim zuständigen<br/>Finanzamt stellen]
+    
+    Antrag --> Pruefen2[Finanzamt prüft<br/>Einzelfall nach<br/>pflichtgemäßem Ermessen]
+    
+    Pruefen2 --> Entscheidung{Befreiung<br/>gewährt?}
+    
+    Entscheidung -->|Nein| Ablehnung[Ablehnungsbescheid<br/>erhalten]
+    Entscheidung -->|Ja| Bewilligung[Befreiungsbescheid<br/>erhalten]
+    
+    Ablehnung --> Rechtsmittel{Rechtsmittel<br/>einlegen?}
+    
+    Rechtsmittel -->|Ja| Einspruch[Einspruch einlegen]
+    Rechtsmittel -->|Nein| NichtBefreit[Belegausgabepflicht<br/>bleibt bestehen]
+    
+    Einspruch --> NeuePruefung[Neues Verfahren]
+    NeuePruefung --> Entscheidung
+    
+    Bewilligung --> Hinweis[HINWEIS:<br/>§368 BGB bleibt<br/>unberührt<br/>Quittung auf Verlangen!]
+    
+    Hinweis --> TSEPflicht[TSE-Funktion darf<br/>nicht eingeschränkt<br/>werden]
+    
+    TSEPflicht --> Ende([Ende: Befreiung<br/>wirksam])
+    
+    NichtZulaessig --> Ende2([Ende: Keine<br/>Befreiung])
+    NichtBefreit --> Ende2
+    
+    style Start fill:#90EE90
+    style Ende fill:#FFB6C1
+    style Ende2 fill:#FFB6C1
+    style Pruefen fill:#FFE4B5
+    style Haerte fill:#FFE4B5
+    style Entscheidung fill:#FFE4B5
+    style Rechtsmittel fill:#FFE4B5
+    style NichtZulaessig fill:#FF6B6B
+    style KostenAllein fill:#FF6B6B
+    style Bewilligung fill:#90EE90
+    style Ablehnung fill:#FF6B6B

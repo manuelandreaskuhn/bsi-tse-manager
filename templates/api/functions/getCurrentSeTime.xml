@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getCurrentSeTime" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getCurrentSeTime</name>
+  <category>Zeitverwaltung</category>
+  <description>
+    <text xml:lang="en">The function returns the current time set in the Secure Element.</text>
+    <text xml:lang="de">Die Funktion gibt die aktuelle Zeit zurück, die im Secure Element eingestellt ist.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+    <role>timeadmin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <standardStep number="3">
+        <shortCommand xml:lang="de">Zeit-Prüfung</shortCommand>
+        <shortCommand xml:lang="en">Time Verification</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the current time in the SE is not set, the function SHALL raise the exception ErrorTimeNotSet and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Zeit gesetzt. Falls nicht: Exception ErrorTimeNotSet, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF current time in SE NOT set THEN
+  THROW ErrorTimeNotSet
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN aktuelle Zeit im SE NICHT gesetzt DANN
+  WERFE ErrorTimeNotSet
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTimeNotSet</exception>
+        <trigger>
+          <text xml:lang="en">The current time in the SE is not set</text>
+          <text xml:lang="de">Die aktuelle Zeit im SE ist nicht gesetzt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If the current time set in the SE could not be obtained, the function SHALL raise the exception ErrorGetCurrentSeTimeFailed and exit the function.</text>
+        <text xml:lang="de">Kann Zeit nicht abrufen: Exception ErrorGetCurrentSeTimeFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF retrieval failed THEN
+  THROW ErrorGetCurrentSeTimeFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Abruf fehlgeschlagen DANN
+  WERFE ErrorGetCurrentSeTimeFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetCurrentSeTimeFailed</exception>
+        <trigger>
+          <text xml:lang="en">The current time in the SE could not be retrieved</text>
+          <text xml:lang="de">Die aktuelle Zeit im SE konnte nicht abgerufen werden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the current time in the SE was successfully obtained, the function SHALL return the time. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Falls die aktuelle Zeit erfolgreich abgerufen wurde: Gebe die Zeit zurück. Funktion kehrt ohne Exception zurück, um erfolgreiche Ausführung anzuzeigen.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN current SE time
+RETURN without exception</text>
+        <text xml:lang="de">GEBE aktuelle SE-Zeit zurück
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The current time in the SE was successfully retrieved</text>
+          <text xml:lang="de">Die aktuelle Zeit im SE wurde erfolgreich abgerufen</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the time and return without exception</text>
+          <text xml:lang="de">Gibt Zeit zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>ZonedDateTime</type>
+    <description>
+      <text xml:lang="en">the current date/time that is managed by the Secure Element.</text>
+      <text xml:lang="de">das aktuelle Datum/die aktuelle Zeit, das/die vom Secure Element verwaltet wird.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetCurrentSeTimeFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorTimeNotSet</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

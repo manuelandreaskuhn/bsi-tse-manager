@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorDeviceInitializationFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorDeviceInitializationFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if any necessary action to initialize the device fails during execution of the initialize function. The exception represents a critical failure in the device's startup sequence that prevents the device from entering an operational state. ErrorDeviceInitializationFailed is raised when the device attempts to perform one or more essential initialization actions (such as Secure Element activation, internal state setup, client registry creation, logging system initialization, or cryptographic key loading), but encounters a hardware error, firmware issue, state management failure, or system-level error that prevents successful completion. This exception indicates that the device initialization process has partially failed at some critical checkpoint, leaving the device in an uninitialized and unusable state. The exception is raised after the device has attempted initialization but before all necessary initialization steps have been completed and verified.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine notwendige Maßnahme zur Initialisierung des Geräts während der Ausführung der Funktion initialize fehlschlägt. Die Ausnahme stellt einen kritischen Fehler in der Startsequenz des Geräts dar, der das Gerät daran hindert, einen betriebsbereiten Zustand zu erreichen. ErrorDeviceInitializationFailed wird ausgelöst, wenn das Gerät versucht, eine oder mehrere wichtige Initialisierungsmaßnahmen durchzuführen (wie z. B. Secure-Element-Aktivierung, interne Statuseinrichtung, Client-Registry-Erstellung, Initialisierung des Protokollierungssystems oder Laden von Kryptogräfieschlüsseln), aber auf einen Hardwarefehler, Firmware-Problem, Statusverwaltungsfehler oder Fehler auf Systemebene stößt, der einen erfolgreichen Abschluss verhindert. Diese Ausnahme zeigt an, dass der Geräteinitialisierungsprozess an einem kritischen Kontrollpunkt teilweise fehlgeschlagen ist und das Gerät in einem nicht initialisierten und unbrauchbaren Zustand hängenbleibt. Die Ausnahme wird ausgelöst, nachdem das Gerät die Initialisierung versucht hat, aber bevor alle erforderlichen Initialisierungsschritte abgeschlossen und verifiziert wurden.</text>
+  </description>
+  <category>Initialization</category>
+  <subcategory>Initialization Process</subcategory>
+  <severity>Critical</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorDeviceInitializationFailed that is thrown if any necessary action to initialize the device fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorDeviceInitializationFailed, die ausgelöst wird, wenn eine notwendige Maßnahme zur Initialisierung des Geräts fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The device initialization process encountered a failure condition during execution of the initialize function. This exception indicates that one or more necessary actions required to properly initialize the device could not be completed successfully. This failure may occur due to hardware issues, state management problems, internal system errors, or failures in device component initialization.</text>
+      <text xml:lang="de">Der Geräteinitialisierungsprozess ist während der Ausführung der Funktion initialize auf eine Fehlerbedingung gestoßen. Diese Ausnahme zeigt an, dass eine oder mehrere notwendige Maßnahmen, die für eine ordnungsgemäße Initialisierung des Geräts erforderlich sind, nicht erfolgreich abgeschlossen werden konnten. Dieser Fehler kann auf Hardwareprobleme, Probleme bei der Statusverwaltung, interne Systemfehler oder Fehler bei der Initialisierung von Gerätekomponenten zurückzuführen sein.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1.5</section>
+    <requirement>
+      <text xml:lang="en">SHALL be raised if any necessary action to initialize the device fails. The function SHALL perform all necessary actions to initialize the device. If the initialization fails, the function SHALL raise the exception ErrorDeviceInitializationFailed and exit the function.</text>
+      <text xml:lang="de">Soll ausgelöst werden, wenn eine notwendige Maßnahme zur Initialisierung des Geräts fehlschlägt. Die Funktion soll alle notwendigen Maßnahmen durchführen, um das Gerät zu initialisieren. Falls die Initialisierung fehlschlägt, soll die Funktion die Ausnahme ErrorDeviceInitializationFailed auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device initialization operations when initialization process fails</text>
+      <text xml:lang="de">Geräteinitialisierungsvorgänge, wenn der Initialisierungsprozess fehlschlägt</text>
+    </applicability>
+    <reference>initialize – Exceptions (3.3.1.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>initialize</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check device self-test status using selfTest</text>
+      <text xml:lang="de">Prüfen Sie den Geräteselbsttest-Status mit selfTest</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify Secure Element is functional and connected</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Secure Element funktioniert und verbunden ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm device storage is accessible and not full</text>
+      <text xml:lang="de">Bestätigen Sie, dass der Gerätespeicher zugänglich und nicht voll ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry initialization after confirming prerequisites</text>
+      <text xml:lang="de">Wiederholen Sie die Initialisierung nach Bestätigung der Vorbedingungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device vendor if initialization persistently fails</text>
+      <text xml:lang="de">Wenden Sie sich an den Gerätehersteller, wenn die Initialisierung weiterhin fehlschlägt</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceIsInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached for initialize with no parameters required</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird für initialize ohne erforderliche Parameter erreicht</text>
+    </step>
+    <step number="2" name="Current State Check">
+      <text xml:lang="en">The device checks its current state to verify it is not already initialized. If already initialized, ErrorDeviceIsInitialized is raised instead (not taken in this exception case)</text>
+      <text xml:lang="de">Das Gerät prüft seinen aktuellen Zustand, um zu verifizieren, dass es nicht bereits initialisiert ist. Falls bereits initialisiert, wird stattdessen ErrorDeviceIsInitialized ausgelöst (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="3" name="Secure Element Communication Initialization">
+      <text xml:lang="en">The device establishes communication with the Secure Element hardware and verifies that it is responsive and accessible</text>
+      <text xml:lang="de">Das Gerät stellt eine Kommunikation mit der Secure-Element-Hardware her und verifiziert, dass sie reaktionsfähig und zugänglich ist</text>
+    </step>
+    <step number="4" name="Internal State Structure Creation">
+      <text xml:lang="en">The device creates and initializes internal state management structures including client registry, transaction tracking, and resource management tables</text>
+      <text xml:lang="de">Das Gerät erstellt und initialisiert interne Statusverwaltungsstrukturen, einschließlich Client-Registry, Transaktionsverfolgung und Ressourcenverwaltungstabellen</text>
+    </step>
+    <step number="5" name="Storage System Verification">
+      <text xml:lang="en">The device verifies that all storage media are accessible, functional, and properly formatted for logging and data persistence</text>
+      <text xml:lang="de">Das Gerät stellt sicher, dass alle Speichermedien zugänglich, funktionsfähig und ordnungsgemäß für Protokollierung und Datenbeständigkeit formatiert sind</text>
+    </step>
+    <step number="6" name="Cryptographic Key Loading">
+      <text xml:lang="en">The device loads cryptographic keys and certificates from protected storage and verifies their validity and integrity</text>
+      <text xml:lang="de">Das Gerät lädt Kryptogräfieschlüssel und Zertifikate aus geschütztem Speicher und verifiziert deren Gültigkeit und Integrität</text>
+    </step>
+    <step number="7" name="Logging System Initialization">
+      <text xml:lang="en">The device initializes the logging subsystem, creates initial log entries, and verifies logging capability</text>
+      <text xml:lang="de">Das Gerät initialisiert das Protokoll-Subsystem, erstellt initiale Protokolleinträge und verifiziert die Protokollierungsfähigkeit</text>
+    </step>
+    <step number="8" name="Device Self-Test Execution">
+      <text xml:lang="en">The device performs self-test and diagnostic checks on critical hardware components to verify functional status</text>
+      <text xml:lang="de">Das Gerät führt Selbsttest und Diagnoseprüfungen für kritische Hardwarekomponenten durch, um den Funktionsstatus zu verifizieren</text>
+    </step>
+    <step number="9" name="Initialization Completion Verification">
+      <text xml:lang="en">The device verifies that all initialization steps have completed successfully and the device is ready for operation</text>
+      <text xml:lang="de">Das Gerät verifiziert, dass alle Initialisierungsschritte erfolgreich abgeschlossen wurden und das Gerät betriebsbereit ist</text>
+    </step>
+    <step number="10a" name="Initialization Success">
+      <text xml:lang="en">If all initialization steps complete successfully, the device enters an initialized state and the function returns normally (not taken in this exception case)</text>
+      <text xml:lang="de">Falls alle Initialisierungsschritte erfolgreich abgeschlossen sind, geht das Gerät in einen initialisierten Zustand über und die Funktion wird normal zurückgegeben (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="10b" name="Initialization Failure">
+      <text xml:lang="en">If any critical initialization step fails, execution branches to exception handling at step 11</text>
+      <text xml:lang="de">Falls ein kritischer Initialisierungsschritt fehlschlägt, wird die Ausführung zur Ausnahmeverarbeitung in Schritt 11 verzweigt</text>
+    </step>
+    <step number="11" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including the specific initialization step that failed, error details from the failed component, and device state information</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich des spezifischen Initialisierungsschritts, der fehlgeschlagen ist, Fehlerdetails aus der fehlgeschlagenen Komponente und Gerätestatusinformationen</text>
+    </step>
+    <step number="12" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorDeviceInitializationFailed exception instance is created with appropriate error message indicating which initialization action failed</text>
+      <text xml:lang="de">ErrorDeviceInitializationFailed-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die anzeigt, welche Initialisierungsmaßnahme fehlgeschlagen ist</text>
+    </step>
+    <step number="13" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack, leaving the device in an uninitialized and non-operational state</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack propagiert, wobei das Gerät in einem nicht initialisierten und nicht betriebsbereiten Zustand verbleibt</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorDeviceInitializationFailed exception has been created and raised, containing information about the failed initialization step and component error details</text>
+      <text xml:lang="de">Eine ErrorDeviceInitializationFailed-Ausnahme wurde erstellt und ausgelöst, die Informationen über den fehlgeschlagenen Initialisierungsschritt und Komponentenfehlerdetails enthält</text>
+    </state>
+    <state name="Device Operational State">
+      <text xml:lang="en">The device remains in an uninitialized state and is not operational for SE API functions. No SE API functions other than initialize can be called on this device.</text>
+      <text xml:lang="de">Das Gerät bleibt in einem nicht initialisierten Zustand und ist nicht für SE-API-Funktionen betriebsbereit. Es können nur keine anderen SE-API-Funktionen außer initialize auf diesem Gerät aufgerufen werden.</text>
+    </state>
+    <state name="Device Internal State">
+      <text xml:lang="en">The device may have partially initialized some internal structures (Secure Element communication, state tables, storage verification), but the overall device state is inconsistent and unsuitable for operation.</text>
+      <text xml:lang="de">Das Gerät kann einige interne Strukturen teilweise initialisiert haben (Secure-Element-Kommunikation, Statustabellen, Speicherverifikation), aber der allgemeine Gerätezustand ist inkonsistent und ungeeignet für den Betrieb.</text>
+    </state>
+    <state name="Secure Element State">
+      <text xml:lang="en">The Secure Element may be accessible or initialized, depending on where the initialization process failed. The Secure Element may be in a transient state that requires reset.</text>
+      <text xml:lang="de">Das Secure Element kann zugänglich oder initialisiert sein, je nachdem, wo der Initialisierungsprozess fehlgeschlagen ist. Das Secure Element kann sich in einem vorübergehenden Zustand befinden, der einen Zurücksetzen erfordert.</text>
+    </state>
+    <state name="Data Integrity State">
+      <text xml:lang="en">Existing data in device storage may be inaccessible or unverified due to incomplete initialization. The device cannot be relied upon to provide data consistency.</text>
+      <text xml:lang="de">Vorhandene Daten im Gerätespeicher können aufgrund unvollständiger Initialisierung nicht erreichbar oder unverifiziert sein. Das Gerät kann nicht auf Datenkonsistenz verlässig sein.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits abnormally via exception propagation without completing device initialization</text>
+      <text xml:lang="de">Die Funktion wird abnormal über Ausnahmepropagation beendet, ohne die Geräteinitialisierung abzuschließen</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Device initialization failed - device could not be properly set up</text>
+      <text xml:lang="de">Anzeichen: Geräteinitialisierung fehlgeschlagen - Gerät konnte nicht ordnungsgemäß eingerichtet werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Initialization, Setup Operations, Device State, System Configuration</text>
+      <text xml:lang="de">Themen: Geräteinitialisierung, Einrichtungsvorgänge, Gerätezustand, Systemkonfiguration</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by initialize when device setup and initialization fails</text>
+      <text xml:lang="de">Wird von initialize ausgelöst, wenn Geräteeinrichtung und Initialisierung fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Initialization function sets up device state, storage, and cryptographic components</text>
+      <text xml:lang="de">Die Initialisierungsfunktion richtet Gerätezustand, Speicher und Kryptogräfikomponenten ein</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device performs self-tests and validates internal components during initialization</text>
+      <text xml:lang="de">Das Gerät führt Selbsttests durch und validiert interne Komponenten während der Initialisierung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Initialization failure prevents device from reaching ready state</text>
+      <text xml:lang="de">Initialisierungsfehler verhindert, dass das Gerät den bereiten Zustand erreicht</text>
+    </note>
+  </implementationContext>
+</exception>
+

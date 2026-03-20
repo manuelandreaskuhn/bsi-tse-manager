@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorExportSerialNumbersFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorExportSerialNumbersFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the collection of the serial number(s) failed during execution of the exportSerialNumbers function. The exception represents a critical failure in the Secure Element's ability to retrieve and provide serial numbers required for exporting device identification data. ErrorExportSerialNumbersFailed is raised when the exportSerialNumbers function requests serial number retrieval from the Secure Element but the Secure Element cannot assemble or provide the required serial numbers due to a hardware error, firmware issue, serial number storage failure, or communication breakdown. This exception indicates that the Secure Element's serial number retrieval functionality did not complete successfully, preventing the assembly of valid export data containing authenticated device identification information. The exception is raised during the serial number collection phase before serial numbers are packaged into the export data structure, ensuring no partial or incomplete export data is returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Sammlung der Seriennummer(n) während der Ausführung der Funktion exportSerialNumbers fehlgeschlagen ist. Die Ausnahme stellt einen kritischen Fehler in der Fähigkeit des Secure Element dar, die für den Export von Geräteidentifikationsdaten erforderlichen Seriennummern abzurufen und bereitzustellen. ErrorExportSerialNumbersFailed wird ausgelöst, wenn die Funktion exportSerialNumbers einen Seriennummern-Abruf vom Secure Element anfordert, aber das Secure Element die erforderlichen Seriennummern aufgrund eines Hardwarefehlers, Firmware-Problems, Speicherfehlers oder Kommunikationsfehlers nicht zusammenstellen oder bereitstellen kann. Diese Ausnahme zeigt an, dass die Seriennummern-Abruffunktionalität des Secure Element nicht erfolgreich abgeschlossen wurde, was die Zusammenstellung gültiger Exportdaten mit authentifizierten Geräteidentifikationsinformationen verhindert. Die Ausnahme wird während der Seriennummern-Sammlungsphase ausgelöst, bevor Seriennummern in die Exportdatenstruktur verpackt werden, um sicherzustellen, dass keine teilweisen oder unvollständigen Exportdaten zurückgegeben werden.</text>
+  </description>
+  <category>Information Export Operations</category>
+  <subcategory>Export</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorExportSerialNumbersFailed that is thrown if the collection of the serial number(s) failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorExportSerialNumbersFailed, die ausgelöst wird, wenn die Sammlung der Seriennummer(n) fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The exportSerialNumbers function performs a multi-step process to export serial numbers from the Secure Element. This exception is raised when the Secure Element cannot provide the required serial numbers during the collection phase of the export operation. When this exception occurs, no export data is returned to the user, and the function exits without providing any partial serial number data. The failure indicates that the Secure Element's serial number retrieval functionality did not complete successfully.</text>
+      <text xml:lang="de">Die Funktion exportSerialNumbers führt einen mehrstufigen Prozess durch, um Seriennummern aus dem Secure Element zu exportieren. Diese Ausnahme wird ausgelöst, wenn das Secure Element die erforderlichen Seriennummern während der Sammlungsphase des Exportvorgangs nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Exportdaten an den Benutzer zurückgegeben, und die Funktion wird beendet, ohne teilweise Seriennummern-Daten bereitzustellen. Der Fehler zeigt an, dass die Seriennummern-Abruffunktionalität des Secure Element nicht erfolgreich abgeschlossen wurde.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.12 Export Functionality - exportSerialNumbers</section>
+    <requirement>
+      <text xml:lang="en">The function exportSerialNumbers SHALL request the Secure Element to retrieve the serial number(s) needed for export. If the Secure Element cannot provide or collect the required serial numbers, the function SHALL raise the exception ErrorExportSerialNumbersFailed and exit without returning any export data. The serial number collection failure indicates the Secure Element's serial number retrieval functionality could not complete successfully, preventing the assembly of valid export data.</text>
+      <text xml:lang="de">Die Funktion exportSerialNumbers soll das Secure Element anfordern, die für den Export erforderlichen Seriennummer(n) abzurufen. Wenn das Secure Element die erforderlichen Seriennummern nicht bereitstellen oder sammeln kann, soll die Funktion die Ausnahme ErrorExportSerialNumbersFailed auslösen und beendet werden, ohne Exportdaten zurückzugeben. Der Fehler bei der Seriennummern-Sammlung zeigt an, dass die Seriennummern-Abruffunktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte, was die Zusammenstellung gültiger Exportdaten verhindert.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Serial number export operations - Export functionality exportSerialNumbers only</text>
+      <text xml:lang="de">Operationen zum Exportieren von Seriennummern - nur Exportfunktionalität exportSerialNumbers</text>
+    </applicability>
+    <reference>exportSerialNumbers – Function (3.3.12)</reference>
+  </specification>
+  <thrownBy>
+    <function>exportSerialNumbers</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">User or application calls exportSerialNumbers function with no parameters required</text>
+      <text xml:lang="de">Benutzer oder Anwendung ruft die Funktion exportSerialNumbers ohne erforderliche Parameter auf</text>
+    </step>
+    <step number="2" name="Authentication Check">
+      <text xml:lang="en">The function checks authentication status if required by the implementation guideline to ensure the caller is authorized to export serial numbers</text>
+      <text xml:lang="de">Die Funktion prüft den Authentifizierungsstatus, falls von der Implementierungsrichtlinie erforderlich, um sicherzustellen, dass der Aufrufer zum Seriennummern-Export berechtigt ist</text>
+    </step>
+    <step number="3" name="Authorization Check">
+      <text xml:lang="en">The function checks authorization to verify the caller has permission to export device identification data</text>
+      <text xml:lang="de">Die Funktion prüft die Autorisierung, um zu überprüfen, dass der Aufrufer die Berechtigung zum Exportieren von Geräteidentifikationsdaten hat</text>
+    </step>
+    <step number="4" name="Device Initialization Verification">
+      <text xml:lang="en">The function verifies that the device is in an initialized state and ready for export operations</text>
+      <text xml:lang="de">Die Funktion überprüft, dass das Gerät in einem initialisierten Zustand ist und bereit für Exportvorgänge ist</text>
+    </step>
+    <step number="5" name="Time Synchronization Check">
+      <text xml:lang="en">The function verifies that device time is synchronized if required for serial number export operations</text>
+      <text xml:lang="de">Die Funktion überprüft, dass die Gerätezeit synchronisiert wird, falls für Seriennummern-Exportvorgänge erforderlich</text>
+    </step>
+    <step number="6" name="Secure Element Serial Number Request">
+      <text xml:lang="en">The function sends a request to the Secure Element to retrieve and assemble the required device serial numbers</text>
+      <text xml:lang="de">Die Funktion sendet eine Anfrage an das Secure Element, um die erforderlichen Geräteseriennummern abzurufen und zusammenzustellen</text>
+    </step>
+    <step number="6a" name="Serial Number Collection Success">
+      <text xml:lang="en">If the Secure Element successfully retrieves and assembles all required serial numbers, execution continues to step 7 (not taken in this exception case)</text>
+      <text xml:lang="de">Falls das Secure Element alle erforderlichen Seriennummern erfolgreich abruft und zusammenstellt, wird die Ausführung zu Schritt 7 fortgesetzt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="6b" name="Serial Number Collection Failure">
+      <text xml:lang="en">If the Secure Element cannot retrieve, assemble, or provide the required serial numbers due to storage failure, firmware error, communication loss, quota exhaustion, or security restrictions, execution branches to exception handling at step 7b</text>
+      <text xml:lang="de">Falls das Secure Element die erforderlichen Seriennummern aufgrund eines Speicherfehlers, Firmware-Fehlers, Kommunikationsverlusts, Ressourcenerschöpfung oder Sicherheitsbeschränkungen nicht abrufen, zusammenstellen oder bereitstellen kann, wird die Ausführung zur Ausnahmeverarbeitung bei Schritt 7b verzweigt</text>
+    </step>
+    <step number="7a" name="Export Data Assembly">
+      <text xml:lang="en">Upon successful serial number collection, the function packages the serial numbers into the export data structure for return (not taken in this exception case)</text>
+      <text xml:lang="de">Nach erfolgreicher Seriennummern-Sammlung packt die Funktion die Seriennummern zur Rückgabe in die Exportdatenstruktur (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="7b" name="Exception Context Preparation">
+      <text xml:lang="en">Upon serial number collection failure, exception context is prepared including the Secure Element error details, export operation context, and timestamp</text>
+      <text xml:lang="de">Bei Fehler bei der Seriennummern-Sammlung wird der Ausnahmekontekt vorbereitet, einschließlich Secure-Element-Fehlerdetails, Exportvorgangskontext und Zeitstempel</text>
+    </step>
+    <step number="8" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorExportSerialNumbersFailed exception instance is created with appropriate error message indicating Secure Element serial number collection failure</text>
+      <text xml:lang="de">ErrorExportSerialNumbersFailed-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die den Fehler bei der Seriennummern-Sammlung des Secure Element anzeigt</text>
+    </step>
+    <step number="9" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack without returning any export data to the caller</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack propagiert, ohne Exportdaten an den Aufrufer zurückzugeben</text>
+    </step>
+    <step number="10" name="Device State Verification">
+      <text xml:lang="en">The Secure Element and serial number storage remain in their current state with no modifications or data extraction having occurred</text>
+      <text xml:lang="de">Das Secure Element und der Seriennummern-Speicher bleiben in ihrem aktuellen Zustand mit keinen Änderungen oder Datenautzügen</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm storage medium is connected and accessible</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Speichermedium verbunden und zugänglich ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check output parameter is valid</text>
+      <text xml:lang="de">Überprüfen Sie, dass der Ausgabeparameter gültig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry serial number export after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie den Seriennummern-Export nach Bestätigung der Vorbedingungen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Export Data State">
+      <text xml:lang="en">No export data is returned to the caller. The serial number export operation has not completed and no data of any kind (not even partial data) is provided to the user.</text>
+      <text xml:lang="de">Es werden keine Exportdaten an den Aufrufer zurückgegeben. Der Seriennummern-Exportvorgang wurde nicht abgeschlossen und es werden keine Daten (nicht einmal teilweise Daten) an den Benutzer bereitgestellt.</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">Device state remains completely unchanged. No modifications to internal state, configuration, or data structures have occurred as a result of the failed serial number export attempt.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt vollständig unverändert. Es wurden keine Änderungen am internen Zustand, der Konfiguration oder den Datenstrukturen aufgrund des fehlgeschlagenen Seriennummern-Exportversuchs vorgenommen.</text>
+    </state>
+    <state name="Secure Element State">
+      <text xml:lang="en">Secure Element remains unchanged and all its serial numbers remain stored in protected Secure Element storage. No serial number data has been extracted or modified.</text>
+      <text xml:lang="de">Das Secure Element bleibt unverändert und alle Seriennummern bleiben im geschützten Secure-Element-Speicher gespeichert. Es wurden keine Seriennummern-Daten extrahiert oder geändert.</text>
+    </state>
+    <state name="Serial Number Storage">
+      <text xml:lang="en">Serial number storage on device is unaffected. All serial numbers remain securely stored in the Secure Element. Serial number count and content are unchanged.</text>
+      <text xml:lang="de">Der Seriennummern-Speicher auf dem Gerät ist nicht betroffen. Alle Seriennummern bleiben sicher im Secure Element gespeichert. Die Seriennummern-Anzahl und der Inhalt sind unverändert.</text>
+    </state>
+    <state name="State Consistency">
+      <text xml:lang="en">No state inconsistency exists. The function exits at the serial number collection phase before any data assembly, packaging, or return operations.</text>
+      <text xml:lang="de">Es gibt keine Zustandsinkonsistenz. Die Funktion wird in der Seriennummern-Sammlungsphase beendet, bevor Datenausammlung, Verpackung oder Rückgabevorgänge erfolgen.</text>
+    </state>
+    <state name="Device Availability">
+      <text xml:lang="en">Device functions continue to execute normally. The device remains operational and all API functions remain accessible.</text>
+      <text xml:lang="de">Gerätefunktionen werden weiterhin normal ausgeführt. Das Gerät bleibt betriebsbereit und alle API-Funktionen bleiben zugänglich.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Export of device serial numbers failed - serial number data could not be retrieved</text>
+      <text xml:lang="de">Anzeichen: Export von Geräteseriennummern fehlgeschlagen - Seriennummern-Daten konnten nicht abgerufen werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Information, Data Export, Device Identification, Serial Number Operations</text>
+      <text xml:lang="de">Themen: Geräteninformationen, Datenexport, Geräteidentifizierung, Seriennummern-Vorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by exportSerialNumbers when serial number export fails</text>
+      <text xml:lang="de">Wird von exportSerialNumbers ausgelöst, wenn der Seriennummern-Export fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Export function retrieves device and component serial numbers</text>
+      <text xml:lang="de">Exportfunktion ruft Geräte- und Komponentenseriennummern ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains serial number information for identification</text>
+      <text xml:lang="de">Das Gerät verwaltet Seriennummern-Informationen zur Identifizierung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Export failure prevents device identification data retrieval</text>
+      <text xml:lang="de">Exportfehler verhindert Abruf von Geräteidentifikationsdaten</text>
+    </note>
+  </implementationContext>
+</exception>
+

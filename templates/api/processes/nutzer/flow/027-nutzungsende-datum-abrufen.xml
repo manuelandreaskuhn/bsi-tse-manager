@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>027</processId>
+    <processName>
+        <text xml:lang="en">Query End of Usage Date</text>
+        <text xml:lang="de">Nutzungsende-Datum abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying the end-of-usage date of the TSE device. This date indicates when the TSE must be replaced according to regulations. It is independent of temporary locks or decommissioning status.</text>
+        <text xml:lang="de">Abfrage des Nutzungsenddatums des TSE-Geräts. Dieses Datum gibt an, wann die TSE gemäß den Vorschriften ersetzt werden muss. Sie ist unabhängig von temporären Sperren oder Decommissioning-Status.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">End of Usage Date</text>
+            <text xml:lang="de">Nutzungsende-Datum</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate</text>
+            <text xml:lang="de">Zertifikat</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getEndOfLifeDate</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>endOfUsageDate</name>
+            <type>DateTime</type>
+            <description>
+                <text xml:lang="en">Date and time when the TSE usage must end according to regulations</text>
+                <text xml:lang="de">Datum und Uhrzeit, an dem die TSE-Nutzung gemäß den Vorschriften beendet sein muss</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>DateTime</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingEndOfLifeDateFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.5</reference>
+        <reference>BSI TR-03153-1 Chapter 5.5.3 (Validity Period)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This is an optional function accessible to all users. The end-of-usage date is independent of temporary locks or decommissioning state - it is always available for planning purposes. Users should plan TSE replacement well before this date to ensure continuity of operations. This date is typically based on the certificate validity period.</text>
+        <text xml:lang="de">Dies ist eine optionale Funktion, die für alle Nutzer zugänglich ist. Das Nutzungsende-Datum ist unabhängig von temporären Sperren oder Decommissioning-Status - es ist immer für Planungszwecke verfügbar. Nutzer sollten die TSE-Ersetzung lange vor diesem Datum planen, um die Geschäftskontinuität zu gewährleisten. Dieses Datum basiert typischerweise auf der Zertifikatsgültigkeitsdauer.</text>
+    </notes>
+</process>

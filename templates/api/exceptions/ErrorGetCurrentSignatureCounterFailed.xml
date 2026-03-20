@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetCurrentSignatureCounterFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetCurrentSignatureCounterFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getCurrentLoggingSignatureCounters fails to obtain the current signature counter values from the Secure Element's logging subsystem. The function attempts to retrieve the current state of cryptographic signature counters used for logging operations, but the retrieval process fails before the counter values can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getCurrentLoggingSignatureCounters fehlschlägt, um die aktuellen Signatur-Zählerwerte von dem Logging-Subsystem des Secure Element zu erhalten. Die Funktion versucht, den aktuellen Zustand kryptographischer Signatur-Zähler abzurufen, die für Logging-Operationen verwendet werden, aber der Abrufprozess schlägt fehl, bevor die Zählerwerte bestimmt und zurückgegeben werden können.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Signature Counter Management</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetCurrentSignatureCounterFailed that is thrown if the SE API function getCurrentLoggingSignatureCounters fails to obtain the current signature counter values.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetCurrentSignatureCounterFailed, die ausgelöst wird, wenn die SE API Funktion getCurrentLoggingSignatureCounters fehlschlägt, um die aktuellen Signatur-Zählerwerte zu erhalten.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getCurrentLoggingSignatureCounters function cannot retrieve the current signature counter values from the Secure Element's logging subsystem. Signature counters are critical components of the logging infrastructure that track and validate the sequence and integrity of logged events. ErrorGetCurrentSignatureCounterFailed indicates that the Secure Element cannot provide the current counter state due to hardware failure, storage corruption, internal logging system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no counter data is returned and applications cannot verify logging integrity or determine current counter state. Recovery typically involves device verification, logging subsystem diagnostics, potential counter reinitialization, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getCurrentLoggingSignatureCounters die aktuellen Signatur-Zählerwerte nicht aus dem Logging-Subsystem des Secure Element abrufen kann. Signatur-Zähler sind kritische Komponenten der Logging-Infrastruktur, die die Sequenz und Integrität von protokollierten Ereignissen nachverfolgen und validieren. ErrorGetCurrentSignatureCounterFailed zeigt an, dass das Secure Element den aktuellen Zählerzustand aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Logging-System-Fehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Zählerdaten zurückgegeben und Anwendungen können die Logging-Integrität nicht verifizieren oder den aktuellen Zählerzustand nicht bestimmen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Logging-Subsystem-Diagnose, mögliche Zähler-Reinitialisierung und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.6 Logging - getCurrentLoggingSignatureCounters</section>
+    <requirement>
+      <text xml:lang="en">The function getCurrentLoggingSignatureCounters SHALL retrieve the current signature counter values maintained by the Secure Element's logging subsystem. If the Secure Element cannot provide or return the required counter information, the function SHALL raise the exception ErrorGetCurrentSignatureCounterFailed and exit without returning any counter data. The signature counter retrieval failure indicates the Secure Element's logging counter query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getCurrentLoggingSignatureCounters soll die aktuellen Signatur-Zählerwerte abrufen, die von dem Logging-Subsystem des Secure Element verwaltet werden. Falls das Secure Element die erforderlichen Zählerinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetCurrentSignatureCounterFailed auslösen und beendet werden, ohne Zählerdaten zurückzugeben. Der Fehler bei der Signatur-Zählerabruf zeigt an, dass die Logging-Zählerabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Logging operations - getCurrentLoggingSignatureCounters function only</text>
+      <text xml:lang="de">Logging-Operationen - nur Funktion getCurrentLoggingSignatureCounters</text>
+    </applicability>
+    <reference>getCurrentLoggingSignatureCounters – Function (3.2.6)</reference>
+  </specification>
+  <thrownBy>
+    <function>getCurrentLoggingSignatureCounters</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getCurrentLoggingSignatureCounters function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getCurrentLoggingSignatureCounters auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for counter information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Zählerinformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and logging subsystem is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Logging-Subsystem betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares counter query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Zählerabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits counter query command to Secure Element requesting current signature counter values</text>
+      <text xml:lang="de">Funktion übermättelt Zählerabfrage-Befehl zu Secure Element und fordert aktuelle Signatur-Zählerwerte an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (storage error, counter calculation error, subsystem error) → ErrorGetCurrentSignatureCounterFailed raised, function exits without counter data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Speicherfehler, Zählerberechnungsfehler, Subsystem-Fehler) → ErrorGetCurrentSignatureCounterFailed ausgelöst, Funktion beendet ohne Zählerdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetCurrentSignatureCounterFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetübertragung oder Antwortempfang auftritt → ErrorGetCurrentSignatureCounterFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives counter values from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Zählerwerte von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates counter values for correctness (format, sequence, logical consistency)</text>
+      <text xml:lang="de">Funktion validiert Zählerwerte auf Korrektheit (Format, Sequenz, logische Konsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid counter values to caller</text>
+      <text xml:lang="de">Funktion gibt gültige Zählerwerte an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry counter query after confirming device state</text>
+      <text xml:lang="de">Wiederholen Sie die Zählerabfrage nach Bestätigung des Gerätestatus</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check logging subsystem status</text>
+      <text xml:lang="de">Prüfen Sie den Logging-Subsystem-Status</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorDeleteLogMessagesFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve counter values does not affect device initialization state, logging operations, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschalten beim Zählerwertabruf wirkt sich nicht auf den Geräteinitialisierungszustand, Logging-Operationen, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Counter Data Return Status">
+      <text xml:lang="en">No counter values are returned to the caller. The function exits without providing any counter information. Applications must not assume default or cached counter values; they must handle the exception as indicating counter information is unavailable.</text>
+      <text xml:lang="de">Es werden keine Zählerwerte an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Zählerinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard- oder zwischengespeicherten Zählerwerten rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Zählerinformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element Logging State">
+      <text xml:lang="en">Secure Element logging subsystem remains unchanged by the failed counter query. No state modifications, counter updates, or logging configuration changes occur. Logging operations continue internally in the Secure Element regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Logging-Subsystem des Secure Element bleibt durch die fehlgeschlagene Zählerabfrage unverändert. Es werden keine Zustandseränderungen, Zählerspalten oder Logging-Konfigurationsoderänderungen vorgenommen. Logging-Operationen werden intern im Secure Element unabhängig vom Abruffehler fortgesetzt.</text>
+    </state>
+    <state name="Counter Advancement Continuity">
+      <text xml:lang="en">Secure Element's signature counters continue to advance as logging events occur. The failure to retrieve counter values does not stop or pause counter tracking. Subsequent attempts to query counters or perform logging operations may succeed once the underlying issue is resolved.</text>
+      <text xml:lang="de">Die Signatur-Zähler des Secure Element führen weiterhin fort, wenn Protokollereignisse auftreten. Das Fehlschalten beim Abruf von Zählerwerten stoppt oder pausiert die Zählerverfolgung nicht. Nachfolgende Versuche, Zähler abzufragen oder Logging-Operationen durchzuführen, können erfolgreich sein, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the counter retrieval failure. Device internal consistency is maintained. Other SE API functions and logging operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfallschlösse als Ergebnis des Zählerabruffehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Logging-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (storage error, communication error, subsystem error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Speicherfehler, Kommunikationsfehler, Subsystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of current signature counter failed - cannot determine counter value</text>
+      <text xml:lang="de">Anzeichen: Abruf des aktuellen Signatur-Zählers fehlgeschlagen - kann Zählerwert nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Signature Operations, Counter Management, Information Retrieval, Logging State</text>
+      <text xml:lang="de">Themen: Signatur-Operationen, Zählerverwaltung, Informationsabfrage, Logging-Zustand</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getCurrentLoggingSignatureCounters when counter retrieval fails</text>
+      <text xml:lang="de">Wird von getCurrentLoggingSignatureCounters ausgelöst, wenn der Zählerabruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Counter query function retrieves signature counter state</text>
+      <text xml:lang="de">Zählerabfragefunktion ruft Signatur-Zählerzustand ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains signature counter for logging operations</text>
+      <text xml:lang="de">Das Gerät verwaltet Signatur-Zähler für Logging-Operationen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents counter value access</text>
+      <text xml:lang="de">Abruffehler verhindert Zählerwertezugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

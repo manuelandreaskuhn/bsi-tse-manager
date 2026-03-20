@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorDeviceIsInitialized" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorDeviceIsInitialized</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function initialize is invoked when the device has already been successfully initialized. The exception represents a protective state check that prevents duplicate initialization of an already operational device. ErrorDeviceIsInitialized is raised when an application attempts to call initialize on a device that has already completed the initialization process and is in an initialized, operational state. This exception serves as a safeguard against re-initialization attempts that could disrupt ongoing operations, corrupt internal state, or create consistency issues. The exception is raised immediately upon entry to the initialize function after verifying that the device is in an initialized state, preventing any re-initialization actions from being executed.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion initialize aufgerufen wird, wenn das Gerät bereits erfolgreich initialisiert wurde. Die Ausnahme stellt eine Schutzstatusprüfung dar, die verhindert, dass ein bereits betriebsbereites Gerät doppelt initialisiert wird. ErrorDeviceIsInitialized wird ausgelöst, wenn eine Anwendung versucht, initialize auf einem Gerät aufzurufen, das den Initialisierungsprozess bereits abgeschlossen hat und sich in einem initialisierten, betriebsbereiten Zustand befindet. Diese Ausnahme dient als Schutzmaßnahme gegen Reinitialisierungsversuche, die laufende Vorgänge stören, internen Zustand beschädigen oder Konsistenzprobleme verursachen könnten. Die Ausnahme wird unmittelbar nach Eintritt in die Funktion initialize nach Überprüfung, dass sich das Gerät in einem initialisierten Zustand befindet, ausgelöst und verhindert, dass Reinitialisierungsmaßnahmen ausgeführt werden.</text>
+  </description>
+  <category>Initialization</category>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>configureLogging</function>
+    <function>initialize</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorDeviceIsInitialized that is thrown if the SE API function initialize has already been invoked before.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorDeviceIsInitialized, die ausgelöst wird, wenn die SE-API-Funktion initialize bereits vorher aufgerufen wurde.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The device initialization function has been invoked when the device was already in an initialized state. This exception indicates that a duplicate initialization attempt was detected. Once a device has been successfully initialized, subsequent calls to the initialize function are not permitted and will raise this exception as a safeguard against re-initialization of an already active device.</text>
+      <text xml:lang="de">Die Geräteinitialisierungsfunktion wurde aufgerufen, als sich das Gerät bereits in einem initialisierten Zustand befand. Diese Ausnahme zeigt an, dass ein doppelter Initialisierungsversuch erkannt wurde. Nachdem ein Gerät erfolgreich initialisiert wurde, sind nachfolgende Aufrufe der Initialisierungsfunktion nicht erlaubt und lösen diese Ausnahme als Schutzmaßnahme gegen die Reinitialisierung eines bereits aktiven Geräts aus.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1.5</section>
+    <requirement>
+      <text xml:lang="en">SHALL be raised if the initialize function has already been successfully executed. The function SHALL check if the function initialize has already been successfully executed. If it has been executed before, the function SHALL raise the exception ErrorDeviceIsInitialized and exit the function.</text>
+      <text xml:lang="de">Soll ausgelöst werden, wenn die Funktion initialize bereits erfolgreich ausgeführt wurde. Die Funktion soll prüfen, ob die Funktion initialize bereits erfolgreich ausgeführt wurde. Falls sie zuvor ausgeführt wurde, soll die Funktion die Ausnahme ErrorDeviceIsInitialized auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device initialization when device already initialized (prerequisite check)</text>
+      <text xml:lang="de">Geräteinitialisierung, wenn das Gerät bereits initialisiert ist (Voraussetzungsprüfung)</text>
+    </applicability>
+    <reference>initialize – Exceptions (3.3.1.4)</reference>
+  </specification>
+  <recovery>
+    <step>
+      <text xml:lang="en">Device is already initialized - proceed with normal operations</text>
+      <text xml:lang="de">Gerät ist bereits initialisiert - Fortfahren mit normalen Operationen</text>
+    </step>
+    <step>
+      <text xml:lang="en">No reinitialization needed or permitted</text>
+      <text xml:lang="de">Keine Reinitialisierung erforderlich oder erlaubt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Reset device if full reinitialization required</text>
+      <text xml:lang="de">Gerät zurücksetzen, wenn vollständige Reinitialisierung erforderlich ist</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached for initialize with no parameters required</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird für initialize ohne erforderliche Parameter erreicht</text>
+    </step>
+    <step number="2" name="Initialization State Check">
+      <text xml:lang="en">The device immediately checks whether it is already in an initialized state by examining internal state flags and device status indicators</text>
+      <text xml:lang="de">Das Gerät prüft sofort, ob es sich bereits in einem initialisierten Zustand befindet, indem es interne Zustandsflaggen und Gerätestatusindikatoren untersucht</text>
+    </step>
+    <step number="3a" name="Device Not Initialized">
+      <text xml:lang="en">If the device is not yet initialized, execution branches to the normal initialization sequence (not taken in this exception case)</text>
+      <text xml:lang="de">Falls das Gerät noch nicht initialisiert ist, wird die Ausführung zur normalen Initialisierungssequenz verzweigt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="3b" name="Device Already Initialized">
+      <text xml:lang="en">If the device is already in an initialized state, execution branches to exception handling at step 4</text>
+      <text xml:lang="de">Falls sich das Gerät bereits in einem initialisierten Zustand befindet, wird die Ausführung zur Ausnahmeverarbeitung in Schritt 4 verzweigt</text>
+    </step>
+    <step number="4" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including device initialization state information and timestamp of the duplicate initialization attempt</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich Geräteinitialisierungsstatus-Informationen und Zeitstempel des doppelten Initialisierungsversuchs</text>
+    </step>
+    <step number="5" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorDeviceIsInitialized exception instance is created with appropriate error message indicating that the device is already initialized</text>
+      <text xml:lang="de">ErrorDeviceIsInitialized-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die anzeigt, dass das Gerät bereits initialisiert ist</text>
+    </step>
+    <step number="6" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, without performing any device initialization actions</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, ohne Geräteinitialisierungsmaßnahmen auszuführen</text>
+    </step>
+    <step number="7" name="Device State Unchanged">
+      <text xml:lang="en">The device remains in its previously initialized state with no changes to internal state, configuration, or operational status</text>
+      <text xml:lang="de">Das Gerät bleibt in seinem zuvor initialisierten Zustand mit keinen Änderungen am internen Zustand, der Konfiguration oder dem Betriebsstatus</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorDeviceIsInitialized exception has been created and raised, indicating that the device is already initialized</text>
+      <text xml:lang="de">Eine ErrorDeviceIsInitialized-Ausnahme wurde erstellt und ausgelöst, die anzeigt, dass das Gerät bereits initialisiert ist</text>
+    </state>
+    <state name="Device Operational State">
+      <text xml:lang="en">The device remains in its initialized, operational state. No changes have been made to device state, configuration, or internal structures.</text>
+      <text xml:lang="de">Das Gerät bleibt in seinem initialisierten, betriebsbereiten Zustand. Es wurden keine Änderungen am Gerätezustand, der Konfiguration oder den internen Strukturen vorgenommen.</text>
+    </state>
+    <state name="Device Initialization Status">
+      <text xml:lang="en">The device initialization status remains unchanged. The device is and remains initialized. No re-initialization has occurred.</text>
+      <text xml:lang="de">Der Geräteinitialisierungsstatus bleibt unverändert. Das Gerät ist und bleibt initialisiert. Es hat keine Reinitialisierung stattgefunden.</text>
+    </state>
+    <state name="Internal State">
+      <text xml:lang="en">All internal state structures, client registry, transaction tracking, and resource management remain in their current state, completely unchanged by the duplicate initialization attempt.</text>
+      <text xml:lang="de">Alle internen Zustandsstrukturen, Client-Registry, Transaktionsverfolgung und Ressourcenverwaltung bleiben in ihrem aktuellen Zustand, vollständig unbeeinflusst durch den doppelten Initialisierungsversuch.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits via exception propagation without performing any initialization actions or modifying device state</text>
+      <text xml:lang="de">Die Funktion wird über Ausnahmepropagation beendet, ohne Initialisierungsmaßnahmen auszuführen oder den Gerätezustand zu ändern</text>
+    </state>
+    <state name="Device Availability">
+      <text xml:lang="en">The device remains fully available and operational for all SE API functions. The device is ready for use and all operations can proceed normally.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig verfügbar und betriebsbereit für alle SE-API-Funktionen. Das Gerät ist einsatzbereit und alle Operationen können normal fortgesetzt werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Attempted to initialize a device that is already initialized - reinitialization not allowed</text>
+      <text xml:lang="de">Anzeichen: Versuch, ein Gerät zu initialisieren, das bereits initialisiert ist - Reinitialisierung nicht erlaubt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Initialization, Device State, State Management, Initialization Constraints</text>
+      <text xml:lang="de">Themen: Geräteinitialisierung, Gerätezustand, Statusverwaltung, Initialisierungsbeschränkungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by initialize when re-initialization attempted on already initialized device</text>
+      <text xml:lang="de">Wird von initialize ausgelöst, wenn eine Reinitialisierung auf einem bereits initialisierten Gerät versucht wird</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains initialization state preventing duplicate initialization</text>
+      <text xml:lang="de">Gerät verwaltet Initialisierungsstatus, um doppelte Initialisierung zu verhindern</text>
+    </note>
+    <note>
+      <text xml:lang="en">Reinitialization is not permitted when device already initialized</text>
+      <text xml:lang="de">Reinitialisierung ist nicht zulässig, wenn das Gerät bereits initialisiert ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application must reset or deregister before reinitializing</text>
+      <text xml:lang="de">Die Anwendung muss vor der Reinitialisierung zurücksetzen oder abmelden</text>
+    </note>
+  </implementationContext>
+</exception>
+

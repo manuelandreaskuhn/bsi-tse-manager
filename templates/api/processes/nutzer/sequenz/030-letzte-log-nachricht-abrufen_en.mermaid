@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant User as User
+    participant TSE as TSE
+    participant SM as Security Module
+
+    User->>TSE: getLastLogMessage()
+    activate TSE
+    
+    TSE->>TSE: Check: TSE initialized
+    
+    TSE->>SM: Get last created<br/>Log Message
+    activate SM
+    
+    alt No Log Message found
+        SM-->>TSE: Not found
+        TSE-->>User: Exception:<br/>ErrorNoLogMessageFound
+    else Log Message found
+        SM->>SM: Get last Log Parts:<br/>- operationType<br/>- clientId<br/>- processData<br/>- processType<br/>- additionalExternalData<br/>- transactionNumber<br/>- signatureCounter<br/>- logTime<br/>- signatureValue<br/>- serialNumber
+        
+        SM-->>TSE: Log Parts
+        deactivate SM
+        
+        TSE->>TSE: Combine into<br/>complete Log Message
+        
+        TSE->>TSE: Generate Filename:<br/>[SERIALNUMBER]_[SIGNATURECOUNTER].log
+        
+        TSE-->>User: logMessageContent +<br/>logMessageFileName
+    end
+    deactivate TSE
+    
+    Note over User: Can be Transaction-Log,<br/>System-Log or<br/>Audit-Log

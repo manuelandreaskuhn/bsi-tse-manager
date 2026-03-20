@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SonstigerVorgangData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SonstigerVorgangData</name>
+  <category>TransactionData</category>
+  <source>DSFinV-K</source>
+  <description>
+    <text xml:lang="en">Structure for processType 'SonstigerVorgang'. The processType "SonstigerVorgang" is used for all transactions that do not correspond to a receipt or an order. The content of processData can be freely chosen by the recording system.</text>
+    <text xml:lang="de">Struktur für processType 'SonstigerVorgang'. Der processType "SonstigerVorgang" ist für alle Vorgänge zu verwenden, die nicht einem Kassenbeleg oder einer Bestellung entsprechen. Der Inhalt von processData kann vom Aufzeichnungssystem frei gewählt werden.</text>
+    <text xml:lang="en">
+      *** DSFinV-K specific usage: ***
+      This data structure is used as a catch-all for any transactions that do not fit the Kassenbeleg-V1 or Bestellung-V1 formats. It provides maximum flexibility - the processData content is not strictly regulated. However, for audit purposes, readable text format is recommended when the transaction may be relevant for tax authorities. Used at FinishTransaction operation, transmitted in UTF-8 or ASCII encoding.
+    </text>
+    <text xml:lang="de">
+      *** DSFinV-K-spezifische Verwendung: ***
+      Diese Datenstruktur dient als Auffangtyp für alle Vorgänge, die nicht in die Formate Kassenbeleg-V1 oder Bestellung-V1 passen. Sie bietet maximale Flexibilität - der Inhalt von processData ist nicht streng reguliert. Für Prüfzwecke wird jedoch ein lesbares Textformat empfohlen, wenn der Vorgang für das Finanzamt relevant sein könnte. Wird bei der FinishTransaction-Operation verwendet und in UTF-8- oder ASCII-Codierung übertragen.
+    </text>
+  </description>
+  <asn1Definition>SonstigerVorgangData ::= OCTET STRING</asn1Definition>
+  <fields>
+    <field>
+      <name>frei</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Inhalt frei wählbar. Für ggf. relevante Vorgänge sollte nach Möglichkeit ein lesbares Textformat gewählt werden, um die Nachvollziehbarkeit und Prüfbarkeit zu gewährleisten.</description>
+    </field>
+  </fields>
+</type>

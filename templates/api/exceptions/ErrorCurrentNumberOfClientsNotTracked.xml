@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorCurrentNumberOfClientsNotTracked" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorCurrentNumberOfClientsNotTracked</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the device does not track the current number of registered clients and therefore cannot provide this information through the getCurrentNumberOfClients function. The exception represents a device capability limitation rather than a functional failure. ErrorCurrentNumberOfClientsNotTracked is raised when an application invokes getCurrentNumberOfClients on a device that supports a practically unlimited number of clients simultaneously and has deliberately omitted client counting functionality to avoid performance overhead. This exception indicates that the device is operating normally, but the specific capability to enumerate or count currently registered clients is not implemented or has been disabled. The exception is raised after the device validates that the function was invoked correctly but determines that client tracking is not available on this device variant.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Gerät die aktuelle Anzahl registrierter Clients nicht verfolgt und daher diese Informationen nicht durch die Funktion getCurrentNumberOfClients bereitstellen kann. Die Ausnahme stellt eine Gerätekapaziztätsbeschränkung dar, nicht einen funktionalen Fehler. ErrorCurrentNumberOfClientsNotTracked wird ausgelöst, wenn eine Anwendung getCurrentNumberOfClients auf einem Gerät aufruft, das eine praktisch unbegrenzte Anzahl von Clients gleichzeitig unterstützt und die Client-Zählfunktionalität absichtlich weggelassen hat, um den Leistungsaufwand zu vermeiden. Diese Ausnahme zeigt an, dass das Gerät normal funktioniert, aber die spezifische Fähigkeit zur Aufzählung oder zum Zählen aktuell registrierter Clients nicht implementiert ist oder deaktiviert wurde. Die Ausnahme wird ausgelöst, nachdem das Gerät validiert hat, dass die Funktion ordnungsgemäß aufgerufen wurde, aber festgestellt hat, dass Client-Tracking auf dieser Gerätevariante nicht verfügbar ist.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>State Tracking</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorCurrentNumberOfClientsNotTracked that is thrown if the devices does not track the current number of (registered) clients. Therefore, the SE API function getCurrentNumberOfClients cannot provide a number.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorCurrentNumberOfClientsNotTracked, die ausgelöst wird, wenn das Gerät die aktuelle Anzahl (registrierter) Clients nicht verfolgt. Daher kann die SE-API-Funktion getCurrentNumberOfClients keine Nummer bereitstellen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The device supports a practically unlimited number of clients simultaneously and does not track the current number of clients. This exception is raised when the device capability to count active clients is not available, typically in systems designed for unlimited scalability.</text>
+      <text xml:lang="de">Das Gerät unterstützt eine praktisch unbegrenzte Anzahl von Clients gleichzeitig und verfolgt die aktuelle Anzahl von Clients nicht. Diese Ausnahme wird ausgelöst, wenn die Gerätekapaziztät zum Zählen aktiver Clients nicht verfügbar ist, typischerweise in Systemen, die für unbegrenzte Skalierbarkeit konzipiert sind.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.7.9.2.3</section>
+    <requirement>
+      <text xml:lang="en">MAY be raised when the device supports a practically unlimited number of clients simultaneously and at the same time does not track the current number of clients. If the device does not support client counting, the function SHALL raise the exception ErrorCurrentNumberOfClientsNotTracked and exit the function.</text>
+      <text xml:lang="de">Kann ausgelöst werden, wenn das Gerät eine praktisch unbegrenzte Anzahl von Clients gleichzeitig unterstützt und gleichzeitig die aktuelle Anzahl von Clients nicht verfolgt. Falls das Gerät keine Client-Zählung unterstützt, sollte die Funktion die Ausnahme ErrorCurrentNumberOfClientsNotTracked auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client counting query when device does not support client tracking</text>
+      <text xml:lang="de">Client-Zählungsabfrage, wenn das Gerät keine Client-Verfolgung unterstützt</text>
+    </applicability>
+    <reference>getCurrentNumberOfClients – Exceptions (3.7.9.2.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>getCurrentNumberOfClients</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Confirm device is in valid initialized state</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Gerät in einen gültigen initialisierten Zustand ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry getCurrentNumberOfClients operation</text>
+      <text xml:lang="de">Wiederholen Sie die getCurrentNumberOfClients-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">If unavailable, estimate client count from application-level tracking</text>
+      <text xml:lang="de">Falls nicht verfügbar, schätzen Sie die Client-Anzahl aus der Tracking auf Anwendungsebene</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device status using getDeviceHealth</text>
+      <text xml:lang="de">Prüfen Sie den Gerätestatus mit getDeviceHealth</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+    <exception>ErrorGetMaxNumberOfClientsFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached for getCurrentNumberOfClients with no parameters required</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird für getCurrentNumberOfClients ohne erforderliche Parameter erreicht</text>
+    </step>
+    <step number="2" name="Device Capability Check">
+      <text xml:lang="en">The device checks whether client tracking capability is available and enabled on this device instance</text>
+      <text xml:lang="de">Das Gerät prüft, ob die Client-Tracking-Kapaziztät auf dieser Geräteinstanz verfügbar und aktiviert ist</text>
+    </step>
+    <step number="3" name="Tracking Availability Detection">
+      <text xml:lang="en">The device evaluates its configuration and firmware to determine if client tracking functionality is present and operational</text>
+      <text xml:lang="de">Das Gerät bewertet seine Konfiguration und Firmware, um zu bestimmen, ob Client-Tracking-Funktionalität vorhanden und funktionsfähig ist</text>
+    </step>
+    <step number="4a" name="Tracking Available">
+      <text xml:lang="en">If client tracking is available, execution branches to retrieve and return the current client count (not taken in this exception case)</text>
+      <text xml:lang="de">Falls Client-Tracking verfügbar ist, wird die Ausführung verzweigt, um die aktuelle Client-Anzahl abzurufen und zurückzugeben (nicht in diesem Ausnahmefäll)</text>
+    </step>
+    <step number="4b" name="Tracking Not Available">
+      <text xml:lang="en">If client tracking is not available, execution branches to exception handling at step 5</text>
+      <text xml:lang="de">Falls Client-Tracking nicht verfügbar ist, wird die Ausführung zur Ausnahmebehandlung bei Schritt 5 verzweigt</text>
+    </step>
+    <step number="5" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including device capability information, firmware version, and device configuration state indicating absence of client tracking</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich Gerätekapaziztätsinformationen, Firmware-Version und Gerätekonfigurationsstatus, der das Fehlen von Client-Tracking anzeigt</text>
+    </step>
+    <step number="6" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorCurrentNumberOfClientsNotTracked exception instance is created with appropriate error message indicating that client tracking is not supported on this device</text>
+      <text xml:lang="de">ErrorCurrentNumberOfClientsNotTracked-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die darauf hinweist, dass Client-Tracking auf diesem Gerät nicht unterstützt wird</text>
+    </step>
+    <step number="7" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, allowing capability-aware error handling</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, was kapaziztätsbewusste Fehlerbehandlung ermöglicht</text>
+    </step>
+    <step number="8" name="Application Decision Point">
+      <text xml:lang="en">The calling application receives the exception and must decide whether to implement fallback mechanisms, use alternative functions, or abort operations that require client counting</text>
+      <text xml:lang="de">Die aufrufende Anwendung erhält die Ausnahme und muss entscheiden, ob Fallback-Mechanismen implementiert, alternative Funktionen verwendet oder Vorgänge abgebrochen werden, die Client-Zählung erfordern</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorCurrentNumberOfClientsNotTracked exception has been created and raised, indicating that client counting capability is not available on this device</text>
+      <text xml:lang="de">Eine ErrorCurrentNumberOfClientsNotTracked-Ausnahme wurde erstellt und ausgelöst, die darauf hinweist, dass die Client-Zählungskapaziztät auf diesem Gerät nicht verfügbar ist</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">The device remains in its previous operational state. No device state has changed as a result of this operation or exception. The device continues to operate normally without client tracking.</text>
+      <text xml:lang="de">Das Gerät bleibt in seinem vorherigen Betriebszustand. Kein Gerätezustand wurde durch diesen Vorgang oder diese Ausnahme geändert. Das Gerät funktioniert weiterhin normal ohne Client-Tracking.</text>
+    </state>
+    <state name="Client Registry State">
+      <text xml:lang="en">The client registry (if implemented) remains unchanged. No clients have been registered or deregistered as a result of this operation.</text>
+      <text xml:lang="de">Die Client-Registry (falls implementiert) bleibt unverändert. Keine Clients wurden als Ergebnis dieses Vorgangs registriert oder abgemeldet.</text>
+    </state>
+    <state name="Device Capability State">
+      <text xml:lang="en">The absence of client tracking capability is a permanent characteristic of this device variant or configuration, not a temporary condition. The device capability cannot be changed through subsequent API calls without reinitialization or firmware update.</text>
+      <text xml:lang="de">Das Fehlen der Client-Tracking-Kapaziztät ist eine permanente Eigenschaft dieser Gerätevariante oder Konfiguration, keine temporäre Bedingung. Die Gerätekapaziztät kann durch nachfolgende API-Aufrufe ohne Neuinitialisierung oder Firmware-Update nicht geändert werden.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits via exception propagation without providing client count information or returning normally</text>
+      <text xml:lang="de">Die Funktion wird über Ausnahmepropagation beendet, ohne Client-Zählinformationen bereitzustellen oder normal zurückzukehren</text>
+    </state>
+    <state name="Application Awareness">
+      <text xml:lang="en">The calling application learns through this exception that it cannot depend on server-side client counting for this device and must implement alternative strategies</text>
+      <text xml:lang="de">Die aufrufende Anwendung erfährt durch diese Ausnahme, dass sie sich nicht auf serverseitige Client-Zählung für dieses Gerät verlassen kann und alternative Strategien implementieren muss</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Current number of registered clients cannot be retrieved - tracking information unavailable</text>
+      <text xml:lang="de">Anzeichen: Aktuelle Anzahl registrierter Clients kann nicht abgerufen werden - Tracking-Informationen nicht verfügbar</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Device State, Information Retrieval, Resource Tracking</text>
+      <text xml:lang="de">Themen: Client-Verwaltung, Gerätezustand, Informationsabruf, Ressourcen-Tracking</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getCurrentNumberOfClients when client count tracking unavailable</text>
+      <text xml:lang="de">Wird von getCurrentNumberOfClients ausgelöst, wenn Client-Zählung-Tracking nicht verfügbar ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains current client count as part of runtime state</text>
+      <text xml:lang="de">Gerät verwaltet aktuelle Client-Anzahl als Teil des Laufzeitzustands</text>
+    </note>
+    <note>
+      <text xml:lang="en">Tracking mechanism may be unavailable in certain device states</text>
+      <text xml:lang="de">Tracking-Mechanismus kann in bestimmten Gerätezuständen nicht verfügbar sein</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application cannot retrieve real-time client count at this time</text>
+      <text xml:lang="de">Anwendung kann derzeit Echtzeit-Client-Zählung nicht abrufen</text>
+    </note>
+  </implementationContext>
+</exception>
+

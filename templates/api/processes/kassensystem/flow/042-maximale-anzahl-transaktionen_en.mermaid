@@ -1,0 +1,9 @@
+flowchart TD
+    Start([User: getMaxNumberOfTransactions])
+    Start --> Get[Determine maximum number<br/>of simultaneous open<br/>transactions]
+    Get --> CheckUnlimited{Unlimited<br/>number?}
+    CheckUnlimited -->|Yes| ReturnMax[Return: Highest value unsigned long]
+    CheckUnlimited -->|No| ReturnActual[Return: Actual maximum]
+    ReturnMax --> End([End])
+    ReturnActual --> End
+    style Get fill:#87CEEB

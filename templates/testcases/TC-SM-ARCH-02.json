@@ -1,0 +1,346 @@
+{
+  "testcase_id": "TC-SM-ARCH-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Sicherheitsmodul-Architektur: CSP-Entity, CSP-Light und CSP-Cluster",
+  "description": "Prüft CSP-spezifische Architekturvarianten: eindeutige TSE-Zuordnung im CSP_ENTITY-Modus, CSP-Light-Cluster-Verwendung, Master-Synchronisation im Cluster.",
+  "purpose": "Prüfung, ob ein Aufzeichnungssystem immer nur genau einer TSE zugeordnet wird, wenn die CSP-Einheit der TSE mit anderen logischen Einheiten zu einem sicherheitseinrichtungsübergreifenden CSP zusammengefasst wird.",
+  "module": "Security Module",
+  "submodule": "SM_ARCH",
+  "function": null,
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "CSP_ENTITY",
+    "CSP_LIGHT",
+    "CSP_CLUSTER"
+  ],
+  "source_tests": [
+    "SM_ARCH_08",
+    "SM_ARCH_10",
+    "SM_ARCH_11"
+  ],
+  "variables": {
+    "$sig1": "Signaturzähler (Rückgabe, sig1)",
+    "$sig2": "Signaturzähler (Rückgabe, sig2)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technischen Sicherheitseinrichtungen wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von den Technischen Sicherheitseinrichtungen authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es stehen zwei Aufzeichnungssystene zur Verfügung, die zwei ",
+      "result": null,
+      "instruction": "Es stehen zwei Aufzeichnungssystene zur Verfügung, die zwei verschiedene TSEn ansprechen. Die TSE verwenden logische CSP-Einheiten eines sicherheitseinrichtungsübergreifenden CSP."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es liegt eine entsprechende Dokumentation in einer eindeutig",
+      "result": null,
+      "instruction": "Es liegt eine entsprechende Dokumentation in einer eindeutig referenzierbaren Version vor."
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am ersten Aufzeichnungssystem.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $sig1 = signatureCounter.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1.1 übergeben. Aufruf der Funktion am ersten Aufzeichnungssystem.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am zweiten Aufzeichnungssystem.\n\nRückgabewerte festhalten: $tn2 = transactionNumber, $sig2 = signatureCounter.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2.1 übergeben. Aufruf der Funktion am zweiten Aufzeichnungssystem.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob die zurückgegebenen Signaturzähler der beiden TSEn fortlaufend und voneinander unabhängig sind.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "getCurrentTransactionCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob die zurückgegebenen Transaktionszähler der beiden TSEn fortlaufend und voneinander unabhängig sind.",
+      "function": "getCurrentTransactionCounter",
+      "user": "logger",
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Herstellerdokumentation, ob zu jeder Zeit genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv verwendet und ob die anderen CSP-Einheiten den Signaturzähler des jeweiligen Masters für den Signaturschlüssel synchronisieren.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Zu jeder Zeit verwendet genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die CSP-Einheiten, die nicht als Master den Signaturschlüssel aktiv verwenden, synchronisieren den Signaturzähler des Masters für den Signaturschlüssel.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_08"
+    },
+    {
+      "step": 13,
+      "type": "VERIFY",
+      "title": "CSP_ENTITY: Eindeutige TSE-Zuordnung prüfen",
+      "result": null,
+      "instruction": "CSP_ENTITY: Eindeutige TSE-Zuordnung prüfen\n\nAufruf der Funktionalität für das Starten einer Transaktion. Aufruf der Funktion am ersten Aufzeichnungssystem.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Jedes Aufzeichnungssystem ist genau einer TSE zugeordnet",
+          "expected": "Eindeutige Zuordnung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Aufzeichnungssystem ist mehreren TSEn zugeordnet",
+          "expected": "Keine Mehrfachzuordnung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_08",
+      "notes": "Nur wenn Profil CSP_ENTITY aktiv"
+    },
+    {
+      "step": 14,
+      "type": "FP",
+      "title": "CSP_LIGHT (FP): CSP-Light-Cluster-Verwendung dokumentiert",
+      "result": null,
+      "instruction": "CSP_LIGHT (FP): CSP-Light-Cluster-Verwendung dokumentiert",
+      "checks": [
+        {
+          "description": "Herstellerdokumentation belegt Verwendung eines CSP-Light-Clusters im gesicherten RZ",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Cluster-Konfiguration beschrieben",
+          "expected": "Beschrieben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil CSP_LIGHT aktiv"
+    },
+    {
+      "step": 15,
+      "type": "FP",
+      "title": "CSP_CLUSTER (FP): Master-Slave-Struktur und Signaturzähler-Synchronisation",
+      "result": null,
+      "instruction": "CSP_CLUSTER (FP): Master-Slave-Struktur und Signaturzähler-Synchronisation",
+      "checks": [
+        {
+          "description": "Zu jedem Zeitpunkt genau eine CSP-Einheit als Master aktiv",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle anderen CSP-Einheiten synchronisieren Signaturzähler des Masters",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturzähler-Konsistenz bei Master-Wechsel gewährleistet",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil CSP_CLUSTER aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §4"
+  ]
+}

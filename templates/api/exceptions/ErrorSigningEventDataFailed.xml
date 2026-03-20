@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSigningEventDataFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSigningEventDataFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the Secure Element fails to create the log message parts and digital signature for event data during transaction processing. The Secure Element signs transaction event data to create a tamper-proof audit trail where signatures prove the integrity and authenticity of recorded transactions. The signing process includes formatting event data, computing digital signatures, and creating log message parts. If the signing operation fails, ErrorSigningEventDataFailed indicates the event data could not be signed and no tamper-proof record of the transaction was created. Common causes include: cryptographic operation failures, device processing errors, invalid event data, insufficient device resources, or communication failures. ErrorSigningEventDataFailed indicates a critical audit trail failure and the transaction may not have been properly recorded.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Secure Element die Log-Message-Teile und die digitale Signatur für Ereignisdaten während der Transaktionsverarbeitung nicht erstellen kann. Das Secure Element signiert Transaktionsereignisdaten, um einen manipulationssicheren Audit-Trail zu erstellen, in dem Signaturen die Integrität und Authentizität aufgezeichneter Transaktionen nachweisen. Der Signierungsprozess umfasst die Formatierung von Ereignisdaten, die Berechnung digitaler Signaturen und die Erstellung von Log-Message-Teilen. Falls die Signierungsoperation fehlschlägt, zeigt ErrorSigningEventDataFailed an, dass die Ereignisdaten nicht signiert werden konnten und kein manipulationssicherer Datensatz der Transaktion erstellt wurde. Häufige Ursachen sind: Fehler bei kryptografischen Operationen, Gerätefehler, ungültige Ereignisdaten, unzureichende Geräteressourcen oder Kommunikationsfehler. ErrorSigningEventDataFailed zeigt einen kritischen Fehler im Audit-Trail an und die Transaktion wurde möglicherweise nicht ordnungsgemäß aufgezeichnet.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Event Signing - Signature Creation Failure</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSigningEventDataFailed that is thrown if Secure Element signing of event data fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSigningEventDataFailed, die ausgelöst wird, wenn das Secure Element die Signierung von Ereignisdaten fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the Secure Element fails to create log message parts and digital signatures for transaction event data. Digital signatures on transaction data create a cryptographic proof of transaction integrity and authenticity, preventing tampering and providing audit trail protection. ErrorSigningEventDataFailed indicates that the signing operation could not be completed. Common causes include: cryptographic operation failures (signature generation, key operations), device processing errors, invalid or corrupted event data, insufficient device resources, communication failures, or cryptographic key issues. ErrorSigningEventDataFailed is a Critical severity exception because it indicates the audit trail cannot be reliably maintained for the transaction. Without successful signing, the transaction is not protected by cryptographic proof of integrity. Recovery requires investigating the cryptographic failure and potentially retrying the operation or checking device state.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Secure Element die Log-Message-Teile und digitale Signaturen für Transaktionsereignisdaten nicht erstellen kann. Digitale Signaturen für Transaktionsdaten stellen einen kryptografischen Beweis für die Integrität und Authentizität der Transaktion bereit und verhindern Manipulationen und bieten Audit-Trail-Schutz. ErrorSigningEventDataFailed zeigt an, dass die Signierungsoperation nicht abgeschlossen werden konnte. Häufige Ursachen sind: Fehler bei kryptografischen Operationen (Signaturerzeugung, Schlüsseloperationen), Gerätefehler, ungültige oder beschädigte Ereignisdaten, unzureichende Geräteressourcen, Kommunikationsfehler oder Probleme mit kryptografischen Schlüsseln. ErrorSigningEventDataFailed ist eine Ausnahme mit kritischer Schweregrad, da sie anzeigt, dass der Audit-Trail für die Transaktion nicht zuverlässig gepflegt werden kann. Ohne erfolgreiche Signierung ist die Transaktion nicht durch einen kryptografischen Integritätsbeweis geschützt. Die Wiederherstellung erfordert die Untersuchung des kryptografischen Fehlers und möglicherweise den erneuten Versuch der Operation oder die Überprüfung des Gerätezustands.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Transaction Operations - Digital Signatures for Event Data</section>
+    <requirement>
+      <text xml:lang="en">During transaction processing (startTransaction, updateTransaction, finishTransaction), the Secure Element SHALL create digital signatures over transaction event data to establish cryptographic proof of transaction integrity and authenticity. The signing process includes formatting event data, computing digital signatures using cryptographic keys, and generating log message parts containing the signature and metadata. If the signing operation fails at any step (data formatting, signature computation, or log message generation), the function SHALL raise ErrorSigningEventDataFailed. The transaction may not have been properly recorded if signing fails. Event data signing is essential for audit trail integrity and must not be bypassed.</text>
+      <text xml:lang="de">Während der Transaktionsverarbeitung (startTransaction, updateTransaction, finishTransaction) SOLL das Secure Element digitale Signaturen über Transaktionsereignisdaten erstellen, um einen kryptografischen Beweis für die Integrität und Authentizität der Transaktion zu erbringen. Der Signierungsprozess umfasst die Formatierung von Ereignisdaten, die Berechnung digitaler Signaturen mit kryptografischen Schlüsseln und die Erzeugung von Log-Message-Teilen, die die Signatur und Metadaten enthalten. Falls die Signierungsoperation in irgendeinem Schritt fehlschlägt (Datenformatierung, Signaturberechnung oder Log-Message-Erzeugung), SOLL die Funktion ErrorSigningEventDataFailed auslösen. Die Transaktion wurde möglicherweise nicht ordnungsgemäß aufgezeichnet, wenn die Signierung fehlschlägt. Die Signierung von Ereignisdaten ist wesentlich für die Integrität des Audit-Trails und darf nicht umgangen werden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations requiring event data signing: startTransaction, updateTransaction, finishTransaction</text>
+      <text xml:lang="de">Transaktionsoperationen, die Ereignisdatensignierung erfordern: startTransaction, updateTransaction, finishTransaction</text>
+    </applicability>
+    <reference>Transaction Operations (3.3.2), Digital Signature Generation</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls transaction operation that requires event signing (e.g., finishTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Transaktionsoperation auf, die Ereignissignierung erfordert (z.B. finishTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and transaction context</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und Transaktionskontext</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction event data</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsereignisdaten</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element validates and formats event data for signing</text>
+      <text xml:lang="de">Secure Element validiert und formatiert Ereignisdaten zum Signieren</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If event data invalid → ErrorSigningEventDataFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Ereignisdaten ungültig → ErrorSigningEventDataFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If event data valid → proceed to step 6</text>
+      <text xml:lang="de">Wenn Ereignisdaten gültig → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element retrieves cryptographic signing key</text>
+      <text xml:lang="de">Secure Element ruft kryptografischen Signaturschlüssel ab</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If key retrieval fails → ErrorSigningEventDataFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Schlüsselabruf fehlschlägt → ErrorSigningEventDataFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If key retrieved successfully → proceed to step 7</text>
+      <text xml:lang="de">Wenn Schlüssel erfolgreich abgerufen → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element computes digital signature over event data</text>
+      <text xml:lang="de">Secure Element berechnet digitale Signatur über Ereignisdaten</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If signature computation fails → ErrorSigningEventDataFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Signaturberechnung fehlschlägt → ErrorSigningEventDataFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If signature computation succeeds → proceed to step 8</text>
+      <text xml:lang="de">Wenn Signaturberechnung erfolgreich ist → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element constructs log message parts including signature and metadata</text>
+      <text xml:lang="de">Secure Element erstellt Log-Message-Teile einschließlich Signatur und Metadaten</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If log message construction fails → ErrorSigningEventDataFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Log-Message-Konstruktion fehlschlägt → ErrorSigningEventDataFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If log message construction succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Log-Message-Konstruktion erfolgreich ist → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element stores log message parts in audit trail</text>
+      <text xml:lang="de">Secure Element speichert Log-Message-Teile im Audit-Trail</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns signed event data and log message parts to function</text>
+      <text xml:lang="de">Secure Element gibt signierte Ereignisdaten und Log-Message-Teile an die Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function processes result and returns to caller</text>
+      <text xml:lang="de">Funktion verarbeitet Ergebnis und kehrt zum Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Überprüfen Sie, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check if signature counter is exhausted</text>
+      <text xml:lang="de">Überprüfen Sie, ob der Signaturzähler erschöpft ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry logging operation after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie die Protokollierungsoperation nach Bestätigung der Vorbedingungen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Event Data Not Signed">
+      <text xml:lang="en">The transaction event data is not signed by the device.</text>
+      <text xml:lang="de">Die Transaktionsereignisdaten sind nicht vom Gerät signiert.</text>
+    </state>
+    <state name="Signature Not Created">
+      <text xml:lang="en">The digital signature over event data is not created.</text>
+      <text xml:lang="de">Die digitale Signatur über Ereignisdaten wird nicht erstellt.</text>
+    </state>
+    <state name="Log Message Not Generated">
+      <text xml:lang="en">The log message parts containing signature and metadata are not generated.</text>
+      <text xml:lang="de">Die Log-Message-Teile mit Signatur und Metadaten werden nicht generiert.</text>
+    </state>
+    <state name="Transaction Not Properly Recorded">
+      <text xml:lang="en">The transaction may not have been properly recorded in the tamper-proof audit trail.</text>
+      <text xml:lang="de">Die Transaktion wurde möglicherweise nicht ordnungsgemäß im manipulationssicheren Audit-Trail aufgezeichnet.</text>
+    </state>
+    <state name="Audit Trail Integrity Compromised">
+      <text xml:lang="en">The transaction lacks cryptographic proof of integrity and authenticity.</text>
+      <text xml:lang="de">Der Transaktion fehlt ein kryptografischer Beweis für Integrität und Authentizität.</text>
+    </state>
+    <state name="Transaction State Uncertain">
+      <text xml:lang="en">The transaction state is uncertain - it may or may not have been processed.</text>
+      <text xml:lang="de">Der Transaktionszustand ist unsicher - er wurde möglicherweise verarbeitet oder auch nicht.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Signing of event data failed - cryptographic operation unsuccessful</text>
+      <text xml:lang="de">Anzeichen: Signierung von Ereignisdaten fehlgeschlagen - kryptografische Operation erfolglos</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Cryptography, Signature Operations, Event Signing</text>
+      <text xml:lang="de">Themen: Protokollierungsoperationen, Kryptografie, Signaturoperationen, Ereignissignierung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when cryptographic signing operation fails</text>
+      <text xml:lang="de">Wird von Protokollierungsfunktionen ausgelöst, wenn die kryptografische Signierungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Logging subsystem signs event data via Secure Element</text>
+      <text xml:lang="de">Das Protokollierungssubsystem signiert Ereignisdaten über Secure Element</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device creates cryptographic signature for log messages</text>
+      <text xml:lang="de">Das Gerät erstellt eine kryptografische Signatur für Log-Messages</text>
+    </note>
+    <note>
+      <text xml:lang="en">Signing failure prevents log message creation</text>
+      <text xml:lang="de">Signaturfehlschlag verhindert die Erstellung von Log-Messages</text>
+    </note>
+  </implementationContext>
+</exception>
+

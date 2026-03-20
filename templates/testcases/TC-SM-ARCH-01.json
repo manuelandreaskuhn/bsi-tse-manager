@@ -1,0 +1,490 @@
+{
+  "testcase_id": "TC-SM-ARCH-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Sicherheitsmodul-Architektur: Eindeutiger Schlüssel, SMAERS-CSP-Zuordnung und Zeitnähe",
+  "description": "Kombinierte Prüfung: genau ein Signaturschlüssel pro TSE, korrekte SMAERS/CSP-Struktur, eineindeutige Zuordnungen, zeitnahe Aufzeichnung unter Last.",
+  "purpose": "Prüfung, ob die Technische Sicherheitseinrichtung genau einen eindeutigen Signaturschlüssel besitzt, welcher im Sicherheitsmodul gespeichert ist.",
+  "module": "Security Module",
+  "submodule": "SM_ARCH",
+  "function": "exportSerialNumbers / exportLogMessages",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_ARCH_01",
+    "SM_ARCH_02",
+    "SM_ARCH_03",
+    "SM_ARCH_04",
+    "SM_ARCH_05",
+    "SM_ARCH_06",
+    "SM_ARCH_07",
+    "SM_ARCH_09"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technischen Sicherheitseinrichtungen wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von den Technischen Sicherheitseinrichtungen authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist die im ICS genannte, maximale Anzahl an Technische Sicherheitseinrichtungen mit dem (sicherheitseinrichtungsübergreifenden) CSP verbunden (ggf. eine). An jeder TSE ist die maximale Anzahl von Aufzeichnungssysteme registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "getCurrentTransactionCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Herstellerdokumentation, ob die Sicherheitsmodulanwendung des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer SMAERS-Einheit besteht, welche über genau einen eindeutigen Transaktionszähler verfügt.",
+      "function": "getCurrentTransactionCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass die Sicherheitsmodulanwendung des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer SMAERS-Einheit besteht, welche über genau einen eindeutigen Transaktionszähler verfügt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Herstellerdokumentation, ob der Krypto-Kern des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer CSP-Einheit besteht, welche über genau einen Signatur-Schlüssel (inkl. zugehörigem Signaturzähler) verfügt.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass der Krypto-Kern des Sicherheitsmoduls einer Technischen Sicherheitseinrichtung aus genau einer CSP-Einheit besteht, welche über genau einen Signatur-Schlüssel (inkl. zugehörigem Signaturzähler) verfügt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "getCurrentTransactionCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Herstellerdokumentation, ob die SMAERS-Einheit einer Technischen Sicherheitseinrichtung immer eineindeutig der CSP-Einheit der jeweiligen Technischen Sicherheitseinrichtung zugeordnet ist und umgekehrt. Insbesondere ist jedem Signaturschlüssel einer CSP-Einheit eines CSPs genau ein Transaktionszähler einer SMAERS-Einheit eines SMAERS zugeordnet und umgekehrt.",
+      "function": "getCurrentTransactionCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass die SMAERS-Einheit einer Technischen Sicherheitseinrichtung immer eineindeutig der CSP-Einheit der jeweiligen Technischen Sicherheitseinrichtung zugeordnet ist und umgekehrt. Insbesondere ist jedem Signaturschlüssel einer CSP-Einheit eines CSPs genau ein Transaktionszähler einer SMAERS-Einheit eines SMAERS zugeordnet und umgekehrt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "getCurrentTransactionCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Herstellerdokumentation, ob jedes Aufzeichnungssystem genau einem Signaturschlüssel genau einer CSP-Einheit und genau einem Transaktionszähler genau einer SMAERS-Einheit zugeordnet wird.",
+      "function": "getCurrentTransactionCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Herstellerdokumentation beschreibt plausibel die Architektur und gibt Auskunft darüber, dass jedes Aufzeichnungssystem genau einem Signaturschlüssel genau einer CSP-Einheit und genau einem Transaktionszähler genau einer SMAERS-Einheit zugeordnet wird.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf wiederholt bis die maximale Anzahl an parallel geöffneten Transaktionen erreicht ist, die das Sicherheitsmodul laut ICS verwalten kann. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zwischen dem ersten Aufruf und der Beendigung des letzten Aufrufs sind weniger als MAX_UPDATE_DELAY Sekunden vergangen.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_ARCH_01"
+    },
+    {
+      "step": 15,
+      "type": "VERIFY",
+      "title": "Seriennummer-Export: Genau einen Schlüssel prüfen",
+      "result": null,
+      "instruction": "Seriennummer-Export: Genau einen Schlüssel prüfen",
+      "function": "exportSerialNumbers",
+      "expected_return": {
+        "serialNumbers": {
+          "type": "ASN.1-Struktur",
+          "constraint": "Genau eine Seriennummer (32 Byte SHA-256-Hash)"
+        }
+      },
+      "checks": [
+        {
+          "description": "Genau eine Seriennummer zurückgegeben",
+          "expected": "count = 1",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Seriennummer ist 32 Byte SHA-256-Hash des öffentlichen Schlüssels",
+          "expected": "ESN_CERT_HASH_MATCH bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "ESN_ASN1",
+          "title": "ASN.1-Struktur der Seriennummer korrekt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_CERT",
+          "title": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_LOG",
+          "title": "Seriennummer entspricht serialNumber in Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CERT_HASH_MATCH",
+          "title": "serialNumber entspricht Hash über öffentlichen Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.16",
+        "BSI TR-03151-1 §6.3"
+      ]
+    },
+    {
+      "step": 16,
+      "type": "FP",
+      "title": "Herstellerdokumentation: Architekturnachweise (FP)",
+      "result": null,
+      "instruction": "Herstellerdokumentation: Architekturnachweise (FP)",
+      "checks": [
+        {
+          "description": "SM_ARCH_02: Genau ein Sicherheitsmodul pro TSE dokumentiert",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_ARCH_03: Sicherheitsmodul besteht aus genau einer SMAERS-Einheit und einem Krypto-Kern",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_ARCH_04: SMAERS-Einheit hat genau einen Transaktionszähler",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_ARCH_05: CSP-Einheit hat genau einen Signaturschlüssel mit zugehörigem Signaturzähler",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_ARCH_06: SMAERS-Einheit ist eineindeutig der CSP-Einheit zugeordnet",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_ARCH_07: Jedes Aufzeichnungssystem wird genau einem Signaturschlüssel und einem Transaktionszähler zugeordnet",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 17,
+      "type": "ACTION",
+      "title": "Zeitnahe Aufzeichnung unter maximaler Last (SM_ARCH_09)",
+      "result": null,
+      "instruction": "Zeitnahe Aufzeichnung unter maximaler Last (SM_ARCH_09)\n\nAufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf wiederholt bis die maximale Anzahl an parallel geöffneten Transaktionen erreicht ist, die das Sicherheitsmodul laut ICS verwalten kann. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientCount": "<ICS-Maximum>",
+        "transactionCount": "<ICS-Maximum>"
+      },
+      "checks": [
+        {
+          "description": "Alle Aufzeichnungsoperationen werden zeitnah abgeschlossen",
+          "expected": "Keine unangemessenen Verzögerungen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Timeouts oder Fehlermeldungen bei maximaler Last",
+          "expected": "errorCode = None für alle Aufrufe",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_ARCH_09"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §4",
+    "BSI TR-03151-1 §4"
+  ]
+}

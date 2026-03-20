@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="TransactionState" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+    <name>TransactionState</name>
+    <category>TransactionManagement</category>
+    <source>BSI TR-03151</source>
+    <description>Represents the current state of transaction.</description>
+    <values>
+        <value>
+            <name>started</name>
+            <description>This value shall be returned if the transaction was started and no updateTransaction or finishTransaction was called on the transaction and the transaction is not considered abandoned by the device.</description>
+        </value>
+        <value>
+            <name>updated</name>
+            <description>This value shall be returned if the transaction was updated and no unprotected update data is handeled by the device (= all updates have been protected by log messages) and the transaction is not considered abandoned by the device.</description>
+        </value>
+        <value>
+            <name>updatedWithUnprotectedData</name>
+            <description>This value shall be returned if the transaction was started and updated and there is still unprotected data handeled by the device that is not protected by log messages, yet.</description>
+        </value>
+        <value>
+            <name>finished</name>
+            <description>This value shall be returned if the transaction was finished.</description>
+        </value>
+        <value>
+            <name>abandoned</name>
+            <description>This value shall be returned if the transaction is considered abandoned by the device.</description>
+        </value>
+    </values>
+</enum>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>018</processId>
+    <processName>
+        <text xml:lang="en">Read Description</text>
+        <text xml:lang="de">Beschreibung auslesen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Reading the TSE device description. This is a mandatory function that returns a string with the TSE description set during initialization, or an empty string if no description was set.</text>
+        <text xml:lang="de">Auslesen der TSE-Gerätebeschreibung. Dies ist eine Pflichtfunktion, die eine Zeichenkette mit der während der Initialisierung gesetzten TSE-Beschreibung zurückgibt, oder eine leere Zeichenkette, wenn keine Beschreibung gesetzt wurde.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Device Description</text>
+            <text xml:lang="de">Gerätebeschreibung</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getDescription</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>description</name>
+            <type>string&lt;64&gt;</type>
+            <description>
+                <text xml:lang="en">Device description (max. 64 characters)</text>
+                <text xml:lang="de">Gerätebeschreibung (max. 64 Zeichen)</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>DescriptionType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.7</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin is allowed to read the description. If no description was set during initialization, an empty string is returned.</text>
+        <text xml:lang="de">Nur Admin ist berechtigt, die Beschreibung auszulesen. Wenn während der Initialisierung keine Beschreibung gesetzt wurde, wird eine leere Zeichenkette zurückgegeben.</text>
+    </notes>
+</process>

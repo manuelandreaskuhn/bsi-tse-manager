@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant ERS as Recording System (ERS)
+    participant TSE as TSE
+    participant SM as Security Module
+    participant Storage as Storage Medium
+
+    ERS->>TSE: startTransaction(clientId, processData, processType)
+    activate TSE
+    
+    TSE->>TSE: Check User Authentication
+    TSE->>TSE: Check Client Registration
+    
+    TSE->>SM: Increment Transaction Counter
+    activate SM
+    SM->>SM: transactionNumber++
+    SM-->>TSE: transactionNumber
+    deactivate SM
+    
+    TSE->>SM: Create Checksum (Signature)
+    activate SM
+    SM->>SM: Calculate Checksum over:<br/>- processData<br/>- transactionNumber<br/>- serialNumber<br/>- signatureCounter<br/>- signatureCreationTime
+    SM->>SM: signatureCounter++
+    SM-->>TSE: signature, signatureCounter
+    deactivate SM
+    
+    TSE->>Storage: Save Log Message<br/>(Transaction-Log: start)
+    activate Storage
+    Storage-->>TSE: OK
+    deactivate Storage
+    
+    TSE-->>ERS: Return:<br/>- transactionNumber<br/>- logTime<br/>- serialNumber<br/>- signatureCounter<br/>- signature
+    deactivate TSE

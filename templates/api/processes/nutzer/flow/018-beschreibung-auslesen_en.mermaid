@@ -1,0 +1,26 @@
+flowchart TD
+    Start([Admin: getDescription<br/>call])
+    Start --> CheckAuth{Admin<br/>authenticated?}
+    
+    CheckAuth -->|No| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Yes| CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| GetDesc[Get Description<br/>from Storage]
+    
+    GetDesc --> CheckDesc{Description<br/>present?}
+    
+    CheckDesc -->|No/empty| ReturnEmpty[Return:<br/>Empty String ""]
+    CheckDesc -->|Yes| ReturnDesc[Return:<br/>description String]
+    
+    ReturnEmpty --> End([End])
+    ReturnDesc --> End
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    
+    style GetDesc fill:#87CEEB
+    style ReturnDesc fill:#90EE90
+    
+    Note1[The description is<br/>the same as in field $6<br/>of the info.csv file]
+    ReturnDesc -.-> Note1

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="ConfiguredComponent" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>ConfiguredComponent</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Supporting type ConfiguredComponent used in system log event data.</description>
+  <asn1Definition>ConfiguredComponent ::= SEQUENCE {
+  componentName  PrintableString,
+  configurationWasSuccessful  BOOLEAN,
+  loggingParameterSet  LoggingParameterSet
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>componentName</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field componentName of type PrintableString</description>
+    </field>
+    <field>
+      <name>configurationWasSuccessful</name>
+      <type>BOOLEAN</type>
+      <optional>false</optional>
+      <description>Field configurationWasSuccessful of type BOOLEAN</description>
+    </field>
+    <field>
+      <name>loggingParameterSet</name>
+      <type>LoggingParameterSet</type>
+      <optional>false</optional>
+      <description>Field loggingParameterSet of type LoggingParameterSet</description>
+    </field>
+  </fields>
+</type>

@@ -1,0 +1,445 @@
+{
+  "testcase_id": "TC-CROSS-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Konsistenzprüfung: Signaturzähler über alle Log-Nachrichten fortlaufend",
+  "description": "Prüft, dass der Signaturzähler über alle exportierten Log-Nachrichten (aller Typen) fortlaufend und lückenlos ist.",
+  "purpose": "Prüfung, ob das Sicherheitsmodul einen fortlaufenden Signaturzähler bereitstellt, für\n\n• sequentielle Transaktionen\n• mit mehreren Aktualisierungen\n• mit Absicherungsschritten",
+  "module": "Cross-Validation",
+  "submodule": "CROSS",
+  "function": "exportLogMessages",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_SIG_01",
+    "SM_SIG_02",
+    "EXP_LOG_09"
+  ],
+  "variables": {
+    "$sig1": "Signaturzähler (Rückgabe, sig1)",
+    "$sig10": "Signaturzähler (Rückgabe, sig10)",
+    "$sig14": "Signaturzähler (Rückgabe, sig14)",
+    "$sig15": "Signaturzähler (Rückgabe, sig15)",
+    "$sig2": "Signaturzähler (Rückgabe, sig2)",
+    "$sig4": "Signaturzähler (Rückgabe, sig4)",
+    "$sig5": "Signaturzähler (Rückgabe, sig5)",
+    "$sig9": "Signaturzähler (Rückgabe, sig9)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)",
+    "$tn3": "Transaktionsnummer (Rückgabe startTransaction, tn3)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $sig1 = signatureCounter.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.\n\nRückgabewerte festhalten: $sig2 = signatureCounter.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert von $sig1 ist kleiner als $sig2.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.\n\nRückgabewerte festhalten: $sig5 = signatureCounter.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert von $sig4 ist kleiner als $sig5.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.\n\nRückgabewerte festhalten: $sig10 = signatureCounter.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert von $sig9 ist kleiner als $sig10.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.\n\nRückgabewerte festhalten: $sig15 = signatureCounter.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert von $sig14 ist kleiner als $sig15.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_SIG_01"
+    },
+    {
+      "step": 13,
+      "type": "VERIFY",
+      "title": "Signaturzähler-Lückenlosigkeit aus exportierten Logs prüfen",
+      "result": null,
+      "instruction": "Signaturzähler-Lückenlosigkeit aus exportierten Logs prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages → alle Log-Dateien nach signatureCounter sortieren",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Signaturzähler 1, 2, 3, ..., N lückenlos über alle Log-Typen",
+          "expected": "LOG_CTR_COMPLETE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Duplikate im Signaturzähler",
+          "expected": "CROSS_LOG_CTR_UNIQUE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Lücken",
+          "expected": "CROSS_LOG_CTR_GAPS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_UNIQUE",
+          "title": "Keine doppelten signatureCounter-Werte",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_GAPS",
+          "title": "Keine Lücken in der signatureCounter-Sequenz",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIMEFMT",
+          "title": "Einheitliches Zeitformat im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_CTR_COMPLETE",
+          "title": "Lückenlose Vollständigkeit aller Signaturzähler im Export",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "EXP_LOG_09"
+    },
+    {
+      "step": 14,
+      "type": "VERIFY",
+      "title": "Dateiname-Zähler mit Log-Inhalt-Zähler vergleichen",
+      "result": null,
+      "instruction": "Dateiname-Zähler mit Log-Inhalt-Zähler vergleichen",
+      "checks": [
+        {
+          "description": "Sig-{N} im Dateinamen jeder Log-Datei stimmt mit signatureCounter im ASN.1-Inhalt überein",
+          "expected": "LOG_FNAME_CTR",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9.1",
+    "BSI TR-03151-1"
+  ]
+}

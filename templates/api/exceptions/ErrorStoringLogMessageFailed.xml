@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorStoringLogMessageFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorStoringLogMessageFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the storage of a log message in the device storage fails. Transaction operations (startTransaction, updateTransaction, finishTransaction) create digitally signed log messages that record transaction events in the audit trail. If the log message cannot be stored to device storage, ErrorStoringLogMessageFailed indicates the transaction was not properly recorded in the audit trail. Common causes include: device storage write errors, insufficient storage capacity, storage medium issues, or communication failures. ErrorStoringLogMessageFailed is a Critical condition because it means the transaction is not protected by a tamper-proof audit trail record. The transaction may have been partially processed but is not reliably recorded.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Speicherung einer Log-Message im Gerätespeicher fehlschlägt. Transaktionsoperationen (startTransaction, updateTransaction, finishTransaction) erstellen digital signierte Log-Messages, die Transaktionsereignisse im Audit-Trail aufzeichnen. Falls die Log-Message nicht im Gerätespeicher gespeichert werden kann, zeigt ErrorStoringLogMessageFailed an, dass die Transaktion nicht ordnungsgemäß im Audit-Trail aufgezeichnet wurde. Häufige Ursachen sind: Gerätespeicher-Schreibfehler, unzureichende Speicherkapazität, Speichermedium-Probleme oder Kommunikationsfehler. ErrorStoringLogMessageFailed ist ein kritischer Zustand, da dies bedeutet, dass die Transaktion nicht durch einen manipulationssicheren Audit-Trail-Datensatz geschützt ist. Die Transaktion kann teilweise verarbeitet worden sein, ist aber nicht zuverlässig aufgezeichnet.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Log Message Storage - Storage Failure</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorStoringLogMessageFailed that is thrown if log message storage fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorStoringLogMessageFailed, die ausgelöst wird, wenn die Speicherung von Log-Messages fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the Secure Element fails to store a digitally signed log message to device storage during transaction processing. Transaction operations create log messages that establish an audit trail of all transactions with cryptographic proof of integrity and authenticity. ErrorStoringLogMessageFailed indicates the log message could not be successfully written to storage, meaning the transaction is not properly recorded in the audit trail. Common causes include: device storage write errors, insufficient storage capacity, storage medium disconnection or failure, or communication failures. ErrorStoringLogMessageFailed is a Critical severity exception because it indicates the transaction lacks a tamper-proof audit trail record. Without successful log storage, the transaction integrity cannot be verified. Recovery requires addressing the storage issue and potentially retrying the transaction.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Secure Element eine digital signierte Log-Message nicht in den Gerätespeicher während der Transaktionsverarbeitung speichern kann. Transaktionsoperationen erstellen Log-Messages, die einen Audit-Trail aller Transaktionen mit kryptografischem Beweis für Integrität und Authentizität herstellen. ErrorStoringLogMessageFailed zeigt an, dass die Log-Message nicht erfolgreich in den Speicher geschrieben werden konnte, was bedeutet, dass die Transaktion nicht ordnungsgemäß im Audit-Trail aufgezeichnet wird. Häufige Ursachen sind: Gerätespeicher-Schreibfehler, unzureichende Speicherkapazität, Speichermedium-Trennung oder -Fehler oder Kommunikationsfehler. ErrorStoringLogMessageFailed ist eine Ausnahme mit kritischer Schweregrad, da sie anzeigt, dass der Transaktion ein manipulationssicherer Audit-Trail-Datensatz fehlt. Ohne erfolgreiche Log-Speicherung kann die Transaktionsintegrität nicht verifiziert werden. Die Wiederherstellung erfordert die Behebung des Speicherproblems und möglicherweise den erneuten Versuch der Transaktion.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Transaction Operations and 3.3.3 Logging Operations - Transaction Log Storage</section>
+    <requirement>
+      <text xml:lang="en">During transaction processing (startTransaction, updateTransaction, finishTransaction), the Secure Element creates digitally signed log messages and stores them in device audit trail storage. The log message contains transaction context, timestamp, signature, and status information. If the log message storage operation fails to successfully write the message to storage, the function SHALL raise ErrorStoringLogMessageFailed. The transaction may be partially processed but is not properly recorded in the audit trail. Log message storage is essential for audit trail integrity and must not be bypassed. Failed log storage indicates the transaction is not protected by tamper-proof recording.</text>
+      <text xml:lang="de">Während der Transaktionsverarbeitung (startTransaction, updateTransaction, finishTransaction) erstellt das Secure Element digital signierte Log-Messages und speichert diese im Geräteaudit-Trail-Speicher. Die Log-Message enthält Transaktionskontext, Zeitstempel, Signatur und Statusinformationen. Falls die Log-Message-Speicheroperation die Nachricht nicht erfolgreich in den Speicher schreiben kann, SOLL die Funktion ErrorStoringLogMessageFailed auslösen. Die Transaktion kann teilweise verarbeitet werden, wird aber nicht ordnungsgemäß im Audit-Trail aufgezeichnet. Die Speicherung von Log-Messages ist für die Audit-Trail-Integrität unbedingt erforderlich und darf nicht umgangen werden. Fehlgeschlagene Log-Speicherung zeigt an, dass die Transaktion nicht durch manipulationssichere Aufzeichnung geschützt ist.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations creating log messages: startTransaction, updateTransaction, finishTransaction</text>
+      <text xml:lang="de">Transaktionsoperationen, die Log-Messages erstellen: startTransaction, updateTransaction, finishTransaction</text>
+    </applicability>
+    <reference>Transaction Operations (3.3.2), Logging Operations (3.3.3), Audit Trail Management</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls a transaction operation that creates log messages (e.g., finishTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine Transaktionsoperation auf, die Log-Messages erstellt (z.B. finishTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and transaction context</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und Transaktionskontext</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsanforderung</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element processes transaction operation</text>
+      <text xml:lang="de">Secure Element verarbeitet Transaktionsoperation</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element creates digitally signed log message</text>
+      <text xml:lang="de">Secure Element erstellt digital signierte Log-Message</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element checks storage capacity for log message</text>
+      <text xml:lang="de">Secure Element prüft Speicherkapazität für Log-Message</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If storage full → ErrorStorageMemoryFull raised (or ErrorStoringLogMessageFailed)</text>
+      <text xml:lang="de">Wenn Speicher voll → ErrorStorageMemoryFull ausgelöst (oder ErrorStoringLogMessageFailed)</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If storage available → proceed to step 8</text>
+      <text xml:lang="de">Wenn Speicher verfügbar → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element attempts to write log message to storage</text>
+      <text xml:lang="de">Secure Element versucht, Log-Message in den Speicher zu schreiben</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If storage write fails → ErrorStoringLogMessageFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speicherschreiben fehlschlägt → ErrorStoringLogMessageFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich ist → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element verifies log message storage and integrity</text>
+      <text xml:lang="de">Secure Element verifiziert Log-Message-Speicherung und Integrität</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If verification fails → ErrorStoringLogMessageFailed raised</text>
+      <text xml:lang="de">Wenn Verifikation fehlschlägt → ErrorStoringLogMessageFailed ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If verification succeeds → proceed to step 10</text>
+      <text xml:lang="de">Wenn Verifikation erfolgreich ist → fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element confirms transaction completion and log storage</text>
+      <text xml:lang="de">Secure Element bestätigt Transaktionsabschluss und Log-Speicherung</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an die Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns successfully</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device storage is accessible and has free space</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der Gerätespeicher zugreifbar ist und freien Platz hat</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check logging subsystem health</text>
+      <text xml:lang="de">Prüfen Sie die Gesundheit des Protokollierungssubsystems</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry operation after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie die Operation nach Bestätigung der Vorbedingungen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Log Message Not Stored">
+      <text xml:lang="en">The log message is not stored in device audit trail storage.</text>
+      <text xml:lang="de">Die Log-Message wird nicht im Geräteaudit-Trail-Speicher gespeichert.</text>
+    </state>
+    <state name="Transaction Not Recorded">
+      <text xml:lang="en">The transaction is not properly recorded in the audit trail.</text>
+      <text xml:lang="de">Die Transaktion wird nicht ordnungsgemäß im Audit-Trail aufgezeichnet.</text>
+    </state>
+    <state name="Transaction Audit Protection Lost">
+      <text xml:lang="en">The transaction lacks a tamper-proof audit trail record.</text>
+      <text xml:lang="de">Der Transaktion fehlt ein manipulationssicherer Audit-Trail-Datensatz.</text>
+    </state>
+    <state name="Transaction State Uncertain">
+      <text xml:lang="en">The transaction may be partially processed but recording failed.</text>
+      <text xml:lang="de">Die Transaktion kann teilweise verarbeitet worden sein, aber die Aufzeichnung ist fehlgeschlagen.</text>
+    </state>
+    <state name="Audit Trail Incomplete">
+      <text xml:lang="en">The audit trail has a gap where the transaction should be recorded.</text>
+      <text xml:lang="de">Der Audit-Trail hat eine Lücke, wo die Transaktion aufgezeichnet werden sollte.</text>
+    </state>
+    <state name="Transaction Integrity Unverified">
+      <text xml:lang="en">The transaction integrity cannot be verified without audit trail record.</text>
+      <text xml:lang="de">Die Transaktionsintegrität kann ohne Audit-Trail-Datensatz nicht verifiziert werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Storing of log message failed - message could not be persisted</text>
+      <text xml:lang="de">Anzeichen: Speicherung von Log-Message fehlgeschlagen - Message konnte nicht beibehalten werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Storage Operations, Data Persistence, Log Management</text>
+      <text xml:lang="de">Themen: Protokollierungsoperationen, Speicheroperationen, Datenbeständigkeit, Log-Verwaltung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when log message storage fails</text>
+      <text xml:lang="de">Wird von Protokollierungsfunktionen ausgelöst, wenn die Log-Message-Speicherung fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device stores created log messages in persistent storage</text>
+      <text xml:lang="de">Gerät speichert erstellte Log-Messages in persistentem Speicher</text>
+    </note>
+    <note>
+      <text xml:lang="en">Logging subsystem persists messages for audit trail</text>
+      <text xml:lang="de">Protokollierungssubsystem behält Messages für Audit-Trail bei</text>
+    </note>
+    <note>
+      <text xml:lang="en">Storage failure prevents log message persistence</text>
+      <text xml:lang="de">Speicherfehler verhindert Log-Message-Beibehalting</text>
+    </note>
+  </implementationContext>
+</exception>
+

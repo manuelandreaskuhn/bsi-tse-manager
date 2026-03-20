@@ -1,0 +1,443 @@
+{
+  "testcase_id": "TC-II-GLT-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "getLastTransactionLogMessage: Mit Transaktionsnummer und vollständige Fehlerfälle",
+  "description": "Ergänzt TC-II-GLL-GLT-01 mit SM_AGG-Variante der TxNr-Abfrage und allen Fehlerfällen.",
+  "purpose": "Prüfung, ob die Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht die zuletzt erstellte Transaktions-Log-Nachricht und einen korrekten Namen für diese Log-Nachricht ausgibt. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.\nEs wird eine Transaktionsnummer übergeben.\nDas Sicherheitsmodul der Technischen Sicherheitseinrichtung kann Daten des Vorgangs bei Aktualisierungen einer Transaktion aggregieren.",
+  "module": "Integration Interface",
+  "submodule": "II_GLT",
+  "function": "getLastTransactionLogMessage",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_LASTTRANSLOG"
+  ],
+  "source_tests": [
+    "II_GLT_04",
+    "II_GLT_05",
+    "II_GLT_06",
+    "II_GLT_07"
+  ],
+  "variables": {
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es wurde noch keine Transaktion gestartet.",
+      "result": null,
+      "instruction": "Es wurde noch keine Transaktion gestartet."
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "getLastTransactionLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert logMessageFileName entspricht dem Dateinamen, der in Testschritt 4 identifizierten Datei.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert logMessageContent entspricht dem Inhalt, der in Testschritt 4 identifizierten Datei.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben. Für forceSignature wird FALSE übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "getLastTransactionLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Die übergebene Transaktionsnummer ist größer als TN1.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorNoLogMessageFound  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "getLastTransactionLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Es wird keine Transaktionsnummer übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "unauthenticated",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorNoLogMessageFound  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "getLastTransactionLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Es wird ein Fehler provoziert, der bewirkt, dass die zuletzt erzeugte Transaktions-Log-Nachricht nicht ausgegeben werden kann.",
+      "function": "getLastTransactionLogMessage",
+      "user": "unauthenticated",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorReadingLogMessage ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 15,
+      "type": "VERIFY",
+      "title": "Letzte TxLog-Nachricht mit TxNr (SM_AGG, II_GLT_04)",
+      "result": null,
+      "instruction": "Letzte TxLog-Nachricht mit TxNr (SM_AGG, II_GLT_04)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<gültige TxNr>"
+      },
+      "checks": [
+        {
+          "description": "Letzte Log-Nachricht der spezifizierten Transaktion zurückgegeben",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname stimmt mit TAR überein",
+          "expected": "GLT_FNAME_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "GLT_FNAME_MATCH",
+          "title": "logMessageFileName entspricht TAR-Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "GLT_CONTENT_MATCH",
+          "title": "logMessageContent entspricht TAR-Dateiinhalt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 16,
+      "type": "NEGATIVE",
+      "title": "Fehler: TxNr ohne Logs  (II_GLT_05)",
+      "result": null,
+      "instruction": "Fehler: TxNr ohne Logs [NT] (II_GLT_05)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<TxNr ohne Logs>"
+      },
+      "checks": [
+        {
+          "description": "ErrorNoLogMessageFound zurückgegeben",
+          "expected": "errorCode = ErrorNoLogMessageFound",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 17,
+      "type": "NEGATIVE",
+      "title": "Fehler: Keine Logs vorhanden, kein TxNr  (II_GLT_06)",
+      "result": null,
+      "instruction": "Fehler: Keine Logs vorhanden, kein TxNr [NT] (II_GLT_06)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": null
+      },
+      "checks": [
+        {
+          "description": "ErrorNoLogMessageFound zurückgegeben",
+          "expected": "errorCode = ErrorNoLogMessageFound",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    },
+    {
+      "step": 18,
+      "type": "NEGATIVE",
+      "title": "Fehler: Lesefehler  (II_GLT_07)",
+      "result": null,
+      "instruction": "Fehler: Lesefehler [NT] (II_GLT_07)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "getLastTransactionLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorReadingLogMessage zurückgegeben",
+          "expected": "errorCode = ErrorReadingLogMessage",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLT_04"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK03</chainId>
+    <name>
+        <text xml:lang="en">TSE Initialization and Commissioning</text>
+        <text xml:lang="de">TSE-Initialisierung und Inbetriebnahme</text>
+    </name>
+    <description>
+        <text xml:lang="en">Complete deployment of a new TSE from initialization to operational readiness</text>
+        <text xml:lang="de">Vollständige Inbetriebnahme einer neuen TSE von der Initialisierung bis zur Betriebsbereitschaft</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication</text>
+                <text xml:lang="de">Nutzer-Authentifizierung</text>
+            </name>
+        </process>
+        <process>
+            <id>005</id>
+            <name>
+                <text xml:lang="en">TSE Initialization</text>
+                <text xml:lang="de">TSE-Initialisierung</text>
+            </name>
+        </process>
+        <process>
+            <id>017</id>
+            <name>
+                <text xml:lang="en">Set Description</text>
+                <text xml:lang="de">Beschreibung setzen</text>
+            </name>
+        </process>
+        <process>
+            <id>013</id>
+            <name>
+                <text xml:lang="en">Update Time (optional)</text>
+                <text xml:lang="de">Zeitaktualisierung (optional)</text>
+            </name>
+        </process>
+        <process>
+            <id>004</id>
+            <name>
+                <text xml:lang="en">Client Registration</text>
+                <text xml:lang="de">Client-Registrierung</text>
+            </name>
+        </process>
+        <process>
+            <id>015</id>
+            <name>
+                <text xml:lang="en">User Logout</text>
+                <text xml:lang="de">Nutzer-Abmeldung</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is physically installed</text>
+            <text xml:lang="de">TSE ist physisch installiert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Admin credentials are known</text>
+            <text xml:lang="de">Admin-Zugangsdaten sind bekannt</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">TSE has not yet been initialized</text>
+            <text xml:lang="de">TSE wurde noch nicht initialisiert</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Admin Authentication</text>
+                <text xml:lang="de">Admin-Authentifizierung</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Initialize TSE</text>
+                <text xml:lang="de">TSE initialisieren</text>
+            </name>
+            <function>
+                <name>initialize</name>
+                <linkedProcess>
+                    <id>005</id>
+                    <name>
+                        <text xml:lang="en">TSE Initialization</text>
+                        <text xml:lang="de">TSE-Initialisierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Set Description</text>
+                <text xml:lang="de">Beschreibung setzen</text>
+            </name>
+            <function>
+                <name>setDescription</name>
+                <linkedProcess>
+                    <id>017</id>
+                    <name>
+                        <text xml:lang="en">Set Description</text>
+                        <text xml:lang="de">Beschreibung setzen</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Update Time</text>
+                <text xml:lang="de">Zeit aktualisieren</text>
+            </name>
+            <function>
+                <name>updateTime</name>
+                <linkedProcess>
+                    <id>013</id>
+                    <name>
+                        <text xml:lang="en">Update Time</text>
+                        <text xml:lang="de">Zeitaktualisierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <optional>true</optional>
+        </step>
+        <step>
+            <stepNumber>5</stepNumber>
+            <name>
+                <text xml:lang="en">Register First Client</text>
+                <text xml:lang="de">Ersten Client registrieren</text>
+            </name>
+            <function>
+                <name>registerClient</name>
+                <linkedProcess>
+                    <id>004</id>
+                    <name>
+                        <text xml:lang="en">Client Registration</text>
+                        <text xml:lang="de">Client-Registrierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>6</stepNumber>
+            <name>
+                <text xml:lang="en">Admin Logout</text>
+                <text xml:lang="de">Admin abmelden</text>
+            </name>
+            <function>
+                <name>logOut</name>
+                <linkedProcess>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+    </steps>
+    <outcome>
+        <state>
+            <text xml:lang="en">TSE operational and ready</text>
+            <text xml:lang="de">TSE betriebsbereit</text>
+        </state>
+        <logMessages>
+            <logMessage>
+                <text xml:lang="en">System-Log (authenticateUser)</text>
+                <text xml:lang="de">System-Log (authenticateUser)</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (initialize)</text>
+                <text xml:lang="de">System-Log (initialize)</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (setDescription)</text>
+                <text xml:lang="de">System-Log (setDescription)</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (updateTime) - optional</text>
+                <text xml:lang="de">System-Log (updateTime) - optional</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (registerClient)</text>
+                <text xml:lang="de">System-Log (registerClient)</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (logOut)</text>
+                <text xml:lang="de">System-Log (logOut)</text>
+            </logMessage>
+        </logMessages>
+    </outcome>
+    <importantNotes>
+        <note>
+            <text xml:lang="en">initialize can ONLY be executed ONCE</text>
+            <text xml:lang="de">initialize kann nur EINMAL ausgeführt werden</text>
+        </note>
+        <note>
+            <text xml:lang="en">After initialize, the TSE is permanently in operation</text>
+            <text xml:lang="de">Nach initialize ist die TSE dauerhaft in Betrieb</text>
+        </note>
+        <note>
+            <text xml:lang="en">Signature counter starts at 1, transaction counter starts at 0</text>
+            <text xml:lang="de">Signaturzähler startet bei 1, Transaktionszähler bei 0</text>
+        </note>
+    </importantNotes>
+    <usageScenario>
+        <text xml:lang="en">Initial deployment of a new TSE in a business or restaurant</text>
+        <text xml:lang="de">Erstmalige Inbetriebnahme einer neuen TSE in einem Geschäft oder Restaurant</text>
+    </usageScenario>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5</reference>
+    </references>
+</processChain>

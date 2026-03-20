@@ -1,0 +1,735 @@
+{
+  "testcase_id": "TC-DSFINVK-05",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "DSFinV-K: TSE-Signatur auf Kassenbelegen und externe Verifikation",
+  "description": "Prüft, ob alle für den DSFinV-K-konformen Bonaufdruck benötigten Signaturwerte verfügbar und extern verifizierbar sind.",
+  "purpose": "Prüfung, ob die Funktionalität zum Beenden einer Transaktion die folgenden Aktionen durchführt:\n• Abfragen der Log-Nachricht-Teile vom Sicherheitsmodul\n• Speicherung der Log-Nachricht-Teile im Speichermedium\n• Rückgabe der folgenden Daten:\n  o Information, dass keine Log-Nachricht für eine vorherige Aktualisierung erstellt wurde\n  o Zeitpunkt der Beendigung\n  o Prüfwert\n  o Signaturzähler\n  o Keine weiteren Daten\n\nDer Test übergibt beim Aufruf der Funktion die \n• Seriennummer des Aufzeichnungssystems,\n• Transaktionsnummer, \n• Daten des Vorgangs und \n• Art des Vorgangs.\nZusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht für die Beendigung der Transaktion und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "DSFinV-K",
+  "submodule": "Signatur",
+  "function": "startTransaction / finishTransaction",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_FIN_01",
+    "SM_KRY_02"
+  ],
+  "variables": {
+    "$add1": "Übergabewert für additionalExternalData (add1)",
+    "$add2": "Übergabewert für additionalExternalData (add2)",
+    "$client1": "Seriennummer des Aufzeichnungssystems (client1)",
+    "$data1": "Übergabewert für processData (data1)",
+    "$data2": "Übergabewert für processData (data2)",
+    "$sig1": "Signaturzähler (Rückgabe, sig1)",
+    "$signature1": "Prüfwert/Signatur (Rückgabe, signature1)",
+    "$time1": "Zeitstempel der Signaturerstellung (time1)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$type1": "Übergabewert für processType (type1)",
+    "$type2": "Übergabewert für processType (type2)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Signaturverfahren ist aus dem ICS bekannt.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten. Der für additionalExternalData übergebene Wert wird als $add1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Es wird die Signatur der erstellten Log-Nachricht zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 9,
+      "type": "ACTION",
+      "title": "Alle DSFinV-K-Bonpflichtfelder aus API-Rückgaben extrahieren",
+      "result": null,
+      "instruction": "Alle DSFinV-K-Bonpflichtfelder aus API-Rückgaben extrahieren\n\nAufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten. Der für additionalExternalData übergebene Wert wird als $add1 festgehalten.",
+      "function": "startTransaction → finishTransaction",
+      "user": "logger",
+      "expected_return": {
+        "transactionNumber": {
+          "constraint": "Pflichtfeld auf Bon: BON_NR"
+        },
+        "signatureCreationTime": {
+          "constraint": "Pflichtfeld auf Bon: BELEGDATUM/Zeitstempel"
+        },
+        "serialNumber": {
+          "constraint": "Pflichtfeld auf Bon: TSE-Seriennummer"
+        },
+        "signatureCounter": {
+          "constraint": "Pflichtfeld auf Bon: TSE-Signaturzähler"
+        },
+        "signature": {
+          "constraint": "Pflichtfeld auf Bon: TSE-Prüfwert (Signatur)"
+        }
+      },
+      "checks": [
+        {
+          "description": "Alle 5 Pflichtfelder für DSFinV-K-Bonaufdruck verfügbar",
+          "expected": "Alle gesetzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumber als BON_NR verwendbar",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime als Zeitstempel verwendbar",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber als TSE-Seriennummer verwendbar (32 Byte)",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter als Signaturzähler verwendbar",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signature als Prüfwert verwendbar",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 10,
+      "type": "VERIFY",
+      "title": "Signatur exportieren und extern verifizieren",
+      "result": null,
+      "instruction": "Signatur exportieren und extern verifizieren\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLoggingCertificates → exportLogMessages → externe Signaturverifikation",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Signatur mit exportierten Zertifikaten extern verifizierbar",
+          "expected": "SIG_VERIFY_LOGMSG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signatur in Base64 oder Hex für Bonaufdruck/QR-Code kodierbar",
+          "expected": "Kodierung möglich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME_CERT",
+          "title": "CertificateExport-Dateiname",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_FMT",
+          "title": "Zeitformat-Präfix im Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE_CERT",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_NOLOG",
+          "title": "Keine Log-Dateien enthalten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_FILES",
+          "title": "Nur erlaubte Dateitypen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_CHAIN",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_PRESENT",
+          "title": "Zertifikat-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_NAME",
+          "title": "Zertifikat-Dateinamen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_V3",
+          "title": "X.509 Version 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SIG_ALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CURVE",
+          "title": "Schlüsselkurve",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_DATE_ORDER",
+          "title": "Gültigkeit: notBefore < notAfter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_VALID_NOW",
+          "title": "Zertifikat aktuell gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_PKUP",
+          "title": "Private Key Usage Period",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SKI",
+          "title": "Subject Key Identifier (SKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_AKI",
+          "title": "Authority Key Identifier (AKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CRL",
+          "title": "CRL Distribution Point",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_POLICY",
+          "title": "Certificate Policies",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BC_LEAF",
+          "title": "Basic Constraints: CA:FALSE",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_KU_LEAF",
+          "title": "Key Usage: Digital Signature",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BSI_OID",
+          "title": "BSI-TSE-OID im Subject",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_HASH",
+          "title": "Dateiname = Subject CN = TSE-Seriennummer",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_PUBKEY_HASH",
+          "title": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_COMPLETE",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_AKI_SKI",
+          "title": "AKI→SKI Verkettung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_VALIDITY",
+          "title": "Kindsgültigkeit ≤ Ausstellergültigkeit",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_ISSUER_MATCH",
+          "title": "Aussteller-Inhaber-Übereinstimmung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_CTR_OVERFLOW_CHECK",
+          "title": "Kein signatureCounter am oder über dem Maximalwert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_KRY_02"
+    },
+    {
+      "step": 11,
+      "type": "VERIFY",
+      "title": "QR-Code-Pflichtfelder prüfen",
+      "result": null,
+      "instruction": "QR-Code-Pflichtfelder prüfen",
+      "checks": [
+        {
+          "description": "Alle BSI-Pflichtfelder für QR-Code gemäß DSFinV-K vorhanden (Kassenseriennummer, processType, processData, transactionNumber, signatureCreationTime, serialNumber, signatureCounter, signature)",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "DSFinV-K 2.4",
+    "BSI TR-03153-1 §9.3",
+    "§146a AO"
+  ],
+  "dsfinvk_requirements": [
+    "§146a Abs. 2 AO Belegpflicht",
+    "DSFinV-K 2.4 Anhang Bonangaben"
+  ]
+}

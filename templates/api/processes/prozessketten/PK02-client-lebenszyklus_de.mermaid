@@ -1,0 +1,59 @@
+sequenceDiagram
+    actor Admin as Admin/Logger
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+    participant Client as Client/Kassensystem
+
+    Note over Admin,Client: PHASE 1: REGISTRIERUNG
+
+    Admin->>TSE: registerClient(clientId)
+    activate TSE
+    TSE->>TSE: Prüfe: clientId gültig & noch nicht registriert
+    TSE->>SM: Erstelle registerClient-Log
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM->>SM: Erstelle Signatur
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE->>Speicher: Speichere System-Log
+    TSE->>TSE: Aktiviere clientId für Transaktionen
+    TSE-->>Admin: Registrierung erfolgreich
+    deactivate TSE
+    
+    Note over Admin,Client: Client kann nun Transaktionen durchführen
+
+    rect rgb(200, 255, 200)
+    Note over Client,Speicher: PHASE 2: NUTZUNG (mehrere Transaktionen)
+    
+    loop Mehrere Transaktionen
+        Client->>TSE: startTransaction(clientId, ...)
+        TSE-->>Client: OK
+        opt Updates
+            Client->>TSE: updateTransaction(clientId, transactionNumber, ...)
+            TSE-->>Client: OK
+        end
+        Client->>TSE: finishTransaction(clientId, transactionNumber, ...)
+        TSE-->>Client: OK
+    end
+    end
+
+    Note over Admin,Client: PHASE 3: DEREGISTRIERUNG
+
+    Admin->>TSE: deregisterClient(clientId)
+    activate TSE
+    TSE->>TSE: Prüfe: clientId registriert
+    TSE->>SM: Erstelle deregisterClient-Log
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM->>SM: Erstelle Signatur
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE->>Speicher: Speichere System-Log
+    TSE->>TSE: Deaktiviere clientId
+    TSE-->>Admin: Deregistrierung erfolgreich
+    deactivate TSE
+    
+    Note over Admin,Client: Client kann keine Transaktionen mehr starten
+
+    Note over Admin,Client: ERGEBNIS: Vollständiger Client-Lebenszyklus<br/>von Registrierung bis Deregistrierung dokumentiert

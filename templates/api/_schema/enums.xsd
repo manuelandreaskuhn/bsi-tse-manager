@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://www.bsi.bund.de/tr03151" 
+           xmlns:tr="http://www.bsi.bund.de/tr03151"
+           elementFormDefault="qualified">
+
+  <!-- ============================= -->
+  <!-- Simple Types                  -->
+  <!-- ============================= -->
+
+  <xs:simpleType name="EnumName">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ValueName">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Category">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================= -->
+  <!-- Enumeration Value Structure   -->
+  <!-- ============================= -->
+
+  <!-- EnumValue: Single enumeration value -->
+  <xs:complexType name="EnumValue">
+    <xs:sequence>
+      <xs:element name="name" type="tr:ValueName" minOccurs="1"/>
+      <xs:element name="numericValue" type="xs:integer" minOccurs="0"/>
+      <xs:element name="hexValue" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="germanText" type="xs:string" minOccurs="0"/>
+      <xs:element name="usage" type="xs:string" minOccurs="0"/>
+      <xs:element name="deprecated" type="xs:boolean" minOccurs="0" default="false"/>
+      <xs:element name="since" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- EnumValues: Collection of enumeration values -->
+  <xs:complexType name="EnumValues">
+    <xs:sequence>
+      <xs:element name="value" type="tr:EnumValue" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Constraints Structure         -->
+  <!-- ============================= -->
+
+  <!-- Constraint: Constraint on enum -->
+  <xs:complexType name="Constraint">
+    <xs:sequence>
+      <xs:element name="type" type="xs:string" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Constraints: Collection of constraints -->
+  <xs:complexType name="Constraints">
+    <xs:sequence>
+      <xs:element name="constraint" type="tr:Constraint" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Type Information Structure    -->
+  <!-- ============================= -->
+
+  <!-- TypeInfo: Type mapping information -->
+  <xs:complexType name="TypeInfo">
+    <xs:sequence>
+      <xs:element name="asn1Type" type="xs:string" minOccurs="0"/>
+      <xs:element name="javaType" type="xs:string" minOccurs="0"/>
+      <xs:element name="cType" type="xs:string" minOccurs="0"/>
+      <xs:element name="encoding" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Main Enumeration Type         -->
+  <!-- ============================= -->
+
+  <!-- Enumeration: Main enumeration definition -->
+  <xs:complexType name="Enumeration">
+    <xs:sequence>
+      <!-- Basic Information -->
+      <xs:element name="name" type="tr:EnumName" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="category" type="tr:Category" minOccurs="0"/>
+      <xs:element name="germanText" type="xs:string" minOccurs="0"/>
+      
+      <!-- Enumeration Values -->
+      <xs:element name="values" type="tr:EnumValues" minOccurs="1"/>
+      
+      <!-- Type Information -->
+      <xs:element name="typeInfo" type="tr:TypeInfo" minOccurs="0"/>
+      
+      <!-- Constraints -->
+      <xs:element name="constraints" type="tr:Constraints" minOccurs="0"/>
+      
+      <!-- Usage Context -->
+      <xs:element name="usageContext" type="xs:string" minOccurs="0"/>
+      
+      <!-- Related Enumerations -->
+      <xs:element name="relatedEnumerations" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="enumeration" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      
+      <!-- Notes -->
+      <xs:element name="note" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <!-- Metadata -->
+      <xs:element name="version" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastModified" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Root Elements                 -->
+  <!-- ============================= -->
+
+  <!-- Root element for enumeration documents -->
+  <xs:element name="enum" type="tr:Enumeration"/>
+
+  <!-- Root element for collections of enumerations -->
+  <xs:element name="enums">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enum" type="tr:Enumeration" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ============================= -->
+  <!-- Enumeration Catalog           -->
+  <!-- ============================= -->
+
+  <!-- Catalog of all enumerations -->
+  <xs:element name="enumCatalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metadata">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" type="xs:string" minOccurs="0"/>
+              <xs:element name="version" type="xs:string" minOccurs="0"/>
+              <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+              <xs:element name="source" type="xs:string" minOccurs="0"/>
+              <xs:element name="description" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="enum" type="tr:Enumeration" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

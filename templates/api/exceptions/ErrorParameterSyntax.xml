@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorParameterSyntax" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorParameterSyntax</name>
+  <description>
+    <text xml:lang="en">This exception is thrown by SE API functions when one or more parameters have invalid syntax, incorrect data type, malformed structure, or do not conform to the expected format for that parameter. ErrorParameterSyntax indicates that the parameter value cannot be interpreted or processed by the function because it does not match the required syntax or type specification. This is a common exception applicable to any SE API function that accepts parameters, raised during parameter validation when type mismatches or syntax violations are detected.</text>
+    <text xml:lang="de">Diese Ausnahme wird von SE API Funktionen ausgelöst, wenn ein oder mehrere Parameter ungültige Syntax, falschen Datentyp, fehlerhafte Struktur aufweisen oder nicht dem erwarteten Format für diesen Parameter entsprechen. ErrorParameterSyntax zeigt an, dass der Parameterwert von der Funktion nicht interpretiert oder verarbeitet werden kann, da er nicht der erforderlichen Syntax oder Typspezifikation entspricht. Dies ist eine häufige Ausnahme, die auf jede SE API Funktion anwendbar ist, die Parameter akzeptiert und während der Parametervalidierung ausgelöst wird, wenn Typunvereinbarkeiten oder Syntaxverletzungen erkannt werden.</text>
+  </description>
+  <category>Input Validation</category>
+  <subcategory>Parameter Type and Syntax</subcategory>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deregisterClient</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>exportSerialNumbers</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getCurrentSeTime</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getDescription</function>
+    <function>getDeviceHealth</function>
+    <function>getEndOfUsageDate</function>
+    <function>getFreeMemory</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getOpenTransactions</function>
+    <function>getRegisteredClients</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getTimeSyncVariant</function>
+    <function>getTotalMemory</function>
+    <function>getTransactionState</function>
+    <function>getUsedMemory</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorParameterSyntax that is thrown by any SE API method when at least one parameter is of invalid type or syntax.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorParameterSyntax, die von jeder SE API Methode ausgelöst wird, wenn mindestens ein Parameter einen ungültigen Typ oder ungültige Syntax hat.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when any SE API function receives a parameter with invalid syntax, incorrect data type, or malformed structure. Every SE API function has specific type and format requirements for its parameters. ErrorParameterSyntax is raised when parameters do not conform to these requirements. Common causes include: string parameters with invalid characters or format, numeric parameters that are not numbers, boolean parameters with non-boolean values, complex objects with missing or invalid fields, or any parameter value that cannot be parsed or interpreted according to the function's specification. ErrorParameterSyntax is a common exception that can be raised by any SE API function that accepts parameters. Recovery requires correcting the parameter type or syntax according to the function's documentation and retrying the operation.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine SE API Funktion einen Parameter mit ungültiger Syntax, falschen Datentyp oder fehlerhafter Struktur empfängt. Jede SE API Funktion hat spezifische Typ- und Formatanforderungen für ihre Parameter. ErrorParameterSyntax wird ausgelöst, wenn Parameter nicht diesen Anforderungen entsprechen. Häufige Ursachen sind: String-Parameter mit ungültigen Zeichen oder Format, numerische Parameter, die keine Zahlen sind, boolesche Parameter mit nicht-booleschen Werten, komplexe Objekte mit fehlenden oder ungültigen Feldern, oder jeder Parameterwert, der nicht gemäß der Spezifikation der Funktion analysiert oder interpretiert werden kann. ErrorParameterSyntax ist eine häufige Ausnahme, die von jeder SE API Funktion ausgelöst werden kann, die Parameter akzeptiert. Die Wiederherstellung erfordert Korrektur des Parametertyps oder der Syntax gemäß der Dokumentation der Funktion und Wiederholung des Vorgangs.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1 General Error Handling and Input Validation</section>
+    <requirement>
+      <text xml:lang="en">All SE API functions SHALL validate input parameters for type correctness and syntax compliance. If any parameter is found to have invalid syntax, incorrect data type, or malformed structure that does not conform to the function's parameter specifications, the function SHALL raise the exception ErrorParameterSyntax. The function SHALL NOT attempt to process or interpret parameters with syntax or type errors. ErrorParameterSyntax is applicable to any SE API function that accepts parameters.</text>
+      <text xml:lang="de">Alle SE API Funktionen sollen Eingabeparameter auf Typkorrektheit und Syntaxkonformität validieren. Falls ein Parameter ungültige Syntax, falschen Datentyp oder fehlerhafte Struktur aufweist, die nicht den Parameterspezifikationen der Funktion entspricht, soll die Funktion die Ausnahme ErrorParameterSyntax auslösen. Die Funktion soll NICHT versuchen, Parameter mit Syntax- oder Typfehlern zu verarbeiten oder zu interpretieren. ErrorParameterSyntax ist auf jede SE API Funktion anwendbar, die Parameter akzeptiert.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Input validation - applicable to all SE API functions with parameters</text>
+      <text xml:lang="de">Eingabevalidierung - anwendbar auf alle SE API Funktionen mit Parametern</text>
+    </applicability>
+    <reference>General Error Handling (3.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function with parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE API Funktion mit Parametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function receives the parameters</text>
+      <text xml:lang="de">Funktion empfängt die Parameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function performs type checking on each parameter</text>
+      <text xml:lang="de">Funktion führt Typprüfung für jeden Parameter durch</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If all parameters have correct type → proceed to step 4</text>
+      <text xml:lang="de">Falls alle Parameter den richtigen Typ haben → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If any parameter has incorrect type → ErrorParameterSyntax raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter falschen Typ hat → ErrorParameterSyntax wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function performs syntax validation on each parameter</text>
+      <text xml:lang="de">Funktion führt Syntaxvalidierung für jeden Parameter durch</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If all parameters have valid syntax → proceed to step 5</text>
+      <text xml:lang="de">Falls alle Parameter gültige Syntax haben → fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If any parameter has invalid syntax → ErrorParameterSyntax raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter ungültige Syntax hat → ErrorParameterSyntax wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function performs format validation on parameters (dates, strings, etc.)</text>
+      <text xml:lang="de">Funktion führt Formatvalidierung auf Parametern durch (Daten, Zeichenketten, usw.)</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If all parameters have valid format → proceed to step 6</text>
+      <text xml:lang="de">Falls alle Parameter gültiges Format haben → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If any parameter has invalid format → ErrorParameterSyntax raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter ungültiges Format hat → ErrorParameterSyntax wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function performs range validation on numeric and constrained parameters</text>
+      <text xml:lang="de">Funktion führt Bereichsvalidierung auf numerischen und eingeschränkten Parametern durch</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If all parameters are within valid ranges → proceed to step 7</text>
+      <text xml:lang="de">Falls alle Parameter innerhalb gültiger Bereiche liegen → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If any parameter is out of range → ErrorParameterSyntax raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter außerhalb des Bereichs liegt → ErrorParameterSyntax wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function checks for required fields in complex parameters</text>
+      <text xml:lang="de">Funktion prüft erforderliche Felder in komplexen Parametern</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function proceeds with normal operation logic</text>
+      <text xml:lang="de">Funktion fährt mit normaler Operationslogik fort</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Review function specification for parameter format requirements</text>
+      <text xml:lang="de">Überprüfen Sie die Funktionsspezifikation auf Parameterformatanforderungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Correct parameter format to match specification</text>
+      <text xml:lang="de">Korrigieren Sie das Parameterformat, um die Spezifikation zu erfüllen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Validate parameter syntax before function call</text>
+      <text xml:lang="de">Validieren Sie die Parametersyntax vor dem Funktionsaufruf</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry with correctly formatted parameter</text>
+      <text xml:lang="de">Versuchen Sie es mit einem korrekt formatierten Parameter erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorInvalidTime</exception>
+    <exception>ErrorInvalidEventType</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Function Not Executed">
+      <text xml:lang="en">The function does not execute its main operation logic. Input validation failure prevents operation execution.</text>
+      <text xml:lang="de">Die Funktion führt ihre Hauptoperationslogik nicht aus. Der Eingabevalidierungsfehler verhindert die Operationsausführung.</text>
+    </state>
+    <state name="Device State Unchanged">
+      <text xml:lang="en">The device's state remains completely unchanged. No device operations occur as a result of the parameter syntax error.</text>
+      <text xml:lang="de">Der Gerätzustand bleibt vollständig unverändert. Es finden keine Geräteoperationen als Folge des Parametersyntaxfehlers statt.</text>
+    </state>
+    <state name="No Side Effects">
+      <text xml:lang="en">The exception does not cause any side effects or state changes on the device.</text>
+      <text xml:lang="de">Die Ausnahme verursacht keine Nebenwirkungen oder Zustandsänderungen auf dem Gerät.</text>
+    </state>
+    <state name="Parameters Available for Inspection">
+      <text xml:lang="en">The invalid parameters remain available for inspection to identify the specific syntax or type issue.</text>
+      <text xml:lang="de">Die ungültigen Parameter bleiben zur Inspektion verfügbar, um das spezifische Syntax- oder Typroblem zu identifizieren.</text>
+    </state>
+    <state name="Retry Possible with Corrected Parameters">
+      <text xml:lang="en">The operation can be retried immediately after correcting the parameter syntax or type.</text>
+      <text xml:lang="de">Die Operation kann sofort nach Korrektur der Parametersyntax oder des Typs wiederholt werden.</text>
+    </state>
+    <state name="No Data Loss">
+      <text xml:lang="en">The exception does not result in data loss or corruption of any kind.</text>
+      <text xml:lang="de">Die Ausnahme führt nicht zu Datenverlust oder Beschädigung jeglicher Art.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Function parameter has invalid syntax - does not conform to required format</text>
+      <text xml:lang="de">Anzeichen: Funktionsparameter hat ungültige Syntax - entspricht nicht dem erforderlichen Format</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Parameter Validation, Input Validation, Syntax Checking, Format Requirements</text>
+      <text xml:lang="de">Themen: Parametervalidierung, Eingabevalidierung, Syntaxprüfung, Formatanforderungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when parameter does not conform to required format</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn Parameter nicht dem erforderlichen Format entspricht</text>
+    </note>
+    <note>
+      <text xml:lang="en">Parameter syntax validation enforces format requirements</text>
+      <text xml:lang="de">Parametersyntaxvalidierung erzwingt Formatanforderungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device validates parameter format compliance</text>
+      <text xml:lang="de">Gerät validiert die Einhaltung des Parameterformats</text>
+    </note>
+    <note>
+      <text xml:lang="en">Syntax error prevents function execution</text>
+      <text xml:lang="de">Syntaxfehler verhindert Funktionsausführung</text>
+    </note>
+  </implementationContext>
+</exception>
+

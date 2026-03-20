@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getCurrentLoggingSignatureCounters" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getCurrentLoggingSignatureCounters</name>
+  <category>Logging</category>
+  <description>
+    <text xml:lang="en">The function getCurrentLoggingSignatureCounters can be used to obtain the current signature counters for each private key utilized in the secure element for signing log messages.</text>
+    <text xml:lang="de">Die Funktion getCurrentLoggingSignatureCounters kann verwendet werden, um die aktuellen Signaturzähler für jeden privaten Schlüssel zu erhalten, der im Secure Element zum Signieren von Log-Nachrichten verwendet wird.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL, for each private key utilized in the secure element for signing log messages, determine the signature counter that was provided by the secure element with the last signature. If the determination of the current signature counters fails, the function SHALL raise the exception ErrorGetCurrentSignatureCounterFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt Signaturzähler. Bei Fehler: Exception ErrorGetCurrentSignatureCounterFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  DETERMINE signature counter for each private key in SE
+ON ERROR
+  THROW ErrorGetCurrentSignatureCounterFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  ERMITTLE Signaturzähler für jeden privaten Schlüssel im SE
+BEI_FEHLER
+  WERFE ErrorGetCurrentSignatureCounterFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetCurrentSignatureCounterFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of the signature counters fails</text>
+          <text xml:lang="de">Die Ermittlung der Signaturen-Zähler schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of all current signature counters has been successful, the function SHALL return the current signature counters (as an output parameter) by signatureCounters. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt Signaturzähler zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN signature counters (signatureCounters parameter)
+RETURN without exception</text>
+        <text xml:lang="de">GEBE Signaturzähler zurück (signatureCounters Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Determination of all current signature counters was successful</text>
+          <text xml:lang="de">Die Ermittlung aller aktuellen Signaturzähler war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return signature counters and return without exception</text>
+          <text xml:lang="de">Gibt Signaturzähler zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>byte[]</type>
+    <description>
+      <text xml:lang="en">the current values of the signature counters for logging.</text>
+      <text xml:lang="de">die aktuellen Werte der Signaturzähler für die Protokollierung.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetCurrentSignatureCounterFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

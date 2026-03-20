@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getTransactionState" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getTransactionState</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">The function getTransactionState can be used to obtain the current state of a transaction.</text>
+    <text xml:lang="de">Die Funktion getTransactionState kann verwendet werden, um den aktuellen Status einer Transaktion zu ermitteln.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function getTransactionState SHALL determine the current state of the transaction identified by the passed parameter transactionNumber. If the passed transaction number is not managed by the device the function SHALL raise the exception ErrorTransactionNumberNotFound and exit the function.</text>
+        <text xml:lang="de">Ermittelt aktuellen Transaktionsstatus mit übergebener Transaktionsnummer. Falls Transaktionsnummer nicht vorhanden: Exception ErrorTransactionNumberNotFound, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE transaction state with transaction number
+CATCH error
+  THROW ErrorTransactionNumberNotFound
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Transaktionsstatus mit Transaktionsnummer
+BEI_FEHLER
+  WERFE ErrorTransactionNumberNotFound
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTransactionNumberNotFound</exception>
+        <trigger>
+          <text xml:lang="en">Transaction number not found</text>
+          <text xml:lang="de">Transaktionsnummer nicht gefunden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">If the determination of transaction state fails, the function SHALL raise the exception ErrorGetTransactionStateFailed and exit the function.</text>
+        <text xml:lang="de">Falls die Ermittlung des Transaktionsstatus schlägt fehl: Werfe ErrorGetTransactionStateFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF operation failed THEN
+  THROW ErrorGetTransactionStateFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Operation fehlgeschlagen DANN
+  WERFE ErrorGetTransactionStateFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetTransactionStateFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of transaction state fails</text>
+          <text xml:lang="de">Die Ermittlung des Transaktionsstatus schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of transaction state has been successful, the function SHALL return the information regarding the state by the output parameter transactionState. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Bei Erfolg der Ermittlung: Gibt Transaktionsstatus via Parameter transactionState zurück. Keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN transactionState without exception</text>
+        <text xml:lang="de">GEBE Transaktionsstatus zurück (transactionState Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The determination of transaction state has been successful</text>
+          <text xml:lang="de">Ermittlung des Transaktionsstatus erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the transaction state without raising an exception</text>
+          <text xml:lang="de">Gibt Transaktionsstatus via Parameter zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>transactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">parameter is used to unambiguously identify the transaction.</text>
+        <text xml:lang="de">Parameter wird verwendet, um die Transaktion eindeutig zu identifizieren.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>TransactionState</type>
+    <description>
+      <text xml:lang="en">the current state of the transaction (started, updated, updatedWithUnprotectedData, finished, or abandoned).</text>
+      <text xml:lang="de">der aktuelle Status der Transaktion (started, updated, updatedWithUnprotectedData, finished oder abandoned).</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetTransactionStateFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorTransactionNumberNotFound</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

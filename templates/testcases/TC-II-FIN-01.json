@@ -1,0 +1,914 @@
+{
+  "testcase_id": "TC-II-FIN-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "finishTransaction: Vollständiger Test mit ausstehenden Aggregierungen und Fehlerfällen",
+  "description": "Prüft finishTransaction: korrekte Rückgabewerte, Sicherung ausstehender Aggregierungen bei SM_AGG, Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität zum Beenden einer Transaktion die folgenden Aktionen durchführt:\n• Abfragen der Log-Nachricht-Teile vom Sicherheitsmodul\n• Speicherung der Log-Nachricht-Teile im Speichermedium\n• Rückgabe der folgenden Daten:\n  o Information, dass keine Log-Nachricht für eine vorherige Aktualisierung erstellt wurde\n  o Zeitpunkt der Beendigung\n  o Prüfwert\n  o Signaturzähler\n  o Keine weiteren Daten\n\nDer Test übergibt beim Aufruf der Funktion die \n• Seriennummer des Aufzeichnungssystems,\n• Transaktionsnummer, \n• Daten des Vorgangs und \n• Art des Vorgangs.\nZusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht für die Beendigung der Transaktion und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_FIN",
+  "function": "finishTransaction",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_FIN_01",
+    "II_FIN_02",
+    "II_FIN_03",
+    "II_FIN_04",
+    "II_FIN_05",
+    "II_FIN_06"
+  ],
+  "variables": {
+    "$add1": "Übergabewert für additionalExternalData (add1)",
+    "$add2": "Übergabewert für additionalExternalData (add2)",
+    "$client1": "Seriennummer des Aufzeichnungssystems (client1)",
+    "$data1": "Übergabewert für processData (data1)",
+    "$data2": "Übergabewert für processData (data2)",
+    "$sig1": "Signaturzähler (Rückgabe, sig1)",
+    "$signature1": "Prüfwert/Signatur (Rückgabe, signature1)",
+    "$time1": "Zeitstempel der Signaturerstellung (time1)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$type1": "Übergabewert für processType (type1)",
+    "$type2": "Übergabewert für processType (type2)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens e",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine beendete Transaktion gespeichert."
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten. Der für additionalExternalData übergebene Wert wird als $add1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten. Für forceSignature wird FALSE übergeben. Die übergebenen Daten unterscheiden sich bis auf die Seriennummer des Aufzeichnungssystems von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert firstLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert firstLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert firstLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für die Transaktionsnummer wird eine Zahl übergeben, die größer als $tn1 ist.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für die Transaktionsnummer wird die Transaktionsnummer einer bereits beendeten Transaktion übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Es wird die Seriennummer für das Aufzeichnungssystems übergeben, nie noch nie registriert war.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 14,
+      "type": "VERIFY",
+      "title": "Transaktion ohne vorherige Update-Absicherung beenden (SM_NOAGG)",
+      "result": null,
+      "instruction": "Transaktion ohne vorherige Update-Absicherung beenden (SM_NOAGG)\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<registriert>",
+        "transactionNumber": "<offen>",
+        "processData": "<Schlussdaten>",
+        "processType": "<Typ>"
+      },
+      "expected_return": {
+        "updateSignatureCreationTime": {
+          "constraint": "null (keine vorherige Update-Log)"
+        },
+        "updateSignatureCounter": {
+          "constraint": "null"
+        },
+        "updateSignature": {
+          "constraint": "null"
+        },
+        "finishSignatureCreationTime": {
+          "constraint": "aktuell"
+        },
+        "finishSignatureCounter": {
+          "constraint": "inkrementiert"
+        },
+        "finishSignature": {
+          "constraint": "valide"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe enthält Finish-Signaturfelder",
+          "expected": "Alle Finish-Felder gesetzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Update-Signaturfelder in Rückgabe",
+          "expected": "Update-Felder null",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Finish-Log im TAR korrekt",
+          "expected": "TXN_LIFE_FINISH bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_OPTYPE",
+          "title": "operationType vorhanden und gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_CLIENT",
+          "title": "clientId vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PDATA",
+          "title": "processData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PTYPE",
+          "title": "processType vorhanden, max. 100 Zeichen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_TXNNUM",
+          "title": "transactionNumber vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FMT",
+          "title": "Zeitformat-Präfix",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_NUM",
+          "title": "No-{transactionNumber} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_TYPE",
+          "title": "TYPE stimmt (Start|Update|Finish)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_CLIENT",
+          "title": "Client-{clientId} stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_NO_ADD_INT",
+          "title": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_ADD_EXT_ABSENT",
+          "title": "additionalExternalData nur vorhanden wenn Daten übergeben wurden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_START",
+          "title": "Jede transactionNumber hat genau einen Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_FINISH",
+          "title": "Jede transactionNumber hat genau einen Finish-Eintrag",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_ORDER",
+          "title": "Korrekte Reihenfolge Start → Update* → Finish",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_NODUP_UPDATE",
+          "title": "Keine doppelten Update-Signaturen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_TIME_ORDER",
+          "title": "Zeitliche Reihenfolge innerhalb einer Transaktion",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_NUM_SEQ",
+          "title": "transactionNumbers fortlaufend und lückenlos",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_NUM_UNIQUE",
+          "title": "transactionNumbers eindeutig pro Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_CTR_OVERFLOW_CHECK",
+          "title": "Kein signatureCounter am oder über dem Maximalwert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 15,
+      "type": "VERIFY",
+      "title": "Transaktion mit ausstehender Aggregierung beenden (SM_AGG)",
+      "result": null,
+      "instruction": "Transaktion mit ausstehender Aggregierung beenden (SM_AGG)\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "expected_return": {
+        "updateSignatureCreationTime": {
+          "constraint": "aktuell (für aggregierten Update)"
+        },
+        "updateSignatureCounter": {
+          "constraint": "inkrementiert"
+        },
+        "updateSignature": {
+          "constraint": "valide"
+        },
+        "finishSignatureCreationTime": {
+          "constraint": "aktuell"
+        },
+        "finishSignatureCounter": {
+          "constraint": "inkrementiert"
+        },
+        "finishSignature": {
+          "constraint": "valide"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe enthält Update- UND Finish-Signaturfelder",
+          "expected": "Beide Felder-Sets gesetzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Update-Log und Finish-Log im TAR vorhanden",
+          "expected": "STOR_AGG_UPDATE_PRESENT_AFTER_FINISH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "STOR_AGG_UPDATE_PRESENT_AFTER_FINISH",
+          "title": "Aggregierter Update-Log nach finishTransaction vorhanden",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "AGG_PDATA_CONCAT",
+          "title": "processData einer aggregierten Nachricht ist Konkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 16,
+      "type": "ACTION",
+      "title": "processType bis 100 Zeichen akzeptiert",
+      "result": null,
+      "instruction": "processType bis 100 Zeichen akzeptiert\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "processType": "<100-Zeichen-String>"
+      },
+      "checks": [
+        {
+          "description": "Aufruf erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 17,
+      "type": "NEGATIVE",
+      "title": "Fehler: Nicht-existierende Transaktionsnummer",
+      "result": null,
+      "instruction": "Fehler: Nicht-existierende Transaktionsnummer [NT]\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<nicht vergeben>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 18,
+      "type": "NEGATIVE",
+      "title": "Fehler: Bereits beendete Transaktion",
+      "result": null,
+      "instruction": "Fehler: Bereits beendete Transaktion [NT]\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<bereits beendet>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    },
+    {
+      "step": 19,
+      "type": "NEGATIVE",
+      "title": "Fehler: Nicht-registrierter Client",
+      "result": null,
+      "instruction": "Fehler: Nicht-registrierter Client [NT]\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<nicht registriert>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_FIN_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1",
+    "BSI TR-03151-1 §5.3"
+  ],
+  "dsfinvk_requirements": [
+    "processType muss BON_SCHLUSS oder äquivalenten DSFinV-K-Typ enthalten"
+  ]
+}

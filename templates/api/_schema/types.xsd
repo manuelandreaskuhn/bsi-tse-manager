@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://bsi.bund.de/TR03151" 
+           xmlns:tr="http://bsi.bund.de/TR03151"
+           elementFormDefault="qualified">
+
+  <!-- ============================= -->
+  <!-- Simple Types and Base Types   -->
+  <!-- ============================= -->
+
+  <!-- ClientId: Restricted PrintableString for client identification -->
+  <xs:simpleType name="ClientId">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z0-9 '()+,\-./=?:]*"/>
+      <xs:minLength value="1"/>
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Time: CHOICE between UTCTime and GeneralizedTime -->
+  <xs:complexType name="Time">
+    <xs:choice>
+      <xs:element name="utcTime" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="generalizedTime" type="xs:dateTime" minOccurs="0"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- AlgorithmIdentifier: For cryptographic algorithm identification -->
+  <xs:complexType name="AlgorithmIdentifier">
+    <xs:sequence>
+      <xs:element name="algorithm" type="xs:string" minOccurs="1"/>
+      <xs:element name="parameters" type="xs:anyType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Component Types               -->
+  <!-- ============================= -->
+
+  <!-- ComponentInformationSet: Device component information -->
+  <xs:complexType name="ComponentInformationSet">
+    <xs:sequence>
+      <xs:element name="componentName" type="xs:string" minOccurs="1"/>
+      <xs:element name="manufacturer" type="xs:string" minOccurs="1"/>
+      <xs:element name="model" type="xs:string" minOccurs="1"/>
+      <xs:element name="version" type="xs:string" minOccurs="1"/>
+      <xs:element name="certificationId" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DeviceInformationSet: SEQUENCE OF ComponentInformationSet -->
+  <xs:complexType name="DeviceInformationSet">
+    <xs:sequence>
+      <xs:element name="componentInformation" type="tr:ComponentInformationSet" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ConfiguredComponent: Component configuration information -->
+  <xs:complexType name="ConfiguredComponent">
+    <xs:sequence>
+      <xs:element name="componentName" type="xs:string" minOccurs="1"/>
+      <xs:element name="configurationWasSuccessful" type="xs:boolean" minOccurs="1"/>
+      <xs:element name="loggingParameterSet" type="tr:LoggingParameterSet" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ConfiguredComponents: SEQUENCE OF ConfiguredComponent -->
+  <xs:complexType name="ConfiguredComponents">
+    <xs:sequence>
+      <xs:element name="configuredComponent" type="tr:ConfiguredComponent" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Logging Parameter Types       -->
+  <!-- ============================= -->
+
+  <!-- LoggingParameter: Single logging configuration parameter -->
+  <xs:complexType name="LoggingParameter">
+    <xs:sequence>
+      <xs:element name="eventType" type="xs:string" minOccurs="1"/>
+      <xs:element name="isLogged" type="xs:boolean" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- LoggingParameterSet: Set of logging parameters -->
+  <xs:complexType name="LoggingParameterSet">
+    <xs:sequence>
+      <xs:element name="loggingParameter" type="tr:LoggingParameter" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SlewSettings: Time adjustment settings -->
+  <xs:complexType name="SlewSettings">
+    <xs:sequence>
+      <xs:element name="slewStepMicroSeconds" type="xs:long" minOccurs="1"/>
+      <xs:element name="slewRateMicroSecondsPerSecond" type="xs:long" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- System Log Event Data Types   -->
+  <!-- ============================= -->
+
+  <!-- AuthenticateUserEventData: Event data for user authentication -->
+  <xs:complexType name="AuthenticateUserEventData">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="1"/>
+      <xs:element name="role" type="xs:string" minOccurs="1"/>
+      <xs:element name="authenticationResult" type="xs:string" minOccurs="1"/>
+      <xs:element name="remainingRetries" type="xs:integer" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ConfigureLoggingEventData: Event data for logging configuration -->
+  <xs:complexType name="ConfigureLoggingEventData">
+    <xs:sequence>
+      <xs:element name="configuredComponents" type="tr:ConfiguredComponents" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DeleteLogMessagesEventData: Event data for log message deletion -->
+  <xs:complexType name="DeleteLogMessagesEventData">
+    <xs:sequence>
+      <xs:element name="deletedLogMessages" type="xs:integer" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DeregisterClientEventData: Event data for client deregistration -->
+  <xs:complexType name="DeregisterClientEventData">
+    <xs:sequence>
+      <xs:element name="clientId" type="tr:ClientId" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DisableSecureElementEventData: Event data for secure element disabling -->
+  <xs:complexType name="DisableSecureElementEventData">
+    <xs:sequence>
+      <xs:element name="reason" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- InitializeEventData: Event data for device initialization -->
+  <xs:complexType name="InitializeEventData">
+    <xs:sequence>
+      <xs:element name="seriesNumber" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- LockTransactionLoggingEventData: Event data for locking transaction logging -->
+  <xs:complexType name="LockTransactionLoggingEventData">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- LogOutEventData: Event data for user logout -->
+  <xs:complexType name="LogOutEventData">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="1"/>
+      <xs:element name="logOutCause" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- RegisterClientEventData: Event data for client registration -->
+  <xs:complexType name="RegisterClientEventData">
+    <xs:sequence>
+      <xs:element name="clientId" type="tr:ClientId" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SelfTestEventData: Event data for self-test execution -->
+  <xs:complexType name="SelfTestEventData">
+    <xs:sequence>
+      <xs:element name="selfTestResult" type="tr:SelfTestResultSet" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SetDescriptionEventData: Event data for device description setting -->
+  <xs:complexType name="SetDescriptionEventData">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UnblockPinEventData: Event data for PIN unblocking -->
+  <xs:complexType name="UnblockPinEventData">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string" minOccurs="1"/>
+      <xs:element name="unblockResult" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UnlockTransactionLoggingEventData: Event data for unlocking transaction logging -->
+  <xs:complexType name="UnlockTransactionLoggingEventData">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UpdateDeviceEventData: Event data for device update start -->
+  <xs:complexType name="UpdateDeviceEventData">
+    <xs:sequence>
+      <xs:element name="updateVariant" type="xs:string" minOccurs="1"/>
+      <xs:element name="targetVersion" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UpdateDeviceCompletedEventData: Event data for completed device update -->
+  <xs:complexType name="UpdateDeviceCompletedEventData">
+    <xs:sequence>
+      <xs:element name="updateVariant" type="xs:string" minOccurs="1"/>
+      <xs:element name="targetVersion" type="xs:string" minOccurs="1"/>
+      <xs:element name="updateOutcome" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UpdateTimeEventData: Event data for time update -->
+  <xs:complexType name="UpdateTimeEventData">
+    <xs:sequence>
+      <xs:element name="timeBeforeUpdate" type="tr:Time" minOccurs="1"/>
+      <xs:element name="timeAfterUpdate" type="tr:Time" minOccurs="1"/>
+      <xs:element name="slewSettings" type="tr:SlewSettings" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Self-Test Result Types        -->
+  <!-- ============================= -->
+
+  <!-- SelfTestResult: Individual self-test result -->
+  <xs:complexType name="SelfTestResult">
+    <xs:sequence>
+      <xs:element name="componentName" type="xs:string" minOccurs="1"/>
+      <xs:element name="testIsPositive" type="xs:boolean" minOccurs="1"/>
+      <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+      <xs:element name="timeOfEvent" type="tr:Time" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SelfTestResultSet: Set of self-test results -->
+  <xs:complexType name="SelfTestResultSet">
+    <xs:sequence>
+      <xs:element name="selfTestResult" type="tr:SelfTestResult" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Result Types                  -->
+  <!-- ============================= -->
+
+  <!-- ExportDataResult: Result container for data export operations -->
+  <xs:complexType name="ExportDataResult">
+    <xs:sequence>
+      <xs:element name="inputStream" type="xs:base64Binary" minOccurs="1"/>
+      <xs:element name="filename" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- FinishTransactionResult: Result container for finishing a transaction -->
+  <xs:complexType name="FinishTransactionResult">
+    <xs:sequence>
+      <xs:element name="transactionNumber" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureCreationTime" type="xs:dateTime" minOccurs="1"/>
+      <xs:element name="serialNumber" type="xs:hexBinary" minOccurs="1"/>
+      <xs:element name="signatureCounter" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureValue" type="xs:hexBinary" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- StartTransactionResult: Result container for starting a transaction -->
+  <xs:complexType name="StartTransactionResult">
+    <xs:sequence>
+      <xs:element name="transactionNumber" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureCreationTime" type="xs:dateTime" minOccurs="1"/>
+      <xs:element name="serialNumber" type="xs:hexBinary" minOccurs="1"/>
+      <xs:element name="signatureCounter" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureValue" type="xs:hexBinary" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- UpdateTransactionResult: Result container for updating a transaction -->
+  <xs:complexType name="UpdateTransactionResult">
+    <xs:sequence>
+      <xs:element name="transactionNumber" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureCreationTime" type="xs:dateTime" minOccurs="1"/>
+      <xs:element name="serialNumber" type="xs:hexBinary" minOccurs="1"/>
+      <xs:element name="signatureCounter" type="xs:long" minOccurs="1"/>
+      <xs:element name="signatureValue" type="xs:hexBinary" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Root Elements                 -->
+  <!-- ============================= -->
+
+  <xs:element name="types">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="type" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,53 @@
+flowchart TD
+    Start([Guest: Take Seat])
+    Start --> StartTx["Order Terminal: startTransaction<br/>processData: empty or initial items<br/>processType: empty or Bestellung-V1"]
+    
+    StartTx --> StartTSE[TSE: Start Transaction<br/>Create Transaction Number]
+    StartTSE --> TxNumber[Receive Transaction Number]
+    
+    TxNumber --> FirstOrder[Waiter: Take First Order]
+    
+    FirstOrder --> Update1{Secure items<br/>immediately?}
+    
+    Update1 -->|Yes| UpdateTx1["Order Terminal: updateTransaction<br/>processData: CSV Items<br/>processType: Bestellung-V1"]
+    
+    UpdateTx1 --> Example1["Example:<br/>2;Schnitzel;12.50<br/>1;Beer 0.5l;4.20"]
+    
+    Example1 --> UpdateTSE1[TSE: Secure Update<br/>Create Signature]
+    
+    Update1 -->|No| Wait1[Wait for More Orders]
+    UpdateTSE1 --> Wait1
+    
+    Wait1 --> MoreOrders{More<br/>Orders?}
+    
+    MoreOrders -->|Yes| NextOrder[Waiter: Additional Order]
+    NextOrder --> UpdateTx2[updateTransaction<br/>with new items]
+    UpdateTx2 --> UpdateTSE2[TSE: Secure Update]
+    UpdateTSE2 --> Wait1
+    
+    MoreOrders -->|No| Checkout[Guest Wants to Pay]
+    
+    Checkout --> FinishTx["Order Terminal: finishTransaction<br/>processData: final items or empty<br/>processType: Bestellung-V1"]
+    
+    FinishTx --> FinishTSE[TSE: Finish Transaction<br/>Final Signature]
+    
+    FinishTSE --> SaveLog[Save Transaction Logs]
+    
+    SaveLog --> CreateKB[Separate POS:<br/>Create Kassenbeleg Transaction<br/>for Payment]
+    
+    CreateKB --> Link[Link via<br/>ABRECHNUNGSKREIS<br/>e.g. Table Number]
+    
+    Link --> PrintReceipt[Print Receipt<br/>with First Order Timestamp]
+    
+    PrintReceipt --> End([End])
+    
+    style StartTx fill:#e1f5ff
+    style UpdateTx1 fill:#fff9c4
+    style UpdateTx2 fill:#fff9c4
+    style FinishTx fill:#e1f5ff
+    style Example1 fill:#fff4e1
+    style Link fill:#e8f5e9
+    
+    Note1[Important: For Bestellung-V1<br/>updateTransaction IS used<br/>for incremental securing]
+    
+    style Note1 fill:#e3f2fd

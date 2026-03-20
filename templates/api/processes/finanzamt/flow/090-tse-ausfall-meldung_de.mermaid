@@ -1,0 +1,31 @@
+graph TD
+    Start([Start: TSE-Ausfall erkannt])
+    
+    Start --> Feststellen[TSE-Ausfall feststellen]
+    Feststellen --> Dokumentieren[Ausfallzeiten und -grund<br/>dokumentieren]
+    
+    Dokumentieren --> Pruefen{Kann System ohne<br/>TSE weiterbetrieben<br/>werden?}
+    
+    Pruefen -->|Ja| Kennzeichnen[Ausfall auf Beleg<br/>kennzeichnen]
+    Pruefen -->|Nein| Stoppen[System stoppen]
+    
+    Kennzeichnen --> Betrieb[Weiterbetrieb bis<br/>Ausfallbehebung]
+    
+    Betrieb --> Beheben[Unverzüglich Maßnahmen<br/>zur Behebung treffen]
+    Stoppen --> Beheben
+    
+    Beheben --> Testen[TSE-Funktion<br/>testen]
+    
+    Testen --> Funktioniert{TSE funktioniert<br/>wieder?}
+    
+    Funktioniert -->|Nein| Beheben
+    Funktioniert -->|Ja| Wiederaufnahme[Normalbetrieb<br/>wiederaufnehmen]
+    
+    Wiederaufnahme --> Ende([Ende: TSE wieder<br/>funktionsfähig])
+    
+    style Start fill:#90EE90
+    style Ende fill:#FFB6C1
+    style Pruefen fill:#FFE4B5
+    style Funktioniert fill:#FFE4B5
+    style Kennzeichnen fill:#87CEEB
+    style Dokumentieren fill:#87CEEB

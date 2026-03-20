@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getMaxNumberOfTransactions" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getMaxNumberOfTransactions</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">The function getMaxNumberOfTransactions can be used to obtain the maximum number of simultaneously open transactions that can be managed by the device.</text>
+    <text xml:lang="de">Die Funktion getMaxNumberOfTransactions kann verwendet werden, um die maximale Anzahl gleichzeitig offener Transaktionen zu ermitteln, die vom Gerät verwaltet werden können.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL determine the maximum number of transactions that can be managed by the device simultaneously. If the device supports a practically unlimited number of transactions, the function SHALL return the highest value that can be stored in the output parameter maxNumberTransactions. If the determination of the maximum number of transactions fails, the function SHALL raise the exception ErrorGetMaxNumberTransactionsFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt maximale Transaktionsanzahl, die gleichzeitig verwaltet werden kann. Bei unbegrenzten Transaktionen: Gibt Höchstwert zurück. Bei Fehler: Exception ErrorGetMaxNumberTransactionsFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  DETERMINE maximum number of transactions
+CATCH error
+  THROW ErrorGetMaxNumberTransactionsFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  ERMITTLE maximale Transaktionsanzahl
+BEI_FEHLER
+  WERFE ErrorGetMaxNumberTransactionsFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetMaxNumberTransactionsFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of the maximum number of transactions fails</text>
+          <text xml:lang="de">Die Ermittlung der max. Transaktionsanzahl schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of the maximal number of transaction is successful, the function SHALL return the number by the output parameter maxNumberTransactions. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt maximale Transaktionsanzahl zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN maxNumberTransactions without exception</text>
+        <text xml:lang="de">GEBE maximale Transaktionsanzahl zurück (maxNumberTransactions Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The determination of the maximum number of transactions has been successful</text>
+          <text xml:lang="de">Die Ermittlung der maximalen Transaktionsanzahl war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the maximum number of transactions without raising an exception</text>
+          <text xml:lang="de">Gibt maximale Transaktionsanzahl zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>long</type>
+    <description>
+      <text xml:lang="en">the maximum number of simultaneously open transactions.</text>
+      <text xml:lang="de">die maximale Anzahl gleichzeitig offener Transaktionen.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetMaxNumberTransactionsFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

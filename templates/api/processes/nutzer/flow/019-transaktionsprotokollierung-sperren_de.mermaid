@@ -1,0 +1,42 @@
+flowchart TD
+    Start([Admin/Central Operator:<br/>lockTransactionLogging aufrufen])
+    Start --> CheckAuth{Admin<br/>authentifiziert?}
+    
+    CheckAuth -->|Nein| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Ja| CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| CheckTime{Zeit<br/>gesetzt?}
+    
+    CheckTime -->|Nein| ErrorTime[Exception:<br/>ErrorTimeNotSet]
+    CheckTime -->|Ja| CreateLog[Erstelle System-Log-Nachricht<br/>lockTransactionLogging]
+    
+    CreateLog --> SetOrigin{Aufrufer?}
+    SetOrigin -->|Admin| SetOriginAdmin[eventOrigin = Interface<br/>eventTriggeredByUser = admin]
+    SetOrigin -->|Central Operator| SetOriginCO[eventOrigin = centraloperator<br/>eventTriggeredByUser = centraloperator]
+    
+    SetOriginAdmin --> IncrSig
+    SetOriginCO --> IncrSig[SM: Signaturzähler++]
+    
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> LockFunctions[Sperre Funktionen:<br/>- startTransaction<br/>- updateTransaction<br/>- finishTransaction]
+    
+    LockFunctions --> CheckLock{Sperrung<br/>erfolgreich?}
+    
+    CheckLock -->|Nein| ErrorLock[Exception:<br/>ErrorLockTransactionLoggingFailed]
+    CheckLock -->|Ja| Return[Rückgabe: Erfolg]
+    
+    Return --> End([Ende - Transaktionen gesperrt])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorTime --> End
+    ErrorLock --> End
+    
+    style LockFunctions fill:#FFB6C1
+    style Return fill:#FFD700
+    
+    Note1[Hinweis: Offene Transaktionen<br/>können weiter existieren,<br/>aber keine neuen mehr gestartet werden]
+    CheckLock -.-> Note1

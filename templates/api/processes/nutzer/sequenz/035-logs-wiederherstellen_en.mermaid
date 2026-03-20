@@ -1,0 +1,44 @@
+sequenceDiagram
+    participant Admin as Admin
+    participant TSE as TSE
+    participant Storage as Storage Medium
+
+    Note over Admin: Admin has TAR archive<br/>from previous export
+
+    Admin->>TSE: restoreLogsFromBackup(restoreData)
+    activate TSE
+    
+    TSE->>TSE: Check: Admin authenticated
+    
+    TSE->>TSE: Unpack TAR Archive:<br/>- Log Messages (*.log)<br/>- Certificates (*.crt)<br/>- info.csv (NOT for restore)
+    
+    TSE->>TSE: Validate Log Messages:<br/>Were created by THIS TSE?
+    
+    alt Logs from different TSE
+        TSE-->>Admin: Exception:<br/>ErrorRestoreFailed
+    else Logs from this TSE
+        TSE->>Storage: Save Log Messages
+        activate Storage
+        
+        alt Filename already exists
+            Storage->>Storage: Append counter:<br/>file_1.log, file_2.log
+        end
+        
+        Storage-->>TSE: OK
+        deactivate Storage
+        
+        TSE->>Storage: Save Certificates
+        activate Storage
+        
+        alt Certificate already exists
+            Storage->>Storage: Skip (already present)
+        end
+        
+        Storage-->>TSE: OK
+        deactivate Storage
+        
+        TSE-->>Admin: Restoration successful
+    end
+    deactivate TSE
+    
+    Note over Admin,Storage: Storage must remain<br/>in consistent state

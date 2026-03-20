@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorNoLogMessageFound" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorNoLogMessageFound</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API functions getLastLogMessage or exportLogMessages cannot find any log message parts in the Secure Element's logging storage. The functions attempt to retrieve or export log messages, but the logging storage either contains no messages at all or has been cleared. ErrorNoLogMessageFound indicates that the Secure Element's transaction logging system has no recorded log entries to return to the caller.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktionen getLastLogMessage oder exportLogMessages keine Protokollmeldungsteile im Protokollierungsspeicher des Secure Element finden können. Die Funktionen versuchen, Protokollmeldungen abzurufen oder zu exportieren, aber der Protokollierungsspeicher enthält entweder überhaupt keine Meldungen oder wurde gelöscht. ErrorNoLogMessageFound zeigt an, dass das Transaktionsprotokollierungssystem des Secure Element keine aufgezeichneten Protokolleinträge hat, um sie an den Aufrufer zurückzugeben.</text>
+  </description>
+  <category>Event Logging</category>
+  <subcategory>No Content</subcategory>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorNoLogMessageFound that is thrown if no log message parts have been found in the Secure Element.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorNoLogMessageFound, die ausgelöst wird, wenn keine Protokollmeldungsteile im Secure Element gefunden wurden.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when log message retrieval or export functions attempt to access transaction log messages but find that no log messages exist in the Secure Element's storage. Functions such as getLastLogMessage and exportLogMessages are used to retrieve recorded log entries from the device's transaction logging subsystem. ErrorNoLogMessageFound is raised when these functions search the logging storage and find it empty - no log entries are available to retrieve or export. This is an expected condition when the logging storage has not yet accumulated entries or when log messages have been deleted. Recovery requires confirming that logging is enabled and functioning, or verifying that expected events have actually been logged on the device.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn Protokollmeldungs-Abruf- oder Exportfunktionen versuchen, auf Transaktionsprotokollmeldungen zuzugreifen, aber stellen fest, dass keine Protokollmeldungen im Speicher des Secure Element vorhanden sind. Funktionen wie getLastLogMessage und exportLogMessages werden verwendet, um aufgezeichnete Protokolleinträge vom Transaktionsprotokollierungs-Subsystem des Geräts abzurufen. ErrorNoLogMessageFound wird ausgelöst, wenn diese Funktionen den Protokollierungsspeicher durchsuchen und ihn leer finden - es sind keine Protokolleinträge verfügbar zum Abrufen oder Exportieren. Dies ist eine erwartete Bedingung, wenn der Protokollierungsspeicher noch keine Einträge angesammelt hat oder wenn Protokollmeldungen gelöscht wurden. Die Wiederherstellung erfordert Bestätigung, dass Protokollierung aktiviert und funktioniert, oder Verifizierung, dass erwartete Ereignisse tatsächlich auf dem Gerät protokolliert wurden.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1 Event Logging and Log Message Retrieval - getLastLogMessage and exportLogMessages</section>
+    <requirement>
+      <text xml:lang="en">The functions getLastLogMessage and exportLogMessages SHALL retrieve transaction log message entries from the Secure Element's logging storage. If the logging storage contains no log message entries (i.e., it is empty), these functions SHALL raise the exception ErrorNoLogMessageFound. This exception indicates that the requested log messages do not exist in the device's storage - it is an expected condition when no events have been logged or when previously logged messages have been deleted.</text>
+      <text xml:lang="de">Die Funktionen getLastLogMessage und exportLogMessages sollen Transaktionsprotokollmeldungseinträge aus dem Protokollierungsspeicher des Secure Element abrufen. Falls der Protokollierungsspeicher keine Protokollmeldungseinträge enthält (d. h., er ist leer), sollen diese Funktionen die Ausnahme ErrorNoLogMessageFound auslösen. Diese Ausnahme zeigt an, dass die angeforderten Protokollmeldungen nicht im Speicher des Geräts vorhanden sind - es ist eine erwartete Bedingung, wenn keine Ereignisse protokolliert wurden oder wenn zuvor protokollierte Meldungen gelöscht wurden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Log message retrieval operations - getLastLogMessage and exportLogMessages functions only, when logging storage is empty</text>
+      <text xml:lang="de">Protokollmeldungs-Abrufoperationen - nur Funktionen getLastLogMessage und exportLogMessages, wenn Protokollierungsspeicher leer ist</text>
+    </applicability>
+    <reference>getLastLogMessage – Function (3.3.1); exportLogMessages – Function (3.3.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getLastLogMessage or exportLogMessages function to retrieve log entries</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft getLastLogMessage oder exportLogMessages Funktion auf, um Protokolleinträge abzurufen</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters (for exportLogMessages, filter criteria if applicable)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter (für exportLogMessages, Filterkriterien falls zutreffend)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization and device state for log access operations</text>
+      <text xml:lang="de">Funktion prüft Autorisierung und Gerätezustand für Protokollzugriffsoperationen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function transmits log retrieval or export command to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet Protokollabfrage- oder Exportbefehl an Secure Element</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element searches its logging storage for log messages</text>
+      <text xml:lang="de">Secure Element durchsucht seinen Protokollierungsspeicher nach Protokollmeldungen</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If log messages are found → proceed to step 7</text>
+      <text xml:lang="de">Falls Protokollmeldungen gefunden werden → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If NO log messages are found (storage is empty) → ErrorNoLogMessageFound raised, function exits</text>
+      <text xml:lang="de">Falls KEINE Protokollmeldungen gefunden werden (Speicher ist leer) → ErrorNoLogMessageFound ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function receives log messages from Secure Element</text>
+      <text xml:lang="de">Funktion erhält Protokollmeldungen vom Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function processes and formats log messages for return to caller</text>
+      <text xml:lang="de">Funktion verarbeitet und formatiert Protokollmeldungen für Rückgabe an Aufrufer</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns log messages to caller</text>
+      <text xml:lang="de">Funktion gibt Protokollmeldungen an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify log messages exist using appropriate query</text>
+      <text xml:lang="de">Verifizieren Sie, dass Protokollmeldungen mit geeigneter Abfrage vorhanden sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check if device has stored any log messages</text>
+      <text xml:lang="de">Prüfen Sie, ob Gerät Protokollmeldungen gespeichert hat</text>
+    </step>
+    <step>
+      <text xml:lang="en">Perform operations that create log messages first</text>
+      <text xml:lang="de">Führen Sie zuerst Operationen aus, die Protokollmeldungen erstellen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure logging is enabled before creating messages</text>
+      <text xml:lang="de">Stellen Sie sicher, dass Protokollierung aktiviert ist, bevor Meldungen erstellt werden</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeleteLogMessagesFailed</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="No Log Messages Retrieved">
+      <text xml:lang="en">No log message data is returned to the caller. The retrieval or export operation produces no output because no log messages exist to return.</text>
+      <text xml:lang="de">Keine Protokollmeldungsdaten werden an den Aufrufer zurückgegeben. Der Abruf- oder Exportvorgang erzeugt keine Ausgabe, da keine Protokollmeldungen zum Zurückgeben vorhanden sind.</text>
+    </state>
+    <state name="Logging Storage Unchanged">
+      <text xml:lang="en">The Secure Element's logging storage remains unchanged. The retrieval operation is read-only and does not modify any stored log messages.</text>
+      <text xml:lang="de">Der Protokollierungsspeicher des Secure Element bleibt unverändert. Der Abrufvorgang ist schreibgeschützt und ändert keine gespeicherten Protokollmeldungen.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged by the exception. No cascading state modifications occur as a result of the missing log messages.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt durch die Ausnahme unverändert. Es treten keine kaskadierenden Zustandsmodifizierungen als Ergebnis der fehlenden Protokollmeldungen auf.</text>
+    </state>
+    <state name="Logging System Operational">
+      <text xml:lang="en">The logging subsystem continues to operate normally. The absence of current log messages does not prevent future events from being logged.</text>
+      <text xml:lang="de">Das Protokollierungs-Subsystem funktioniert weiterhin normal. Das Fehlen aktueller Protokollmeldungen verhindert nicht, dass zukünftige Ereignisse protokolliert werden.</text>
+    </state>
+    <state name="Future Logging Available">
+      <text xml:lang="en">The logging system remains capable of recording new log entries as operations occur on the device.</text>
+      <text xml:lang="de">Das Protokollierungssystem bleibt fähig, neue Protokolleinträge zu erfassen, wenn Operationen auf dem Gerät auftreten.</text>
+    </state>
+    <state name="No Data Loss">
+      <text xml:lang="en">The exception does not cause loss or corruption of any existing data. All previously stored messages, if any, remain intact.</text>
+      <text xml:lang="de">Die Ausnahme führt nicht zu Verlust oder Beschädigung vorhandener Daten. Alle zuvor gespeicherten Meldungen bleiben, falls vorhanden, intakt.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: No log message found matching the query criteria</text>
+      <text xml:lang="de">Anzeichen: Keine Protokollmeldung gefunden, die den Abfragekriterien entspricht</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Message Retrieval, Log Search, Data Availability</text>
+      <text xml:lang="de">Themen: Protokollierungsoperationen, Meldungsabruf, Protokollsuche, Datenverfügbarkeit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getLastLogMessage and getLastTransactionLogMessage when no messages exist</text>
+      <text xml:lang="de">Wird von getLastLogMessage und getLastTransactionLogMessage ausgelöst, wenn keine Meldungen vorhanden sind</text>
+    </note>
+    <note>
+      <text xml:lang="en">Log query functions search for most recent log message</text>
+      <text xml:lang="de">Protokollabfragefunktionen suchen nach neuester Protokollmeldung</text>
+    </note>
+    <note>
+      <text xml:lang="en">No log messages available in device storage</text>
+      <text xml:lang="de">Keine Protokollmeldungen im Gerätespeicher verfügbar</text>
+    </note>
+    <note>
+      <text xml:lang="en">Query returns empty result due to absent log data</text>
+      <text xml:lang="de">Abfrage gibt leeres Ergebnis zurück wegen fehlender Protokolldaten</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,50 @@
+graph TD
+    Start([Start: Exemption from<br/>receipt obligation<br/>requested])
+    
+    Start --> Check{Sale to many<br/>unknown persons?}
+    
+    Check -->|No| NotAllowed[Exemption not<br/>possible]
+    Check -->|Yes| Hardship{Material hardship<br/>demonstrable?}
+    
+    Hardship -->|Only costs| CostsAlone[Costs alone are<br/>NOT material hardship]
+    Hardship -->|Yes| Document[Document and<br/>justify material<br/>hardship]
+    
+    CostsAlone --> NotAllowed
+    
+    Document --> Application[File application per<br/>§148 AO with<br/>competent tax office]
+    
+    Application --> Review[Tax office reviews<br/>individual case per<br/>due discretion]
+    
+    Review --> Decision{Exemption<br/>granted?}
+    
+    Decision -->|No| Rejection[Receive rejection<br/>notice]
+    Decision -->|Yes| Approval[Receive exemption<br/>notice]
+    
+    Rejection --> Appeal{File legal<br/>remedy?}
+    
+    Appeal -->|Yes| Objection[File objection]
+    Appeal -->|No| NotExempted[Receipt obligation<br/>remains]
+    
+    Objection --> NewReview[New proceedings]
+    NewReview --> Decision
+    
+    Approval --> Notice[NOTE:<br/>§368 BGB remains<br/>applicable<br/>Receipt upon request!]
+    
+    Notice --> TSERequirement[TSE function must<br/>not be restricted]
+    
+    TSERequirement --> End([End: Exemption<br/>effective])
+    
+    NotAllowed --> End2([End: No<br/>exemption])
+    NotExempted --> End2
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style End2 fill:#FFB6C1
+    style Check fill:#FFE4B5
+    style Hardship fill:#FFE4B5
+    style Decision fill:#FFE4B5
+    style Appeal fill:#FFE4B5
+    style NotAllowed fill:#FF6B6B
+    style CostsAlone fill:#FF6B6B
+    style Approval fill:#90EE90
+    style Rejection fill:#FF6B6B

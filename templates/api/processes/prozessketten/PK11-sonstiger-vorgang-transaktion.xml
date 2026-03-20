@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK11</chainId>
+    <name>
+        <text xml:lang="en">SonstigerVorgang Transaction (DSFinV-K)</text>
+        <text xml:lang="de">SonstigerVorgang-Transaktion (DSFinV-K)</text>
+    </name>
+    <description>
+        <text xml:lang="en">DSFinV-K specific transaction process for processType 'SonstigerVorgang' (Other Transaction). This is a catch-all category for any transactions that do not fit the Kassenbeleg-V1 or Bestellung-V1 formats. The processData content is free-form and not strictly regulated.</text>
+        <text xml:lang="de">DSFinV-K-spezifischer Transaktionsprozess für processType 'SonstigerVorgang' (Sonstiger Vorgang). Dies ist eine Auffangkategorie für alle Vorgänge, die nicht in die Formate Kassenbeleg-V1 oder Bestellung-V1 passen. Der Inhalt von processData ist freiform und nicht streng reguliert.</text>
+    </description>
+    <category>
+        <text xml:lang="en">DSFinV-K Transaction Types</text>
+        <text xml:lang="de">DSFinV-K Transaktionstypen</text>
+    </category>
+    <actors>
+        <actor>
+            <text xml:lang="en">User/Staff</text>
+            <text xml:lang="de">Nutzer/Personal</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">POS System/Application</text>
+            <text xml:lang="de">Kassensystem/Anwendung</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">Free-form Process Data</text>
+            <text xml:lang="de">Freiform-Prozessdaten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Type: SonstigerVorgang</text>
+            <text xml:lang="de">Transaktionstyp: SonstigerVorgang</text>
+        </object>
+        <object>
+            <text xml:lang="en">SonstigerVorgangData Structure</text>
+            <text xml:lang="de">SonstigerVorgangData Struktur</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>startTransaction</function>
+        <function>finishTransaction</function>
+    </interfaceFunctions>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized</text>
+            <text xml:lang="de">TSE ist initialisiert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Client is registered</text>
+            <text xml:lang="de">Client ist registriert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Time is set</text>
+            <text xml:lang="de">Zeit ist gesetzt</text>
+        </prerequisite>
+    </prerequisites>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Start Transaction (empty)</text>
+                <text xml:lang="de">Transaktion starten (leer)</text>
+            </name>
+            <function>
+                <name>startTransaction</name>
+                <linkedProcess>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call startTransaction with empty processData and empty processType. Similar to Kassenbeleg-V1, the transaction is started first, data is provided later.</text>
+                <text xml:lang="de">Aufruf von startTransaction mit leerem processData und leerem processType. Ähnlich wie bei Kassenbeleg-V1 wird die Transaktion zuerst gestartet, Daten werden später übergeben.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Registered client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>Empty (byte[0])</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>Empty string</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Process Execution</text>
+                <text xml:lang="de">Vorgangsausführung</text>
+            </name>
+            <description>
+                <text xml:lang="en">Execute the custom process. This could be any operation that needs TSE security but doesn't fit standard formats: training transactions, system tests, cash movements, preparation timestamps, etc.</text>
+                <text xml:lang="de">Ausführung des individuellen Vorgangs. Dies kann jede Operation sein, die TSE-Absicherung benötigt aber nicht in Standardformate passt: Schulungsvorgänge, Systemtests, Geldbewegungen, Vorbereitungszeitstempel, etc.</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Finish Transaction (with free-form data)</text>
+                <text xml:lang="de">Transaktion abschließen (mit Freiform-Daten)</text>
+            </name>
+            <function>
+                <name>finishTransaction</name>
+                <linkedProcess>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call finishTransaction with processData in free-form text format and processType 'SonstigerVorgang'. The content is not strictly regulated, but readable text is recommended for audit purposes.</text>
+                <text xml:lang="de">Aufruf von finishTransaction mit processData in Freiform-Textformat und processType 'SonstigerVorgang'. Der Inhalt ist nicht streng reguliert, aber lesbarer Text wird für Prüfzwecke empfohlen.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Same client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>transactionNumber</name>
+                    <value>From startTransaction response</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>Free-form text: "Preparation started for order 12345" or "Training mode test transaction"</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>"SonstigerVorgang"</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+    </steps>
+    <outcome>
+        <processData>
+            <format>
+                <text xml:lang="en">Free-form content. No strict format requirement.</text>
+                <text xml:lang="de">Freiform-Inhalt. Keine strenge Formatanforderung.</text>
+            </format>
+            <recommendation>
+                <text xml:lang="en">Use readable text format when the transaction may be relevant for tax audits. Include descriptive information about what the transaction represents.</text>
+                <text xml:lang="de">Verwenden Sie ein lesbares Textformat, wenn der Vorgang für Betriebsprüfungen relevant sein könnte. Fügen Sie beschreibende Informationen hinzu, was der Vorgang darstellt.</text>
+            </recommendation>
+            <encoding>
+                <text xml:lang="en">UTF-8 or ASCII encoding</text>
+                <text xml:lang="de">UTF-8- oder ASCII-Codierung</text>
+            </encoding>
+            <examples>
+                <example>
+                    <text xml:lang="en">"Preparation timestamp for order process - Table 5 - Started at 14:23"</text>
+                    <text xml:lang="de">"Vorbereitungszeitstempel für Bestellvorgang - Tisch 5 - Gestartet um 14:23"</text>
+                </example>
+                <example>
+                    <text xml:lang="en">"Training transaction - Employee ID: 4711 - System test successful"</text>
+                    <text xml:lang="de">"Schulungsvorgang - Mitarbeiter-ID: 4711 - Systemtest erfolgreich"</text>
+                </example>
+                <example>
+                    <text xml:lang="en">"Cash withdrawal for bank deposit - Amount: 500.00 EUR"</text>
+                    <text xml:lang="de">"Geldentnahme für Bankeinzahlung - Betrag: 500,00 EUR"</text>
+                </example>
+            </examples>
+        </processData>
+        <artifacts>
+            <artifact>
+                <text xml:lang="en">Transaction log entry with free-form processData</text>
+                <text xml:lang="de">Transaktions-Log-Eintrag mit Freiform-processData</text>
+            </artifact>
+            <artifact>
+                <text xml:lang="en">TSE signature for custom process</text>
+                <text xml:lang="de">TSE-Signatur für individuellen Vorgang</text>
+            </artifact>
+        </artifacts>
+    </outcome>
+    <useCases>
+        <useCase>
+            <name>
+                <text xml:lang="en">Sales Preparation Timestamp (Multi-System without Order Security)</text>
+                <text xml:lang="de">Vorbereitungszeitstempel (Mehrsystem ohne Bestellabsicherung)</text>
+            </name>
+            <description>
+                <text xml:lang="en">In multi-system gastronomy WITHOUT order security (DSFinV-K Section 2.7.3), the first sales preparation timestamp is secured via SonstigerVorgang. This timestamp must later be printed on the final receipt.</text>
+                <text xml:lang="de">In Mehrsystem-Gastronomie OHNE Bestellabsicherung (DSFinV-K Abschnitt 2.7.3) wird der erste Vorbereitungszeitstempel via SonstigerVorgang abgesichert. Dieser Zeitstempel muss später auf dem finalen Beleg gedruckt werden.</text>
+            </description>
+            <reference>DSFinV-K 2.4 Annex H Diagram 5</reference>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Training Transactions</text>
+                <text xml:lang="de">Schulungsvorgänge</text>
+            </name>
+            <description>
+                <text xml:lang="en">Training mode transactions that need TSE security for completeness but have no business/tax relevance. Can use SonstigerVorgang to distinguish from real business transactions.</text>
+                <text xml:lang="de">Schulungsmodus-Transaktionen, die TSE-Absicherung für Vollständigkeit benötigen aber keine geschäftliche/steuerliche Relevanz haben. Kann SonstigerVorgang verwenden zur Unterscheidung von echten Geschäftsvorgängen.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">System Tests</text>
+                <text xml:lang="de">Systemtests</text>
+            </name>
+            <description>
+                <text xml:lang="en">Testing TSE connectivity, timing, or functionality without creating a real receipt. Use SonstigerVorgang to mark as test transaction.</text>
+                <text xml:lang="de">Testen der TSE-Konnektivität, Timing oder Funktionalität ohne echten Beleg zu erstellen. Verwende SonstigerVorgang zur Kennzeichnung als Testtransaktion.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Non-Standard Cash Movements</text>
+                <text xml:lang="de">Nicht-Standard-Geldbewegungen</text>
+            </name>
+            <description>
+                <text xml:lang="en">Cash register operations that don't fit standard formats: employee cash withdrawals, safe deposits, cash transfers between registers, etc. Can be secured with descriptive text.</text>
+                <text xml:lang="de">Kassenoperationen, die nicht in Standardformate passen: Mitarbeiter-Geldentnahmen, Tresoreinlagen, Geldtransfers zwischen Kassen, etc. Können mit beschreibendem Text abgesichert werden.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Custom Business Processes</text>
+                <text xml:lang="de">Individuelle Geschäftsprozesse</text>
+            </name>
+            <description>
+                <text xml:lang="en">Industry-specific or company-specific processes that require TSE timestamps but don't match standard transaction types.</text>
+                <text xml:lang="de">Branchen- oder unternehmensspezifische Prozesse, die TSE-Zeitstempel benötigen aber nicht zu Standardtransaktionstypen passen.</text>
+            </description>
+        </useCase>
+    </useCases>
+    <importantNotes>
+        <note type="advantage">
+            <text xml:lang="en">Maximum flexibility: No strict format requirements</text>
+            <text xml:lang="de">Maximale Flexibilität: Keine strengen Formatanforderungen</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Catch-all for non-standard transactions</text>
+            <text xml:lang="de">Auffangbecken für nicht-standardisierte Transaktionen</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Simple process: Like Kassenbeleg-V1, just start and finish</text>
+            <text xml:lang="de">Einfacher Prozess: Wie Kassenbeleg-V1, nur Start und Finish</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Enables custom business process security</text>
+            <text xml:lang="de">Ermöglicht Absicherung individueller Geschäftsprozesse</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">No standardized structure: Harder to audit programmatically</text>
+            <text xml:lang="de">Keine standardisierte Struktur: Schwieriger maschinell zu prüfen</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Requires clear documentation: Content meaning must be documented</text>
+            <text xml:lang="de">Erfordert klare Dokumentation: Inhaltsbedeutung muss dokumentiert werden</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Not suitable for standard receipts or orders</text>
+            <text xml:lang="de">Nicht geeignet für Standard-Belege oder Bestellungen</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Should be used sparingly: Prefer Kassenbeleg-V1 or Bestellung-V1 when applicable</text>
+            <text xml:lang="de">Sollte sparsam verwendet werden: Bevorzuge Kassenbeleg-V1 oder Bestellung-V1 wenn anwendbar</text>
+        </note>
+    </importantNotes>
+    <keyDifferences>
+        <difference>
+            <text xml:lang="en">vs. Kassenbeleg-V1: SonstigerVorgang has no structured format for tax/payment data</text>
+            <text xml:lang="de">vs. Kassenbeleg-V1: SonstigerVorgang hat kein strukturiertes Format für Steuer-/Zahlungsdaten</text>
+        </difference>
+        <difference>
+            <text xml:lang="en">vs. Bestellung-V1: SonstigerVorgang has no CSV structure, no updateTransaction typically used</text>
+            <text xml:lang="de">vs. Bestellung-V1: SonstigerVorgang hat keine CSV-Struktur, updateTransaction wird typischerweise nicht verwendet</text>
+        </difference>
+        <difference>
+            <text xml:lang="en">vs. Both: SonstigerVorgang is a catch-all for anything that doesn't fit the other two</text>
+            <text xml:lang="de">vs. Beide: SonstigerVorgang ist Auffangtyp für alles, was nicht in die anderen zwei passt</text>
+        </difference>
+    </keyDifferences>
+    <references>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex I: processType definitions</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang I: processType Definitionen</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Section 2.7.3: Multi-system without order security (using SonstigerVorgang for preparation timestamp)</text>
+            <text xml:lang="de">DSFinV-K 2.4 Abschnitt 2.7.3: Mehrsystem ohne Bestellabsicherung (SonstigerVorgang für Vorbereitungszeitstempel)</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex H Diagram 5: Multi-system without order security</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang H Folie 5: Mehrsystem ohne Bestellabsicherung</text>
+        </reference>
+        <reference>Type: SonstigerVorgangData</reference>
+        <reference>Function: startTransaction</reference>
+        <reference>Function: finishTransaction</reference>
+    </references>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+</processChain>

@@ -1,0 +1,53 @@
+sequenceDiagram
+    participant G as Guest
+    participant W as Waiter
+    participant O as Order Terminal
+    participant T as TSE
+
+    G->>W: Take seat at table
+    W->>O: Take first order
+    
+    Note over O,T: Start transaction
+    O->>T: startTransaction(clientId, processData: empty or initial items, processType: empty or "Bestellung-V1")
+    T->>T: Generate transaction number
+    T-->>O: transactionNumber, logTime, signatureCounter
+    
+    Note over G,T: Guest is dining, more orders possible
+    
+    rect rgb(255, 249, 196)
+        Note over W,T: First additional order
+        G->>W: Additional order (e.g. dessert)
+        W->>O: Enter items
+        O->>O: Create CSV
+        Note right of O: Example: 2 x Schnitzel 12.50 EUR, 1 x Beer 0.5l 4.20 EUR
+        O->>T: updateTransaction(clientId, transactionNumber, processData: CSV Items, processType: "Bestellung-V1")
+        T->>T: Create signature for update
+        T->>T: Save transaction log update
+        T-->>O: logTime, signatureValue, signatureCounter
+    end
+    
+    rect rgb(255, 249, 196)
+        Note over W,T: Second additional order (optional)
+        G->>W: Order more
+        W->>O: Enter more items
+        O->>T: updateTransaction(clientId, transactionNumber, processData: new CSV Items, processType: "Bestellung-V1")
+        T->>T: Create signature for update
+        T-->>O: logTime, signatureValue, signatureCounter
+    end
+    
+    Note over G,T: Guest wants to pay
+    
+    G->>W: Check please
+    W->>O: Initiate closing
+    
+    O->>T: finishTransaction(clientId, transactionNumber, processData: final items or empty, processType: "Bestellung-V1")
+    T->>T: Create final signature
+    T->>T: Close transaction log
+    T-->>O: logTime, signatureValue, signatureCounter
+    
+    Note over O: Create separate Kassenbeleg transaction for payment (PK09), Link via ABRECHNUNGSKREIS
+    
+    O->>W: Print receipt with first order timestamp
+    W->>G: Hand over receipt
+    
+    Note over G,T: Order transaction closed<br/>Separate payment transaction follows

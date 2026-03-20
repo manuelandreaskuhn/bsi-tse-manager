@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <!-- Process Chain Root Element -->
+    <xs:element name="processChain" type="ProcessChainType"/>
+
+    <!-- Main Complex Types -->
+    <xs:complexType name="ProcessChainType">
+        <xs:sequence>
+            <xs:element name="chainId" type="xs:string"/>
+            <xs:element name="name" type="MultilingualTextType"/>
+            <xs:element name="description" type="MultilingualTextType"/>
+            <xs:element name="involvedProcesses" type="InvolvedProcessesType" minOccurs="0"/>
+            <xs:element name="prerequisites" type="PrerequisitesType" minOccurs="0"/>
+            <xs:element name="actors" type="ActorsType" minOccurs="0"/>
+            <xs:element name="steps" type="StepsType" minOccurs="0"/>
+            <xs:element name="variants" type="VariantsType" minOccurs="0"/>
+            <xs:element name="outcome" type="OutcomeType" minOccurs="0"/>
+            <xs:element name="usageScenario" type="MultilingualTextType" minOccurs="0"/>
+            <xs:element name="importantNotes" type="ImportantNotesType" minOccurs="0"/>
+            <xs:element name="securityAspects" type="SecurityAspectsType" minOccurs="0"/>
+            <xs:element name="rules" type="RulesType" minOccurs="0"/>
+            <xs:element name="frequency" type="xs:string" minOccurs="0"/>
+            <xs:element name="useCases" type="UseCasesType" minOccurs="0"/>
+            <xs:element name="logMessages" type="LogMessagesType" minOccurs="0"/>
+            <xs:element name="errorCases" type="ErrorCasesType" minOccurs="0"/>
+            <xs:element name="securityMechanisms" type="SecurityMechanismsType" minOccurs="0"/>
+            <xs:element name="references" type="ReferencesType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Multilingual Text Type -->
+    <xs:complexType name="MultilingualTextType">
+        <xs:sequence>
+            <xs:element name="text" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute ref="xml:lang"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Involved Processes Type -->
+    <xs:complexType name="InvolvedProcessesType">
+        <xs:sequence>
+            <xs:element name="process" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:string"/>
+                        <xs:element name="name" type="MultilingualTextType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Prerequisites Type -->
+    <xs:complexType name="PrerequisitesType">
+        <xs:sequence>
+            <xs:element name="prerequisite" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Actors Type -->
+    <xs:complexType name="ActorsType">
+        <xs:sequence>
+            <xs:element name="actor" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Steps Type -->
+    <xs:complexType name="StepsType">
+        <xs:sequence>
+            <xs:element name="step" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="stepNumber" type="xs:integer"/>
+                        <xs:element name="name" type="MultilingualTextType"/>
+                        <xs:element name="function" type="FunctionType" minOccurs="0"/>
+                        <xs:element name="description" type="MultilingualTextType" minOccurs="0"/>
+                        <xs:element name="input" type="xs:string" minOccurs="0"/>
+                        <xs:element name="critical" type="xs:boolean" minOccurs="0"/>
+                        <xs:element name="optional" type="xs:boolean" minOccurs="0"/>
+                        <xs:element name="frequency" type="xs:string" minOccurs="0"/>
+                        <xs:element name="variants" type="VariantsType" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Variants Type -->
+    <xs:complexType name="VariantsType">
+        <xs:sequence>
+            <xs:element name="variant" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="MultilingualTextType"/>
+                        <xs:element name="description" type="MultilingualTextType" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Function Type with Linked Process -->
+    <xs:complexType name="FunctionType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="linkedProcess" type="ProcessReferenceType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Process Reference Type -->
+    <xs:complexType name="ProcessReferenceType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="name" type="MultilingualTextType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Outcome Type -->
+    <xs:complexType name="OutcomeType">
+        <xs:sequence>
+            <xs:element name="state" type="MultilingualTextType" minOccurs="0"/>
+            <xs:element name="logMessages" type="LogMessagesType" minOccurs="0"/>
+            <xs:element name="storedData" type="StoredDataType" minOccurs="0"/>
+            <xs:element name="minimumLogMessages" type="xs:integer" minOccurs="0"/>
+            <xs:element name="logTypes" type="LogTypesType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Log Messages Type -->
+    <xs:complexType name="LogMessagesType">
+        <xs:sequence>
+            <xs:element name="logMessage" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Log Types Type -->
+    <xs:complexType name="LogTypesType">
+        <xs:sequence>
+            <xs:element name="logType" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Stored Data Type -->
+    <xs:complexType name="StoredDataType">
+        <xs:sequence>
+            <xs:element name="dataItem" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Important Notes Type -->
+    <xs:complexType name="ImportantNotesType">
+        <xs:sequence>
+            <xs:element name="note" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Security Aspects Type -->
+    <xs:complexType name="SecurityAspectsType">
+        <xs:sequence>
+            <xs:element name="aspect" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Rules Type -->
+    <xs:complexType name="RulesType">
+        <xs:sequence>
+            <xs:element name="rule" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Use Cases Type -->
+    <xs:complexType name="UseCasesType">
+        <xs:sequence>
+            <xs:element name="useCase" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Error Cases Type -->
+    <xs:complexType name="ErrorCasesType">
+        <xs:sequence>
+            <xs:element name="errorCase" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="error" type="MultilingualTextType"/>
+                        <xs:element name="reaction" type="MultilingualTextType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Security Mechanisms Type -->
+    <xs:complexType name="SecurityMechanismsType">
+        <xs:sequence>
+            <xs:element name="mechanism" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- References Type -->
+    <xs:complexType name="ReferencesType">
+        <xs:sequence>
+            <xs:element name="reference" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

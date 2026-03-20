@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorPinBlocked" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorPinBlocked</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function authenticateUser fails because the user's PIN has been blocked due to excessive failed authentication attempts. The device tracks the number of consecutive failed PIN attempts and blocks the PIN after exceeding a configurable retry limit. Once blocked, the PIN cannot be used for authentication until it is unblocked via the unblockPin function using the correct PUK (PIN Unblock Key). ErrorPinBlocked indicates that user authentication is no longer possible with the current PIN and PIN unblocking is required.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion authenticateUser fehlschlägt, weil die PIN des Benutzers aufgrund übermäßiger fehlgeschlagener Authentifizierungsversuche blockiert wurde. Das Gerät verfolgt die Anzahl der aufeinanderfolgenden fehlgeschlagenen PIN-Versuche und blockiert die PIN nach Überschreiten einer konfigurierbaren Wiederholungsgrenze. Nach dem Blockieren kann die PIN erst zur Authentifizierung verwendet werden, wenn sie mittels der Funktion unblockPin mit dem korrekten PUK (PIN Unblock Key) entsperrt wird. ErrorPinBlocked zeigt an, dass Benutzerauthentifizierung mit der aktuellen PIN nicht mehr möglich ist und PIN-Entsperrung erforderlich ist.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PIN Security Lock</subcategory>
+  <severity>Critical</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorPinBlocked that is thrown if the PIN has been blocked after excessive failed authentication attempts.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorPinBlocked, die ausgelöst wird, wenn die PIN nach übermäßigen fehlgeschlagenen Authentifizierungsversuchen blockiert wurde.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the authenticateUser function is called but the user's PIN is in a blocked state. The PIN blocking mechanism is a critical security feature that prevents brute-force attacks on user authentication. When a user makes several consecutive incorrect PIN entries (typically 3-5 attempts depending on device configuration), the device automatically blocks the PIN to protect account security. ErrorPinBlocked indicates that the PIN is blocked and authentication cannot proceed. The user must unblock the PIN by providing the correct PUK (PIN Unblock Key) via the unblockPin function before authentication can resume. This is a critical security event that requires proper handling and potentially user notification. Recovery requires either calling unblockPin with the correct PUK to unblock the PIN, or administratively resetting the PIN through alternative means if the PUK is lost.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion authenticateUser aufgerufen wird, aber die PIN des Benutzers in einem blockierten Zustand ist. Der PIN-Blocking-Mechanismus ist ein kritisches Sicherheitsfeature, das vor Brute-Force-Angriffen auf Benutzerauthentifizierung schützt. Wenn ein Benutzer mehrere aufeinanderfolgende falsche PIN-Einträge tätigt (typischerweise 3-5 Versuche je nach Gerätekonfiguration), blockiert das Gerät automatisch die PIN, um die Kontosicherheit zu schützen. ErrorPinBlocked zeigt an, dass die PIN blockiert ist und Authentifizierung nicht fortgesetzt werden kann. Der Benutzer muss die PIN entsperren, indem er den korrekten PUK (PIN Unblock Key) über die Funktion unblockPin bereitstellt, bevor Authentifizierung fortgesetzt werden kann. Dies ist ein kritisches Sicherheitsereignis, das ordnungsgemäße Handhabung und möglicherweise Benutzerbenachrichtigung erfordert. Die Wiederherstellung erfordert entweder Aufruf von unblockPin mit dem korrekten PUK, um die PIN zu entsperren, oder administrative PIN-Zurücksetzen durch alternative Mittel, wenn der PUK verloren geht.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.1 User Authentication - authenticateUser</section>
+    <requirement>
+      <text xml:lang="en">The function authenticateUser SHALL authenticate a user by verifying the provided PIN. The device maintains a retry counter for failed PIN authentication attempts. If a user provides an incorrect PIN, the retry counter is incremented. If the retry counter reaches or exceeds the maximum allowed failed attempts (typically 3, configurable per device), the device SHALL block the PIN to protect account security. Once the PIN is blocked, the authenticateUser function SHALL raise the exception ErrorPinBlocked for any authentication attempt with that user account. The blocked PIN state can only be cleared by providing the correct PUK via the unblockPin function or through administrative PIN reset procedures.</text>
+      <text xml:lang="de">Die Funktion authenticateUser soll einen Benutzer authentifizieren, indem die bereitgestellte PIN verifiziert wird. Das Gerät verwaltet einen Wiederholungszähler für fehlgeschlagene PIN-Authentifizierungsversuche. Falls ein Benutzer eine falsche PIN bereitstellt, wird der Wiederholungszähler erhöht. Falls der Wiederholungszähler das maximale Kontingent fehlgeschlagener Versuche erreicht oder überschreitet (typischerweise 3, konfigurierbar pro Gerät), soll das Gerät die PIN blockieren, um die Kontosicherheit zu schützen. Nach der Blockierung der PIN soll die Funktion authenticateUser die Ausnahme ErrorPinBlocked für jeden Authentifizierungsversuch mit diesem Benutzerkonto auslösen. Der blockierte PIN-Zustand kann nur durch Bereitstellung des korrekten PUK über die Funktion unblockPin oder durch administrative PIN-Zurücksetzvorgänge gelöscht werden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">User authentication operations - authenticateUser function only, when PIN is in blocked state</text>
+      <text xml:lang="de">Benutzerauthentifizierungsvorgänge - nur Funktion authenticateUser, wenn PIN in blockiertem Zustand ist</text>
+    </applicability>
+    <reference>authenticateUser – Function (3.1.1); unblockPin – Function (3.1.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>authenticateUser</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls authenticateUser function with user credentials and PIN</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion authenticateUser mit Benutzerberechtigungen und PIN auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PIN format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PIN-Format</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function transmits authentication command with PIN to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet Authentifizierungsbefehl mit PIN an Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks if the user's PIN is in blocked state</text>
+      <text xml:lang="de">Secure Element prüft, ob die PIN des Benutzers im blockierten Zustand ist</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If PIN is blocked → ErrorPinBlocked raised, function exits</text>
+      <text xml:lang="de">Falls PIN blockiert ist → ErrorPinBlocked wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If PIN is not blocked → proceed to step 6</text>
+      <text xml:lang="de">Falls PIN nicht blockiert ist → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element verifies the provided PIN against the stored PIN</text>
+      <text xml:lang="de">Secure Element prüft die bereitgestellte PIN gegen die gespeicherte PIN</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If PIN is correct → proceed to step 8</text>
+      <text xml:lang="de">Falls PIN korrekt ist → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PIN is incorrect → proceed to step 7</text>
+      <text xml:lang="de">Falls PIN falsch ist → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element increments failed attempt counter and checks retry threshold</text>
+      <text xml:lang="de">Secure Element erhöht den Zähler fehlgeschlagener Versuche und prüft Wiederholungsschwelle</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If retry threshold exceeded → blocks PIN and raises ErrorPinBlocked</text>
+      <text xml:lang="de">Falls Wiederholungsschwelle überschritten → blockiert PIN und löst ErrorPinBlocked aus</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If retry threshold not exceeded → raises ErrorIncorrectPin</text>
+      <text xml:lang="de">Falls Wiederholungsschwelle nicht überschritten → löst ErrorIncorrectPin aus</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function returns successfully with user authenticated</text>
+      <text xml:lang="de">Funktion gibt erfolgreich zurück mit authentifiziertem Benutzer</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">PIN is blocked after failed authentication attempts</text>
+      <text xml:lang="de">PIN wird nach fehlgeschlagenen Authentifizierungsversuchen blockiert</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use unblockPin with correct PUK to unblock PIN</text>
+      <text xml:lang="de">Verwenden Sie unblockPin mit korrektem PUK, um PIN zu entsperren</text>
+    </step>
+    <step>
+      <text xml:lang="en">Wait for any blocking timeout if PUK also blocked</text>
+      <text xml:lang="de">Warten Sie auf Blockierungs-Timeout, falls PUK auch blockiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Reset PIN to new value during unblocking</text>
+      <text xml:lang="de">PIN während Entsperrung auf neuen Wert zurücksetzen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorIncorrectPin</exception>
+    <exception>ErrorPukBlocked</exception>
+    <exception>ErrorUnblockPinFailed</exception>
+    <exception>ErrorAuthenticationFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Authentication Not Performed">
+      <text xml:lang="en">User authentication is not completed. The function exits before verifying credentials.</text>
+      <text xml:lang="de">Benutzerauthentifizierung wird nicht abgeschlossen. Die Funktion beendet sich, bevor Berechtigungen verifiziert werden.</text>
+    </state>
+    <state name="PIN Remains Blocked">
+      <text xml:lang="en">The PIN remains in blocked state after the exception is raised. It does not become unblocked automatically.</text>
+      <text xml:lang="de">Die PIN bleibt nach dem Auftreten der Ausnahme im blockierten Zustand. Sie wird nicht automatisch entsperrt.</text>
+    </state>
+    <state name="Retry Counter Preserved">
+      <text xml:lang="en">The retry counter state is preserved. It may continue to increment if unblockPin is called with incorrect PUK.</text>
+      <text xml:lang="de">Der Wiederholungszählerzustand bleibt erhalten. Er kann weiter inkrementiert werden, wenn unblockPin mit falschem PUK aufgerufen wird.</text>
+    </state>
+    <state name="User Session Not Created">
+      <text xml:lang="en">No user session is created or authenticated. The user is not logged in to the device.</text>
+      <text xml:lang="de">Es wird keine Benutzersitzung erstellt oder authentifiziert. Der Benutzer ist nicht im Gerät angemeldet.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged except for the blocked PIN state.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt unverändert, mit Ausnahme des blockierten PIN-Zustands.</text>
+    </state>
+    <state name="Unblock Required">
+      <text xml:lang="en">PIN unblocking via unblockPin function is required before authentication can resume.</text>
+      <text xml:lang="de">PIN-Entsperrung durch Funktion unblockPin ist erforderlich, bevor Authentifizierung fortgesetzt werden kann.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: PIN is blocked due to too many failed authentication attempts</text>
+      <text xml:lang="de">Anzeichen: PIN ist aufgrund zu vieler fehlgeschlagener Authentifizierungsversuche blockiert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authentication, PIN Management, Security, Access Control, Blocking</text>
+      <text xml:lang="de">Themen: Authentifizierung, PIN-Verwaltung, Sicherheit, Zugriffskontrolle, Blockierung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by authenticateUser when PIN retry counter exhausted</text>
+      <text xml:lang="de">Wird von authenticateUser ausgelöst, wenn PIN-Wiederholungszähler erschöpft ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Authentication blocking mechanism prevents brute force attacks</text>
+      <text xml:lang="de">Authentifizierungs-Blocking-Mechanismus verhindert Brute-Force-Angriffe</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device blocks PIN after multiple failed attempts</text>
+      <text xml:lang="de">Gerät blockiert PIN nach mehreren fehlgeschlagenen Versuchen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Blocked PIN requires unblocking via PUK</text>
+      <text xml:lang="de">Blockierte PIN erfordert Entsperrung über PUK</text>
+    </note>
+  </implementationContext>
+</exception>
+

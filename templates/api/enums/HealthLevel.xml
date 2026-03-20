@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="HealthLevel" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+  <name>HealthLevel</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Enumeration used in system log event data for HealthLevel.</description>
+  <values>
+    <value>
+      <name>ok</name>
+      <numericValue>0</numericValue>
+      <description>ok (0)</description>
+    </value>
+    <value>
+      <name>warning</name>
+      <numericValue>1</numericValue>
+      <description>warning (1)</description>
+    </value>
+    <value>
+      <name>error</name>
+      <numericValue>2</numericValue>
+      <description>error (2)</description>
+    </value>
+    <value>
+      <name>fatal</name>
+      <numericValue>3</numericValue>
+      <description>fatal (3)</description>
+    </value>
+  </values>
+</enum>

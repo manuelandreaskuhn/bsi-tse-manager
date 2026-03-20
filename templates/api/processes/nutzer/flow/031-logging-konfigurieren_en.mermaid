@@ -1,0 +1,38 @@
+flowchart TD
+    Start([Admin: configureLogging call])
+    Start --> CheckParams{Parameters<br/>valid?}
+    
+    CheckParams -->|No| ErrorParam[Exception:<br/>ErrorParameterSyntax]
+    CheckParams -->|Yes| CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceIsInitialized]
+    CheckInit -->|Yes| CheckConfigurable{Event<br/>configurable?}
+    
+    CheckConfigurable -->|No| ErrorNotConfig[Exception:<br/>ErrorLoggingOfEventNotConfigurable]
+    CheckConfigurable -->|Yes| SetLogging[Set Logging Status<br/>for Event in Component:<br/>eventEnabled = true/false]
+    
+    SetLogging --> CheckSet{Setting<br/>successful?}
+    
+    CheckSet -->|No| ErrorConfig[Exception:<br/>ErrorConfigureLoggingFailed]
+    CheckSet -->|Yes| CreateLog[Create System Log Message<br/>configureLogging]
+    
+    CreateLog --> IncrSig[SM: Signature Counter++]
+    IncrSig --> CalcSig[SM: Create Signature]
+    CalcSig --> SaveLog[Save Log Message]
+    
+    SaveLog --> Return[Return: Success]
+    Return --> End([End - Logging configured])
+    
+    ErrorParam --> End
+    ErrorInit --> End
+    ErrorNotConfig --> End
+    ErrorConfig --> End
+    
+    style SetLogging fill:#87CEEB
+    style CreateLog fill:#FFD700
+    
+    Note1[Input:<br/>- componentName<br/>- eventName<br/>- eventEnabled true/false]
+    Start -.-> Note1
+    
+    Note2[Log contains:<br/>- configuredComponents<br/>- configurationWasSuccessful<br/>- loggingParameterSet]
+    CreateLog -.-> Note2

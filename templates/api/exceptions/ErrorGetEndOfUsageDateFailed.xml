@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetEndOfUsageDateFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetEndOfUsageDateFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getEndOfUsageDate fails to retrieve the end of usage date of the Secure Element device. The function attempts to obtain the date after which the Secure Element can no longer be used for cryptographic operations, but the retrieval process fails before the date value can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getEndOfUsageDate fehlschlägt, um das Verwendungsende-Datum des Secure Element Geräts abzurufen. Die Funktion versucht, das Datum nach dem das Secure Element nicht mehr für kryptografische Operationen verwendet werden kann zu erhalten, aber der Abrufprozess schlägt fehl, bevor der Datumswert bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Device Lifecycle</category>
+  <subcategory>Usage Period Management</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetEndOfUsageDateFailed that is thrown if the SE API function getEndOfUsageDate fails to determine the end of usage date of the device.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetEndOfUsageDateFailed, die ausgelöst wird, wenn die SE API Funktion getEndOfUsageDate fehlschlägt, um das Verwendungsende-Datum des Geräts zu bestimmen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getEndOfUsageDate function cannot retrieve the end of usage date from the Secure Element. The end of usage date represents the deadline after which the Secure Element must no longer be used for cryptographic or operational purposes, typically determined by device lifecycle policies, certification validity periods, or security requirements. ErrorGetEndOfUsageDateFailed indicates that the Secure Element cannot provide the usage period information due to hardware failure, storage corruption, internal lifecycle management errors, communication failures, or Secure Element state restrictions. When this exception occurs, no date data is returned and applications cannot determine the device's remaining operational validity period. Recovery typically involves device verification, lifecycle management subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getEndOfUsageDate das Verwendungsende-Datum nicht vom Secure Element abrufen kann. Das Verwendungsende-Datum stellt die Frist dar, nach der das Secure Element nicht mehr für kryptografische oder Betriebszwecke verwendet werden darf, üblicherweise bestimmt durch Geräte-Lebenszyklusrichtlinien, Gültigkeitszeiträume von Zertifizierungen oder Sicherheitsanforderungen. ErrorGetEndOfUsageDateFailed zeigt an, dass das Secure Element die Verwendungsperioden-Informationen aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Lebenszyklusmanagement-Fehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Datumdaten zurückgegeben und Anwendungen können die verbleibende Betriebsgültigkeitsdauer des Geräts nicht bestimmen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Lebenszyklusmanagement-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2 Device Lifecycle - getEndOfUsageDate</section>
+    <requirement>
+      <text xml:lang="en">The function getEndOfUsageDate SHALL retrieve the end of usage date from the Secure Element, representing the deadline after which the device can no longer be used for cryptographic operations. If the Secure Element cannot provide or return the required date information, the function SHALL raise the exception ErrorGetEndOfUsageDateFailed and exit without returning any date data. The end of usage date retrieval failure indicates the Secure Element's lifecycle information query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getEndOfUsageDate soll das Verwendungsende-Datum vom Secure Element abrufen, das die Frist darstellt, nach der das Gerät nicht mehr für kryptografische Operationen verwendet werden kann. Falls das Secure Element die erforderlichen Datuminformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetEndOfUsageDateFailed auslösen und beenden, ohne Datumdaten zurückzugeben. Der Fehler beim Abrufen des Verwendungsende-Datums zeigt an, dass die Lebenszyklusabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device lifecycle management operations - getEndOfUsageDate function only</text>
+      <text xml:lang="de">Geräte-Lebenszyklusmanagement-Operationen - nur Funktion getEndOfUsageDate</text>
+    </applicability>
+    <reference>getEndOfUsageDate – Function (3.1.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>getEndOfUsageDate</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getEndOfUsageDate function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getEndOfUsageDate auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for lifecycle information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Lebenszyklusinformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and accessible</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und zugänglich ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares date query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Datumsabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits date query command to Secure Element requesting end of usage date</text>
+      <text xml:lang="de">Funktion übersendet Datumsabfrage-Befehl zu Secure Element und fordert Verwendungsende-Datum an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (storage error, lifecycle retrieval error, subsystem error) → ErrorGetEndOfUsageDateFailed raised, function exits without date data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Speicherfehler, Lebenszyklus-Abruffehler, Subsystem-Fehler) → ErrorGetEndOfUsageDateFailed ausgelöst, Funktion beendet ohne Datumdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetEndOfUsageDateFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetEndOfUsageDateFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives end of usage date from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Verwendungsende-Datum von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates date value for correctness (format, date range validity, logical consistency with current time)</text>
+      <text xml:lang="de">Funktion validiert Datumswert auf Korrektheit (Format, Datumbereichs-Gültigkeit, logische Konsistenz mit aktueller Zeit)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid end of usage date to caller</text>
+      <text xml:lang="de">Funktion gibt gültiges Verwendungsende-Datum an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry end-of-use date query</text>
+      <text xml:lang="de">Wiederholen Sie die Verwendungsende-Datumsabfrage</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device specification for lifecycle information</text>
+      <text xml:lang="de">Prüfen Sie die Gerätespezifikation auf Lebenszyklusinformationen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorGetBeginOfUsageDateFailed</exception>
+    <exception>ErrorGetVersionFailed</exception>
+    <exception>ErrorGetSerialNumberFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve the end of usage date does not affect device initialization state, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Verwendungsende-Datumsabrufs wirkt sich nicht auf den Geräteinitialisierungszustand, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Date Data Return Status">
+      <text xml:lang="en">No end of usage date is returned to the caller. The function exits without providing any date information. Applications must not assume default dates or cached date values; they must handle the exception as indicating date information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Verwendungsende-Datum an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Datuominformationen bereitzustellen. Anwendungen dürfen nicht mit Standarddaten oder zwischengespeicherten Datumwerten rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Datuominformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element State">
+      <text xml:lang="en">Secure Element remains unchanged by the failed date query. No state modifications, lifecycle updates, or device configuration changes occur. Device lifecycle information continues to be maintained internally in the Secure Element regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Secure Element bleibt durch die fehlgeschlagene Datumsabfrage unverändert. Es werden keine Zustandsänderungen, Lebenszyklusaufdatierungen oder Gerätekonfigurationsänderungen vorgenommen. Die Geräte-Lebenszyklusinformationen werden weiterhin intern im Secure Element gepflegt, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Device Lifecycle Continuity">
+      <text xml:lang="en">The Secure Element continues to maintain its lifecycle information internally. The failure to retrieve the end of usage date does not affect the underlying device lifecycle state or validity period. The date can be queried again once the underlying issue is resolved.</text>
+      <text xml:lang="de">Das Secure Element setzt fort, seine Lebenszyklusinformationen intern zu verwalten. Das Fehlschlagen des Abrufs des Verwendungsende-Datums beeinflusst nicht den zugrunde liegenden Geräte-Lebenszyklusstatus oder Gültigkeitszeitraum. Das Datum kann erneut abgefragt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the date retrieval failure. Device internal consistency is maintained. Other SE API functions and lifecycle operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Datumsabruffehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Lebenszyklusoperationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (storage error, communication error, lifecycle system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Speicherfehler, Kommunikationsfehler, Lebenszyklusystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of end of usage date failed - cannot determine device lifespan</text>
+      <text xml:lang="de">Anzeichen: Abruf des Verwendungsende-Datums fehlgeschlagen - kann Gerätelebensdauer nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Lifecycle, Usage Management, Device Properties, Lifecycle Information</text>
+      <text xml:lang="de">Themen: Geräte-Lebenszyklus, Verwendungsverwaltung, Geräteeigenschaften, Lebenszyklusinformationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getEndOfUsageDate when usage date retrieval fails</text>
+      <text xml:lang="de">Wird von getEndOfUsageDate ausgelöst, wenn der Verwendungsdatumabruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Lifecycle function queries device end-of-life date</text>
+      <text xml:lang="de">Lebenszyklusfunktion fragt Geräte-End-of-Life-Datum ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains usage and lifespan information</text>
+      <text xml:lang="de">Das Gerät verwaltet Verwendungs- und Lebensdauer-Informationen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents lifecycle information access</text>
+      <text xml:lang="de">Abruffehler verhindert Lebenszyklussinformationszugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

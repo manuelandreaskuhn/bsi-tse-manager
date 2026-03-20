@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorLimitOfSimultaneousOpenTransactionsReached" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorLimitOfSimultaneousOpenTransactionsReached</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function startTransaction fails because the maximum number of simultaneously open transactions supported by the Secure Element has been reached. The function attempts to initiate a new transaction, but the number of currently active transactions has already reached the device's capacity limit, preventing the creation of additional concurrent transactions.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion startTransaction fehlschlägt, da die maximale Anzahl von gleichzeitig offenen Transaktionen, die vom Secure Element unterstützt werden, erreicht wurde. Die Funktion versucht, eine neue Transaktion zu initiieren, aber die Anzahl der derzeit aktiven Transaktionen hat bereits die Kapazitätsgrenze des Geräts erreicht, was die Erstellung von zusätzlichen gleichzeitigen Transaktionen verhindert.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Capacity Constraint</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorLimitOfSimultaneousOpenTransactionsReached that is thrown if the maximum number of simultaneously open transactions has been reached.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorLimitOfSimultaneousOpenTransactionsReached, die ausgelöst wird, wenn die maximale Anzahl von gleichzeitig offenen Transaktionen erreicht wurde.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the startTransaction function cannot create a new transaction because the maximum number of concurrently open transactions supported by the Secure Element has been reached. Each Secure Element has a configurable limit on how many transactions can be in the "open" state at the same time. ErrorLimitOfSimultaneousOpenTransactionsReached indicates that the current number of open transactions equals or exceeds this maximum limit. When this exception occurs, the new transaction is not created and the caller must either wait for existing transactions to complete, finish some open transactions, or implement queuing strategies for transaction requests. Recovery requires completing or closing existing transactions to reduce the active transaction count below the maximum limit.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion startTransaction keine neue Transaktion erstellen kann, da die maximale Anzahl von gleichzeitig offenen Transaktionen, die vom Secure Element unterstützt werden, erreicht wurde. Jedes Secure Element hat eine konfigurierbare Begrenzung, wie viele Transaktionen gleichzeitig im Status "offen" sein können. ErrorLimitOfSimultaneousOpenTransactionsReached zeigt an, dass die aktuelle Anzahl offener Transaktionen gleich oder größer als diese maximale Grenze ist. Wenn diese Ausnahme auftritt, wird die neue Transaktion nicht erstellt und der Aufrufer muss entweder auf die Fertigstellung vorhandener Transaktionen warten, einige offene Transaktionen abschließen oder Warteschlangen-Strategien für Transaktionsanforderungen implementieren. Die Wiederherstellung erfordert das Abschließen oder Schließen vorhandener Transaktionen, um die Anzahl aktiver Transaktionen unter die maximale Grenze zu senken.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2 Transaction Management - startTransaction</section>
+    <requirement>
+      <text xml:lang="en">The function startTransaction SHALL create a new transaction if the current number of open transactions is below the maximum supported limit. If the number of currently open transactions has reached the maximum limit configured for the device, the function SHALL raise the exception ErrorLimitOfSimultaneousOpenTransactionsReached and reject the transaction creation. The maximum number of simultaneously open transactions is a device capability that may be queried via getMaxNumberTransactionsFailed or similar functions.</text>
+      <text xml:lang="de">Die Funktion startTransaction soll eine neue Transaktion erstellen, wenn die aktuelle Anzahl offener Transaktionen unter der maximal unterstützten Grenze liegt. Falls die Anzahl der derzeit offenen Transaktionen die für das Gerät konfigurierte Maximallimit erreicht hat, soll die Funktion die Ausnahme ErrorLimitOfSimultaneousOpenTransactionsReached auslösen und die Transaktionserstellung ablehnen. Die maximale Anzahl von gleichzeitig offenen Transaktionen ist eine Gerätefähigkeit, die über getMaxNumberTransactionsFailed oder ähnliche Funktionen abgefragt werden kann.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction creation operations - startTransaction function only</text>
+      <text xml:lang="de">Transaktionserstellungs-Operationen - nur Funktion startTransaction</text>
+    </applicability>
+    <reference>startTransaction – Function (3.1.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>startTransaction</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls startTransaction function with transaction parameters (clientId, etc.)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft startTransaction-Funktion mit Transaktionsparametern auf (clientId, usw.)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including clientId and transaction parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich clientId und Transaktionsparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization and device state for transaction operations</text>
+      <text xml:lang="de">Funktion prüft Autorisierung und Gerätezustand für Transaktionsoperationen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function queries Secure Element for the current number of open transactions</text>
+      <text xml:lang="de">Funktion fragt das Secure Element nach der aktuellen Anzahl offener Transaktionen ab</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If current open transaction count is below maximum → proceed to step 5</text>
+      <text xml:lang="de">Falls aktuelle offene Transaktionsanzahl unter Maximum → fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If current open transaction count equals or exceeds maximum → ErrorLimitOfSimultaneousOpenTransactionsReached raised, function exits</text>
+      <text xml:lang="de">Falls aktuelle offene Transaktionsanzahl gleich oder größer als Maximum → ErrorLimitOfSimultaneousOpenTransactionsReached ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication with Secure Element and prepares transaction creation command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element und bereitet Transaktionserstellungsbefehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits transaction creation command to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet Transaktionserstellungsbefehl an Secure Element</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function receives transaction ID and acknowledgment from Secure Element</text>
+      <text xml:lang="de">Funktion erhält Transaktions-ID und Bestätigung vom Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function records the new transaction as open and manages transaction state</text>
+      <text xml:lang="de">Funktion zeichnet die neue Transaktion als offen auf und verwaltet den Transaktionszustand</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns transaction ID to caller with transaction successfully created</text>
+      <text xml:lang="de">Funktion gibt Transaktions-ID an Aufrufer zurück mit erfolgreich erstellter Transaktion</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check open transactions using getOpenTransactions</text>
+      <text xml:lang="de">Offene Transaktionen mit getOpenTransactions prüfen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Finish or cancel open transactions to free capacity</text>
+      <text xml:lang="de">Beenden oder Abbrechen offener Transaktionen, um Kapazität freizugeben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Wait for transactions to complete</text>
+      <text xml:lang="de">Warten Sie auf Transaktionsvollendung</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan transaction concurrency within device limits</text>
+      <text xml:lang="de">Planen Sie Transaktionsgleichzeitigkeit innerhalb der Gerätegrenzen</text>
+    </step>
+    <step>
+      <text xml:lang="en">If necessary, migrate to device with higher transaction capacity</text>
+      <text xml:lang="de">Falls erforderlich, migrieren Sie zu einem Gerät mit höherer Transaktionskapazität</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorGetMaxNumberTransactionsFailed</exception>
+    <exception>ErrorGetOpenTransactionsFailed</exception>
+    <exception>ErrorStartTransactionFailed</exception>
+    <exception>ErrorTransactionNotFound</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Not Created">
+      <text xml:lang="en">No new transaction is created. The failed transaction creation does not result in a transaction ID being generated or returned to the caller. The transaction count remains unchanged.</text>
+      <text xml:lang="de">Keine neue Transaktion wird erstellt. Die fehlgeschlagene Transaktionserstellung führt nicht dazu, dass eine Transaktions-ID generiert oder an den Aufrufer zurückgegeben wird. Die Transaktionsanzahl bleibt unverändert.</text>
+    </state>
+    <state name="Transaction Capacity Unchanged">
+      <text xml:lang="en">The device's transaction capacity and the maximum transaction limit remain unchanged. The limitation is a device characteristic, not affected by the failed creation attempt.</text>
+      <text xml:lang="de">Die Transaktionskapazität des Geräts und die Transaktionshellgrenze bleiben unverändert. Die Einschränkung ist eine Gerätecharakteristik und wird durch den fehlgeschlagenen Erstellungsversuch nicht beeinflusst.</text>
+    </state>
+    <state name="Open Transaction Count Unchanged">
+      <text xml:lang="en">The number of currently open transactions on the Secure Element remains at its pre-call state. No transaction state modifications occur.</text>
+      <text xml:lang="de">Die Anzahl der derzeit offenen Transaktionen auf dem Secure Element bleibt in ihrem Pre-Call-Zustand. Keine Änderungen des Transaktionszustands erfolgen.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">Device state remains completely unchanged. Transaction management subsystem operates normally. The failure is a capacity constraint, not a device malfunction.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt vollständig unverändert. Das Transaktionsverwaltungs-Subsystem funktioniert normal. Der Fehler ist eine Kapazitätseinschränkung, keine Gerätemalf unktion.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">The failed transaction creation does not cause any cascading state changes or secondary failures. Other open transactions and device operations continue normally.</text>
+      <text xml:lang="de">Die fehlgeschlagene Transaktionserstellung verursacht keine kaskadierende Zustandseränderungen oder sekundären Fehler. Andere offene Transaktionen und Geräteoperationen laufen normal weiter.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device is stable and operational. Recovery is possible by completing existing transactions to reduce the open count. The situation is expected and handled through normal transaction lifecycle management.</text>
+      <text xml:lang="de">Das Gerät ist stabil und funktionsfähig. Wiederherstellung ist durch das Abschließen vorhandener Transaktionen möglich, um die offene Anzahl zu senken. Die Situation ist erwartet und wird durch normale Transaktionslebenszyklus-Verwaltung gehandhabt.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Maximum number of simultaneously open transactions has been reached</text>
+      <text xml:lang="de">Anzeichen: Maximale Anzahl von gleichzeitig offenen Transaktionen wurde erreicht</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Resource Limits, Transaction Constraints, Concurrency</text>
+      <text xml:lang="de">Themen: Transaktionsverwaltung, Ressourcenbegrenzungen, Transaktionsbeschränkungen, Gleichzeitigkeit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by startTransaction when maximum concurrent transactions exceeded</text>
+      <text xml:lang="de">Wird von startTransaction ausgelöst, wenn maximale gleichzeitige Transaktionen überschritten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Transaction concurrency limit prevents excessive simultaneous transactions</text>
+      <text xml:lang="de">Transaktions-Gleichzeitigkeitslimit verhindetüßübermäßige gleichzeitige Transaktionen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device enforces maximum open transaction count</text>
+      <text xml:lang="de">Gerät erzwingt maximale Anzahl offener Transaktionen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Limit reached prevents new transaction initiation</text>
+      <text xml:lang="de">Grenze erreicht verhindert neue Transaktionsinitiation</text>
+    </note>
+  </implementationContext>
+</exception>
+

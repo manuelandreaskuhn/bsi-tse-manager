@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>040</processId>
+    <processName>
+        <text xml:lang="en">Registered Clients Query</text>
+        <text xml:lang="de">Registrierte Clients</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the list of all currently registered clients with optional registration time</text>
+        <text xml:lang="de">Abruf der Liste aller aktuell registrierten Clients mit optionaler Registrierungszeit</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Client List</text>
+            <text xml:lang="de">Client-Liste</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getRegisteredClients</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>registeredClients</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">ASN.1 DER encoded ClientInfoSet</text>
+                <text xml:lang="de">ASN.1 DER kodiertes ClientInfoSet</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>ClientInfoSet (ASN.1)</dataObject>
+        <dataObject>ClientInfo</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetRegisteredClientsFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.4</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. Each client only once in the list. timeOfRegistration is optional.</text>
+        <text xml:lang="de">OPTIONAL. Jeder Client nur einmal in der Liste. timeOfRegistration ist optional.</text>
+    </notes>
+</process>

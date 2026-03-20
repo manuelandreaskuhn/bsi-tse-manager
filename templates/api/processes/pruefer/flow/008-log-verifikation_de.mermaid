@@ -1,0 +1,53 @@
+flowchart TD
+    Start([Prüfer: Starte Verifikation])
+    Start --> LoadTAR[Lade TAR-Archiv]
+    
+    LoadTAR --> ExtractFiles[Extrahiere Dateien:<br/>- Log-Nachrichten<br/>- Zertifikate<br/>- info.csv]
+    
+    ExtractFiles --> ReadInfo[Lese info.csv]
+    ReadInfo --> GetTSEInfo[Hole TSE-Komponenten-Info:<br/>- Hersteller<br/>- Modell<br/>- Zertifizierungs-ID]
+    
+    GetTSEInfo --> LoadCerts[Lade Zertifikatskette]
+    
+    LoadCerts --> CheckCertChain{Zertifikatskette<br/>valide?}
+    CheckCertChain -->|Nein| ErrorCert[Fehler: Ungültige Zertifikate]
+    CheckCertChain -->|Ja| CheckRevocation{Zertifikat<br/>widerrufen?}
+    
+    CheckRevocation -->|Ja| ErrorRev[Fehler: Zertifikat widerrufen]
+    CheckRevocation -->|Nein| ExtractPubKey[Extrahiere Public Key<br/>aus TSE-Zertifikat]
+    
+    ExtractPubKey --> ProcessLogs[Verarbeite Log-Nachrichten<br/>sequenziell]
+    
+    ProcessLogs --> ForEachLog{Für jede<br/>Log-Nachricht}
+    
+    ForEachLog -->|Nächste Log| VerifySerialNo{"Seriennummer =<br/>Hash(PublicKey)?"}
+    VerifySerialNo -->|Nein| ErrorSerial[Fehler: Seriennummer falsch]
+    VerifySerialNo -->|Ja| VerifySig{Signatur<br/>valide?}
+    
+    VerifySig -->|Nein| ErrorSig[Fehler: Signatur ungültig]
+    VerifySig -->|Ja| CheckCounters{Zähler<br/>fortlaufend?}
+    
+    CheckCounters -->|Nein| ErrorCounter[Fehler: Zähler inkonsistent]
+    CheckCounters -->|Ja| CheckTime{Zeitstempel<br/>plausibel?}
+    
+    CheckTime -->|Nein| WarnTime[Warnung: Zeitstempel auffällig]
+    CheckTime -->|Ja| LogOK
+    
+    WarnTime --> LogOK[Log-Nachricht OK]
+    LogOK --> ForEachLog
+    
+    ForEachLog -->|Alle verarbeitet| Report[Erstelle Prüfbericht]
+    
+    Report --> End([Verifikation abgeschlossen])
+    
+    ErrorCert --> End
+    ErrorRev --> End
+    ErrorSerial --> End
+    ErrorSig --> End
+    ErrorCounter --> End
+    
+    style VerifySerialNo fill:#FFE4B5
+    style VerifySig fill:#FFE4B5
+    style CheckCounters fill:#FFE4B5
+    style CheckTime fill:#FFE4B5
+    style Report fill:#90EE90

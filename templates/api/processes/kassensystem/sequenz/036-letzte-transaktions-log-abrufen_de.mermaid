@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant Nutzer as Nutzer
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+
+    Nutzer->>TSE: getLastTransactionLogMessage(transactionNumber?)
+    activate TSE
+    
+    TSE->>TSE: Prüfe: TSE initialisiert
+    
+    alt transactionNumber angegeben
+        TSE->>SM: Hole letzte Transaction-Log<br/>für transactionNumber
+    else transactionNumber nicht angegeben
+        TSE->>SM: Hole letzte Transaction-Log<br/>(über alle Transaktionen)
+    end
+    
+    activate SM
+    
+    alt Keine Transaction-Log gefunden
+        SM-->>TSE: Keine gefunden
+        TSE-->>Nutzer: Exception:<br/>ErrorNoLogMessageFound
+    else Transaction-Log gefunden
+        SM->>SM: Hole Log-Teile der<br/>letzten Transaction-Log
+        SM-->>TSE: Log-Teile
+        deactivate SM
+        
+        TSE->>TSE: Kombiniere zu vollständiger<br/>Transaction-Log-Nachricht
+        
+        TSE->>TSE: Generiere Dateinamen
+        
+        TSE-->>Nutzer: logMessageContent +<br/>logMessageFileName
+    end
+    deactivate TSE
+    
+    Note over Nutzer: Nur Transaction-Logs,<br/>keine System/Audit-Logs

@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getTimeSyncVariant" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getTimeSyncVariant</name>
+  <category>Zeitverwaltung</category>
+  <description>
+    <text xml:lang="en">The function getTimeSyncVariant can be used to obtain information how updates of the current date/time are performed.</text>
+    <text xml:lang="de">Die Funktion getTimeSyncVariant kann verwendet werden, um Informationen darüber zu erhalten, wie Aktualisierungen des aktuellen Datums/der Uhrzeit durchgeführt werden.</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+    <role>timeadmin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function getTimeSyncVariant SHALL identify the supported time synchronization variant. If the identification of the supported update variant(s) fails, the function SHALL raise the exception ErrorGetTimeSyncVariantFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt die unterstützte Zeit-Synchronisationsvariante. Falls die Identifikation schlägt fehl: Werfe ErrorGetTimeSyncVariantFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE time sync variant from SE
+CATCH error
+  THROW ErrorGetTimeSyncVariantFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Zeit-Sync-Variante vom SE
+BEI_FEHLER
+  WERFE ErrorGetTimeSyncVariantFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetTimeSyncVariantFailed</exception>
+        <trigger>
+          <text xml:lang="en">The identification of the time sync variant fails</text>
+          <text xml:lang="de">Die Identifikation der Update-Varianten schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the identification of the supported update variant has been successful, the function SHALL return the information regarding the supported update variants over the output parameter supportedSyncVariant. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Bei Erfolg der Identifikation: Gibt unterstützte Zeit-Sync-Varianten via Parameter supportedSyncVariant zurück. Keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN supportedSyncVariant without exception</text>
+        <text xml:lang="de">GEBE Zeit-Sync-Varianten zurück (supportedSyncVariant Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Identification of the time sync variant has been successful</text>
+          <text xml:lang="de">Identifikation der Zeit-Sync-Variante erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return the supported time sync variant without raising an exception</text>
+          <text xml:lang="de">Gibt Zeit-Sync-Varianten via Parameter zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>SyncVariants</type>
+    <description>
+      <text xml:lang="en">the synchronization variant that the device supports.</text>
+      <text xml:lang="de">die Synchronisationsvariante, die das Gerät unterstützt.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetTimeSyncVariantFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

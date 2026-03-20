@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK05</chainId>
+    <name>
+        <text xml:lang="en">Backup and Restore Workflow</text>
+        <text xml:lang="de">Backup-und-Wiederherstellungs-Workflow</text>
+    </name>
+    <description>
+        <text xml:lang="en">Securing logs through export and subsequent restoration in case of data loss or migration</text>
+        <text xml:lang="de">Sicherung von Logs durch Export und spätere Wiederherstellung bei Datenverlust oder Migration</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>007</id>
+            <name>
+                <text xml:lang="en">Data Export (exportLogMessages)</text>
+                <text xml:lang="de">Datenexport (exportLogMessages)</text>
+            </name>
+        </process>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication (authenticateUser)</text>
+                <text xml:lang="de">Nutzer-Authentifizierung (authenticateUser)</text>
+            </name>
+        </process>
+        <process>
+            <id>035</id>
+            <name>
+                <text xml:lang="en">Restore Logs (restoreLogsFromBackup)</text>
+                <text xml:lang="de">Logs wiederherstellen (restoreLogsFromBackup)</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is operational (for backup)</text>
+            <text xml:lang="de">TSE ist in Betrieb (für Backup)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">TAR archive from exportLogMessages available (for restore)</text>
+            <text xml:lang="de">TAR-Archiv von exportLogMessages verfügbar (für Wiederherstellung)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Admin is authenticated (for restore)</text>
+            <text xml:lang="de">Admin ist authentifiziert (für Wiederherstellung)</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Backup System</text>
+            <text xml:lang="de">Backup-System</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Create Backup - Execute Export</text>
+                <text xml:lang="de">Backup erstellen - Export ausführen</text>
+            </name>
+            <function>
+                <name>exportLogMessages</name>
+                <linkedProcess>
+                    <id>007</id>
+                    <name>
+                        <text xml:lang="en">Export Data for Audit</text>
+                        <text xml:lang="de">Datenexport für Prüfung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Create Backup - Secure Externally</text>
+                <text xml:lang="de">Backup erstellen - Extern sichern</text>
+            </name>
+            <description>
+                <text xml:lang="en">Store TAR archive externally</text>
+                <text xml:lang="de">TAR-Archiv extern sichern</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Restore - Load Archive</text>
+                <text xml:lang="de">Wiederherstellung - TAR-Archiv laden</text>
+            </name>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Restore - Authenticate Admin</text>
+                <text xml:lang="de">Wiederherstellung - Admin authentifizieren</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>5</stepNumber>
+            <name>
+                <text xml:lang="en">Restore - Execute Restore</text>
+                <text xml:lang="de">Wiederherstellung - Restore ausführen</text>
+            </name>
+            <function>
+                <name>restoreLogsFromBackup</name>
+                <linkedProcess>
+                    <id>035</id>
+                    <name>
+                        <text xml:lang="en">Restore Logs from Backup</text>
+                        <text xml:lang="de">Logs wiederherstellen</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+    </steps>
+    <useCases>
+        <useCase>
+            <text xml:lang="en">Data loss on TSE storage</text>
+            <text xml:lang="de">Datenverlust auf TSE-Speicher</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Migration to new TSE hardware (same TSE identity)</text>
+            <text xml:lang="de">Migration auf neue TSE-Hardware (gleiche TSE-Identität)</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Recovery after storage medium failure</text>
+            <text xml:lang="de">Wiederherstellung nach Speichermedium-Ausfall</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Test/development scenarios</text>
+            <text xml:lang="de">Test-/Entwicklungsszenarien</text>
+        </useCase>
+    </useCases>
+    <importantNotes>
+        <note>
+            <text xml:lang="en">Only logs from THIS TSE can be restored</text>
+            <text xml:lang="de">Nur Logs von DIESER TSE können wiederhergestellt werden</text>
+        </note>
+        <note>
+            <text xml:lang="en">Foreign logs are rejected (ErrorRestoreFailed)</text>
+            <text xml:lang="de">Fremde Logs werden abgelehnt (ErrorRestoreFailed)</text>
+        </note>
+        <note>
+            <text xml:lang="en">On filename collisions, counter is appended</text>
+            <text xml:lang="de">Bei Dateinamen-Kollisionen wird Zähler angehängt</text>
+        </note>
+        <note>
+            <text xml:lang="en">info.csv is NOT imported</text>
+            <text xml:lang="de">info.csv wird NICHT importiert</text>
+        </note>
+    </importantNotes>
+    <securityAspects>
+        <aspect>
+            <text xml:lang="en">TSE identity is validated</text>
+            <text xml:lang="de">TSE-Identität wird validiert</text>
+        </aspect>
+        <aspect>
+            <text xml:lang="en">Logs cannot be transferred between TSEs</text>
+            <text xml:lang="de">Logs können nicht zwischen TSEs übertragen werden</text>
+        </aspect>
+        <aspect>
+            <text xml:lang="en">Storage must remain consistent even on error</text>
+            <text xml:lang="de">Speicher muss auch bei Fehler konsistent bleiben</text>
+        </aspect>
+    </securityAspects>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.2 and 3.6.7</reference>
+    </references>
+</processChain>

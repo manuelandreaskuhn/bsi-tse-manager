@@ -1,0 +1,1605 @@
+{
+  "testcase_id": "TC-II-EXF-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "exportFilteredTransactionLogs: Alle Filterkombinationen und Fehlerfälle",
+  "description": "Prüft exportFilteredTransactionLogs für alle Filtervarianten: Transaktionsnummer, Zeitintervall, clientId, maximumNumberRecords sowie alle Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität zum gefilterten Export von Transaktions-Log-Nachrichten bei einem Aufruf mit dem Eingabeparameter transactionNumber die folgende Aktion durchführt:\n• Export von Log-Nachrichten, für die übergebene Transaktionsnummer. \n\nIn dem Intervall von der Log-Nachricht für den Start der Transaktion und der Log-Nachricht für die Beendigung der Transaktion sind ausschließlich Transaktions-Log-Nachrichten enthalten.",
+  "module": "Integration Interface",
+  "submodule": "II_EXF",
+  "function": "exportFilteredTransactionLogs",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_EXPORTFILTERED"
+  ],
+  "source_tests": [
+    "II_EXF_01",
+    "II_EXF_02",
+    "II_EXF_03",
+    "II_EXF_04",
+    "II_EXF_05",
+    "II_EXF_06",
+    "II_EXF_07",
+    "II_EXF_08",
+    "II_EXF_09",
+    "II_EXF_10",
+    "II_EXF_11",
+    "II_EXF_12",
+    "II_EXF_13",
+    "II_EXF_14",
+    "II_EXF_15",
+    "II_EXF_16",
+    "II_EXF_17",
+    "II_EXF_18",
+    "II_EXF_19",
+    "II_EXF_20",
+    "II_EXF_21",
+    "II_EXF_22",
+    "II_EXF_23",
+    "II_EXF_24",
+    "II_EXF_25",
+    "II_EXF_26",
+    "II_EXF_27",
+    "II_EXF_28",
+    "II_EXF_29",
+    "II_EXF_30",
+    "II_EXF_31",
+    "II_EXF_32",
+    "II_EXF_33",
+    "II_EXF_34",
+    "II_EXF_35",
+    "II_EXF_36",
+    "II_EXF_37",
+    "II_EXF_38",
+    "II_EXF_39",
+    "II_EXF_40",
+    "II_EXF_41",
+    "II_EXF_42",
+    "II_EXF_43"
+  ],
+  "variables": {
+    "$client1": "Seriennummer des Aufzeichnungssystems (client1)",
+    "$client2": "Seriennummer des Aufzeichnungssystems (client2)",
+    "$client3": "Seriennummer des Aufzeichnungssystems (client3)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)",
+    "$tn3": "Transaktionsnummer (Rückgabe startTransaction, tn3)",
+    "$tn4": "Transaktionsnummer (Rückgabe startTransaction, tn4)",
+    "$tn5": "Transaktionsnummer (Rückgabe startTransaction, tn5)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Aufruf der Funktionalität zur Auslösung eines Selbsttest",
+      "result": null,
+      "instruction": "Der Aufruf der Funktionalität zur Auslösung eines Selbsttests löst die Erstellung einer Audit-Log-Nachricht aus."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens e",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine beendete Transaktion gespeichert."
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens z",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens zwei beendete Transaktion gespeichert."
+    },
+    {
+      "step": 9,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 10,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium ist nur eine Transaktions-Log-Nachric",
+      "result": null,
+      "instruction": "Auf dem Speichermedium ist nur eine Transaktions-Log-Nachricht für den Start einer Transaktion gespeichert."
+    },
+    {
+      "step": 11,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mehrere been",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mehrere beendete Transaktionen gespeichert."
+    },
+    {
+      "step": 12,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde nicht aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 13,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für eine beendet",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer $tn1 gespeichert."
+    },
+    {
+      "step": 14,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für eine beendet",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer TN1 gespeichert."
+    },
+    {
+      "step": 15,
+      "type": "PRECONDITION",
+      "title": "Sicherheitsmodul aktiv",
+      "result": null,
+      "instruction": "Das Sicherheitsmodul in der Technischen Sicherheitseinrichtung wurde deaktiviert.",
+      "references": [
+        "BSI TR-03153-1 §9"
+      ]
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 21,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Authentifizierung des Nutzers admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 22,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Authentifizierung des Nutzers logger.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 23,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Auslösung des Selbsttests in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Auslösung des Selbsttests.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 24,
+      "type": "SETUP",
+      "title": "logOut aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Abmeldung des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "logOut",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Abmeldung des Nutzers.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 25,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 26,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 27,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client2 festgehalten.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 28,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.\n\nRückgabewerte festhalten: $tn2 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 29,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client3 übergeben.\n\nRückgabewerte festhalten: $tn3 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 30,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für die Transaktionsnummer wird eine Zahl übergeben, die größer ist als alle bereits verwendeten Transaktionsnummern. Für die Seriennummer des Aufzeichnungssystems wird ein Name übergeben, der bei mindestens einer Transaktion beteiligt war.",
+      "function": "exportSerialNumbers",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 31,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn4 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 32,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 33,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 34,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 35,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 36,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn5 übergeben. Für clientId wird der zuvor festgehaltene Wert $client3 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 37,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 38,
+      "type": "SETUP",
+      "title": "logOut aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Abmeldung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "logOut",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Abmeldung des Nutzers logger.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 39,
+      "type": "SETUP",
+      "title": "logOut aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Abmeldung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "logOut",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Abmeldung des Nutzers admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2.3"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 40,
+      "type": "VERIFY",
+      "title": "Filter: Einzelne transactionNumber (maximumNumberRecords=0)",
+      "result": null,
+      "instruction": "Filter: Einzelne transactionNumber (maximumNumberRecords=0)\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<gültige TxNr>",
+        "maximumNumberRecords": 0
+      },
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "Gefilterte Logs der Transaktion"
+        }
+      },
+      "checks": [
+        {
+          "description": "Logs der spezifizierten Transaktion im TAR",
+          "expected": "EXF_TXN_INCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Logs anderer Transaktionen NICHT im TAR",
+          "expected": "EXF_TXN_EXCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname des TAR korrekt",
+          "expected": "EXP_ARCH_NAME bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_03",
+          "title": "Keine unspezifizierten Dateien",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_NOEXTRA",
+          "title": "Keine unzulässigen Dateien im TAR-Container",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME",
+          "title": "Archivdateiname (Export_*.tar)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_SPLIT",
+          "title": "Aufgeteiltes Archiv",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_OPTYPE",
+          "title": "operationType vorhanden und gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_CLIENT",
+          "title": "clientId vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PDATA",
+          "title": "processData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PTYPE",
+          "title": "processType vorhanden, max. 100 Zeichen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_TXNNUM",
+          "title": "transactionNumber vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FMT",
+          "title": "Zeitformat-Präfix",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_NUM",
+          "title": "No-{transactionNumber} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_TYPE",
+          "title": "TYPE stimmt (Start|Update|Finish)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_CLIENT",
+          "title": "Client-{clientId} stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_NO_ADD_INT",
+          "title": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_ADD_EXT_ABSENT",
+          "title": "additionalExternalData nur vorhanden wenn Daten übergeben wurden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TXN_INCLUDED",
+          "title": "Logs der gefilterten Transaktion vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TXN_EXCLUDED",
+          "title": "Logs anderer Transaktionen nicht vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SYSAUDIT_IN_RANGE",
+          "title": "System-/Audit-Logs im Filterbereich enthalten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SYSAUDIT_NOT_REQUESTED",
+          "title": "Ohne Flags keine System-/Audit-Logs",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 41,
+      "type": "VERIFY",
+      "title": "Filter: transactionNumber + clientId",
+      "result": null,
+      "instruction": "Filter: transactionNumber + clientId\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<TxNr>",
+        "clientId": "<ClientId>",
+        "maximumNumberRecords": 0
+      },
+      "checks": [
+        {
+          "description": "Nur Logs der Transaktion UND des spezifizierten Clients",
+          "expected": "EXF_CLIENT_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Logs anderer Clients NICHT enthalten",
+          "expected": "EXF_TXN_EXCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXF_TXN_INCLUDED",
+          "title": "Logs der gefilterten Transaktion vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_CLIENT_MATCH",
+          "title": "Bei kombiniertem Filter: Client-ID korrekt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TXN_EXCLUDED",
+          "title": "Logs anderer Transaktionen nicht vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 42,
+      "type": "VERIFY",
+      "title": "Filter: firstTransactionNumber + lastTransactionNumber",
+      "result": null,
+      "instruction": "Filter: firstTransactionNumber + lastTransactionNumber\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "parameters": {
+        "firstTransactionNumber": "<N1>",
+        "lastTransactionNumber": "<N2>",
+        "maximumNumberRecords": 0
+      },
+      "checks": [
+        {
+          "description": "Alle Logs im Intervall [N1,N2] enthalten",
+          "expected": "EXF_INTERVAL_INCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Logs außerhalb des Intervalls NICHT enthalten",
+          "expected": "EXF_INTERVAL_EXCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXF_INTERVAL_INCLUDED",
+          "title": "Logs im Intervall [first, last] vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_INTERVAL_EXCLUDED",
+          "title": "Logs außerhalb des Intervalls nicht vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_SYSAUDIT_IN_RANGE",
+          "title": "System-/Audit-Logs im Filterbereich enthalten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 43,
+      "type": "VERIFY",
+      "title": "Filter: startDate + endDate (verschiedene Kombinationen)",
+      "result": null,
+      "instruction": "Filter: startDate + endDate (verschiedene Kombinationen)\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "parameters": {
+        "startDate": "<Datum>",
+        "endDate": "<Datum>",
+        "maximumNumberRecords": 0
+      },
+      "checks": [
+        {
+          "description": "Logs im Zeitraum enthalten",
+          "expected": "EXF_TIME_INCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Logs außerhalb des Zeitraums NICHT enthalten",
+          "expected": "EXF_TIME_EXCLUDED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur startDate: Export bis aktuellstem Log",
+          "expected": "EXF_TIME_START_ONLY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur endDate: Export ab ältestem Log",
+          "expected": "EXF_TIME_END_ONLY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXF_TIME_INCLUDED",
+          "title": "Logs im Zeitraum [start, end] vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TIME_EXCLUDED",
+          "title": "Logs außerhalb des Zeitraums nicht vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TIME_START_ONLY",
+          "title": "Nur Startdatum: Export bis zur aktuellsten Nachricht",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_TIME_END_ONLY",
+          "title": "Nur Enddatum: Export von der ältesten Nachricht",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 44,
+      "type": "VERIFY",
+      "title": "maximumNumberRecords-Begrenzung testen",
+      "result": null,
+      "instruction": "maximumNumberRecords-Begrenzung testen\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs mit verschiedenen maximumNumberRecords-Werten",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Anzahl Records ≤ maximumNumberRecords (wenn > 0)",
+          "expected": "EXF_MAXREC_COUNT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Grenzfall: genau maximumNumberRecords Records",
+          "expected": "EXF_MAXREC_BOUNDARY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "maximumNumberRecords=0: Alle verfügbaren Records exportiert",
+          "expected": "Unbegrenzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXF_MAXREC_COUNT",
+          "title": "Anzahl der Records ≤ maximumNumberRecords",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXF_MAXREC_BOUNDARY",
+          "title": "Grenzfall: genau maximumRecords Records",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 45,
+      "type": "NEGATIVE",
+      "title": "Negative Tests: Fehlerfälle",
+      "result": null,
+      "instruction": "Negative Tests: Fehlerfälle\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "transactionNumber nicht gefunden: ErrorTransactionNumberNotFound",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "clientId nicht gefunden: ErrorClientIdNotFound",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zu viele Records: ErrorTooManyRecords (wenn maximumNumberRecords überschritten)",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "startDate > endDate: ErrorParameterMismatch",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Ungültiges Datum: ErrorParameterMismatch",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Datum im Bereich: ErrorNoDataAvailable",
+          "expected": "errorCode korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur ein Parameter aus firstTransactionNumber/lastTransactionNumber: Fehlermeldung",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumber + Datumsparameter kombiniert: Fehlermeldung",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    },
+    {
+      "step": 46,
+      "type": "ACTION",
+      "title": "Export bei nicht gestellter Zeit und deaktiviertem SM",
+      "result": null,
+      "instruction": "Export bei nicht gestellter Zeit und deaktiviertem SM\n\nAufruf der Funktionalität zum Export von Transaktions-Log-Nachrichten mit Filter-Funktion sowie von Zertifikaten und Zusatzdateien. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "exportFilteredTransactionLogs",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Export auch ohne gestellte Zeit möglich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Export auch bei deaktiviertem SM möglich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4.1"
+      ],
+      "source_test": "II_EXF_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1",
+    "BSI TR-03151-1"
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "testcase_id": "TC-II-CLG-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Konfiguration der Protokollierung von Ereignissen (configureLogging)",
+  "description": "Prüft, ob die Funktionalität zur Konfiguration von Ereignissen (configureLogging) korrekte Protokolldaten erstellt.",
+  "purpose": "Prüfung, ob die Protokolldaten für die Konfiguration von Ereignissen korrekt erstellt werden.",
+  "module": "Integration Interface",
+  "submodule": "II_CLG",
+  "function": "configureLogging",
+  "test_type": "PT",
+  "priority": "conditional",
+  "profiles": [
+    "II_CONFIGLOGGING"
+  ],
+  "source_tests": [
+    "II_CLG_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die TSE ist in einem Stadium in dem die Funktionalität zur K",
+      "result": null,
+      "instruction": "Die TSE ist in einem Stadium in dem die Funktionalität zur Konfiguration der Logging-Einstellungen der TSE durchgeführt werden kann."
+    },
+    {
+      "step": 2,
+      "type": "SETUP",
+      "title": "configureLogging aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für ein Ereignis, welches standardmäßig protokolliert wird, wird deaktiviert.",
+      "function": "configureLogging",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CLG_01"
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "configureLogging aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für das Ereignis, dessen Protokollierung im vorherigen Schritt deaktiviert wurde, wird aktiviert.",
+      "function": "configureLogging",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CLG_01"
+    },
+    {
+      "step": 4,
+      "type": "ACTION",
+      "title": "configureLogging aufrufen",
+      "result": null,
+      "instruction": "configureLogging aufrufen\n\nAufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für ein Ereignis, welches standardmäßig protokolliert wird, wird deaktiviert.",
+      "function": "configureLogging",
+      "user": "logger",
+      "parameters": {
+        "loggingConfiguration": "<gültige Konfiguration gemäß Hersteller-Spezifikation>"
+      },
+      "checks": [
+        {
+          "description": "Funktion erfolgreich beendet ohne Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CLG_01"
+    },
+    {
+      "step": 5,
+      "type": "VERIFY",
+      "title": "SystemLog für configureLogging im TAR prüfen",
+      "result": null,
+      "instruction": "SystemLog für configureLogging im TAR prüfen\n\nAufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für ein Ereignis, welches standardmäßig protokolliert wird, wird deaktiviert.",
+      "function": "exportLogMessages → SystemLog für configureLogging analysieren",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "SystemLog für configureLogging erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType korrekt gesetzt",
+          "expected": "LOG_EVTYPE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter inkrementiert",
+          "expected": "LOG_SIGCTR",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signatur valide",
+          "expected": "SIG_VERIFY_LOGMSG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_CLG_01"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "Neue Konfiguration ist aktiv",
+      "result": null,
+      "instruction": "Neue Konfiguration ist aktiv",
+      "checks": [
+        {
+          "description": "Logging-Konfiguration nach Aufruf wirksam",
+          "expected": "Konfiguration aktiv",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall: configureLogging schlägt fehl",
+      "result": null,
+      "instruction": "Fehlerfall: configureLogging schlägt fehl [NT]\n\nAufruf der Funktionalität zur Konfiguration der Logging-Einstellungen der TSE. Die Protokollierung für ein Ereignis, welches standardmäßig protokolliert wird, wird deaktiviert.",
+      "function": "configureLogging",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CLG_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1",
+    "BSI TR-03151-1"
+  ]
+}

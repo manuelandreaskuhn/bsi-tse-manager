@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>039</processId>
+    <processName>
+        <text xml:lang="en">Maximum Number of Clients</text>
+        <text xml:lang="de">Maximale Anzahl Clients</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the maximum number of clients that can simultaneously record transactions</text>
+        <text xml:lang="de">Abruf der maximalen Anzahl von Clients, die gleichzeitig Transaktionen protokollieren können</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getMaxNumberOfClients</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>maxNumberClients</name>
+            <type>unsigned long</type>
+            <description>
+                <text xml:lang="en">Maximum number of simultaneous clients</text>
+                <text xml:lang="de">Maximale Anzahl gleichzeitiger Clients</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetMaxNumberOfClientsFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. For unlimited number, the highest value of unsigned long is returned.</text>
+        <text xml:lang="de">OPTIONAL. Bei unbegrenzter Anzahl wird höchster Wert von unsigned long zurückgegeben.</text>
+    </notes>
+</process>

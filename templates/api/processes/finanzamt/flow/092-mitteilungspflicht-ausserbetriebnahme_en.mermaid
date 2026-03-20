@@ -1,0 +1,46 @@
+graph TD
+    Start([Start: System<br/>decommissioned])
+    
+    Start --> Reason{Reason for<br/>decommissioning}
+    
+    Reason -->|Sale| Sale[System sold/<br/>transferred]
+    Reason -->|Defect| Defect[System defective/<br/>no longer usable]
+    Reason -->|Replacement| Replace[System replaced<br/>by new one]
+    Reason -->|Other| Other[Other reasons]
+    
+    Sale --> Date[Record<br/>decommissioning date]
+    Defect --> Date
+    Replace --> Date
+    Other --> Date
+    
+    Date --> PrepData[Prepare notification<br/>data:<br/>- System serial number<br/>- Decommissioning date<br/>- Business location]
+    
+    PrepData --> Deadline{Within 1 month?}
+    
+    Deadline -->|No| Late[WARNING:<br/>Deadline exceeded!]
+    Deadline -->|Yes| Submit[Submit deregistration<br/>electronically via ELSTER]
+    
+    Late --> Submit
+    
+    Submit --> Confirmation{Confirmation<br/>received?}
+    
+    Confirmation -->|No| Verify[Verify transmission<br/>repeat if necessary]
+    Confirmation -->|Yes| Archive[Archive<br/>confirmation]
+    
+    Verify --> Submit
+    
+    Archive --> TSEExport{TSE data already<br/>exported?}
+    
+    TSEExport -->|No| Export[Export and retain<br/>TSE data]
+    TSEExport -->|Yes| End([End: System<br/>deregistered])
+    
+    Export --> End
+    
+    style Start fill:#90EE90
+    style End fill:#FFB6C1
+    style Reason fill:#FFE4B5
+    style Deadline fill:#FFE4B5
+    style Confirmation fill:#FFE4B5
+    style TSEExport fill:#FFE4B5
+    style Late fill:#FF6B6B
+    style Submit fill:#87CEEB

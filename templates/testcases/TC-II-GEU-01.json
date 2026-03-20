@@ -1,0 +1,141 @@
+{
+  "testcase_id": "TC-II-GEU-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Datum des voraussichtlichen Nutzungsendes: Abfrage und Fehlerfall",
+  "description": "Prüft, ob getEndOfUsageDate ein valides Datum zurückgibt und Fehlerfall korrekt behandelt wird.",
+  "purpose": "Prüfung, ob die Funktionalität zur Ausgabe des Datums, ab dem die TSE planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann, ein solches Datum zurückgibt. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_GEU",
+  "function": "getEndOfUsageDate",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_ENDOFUSAGEDATE"
+  ],
+  "source_tests": [
+    "II_GEU_01",
+    "II_GEU_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "getEndOfUsageDate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+      "function": "getEndOfUsageDate",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert endOfUsageDate entspricht einem plausiblem Datum, ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GEU_01"
+    },
+    {
+      "step": 4,
+      "type": "ACTION",
+      "title": "getEndOfUsageDate aufrufen",
+      "result": null,
+      "instruction": "getEndOfUsageDate aufrufen\n\nAufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+      "function": "getEndOfUsageDate",
+      "user": "logger",
+      "expected_return": {
+        "endOfUsageDate": {
+          "type": "DATE",
+          "constraint": "Datum in der Zukunft"
+        }
+      },
+      "checks": [
+        {
+          "description": "Datum zurückgegeben ohne Fehlermeldung",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datum liegt in der Zukunft (plausibel)",
+          "expected": "In der Zukunft",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GEU_01"
+    },
+    {
+      "step": 5,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall",
+      "result": null,
+      "instruction": "Fehlerfall [NT]\n\nAufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+      "function": "getEndOfUsageDate",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorGetEndOfUsageDateFailed zurückgegeben",
+          "expected": "errorCode = ErrorGetEndOfUsageDateFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GEU_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

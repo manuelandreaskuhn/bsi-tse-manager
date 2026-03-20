@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>034</processId>
+    <processName>
+        <text xml:lang="en">Delete Logs</text>
+        <text xml:lang="de">Logs löschen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Deleting exported log files from the TSE. Only previously exported and extracted logs can be deleted. The system log itself is retained and cannot be deleted.</text>
+        <text xml:lang="de">Löschen von exportierten Log-Dateien von der TSE. Nur zuvor exportierte und extrahierte Logs können gelöscht werden. Das System-Log selbst wird beibehalten und kann nicht gelöscht werden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Files</text>
+            <text xml:lang="de">Log-Dateien</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log</text>
+            <text xml:lang="de">System-Log</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>deleteLogMessagesByDateInterval</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (deleteLogMessagesByDateInterval)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorDeleteLogMessagesFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.7</reference>
+        <reference>BSI TR-03153-1 Chapter 7 (System Log)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin is allowed to delete logs. This function only deletes exported log files that have been extracted from the TSE. The system log itself is permanent and cannot be deleted to maintain audit trail integrity. A log message about the deletion is always created. Exported logs should be backed up before deletion.</text>
+        <text xml:lang="de">Nur Admin darf Logs löschen. Diese Funktion löscht nur exportierte Log-Dateien, die aus der TSE extrahiert wurden. Das System-Log selbst ist permanent und kann nicht gelöscht werden, um die Audit-Trail-Integrität zu wahren. Eine Log-Nachricht über die Löschung wird immer erstellt. Exportierte Logs sollten vor der Löschung gesichert werden.</text>
+    </notes>
+</process>

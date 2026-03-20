@@ -1,0 +1,369 @@
+{
+  "testcase_id": "TC-CROSS-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Konsistenzprüfung: Seriennummer über alle Schnittstellen und Log-Nachrichten",
+  "description": "Prüft, dass die Seriennummer der TSE (SHA-256-Hash des öffentlichen Schlüssels) konsistent über alle Schnittstellen, Log-Nachrichten und Zertifikate hinweg ist.",
+  "purpose": "Prüfung der Seriennummer der TSE durch externe Hashwertbildung über den öffentlichen Schlüssel dessen zugehöriger privater Schlüssel für die Absicherung von Transaktions-Log-Nachrichten verwendet wird.",
+  "module": "Cross-Validation",
+  "submodule": "CROSS",
+  "function": "alle",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_KRY_03",
+    "II_ESN_03",
+    "EXP_LOG_07"
+  ],
+  "variables": {
+    "$serial1": "Seriennummer der TSE (serial1)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Der Hersteller dokumentiert alle verwendeten Audit-Log-Nachrichten und beschreibt herstellerspezifische Inhalte.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $serial1 = serialNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_KRY_03"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Seriennummern.",
+      "function": "exportSerialNumbers",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Funktionanlität gibt eine TLV-Struktur über den Ausgabeparameter serialNumbers zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_KRY_03"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "getCertificate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette.",
+      "function": "getCertificate",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die TSE-Schnittstelle gibt einen TAR-Container zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_KRY_03"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Seriennummer-Konsistenz über alle Quellen prüfen",
+      "result": null,
+      "instruction": "Seriennummer-Konsistenz über alle Quellen prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportSerialNumbers + exportLoggingCertificates + exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "exportSerialNumbers liefert SHA-256(SubjectPublicKeyInfo) = TSE-Seriennummer",
+          "expected": "ESN_CERT_HASH_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "exportSerialNumbers stimmt mit Zertifikat-CN überein",
+          "expected": "ESN_CROSS_CERT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber in allen Log-Nachrichten identisch",
+          "expected": "CROSS_LOG_SERIAL",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber in Logs = exportSerialNumbers",
+          "expected": "ESN_CROSS_LOG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "ESN_CERT_HASH_MATCH",
+          "title": "serialNumber entspricht Hash über öffentlichen Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_LOG",
+          "title": "Seriennummer entspricht serialNumber in Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "ESN_CROSS_CERT",
+          "title": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_KRY_03"
+    },
+    {
+      "step": 10,
+      "type": "VERIFY",
+      "title": "Signaturzähler-Vollständigkeit über gesamten Export",
+      "result": null,
+      "instruction": "Signaturzähler-Vollständigkeit über gesamten Export",
+      "checks": [
+        {
+          "description": "Signaturzähler lückenlos 1..N über alle Log-Typen",
+          "expected": "LOG_CTR_COMPLETE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine doppelten signatureCounter-Werte",
+          "expected": "CROSS_LOG_CTR_UNIQUE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Lücken in der Signaturzähler-Sequenz",
+          "expected": "CROSS_LOG_CTR_GAPS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime monoton steigend",
+          "expected": "CROSS_LOG_TIME_MONO",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur ein Zeitformat im gesamten Archiv",
+          "expected": "CROSS_LOG_TIMEFMT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_UNIQUE",
+          "title": "Keine doppelten signatureCounter-Werte",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_GAPS",
+          "title": "Keine Lücken in der signatureCounter-Sequenz",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIMEFMT",
+          "title": "Einheitliches Zeitformat im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_CTR_COMPLETE",
+          "title": "Lückenlose Vollständigkeit aller Signaturzähler im Export",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9.3.2"
+  ]
+}

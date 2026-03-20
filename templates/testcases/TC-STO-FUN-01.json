@@ -1,0 +1,994 @@
+{
+  "testcase_id": "TC-STO-FUN-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Speichermedium: Log-Nachrichten bei sequenzieller Transaktion korrekt gespeichert",
+  "description": "Prüft, ob Start, Aktualisierung und Beendigung einer Transaktion korrekte Log-Nachrichten erzeugen und auf dem Speichermedium persistieren. Deckt SM_NOAGG und SM_AGG ab.",
+  "purpose": "Prüfung, ob Log-Nachrichten auf dem Speichermedium gespeichert werden. Der Test betrachtet Absicherungsschritte einer Transaktion mit den Phasen:\n• Start der Transaktion\n• einmalige Aktualisierung einer Transaktion \n• Beenden der Transaktion",
+  "module": "Storage",
+  "submodule": "STO_FUN",
+  "function": "startTransaction / updateTransaction / finishTransaction / exportLogMessages",
+  "test_type": "PT",
+  "priority": "mandatory",
+  "profiles": [
+    "STORAGE_BASIC"
+  ],
+  "source_tests": [
+    "STO_FUN_01",
+    "STO_FUN_02",
+    "STO_FUN_03",
+    "STO_FUN_04"
+  ],
+  "variables": {
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird false übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 8,
+      "type": "ACTION",
+      "title": "Transaktion starten",
+      "result": null,
+      "instruction": "Transaktion starten\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<registrierte Seriennummer>",
+        "processData": "<beliebige Daten>",
+        "processType": "<max. 100 Zeichen>"
+      },
+      "expected_return": {
+        "transactionNumber": {
+          "type": "INTEGER",
+          "constraint": "≥ 1, fortlaufend"
+        },
+        "signatureCreationTime": {
+          "type": "TIMESTAMP",
+          "constraint": "aktuelles Datum/Uhrzeit"
+        },
+        "serialNumber": {
+          "type": "BYTE[32]",
+          "constraint": "SHA-256-Hash des öffentlichen Schlüssels"
+        },
+        "signatureCounter": {
+          "type": "INTEGER",
+          "constraint": "≥ 1, inkrementiert gegenüber Vorwert"
+        },
+        "signature": {
+          "type": "BYTES",
+          "constraint": "gültige Signatur über konkatenierte Felder"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe erfolgt ohne Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumber ist neu und fortlaufend",
+          "expected": "= letzter Zähler + 1",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter ist um 1 inkrementiert",
+          "expected": "> vorheriger Signaturzähler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber = SHA-256(SubjectPublicKeyInfo)",
+          "expected": "32 Byte, korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 9,
+      "type": "ACTION",
+      "title": "Transaktion aktualisieren",
+      "result": null,
+      "instruction": "Transaktion aktualisieren\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird false übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<wie Schritt 1>",
+        "transactionNumber": "<aus Schritt 1>",
+        "processData": "<neue Daten>",
+        "processType": "<Typ>",
+        "forceSignature": "SM_AGG: true / SM_NOAGG: ignoriert"
+      },
+      "expected_return": {
+        "signatureCreationTime": {
+          "type": "TIMESTAMP",
+          "constraint": "SM_NOAGG: aktuell; SM_AGG ohne force: null"
+        },
+        "signatureCounter": {
+          "type": "INTEGER",
+          "constraint": "SM_NOAGG: inkrementiert; SM_AGG ohne force: null"
+        },
+        "signature": {
+          "type": "BYTES",
+          "constraint": "SM_NOAGG: gültig; SM_AGG ohne force: null"
+        }
+      },
+      "checks": [
+        {
+          "description": "SM_NOAGG: Rückgabe enthält signatureCounter, signatureCreationTime, signature",
+          "expected": "Alle drei Felder vorhanden und gültig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_AGG ohne forceSignature: Keine Signatur-Rückgabe",
+          "expected": "signatureCounter = null, signature = null",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_AGG mit forceSignature=true: Signatur-Rückgabe wie SM_NOAGG",
+          "expected": "Alle drei Felder vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 10,
+      "type": "ACTION",
+      "title": "Transaktion beenden",
+      "result": null,
+      "instruction": "Transaktion beenden\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<wie Schritt 1>",
+        "transactionNumber": "<aus Schritt 1>",
+        "processData": "<Schlussdaten>",
+        "processType": "<Typ>"
+      },
+      "expected_return": {
+        "signatureCreationTime": {
+          "type": "TIMESTAMP"
+        },
+        "signatureCounter": {
+          "type": "INTEGER"
+        },
+        "signature": {
+          "type": "BYTES"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe enthält Zeitpunkt, Signaturzähler und Signatur",
+          "expected": "Alle Felder vorhanden und gültig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Fehlermeldung",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 11,
+      "type": "VERIFY",
+      "title": "Log-Nachrichten exportieren und TAR-Container validieren",
+      "result": null,
+      "instruction": "Log-Nachrichten exportieren und TAR-Container validieren\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie Zertifikate und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "vollständiger TAR-Container aller Logs"
+        }
+      },
+      "checks": [
+        {
+          "description": "TAR enthält Log für startTransaction",
+          "expected": "Log-Datei vom Typ Start vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR enthält Log für updateTransaction (SM_NOAGG oder SM_AGG mit Absicherung)",
+          "expected": "Log-Datei vom Typ Update vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR enthält Log für finishTransaction",
+          "expected": "Log-Datei vom Typ Finish vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "clientId in allen Transaktions-Logs stimmt mit übergebenem Wert überein",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_03",
+          "title": "Keine unspezifizierten Dateien",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_NOEXTRA",
+          "title": "Keine unzulässigen Dateien im TAR-Container",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME",
+          "title": "Archivdateiname (Export_*.tar)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_SPLIT",
+          "title": "Aufgeteiltes Archiv",
+          "outcome_type": "INFO",
+          "condition": "conditional",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_PRESENT",
+          "title": "Zertifikat-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_NAME",
+          "title": "Zertifikat-Dateinamen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_PRESENT",
+          "title": "Log-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_LOG_03",
+          "title": "Log-Datei Namenskonventionen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TYPE_VALID",
+          "title": "Ausschließlich spezifikationskonforme Log-Nachrichten-Typen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_OPTYPE",
+          "title": "operationType vorhanden und gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_CLIENT",
+          "title": "clientId vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PDATA",
+          "title": "processData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PTYPE",
+          "title": "processType vorhanden, max. 100 Zeichen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_TXNNUM",
+          "title": "transactionNumber vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FMT",
+          "title": "Zeitformat-Präfix",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_NUM",
+          "title": "No-{transactionNumber} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_TYPE",
+          "title": "TYPE stimmt (Start|Update|Finish)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_CLIENT",
+          "title": "Client-{clientId} stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_NO_ADD_INT",
+          "title": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_ADD_EXT_ABSENT",
+          "title": "additionalExternalData nur vorhanden wenn Daten übergeben wurden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_START",
+          "title": "Jede transactionNumber hat genau einen Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_FINISH",
+          "title": "Jede transactionNumber hat genau einen Finish-Eintrag",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_ORDER",
+          "title": "Korrekte Reihenfolge Start → Update* → Finish",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_NODUP_UPDATE",
+          "title": "Keine doppelten Update-Signaturen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_TIME_ORDER",
+          "title": "Zeitliche Reihenfolge innerhalb einer Transaktion",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_NUM_SEQ",
+          "title": "transactionNumbers fortlaufend und lückenlos",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_NUM_UNIQUE",
+          "title": "transactionNumbers eindeutig pro Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_SERIAL",
+          "title": "Einheitliche TSE-Seriennummer im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_UNIQUE",
+          "title": "Keine doppelten signatureCounter-Werte",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_CTR_GAPS",
+          "title": "Keine Lücken in der signatureCounter-Sequenz",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIME_MONO",
+          "title": "Monoton steigende signatureCreationTime",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CROSS_LOG_TIMEFMT",
+          "title": "Einheitliches Zeitformat im gesamten Archiv",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_CTR_OVERFLOW_CHECK",
+          "title": "Kein signatureCounter am oder über dem Maximalwert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "STO_FUN_01"
+    },
+    {
+      "step": 12,
+      "type": "VERIFY",
+      "title": "Anwendungs- und Protokolldaten in Log-Nachrichten prüfen",
+      "result": null,
+      "instruction": "Anwendungs- und Protokolldaten in Log-Nachrichten prüfen",
+      "checks": [
+        {
+          "description": "processData im startTransaction-Log entspricht übergebenem Wert aus Schritt 1",
+          "expected": "Übereinstimmung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "processType im startTransaction-Log entspricht übergebenem Wert",
+          "expected": "Übereinstimmung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "transactionNumber im Log entspricht Rückgabe aus Schritt 1",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCreationTime im Log entspricht Rückgabe aus Schritt 1",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "serialNumber im Log entspricht Rückgabe aus Schritt 1",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signatureCounter im Log entspricht Rückgabe aus Schritt 1",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "signature im Log entspricht Rückgabe aus Schritt 1",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "SIG_VERIFY_LOGMSG",
+          "title": "Kryptographische Signaturverifikation der Log-Nachrichten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SIG_VERIFY_CONCAT",
+          "title": "Korrektheit der Feldkonkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §5",
+    "BSI TR-03151-1 §5"
+  ]
+}

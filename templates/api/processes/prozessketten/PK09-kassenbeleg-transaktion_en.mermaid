@@ -1,0 +1,37 @@
+flowchart TD
+    Start([Customer: Start Shopping])
+    Start --> StartTx[POS System: startTransaction<br/>processData: empty<br/>processType: empty]
+    
+    StartTx --> StartTSE[TSE: Start Transaction<br/>Create Transaction Number]
+    StartTSE --> TxNumber[Receive Transaction Number]
+    
+    TxNumber --> Scan[Scan Items/<br/>Record Prices]
+    Scan --> MoreItems{More<br/>Items?}
+    
+    MoreItems -->|Yes| Scan
+    MoreItems -->|No| Payment[Customer: Select Payment Method]
+    
+    Payment --> Prepare[POS System:<br/>Prepare processData<br/>Format: TransactionType^Taxes^Payments]
+    
+    Prepare --> Example["Example:<br/>Beleg^10.50_2.30_0.00_0.00_0.00^12.80:Bar"]
+    
+    Example --> FinishTx["POS System: finishTransaction<br/>processData: KassenbelegV1Data<br/>processType: Kassenbeleg-V1"]
+    
+    FinishTx --> FinishTSE[TSE: Finish Transaction<br/>Create Signature]
+    
+    FinishTSE --> SaveLog[Save Transaction Log]
+    
+    SaveLog --> GenQR[Generate QR-Code<br/>with Signature Data]
+    
+    GenQR --> PrintReceipt[Print Receipt<br/>with QR-Code]
+    
+    PrintReceipt --> End([End])
+    
+    style StartTx fill:#e1f5ff
+    style FinishTx fill:#e1f5ff
+    style Example fill:#fff4e1
+    style GenQR fill:#e8f5e9
+    
+    Note1[Note: For Kassenbeleg-V1<br/>updateTransaction is<br/>NOT used]
+    
+    style Note1 fill:#ffebee

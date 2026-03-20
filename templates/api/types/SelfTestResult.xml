@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SelfTestResult" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SelfTestResult</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Supporting type SelfTestResult used in system log event data.</description>
+  <asn1Definition>SelfTestResult ::= SEQUENCE {
+  componentName  PrintableString,
+  testIsPositive  BOOLEAN,
+  errorMessage  PrintableString OPTIONAL,
+  timeOfEvent  Time OPTIONAL
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>componentName</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field componentName of type PrintableString</description>
+    </field>
+    <field>
+      <name>testIsPositive</name>
+      <type>BOOLEAN</type>
+      <optional>false</optional>
+      <description>Field testIsPositive of type BOOLEAN</description>
+    </field>
+    <field>
+      <name>errorMessage</name>
+      <type>PrintableString</type>
+      <optional>true</optional>
+      <description>Field errorMessage of type PrintableString</description>
+    </field>
+    <field>
+      <name>timeOfEvent</name>
+      <type>Time</type>
+      <optional>true</optional>
+      <description>Field timeOfEvent of type Time</description>
+    </field>
+  </fields>
+</type>

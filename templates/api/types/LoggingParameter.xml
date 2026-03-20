@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="LoggingParameter" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>LoggingParameter</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Supporting type LoggingParameter used in system log event data.</description>
+  <asn1Definition>LoggingParameter ::= SEQUENCE {
+  eventName  PrintableString,
+  eventEnabled  BOOLEAN
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>eventName</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field eventName of type PrintableString</description>
+    </field>
+    <field>
+      <name>eventEnabled</name>
+      <type>BOOLEAN</type>
+      <optional>false</optional>
+      <description>Field eventEnabled of type BOOLEAN</description>
+    </field>
+  </fields>
+</type>

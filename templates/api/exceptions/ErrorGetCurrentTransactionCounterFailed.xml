@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetCurrentTransactionCounterFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetCurrentTransactionCounterFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getCurrentTransactionCounter fails to obtain the current transaction counter value from the Secure Element's transaction management subsystem. The function attempts to retrieve the current state of the transaction counter used to track transaction sequence and integrity, but the retrieval process fails before the counter value can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getCurrentTransactionCounter fehlschlägt, um den aktuellen Transaktionszahlwert vom Transaktions-Management-Subsystem des Secure Element zu erhalten. Die Funktion versucht, den aktuellen Zustand des Transaktionszahlers abzurufen, der zur Verfolgung der Transaktionssequenz und Integrität verwendet wird, aber der Abrufprozess schlägt fehl, bevor der Zählerwert bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Transaction</category>
+  <subcategory>Counter Management</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetCurrentTransactionCounterFailed that is thrown if the SE API function getCurrentTransactionCounter fails to obtain the current transaction counter value.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetCurrentTransactionCounterFailed, die ausgelöst wird, wenn die SE API Funktion getCurrentTransactionCounter fehlschlägt, um den aktuellen Transaktionszahlwert zu erhalten.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getCurrentTransactionCounter function cannot retrieve the current transaction counter value from the Secure Element's transaction management subsystem. Transaction counters are critical components of the transaction infrastructure that track and validate the sequence and integrity of transactions. ErrorGetCurrentTransactionCounterFailed indicates that the Secure Element cannot provide the current counter state due to hardware failure, storage corruption, internal transaction system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no counter data is returned and applications cannot verify transaction integrity or determine current counter state. Recovery typically involves device verification, transaction subsystem diagnostics, potential counter reinitialization, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getCurrentTransactionCounter den aktuellen Transaktionszahlwert nicht vom Transaktions-Management-Subsystem des Secure Element abrufen kann. Transaktionszahler sind kritische Komponenten der Transaktionsinfrastruktur, die die Sequenz und Integrität von Transaktionen nachverfolgen und validieren. ErrorGetCurrentTransactionCounterFailed zeigt an, dass das Secure Element den aktuellen Zählerzustand aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Transaktionssystem-Fehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Zählerdaten zurückgegeben und Anwendungen können die Transaktionsintegrität nicht verifizieren oder den aktuellen Zählerzustand nicht bestimmen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Transaktions-Subsystem-Diagnose, mögliche Zähler-Reinitialisierung und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.4.1 Transaction Management - getCurrentTransactionCounter</section>
+    <requirement>
+      <text xml:lang="en">The function getCurrentTransactionCounter SHALL retrieve the current transaction counter value maintained by the Secure Element's transaction management subsystem. If the Secure Element cannot provide or return the required counter information, the function SHALL raise the exception ErrorGetCurrentTransactionCounterFailed and exit without returning any counter data. The transaction counter retrieval failure indicates the Secure Element's transaction counter query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getCurrentTransactionCounter soll den aktuellen Transaktionszahlwert abrufen, der vom Transaktions-Management-Subsystem des Secure Element verwaltet wird. Falls das Secure Element die erforderlichen Zählerinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetCurrentTransactionCounterFailed auslösen und beendet werden, ohne Zählerdaten zurückzugeben. Der Fehler bei der Transaktionszahlabfrage zeigt an, dass die Transaktionszahlabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations - getCurrentTransactionCounter function only</text>
+      <text xml:lang="de">Transaktionsoperationen - nur Funktion getCurrentTransactionCounter</text>
+    </applicability>
+    <reference>getCurrentTransactionCounter – Function (3.4.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>getCurrentTransactionCounter</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getCurrentTransactionCounter function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getCurrentTransactionCounter auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for counter information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Zählerinformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and transaction subsystem is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Transaktions-Subsystem betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares counter query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Zählerabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits counter query command to Secure Element requesting current transaction counter value</text>
+      <text xml:lang="de">Funktion übermättelt Zählerabfrage-Befehl zu Secure Element und fordert aktuellen Transaktionszahlwert an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (storage error, counter calculation error, subsystem error) → ErrorGetCurrentTransactionCounterFailed raised, function exits without counter data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Speicherfehler, Zählerberechnungsfehler, Subsystem-Fehler) → ErrorGetCurrentTransactionCounterFailed ausgelöst, Funktion beendet ohne Zählerdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetCurrentTransactionCounterFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetübertragung oder Antwortempfang auftritt → ErrorGetCurrentTransactionCounterFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives counter value from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Zählerwert von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates counter value for correctness (format, sequence, logical consistency)</text>
+      <text xml:lang="de">Funktion validiert Zählerwert auf Korrektheit (Format, Sequenz, logische Konsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid counter value to caller</text>
+      <text xml:lang="de">Funktion gibt gültigen Zählerwert an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry counter query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Zählerabfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check transaction logging system status</text>
+      <text xml:lang="de">Prüfen Sie den Transaktionsprotokollierungssystem-Status</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorStartTransactionFailed</exception>
+    <exception>ErrorUpdateTransactionFailed</exception>
+    <exception>ErrorFinishTransactionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve counter values does not affect device initialization state, transaction operations, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschalten beim Zählerwertabruf wirkt sich nicht auf den Geräteinitialisierungszustand, Transaktionsoperationen, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Counter Data Return Status">
+      <text xml:lang="en">No counter value is returned to the caller. The function exits without providing any counter information. Applications must not assume default or cached counter values; they must handle the exception as indicating counter information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Zählerwert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Zählerinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard- oder zwischengespeicherten Zählerwerten rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Zählerinformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element Transaction State">
+      <text xml:lang="en">Secure Element transaction subsystem remains unchanged by the failed counter query. No state modifications, counter updates, or transaction configuration changes occur. Transaction operations continue internally in the Secure Element regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Transaktions-Subsystem des Secure Element bleibt durch die fehlgeschlagene Zählerabfrage unverändert. Es werden keine Zustandseränderungen, Zählerspalten oder Transaktionskonfigurationsoderänderungen vorgenommen. Transaktionsoperationen werden intern im Secure Element unabhängig vom Abruffehler fortgesetzt.</text>
+    </state>
+    <state name="Counter Advancement Continuity">
+      <text xml:lang="en">Secure Element's transaction counter continues to advance as transaction events occur. The failure to retrieve counter values does not stop or pause counter tracking. Subsequent attempts to query counter or perform transaction operations may succeed once the underlying issue is resolved.</text>
+      <text xml:lang="de">Der Transaktionszahler des Secure Element setzt weiterhin fort, wenn Transaktionsereignisse auftreten. Das Fehlschalten beim Abruf von Zählerwerten stoppt oder pausiert die Zählerverfolgung nicht. Nachfolgende Versuche, Zähler abzufragen oder Transaktionsoperationen durchzuführen, können erfolgreich sein, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the counter retrieval failure. Device internal consistency is maintained. Other SE API functions and transaction operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfallschlösse als Ergebnis des Zählerabruffehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Transaktionsoperationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (storage error, communication error, subsystem error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Speicherfehler, Kommunikationsfehler, Subsystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of current transaction counter failed - cannot determine counter value</text>
+      <text xml:lang="de">Anzeichen: Abruf des aktuellen Transaktionszahlers fehlgeschlagen - kann Zählerwert nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Counter Operations, Information Retrieval, Transaction State</text>
+      <text xml:lang="de">Themen: Transaktions-Management, Zähleroperationen, Informationsabfrage, Transaktionszustand</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getCurrentTransactionCounter when counter retrieval fails</text>
+      <text xml:lang="de">Wird von getCurrentTransactionCounter ausgelöst, wenn der Zählerabruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Counter function queries transaction counter state</text>
+      <text xml:lang="de">Zählerfunktion fragt Transaktionszahl-Zustand ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device tracks transaction numbering via counter</text>
+      <text xml:lang="de">Das Gerät verfolgt die Transaktionsnummerierung über Zähler</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents transaction counter access</text>
+      <text xml:lang="de">Abruffehler verhindert Transaktionszahl-Zugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,178 @@
+{
+  "testcase_id": "TC-DOC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Herstellerdokumentation: Vollständigkeit und Plausibilität",
+  "description": "Prüft die Vollständigkeit der Herstellerdokumentation für alle im ICS angegebenen Sachverhalte.",
+  "purpose": "",
+  "module": "Documentation",
+  "submodule": "DOC",
+  "function": null,
+  "test_type": "FP",
+  "priority": "mandatory",
+  "profiles": [
+    "STORAGE_BASIC"
+  ],
+  "source_tests": [
+    "DOC_01",
+    "DOC_02",
+    "DOC_03",
+    "DOC_04",
+    "DOC_05"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation und ausgefülltes ICS liegen vollständig vor.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation liegt vollständig vor",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "VERIFY",
+      "title": "ICS auf Vollständigkeit und Plausibilität prüfen",
+      "result": null,
+      "instruction": "ICS auf Vollständigkeit und Plausibilität prüfen",
+      "checks": [
+        {
+          "description": "Nutzbare Speichergröße für Log-Nachrichten im ICS angegeben",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Schätzmethode und geschätzte Anzahl speicherbarer Transaktions-Logs dokumentiert",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Max. Lösch-/Schreibzyklen des Speichers angegeben",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Max. Transaktionszähler-Größe angegeben",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Max. Signaturzähler-Größe angegeben",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "Fehlercode-Dokumentation prüfen",
+      "result": null,
+      "instruction": "Fehlercode-Dokumentation prüfen",
+      "checks": [
+        {
+          "description": "Übersicht über Input-Längen für alle relevanten Funktionen vorhanden",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Beschreibung: Wie ErrorParameterSyntax je Funktion provoziert werden kann",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Vollständige Fehlermeldungsübersicht (Funktion → Fehler → Situation) vorhanden",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "type": "VERIFY",
+      "title": "Technische Spezifikationen prüfen",
+      "result": null,
+      "instruction": "Technische Spezifikationen prüfen",
+      "checks": [
+        {
+          "description": "ASN.1-Feinspezifikation von seAuditData vollständig vorhanden",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Verfahren zur Sicherstellung der Zertifizierungskonformität nach Komponentenaktualisierung beschrieben",
+          "expected": "Beschrieben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §Anhang",
+    "BSI TR-03151-1"
+  ]
+}

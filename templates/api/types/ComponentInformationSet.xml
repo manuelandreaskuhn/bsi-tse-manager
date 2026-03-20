@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="ComponentInformationSet" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>ComponentInformationSet</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Supporting type ComponentInformationSet used in system log event data.</description>
+  <asn1Definition>ComponentInformationSet ::= SEQUENCE {
+  componentName  PrintableString,
+  manufacturer  PrintableString,
+  model  PrintableString,
+  version  PrintableString,
+  certificationId  PrintableString OPTIONAL
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>componentName</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field componentName of type PrintableString</description>
+    </field>
+    <field>
+      <name>manufacturer</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field manufacturer of type PrintableString</description>
+    </field>
+    <field>
+      <name>model</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field model of type PrintableString</description>
+    </field>
+    <field>
+      <name>version</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field version of type PrintableString</description>
+    </field>
+    <field>
+      <name>certificationId</name>
+      <type>PrintableString</type>
+      <optional>true</optional>
+      <description>Field certificationId of type PrintableString</description>
+    </field>
+  </fields>
+</type>

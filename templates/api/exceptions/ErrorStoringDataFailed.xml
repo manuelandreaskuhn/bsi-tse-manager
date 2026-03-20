@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorStoringDataFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorStoringDataFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if a storage operation fails when attempting to store data on the device. The Secure Element stores various types of data including device description, configuration parameters, and operational data. If the storage write operation fails, ErrorStoringDataFailed indicates the data could not be successfully written to device storage. Common causes include: device storage errors, storage write failures, corrupted storage, insufficient storage capacity, storage medium issues, or communication failures. ErrorStoringDataFailed indicates that the requested data update was not completed and the device's stored data remains unchanged. This prevents configuration updates and data management operations from completing successfully.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine Speicheroperation fehlschlägt, wenn versucht wird, Daten auf dem Gerät zu speichern. Das Secure Element speichert verschiedene Arten von Daten, einschließlich Gerätebeschreibung, Konfigurationsparameter und operationale Daten. Falls die Speicherschreiboperation fehlschlägt, zeigt ErrorStoringDataFailed an, dass die Daten nicht erfolgreich in den Gerätespeicher geschrieben werden konnten. Häufige Ursachen sind: Gerätespeicherfehler, Speicherschreibfehler, beschädigter Speicher, unzureichende Speicherkapazität, Speichermedium-Probleme oder Kommunikationsfehler. ErrorStoringDataFailed zeigt an, dass die angeforderte Datenaktualisierung nicht abgeschlossen wurde und die auf dem Gerät gespeicherten Daten unverändert bleiben. Dies verhindert, dass Konfigurationsaktualisierungen und Datenverwaltungsoperationen erfolgreich abgeschlossen werden.</text>
+  </description>
+  <category>Storage</category>
+  <subcategory>Data Storage Failure</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>setDescription</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorStoringDataFailed that is thrown if data storage operations fail.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorStoringDataFailed, die ausgelöst wird, wenn Datenspeicheroperationen fehlschlagen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when a storage write operation fails while attempting to store data on the Secure Element. The device stores configuration, description, and operational data that must be persisted reliably. ErrorStoringDataFailed indicates that a data storage operation (typically setDescription or initialize) could not complete successfully. Common causes include: device storage write errors, storage medium issues, corrupted storage, insufficient storage capacity, or communication failures during write. ErrorStoringDataFailed is a High severity exception because it prevents configuration updates and data management. The device's stored data remains in its previous state - the failed write does not update the data. Recovery requires investigating the storage issue and potentially retrying the operation or addressing underlying storage problems.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine Speicherschreiboperation fehlschlägt, wenn versucht wird, Daten auf dem Secure Element zu speichern. Das Gerät speichert Konfiguration, Beschreibung und operationale Daten, die zuverlässig beibehalten werden müssen. ErrorStoringDataFailed zeigt an, dass eine Datenspeicheroperation (typischerweise setDescription oder initialize) nicht erfolgreich abgeschlossen werden konnte. Häufige Ursachen sind: Gerätespeicher-Schreibfehler, Speichermedium-Probleme, beschädigter Speicher, unzureichende Speicherkapazität oder Kommunikationsfehler während des Schreibens. ErrorStoringDataFailed ist eine Ausnahme mit hoher Schweregrad, da sie Konfigurationsaktualisierungen und Datenverwaltung verhindert. Die auf dem Gerät gespeicherten Daten bleiben in ihrem vorherigen Zustand - das fehlgeschlagene Schreiben aktualisiert die Daten nicht. Die Wiederherstellung erfordert die Untersuchung des Speicherproblems und möglicherweise den erneuten Versuch der Operation oder die Behebung zugrunde liegender Speicherprobleme.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2 Device Configuration and 3.3.1 Device Information Operations - Data Storage</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element stores device configuration and operational data including device description and initialization data. Operations that update stored data (setDescription, initialize) must persist the data reliably to device storage. If a data storage operation fails to successfully write data to device storage, the function SHALL raise ErrorStoringDataFailed. The device's stored data remains unchanged if the write fails. Data storage failures must be reported clearly so the caller knows the operation did not complete. Storage failures may require addressing underlying storage issues before retry.</text>
+      <text xml:lang="de">Das Secure Element speichert Gerätekonfiguration und operationale Daten, einschließlich Gerätebeschreibung und Initialisierungsdaten. Operationen, die gespeicherte Daten aktualisieren (setDescription, initialize), müssen die Daten zuverlässig im Gerätespeicher beibehalten. Falls eine Datenspeicheroperation die Daten nicht erfolgreich in den Gerätespeicher schreiben kann, SOLL die Funktion ErrorStoringDataFailed auslösen. Die auf dem Gerät gespeicherten Daten bleiben unverändert, wenn das Schreiben fehlschlägt. Datenspeicherfehler müssen klar gemeldet werden, damit der Aufrufer weiß, dass die Operation nicht abgeschlossen wurde. Speicherfehler können die Behebung zugrunde liegender Speicherprobleme vor dem erneuten Versuch erfordern.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Data storage operations: setDescription, initialize</text>
+      <text xml:lang="de">Datenspeicheroperationen: setDescription, initialize</text>
+    </applicability>
+    <reference>Device Configuration (3.2), Device Information Operations (3.3.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls a data storage operation (e.g., setDescription)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine Datenspeicheroperation auf (z.B. setDescription)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input data parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabedatenparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks data format and validity</text>
+      <text xml:lang="de">Funktion prüft Datenformat und Gültigkeit</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If data invalid → may raise ErrorParameterSyntax instead</text>
+      <text xml:lang="de">Wenn Daten ungültig → kann stattdessen ErrorParameterSyntax auslösen</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If data valid → proceed to step 4</text>
+      <text xml:lang="de">Wenn Daten gültig → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function sends data storage request with data payload to Secure Element</text>
+      <text xml:lang="de">Funktion sendet Datenspeicheranforderung mit Daten-Payload an Secure Element</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element receives data storage request</text>
+      <text xml:lang="de">Secure Element empfängt Datenspeicheranforderung</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element validates received data</text>
+      <text xml:lang="de">Secure Element validiert empfangene Daten</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element attempts to write data to storage</text>
+      <text xml:lang="de">Secure Element versucht, Daten in den Speicher zu schreiben</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If storage write fails → ErrorStoringDataFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speicherschreiben fehlschlägt → ErrorStoringDataFailed ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich ist → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element verifies write completion and data integrity</text>
+      <text xml:lang="de">Secure Element verifiziert Schreibabschluss und Datenintegrität</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If verification fails → ErrorStoringDataFailed raised</text>
+      <text xml:lang="de">Wenn Verifikation fehlschlägt → ErrorStoringDataFailed ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If verification succeeds → proceed to step 10</text>
+      <text xml:lang="de">Wenn Verifikation erfolgreich ist → fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns success acknowledgment to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolgsquittung an die Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function closes communication with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikation mit Secure Element</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns successfully</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify storage medium is accessible</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Speichermedium zugreifbar ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check available storage space</text>
+      <text xml:lang="de">Prüfen Sie den verfügbaren Speicherplatz</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure data to store is valid format</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die zu speichernden Daten das gültige Format haben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry storage operation after freeing space if needed</text>
+      <text xml:lang="de">Wiederholen Sie die Speicheroperation nach dem Freigeben von Platz, falls erforderlich</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Data Not Stored">
+      <text xml:lang="en">The data is not stored on the device.</text>
+      <text xml:lang="de">Die Daten werden nicht auf dem Gerät gespeichert.</text>
+    </state>
+    <state name="Device Data Unchanged">
+      <text xml:lang="en">The device's stored data remains in its previous state - the write did not complete.</text>
+      <text xml:lang="de">Die auf dem Gerät gespeicherten Daten bleiben in ihrem vorherigen Zustand - das Schreiben wurde nicht abgeschlossen.</text>
+    </state>
+    <state name="Operation Not Completed">
+      <text xml:lang="en">The data storage operation is not completed successfully.</text>
+      <text xml:lang="de">Die Datenspeicheroperation wird nicht erfolgreich abgeschlossen.</text>
+    </state>
+    <state name="Configuration Not Updated">
+      <text xml:lang="en">Device configuration is not updated with the new data.</text>
+      <text xml:lang="de">Die Gerätekonfiguration wird nicht mit den neuen Daten aktualisiert.</text>
+    </state>
+    <state name="Caller Receives Exception">
+      <text xml:lang="en">The function returns ErrorStoringDataFailed exception instead of success.</text>
+      <text xml:lang="de">Die Funktion gibt ErrorStoringDataFailed-Ausnahme statt Erfolg zurück.</text>
+    </state>
+    <state name="Retry Possible">
+      <text xml:lang="en">The storage operation can be retried after addressing the storage issue.</text>
+      <text xml:lang="de">Die Speicheroperation kann nach der Behebung des Speicherproblems wiederholt werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Storing of data failed - data could not be written to storage</text>
+      <text xml:lang="de">Anzeichen: Speicherung von Daten fehlgeschlagen - Daten konnten nicht in den Speicher geschrieben werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Storage Operations, Data Writing, Storage Management, Data Persistence</text>
+      <text xml:lang="de">Themen: Speicheroperationen, Datenschreiben, Speicherverwaltung, Datenbeständigkeit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by setDescription when description storage fails</text>
+      <text xml:lang="de">Wird von setDescription ausgelöst, wenn die Speicherung der Beschreibung fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Data persistence function writes description to device storage</text>
+      <text xml:lang="de">Datenbeständigkeitsfunktion schreibt Beschreibung in den Gerätespeicher</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device stores user-provided description string</text>
+      <text xml:lang="de">Gerät speichert vom Benutzer bereitgestellte Beschreibungszeichenfolge</text>
+    </note>
+    <note>
+      <text xml:lang="en">Storage failure prevents description update</text>
+      <text xml:lang="de">Speicherfehler verhindert Beschreibungs-Update</text>
+    </note>
+  </implementationContext>
+</exception>
+

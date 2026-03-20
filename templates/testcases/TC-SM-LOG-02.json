@@ -1,0 +1,294 @@
+{
+  "testcase_id": "TC-SM-LOG-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Sicherheitsmodulanwendung: Safe-State verlassen und Deaktivierung",
+  "description": "Prüft exitSecureState-Log (leere ASN.1-Sequenz als eventData) und SM_AUD-Deaktivierungsverhalten.",
+  "purpose": "Prüfung, ob die Log-Nachricht, die erstellt wird, wenn der sichere Zustand verlassen wird, als eventData eine leere ASN.1-Sequenz enthält.",
+  "module": "Security Module",
+  "submodule": "SM_LOG/SM_AUD",
+  "function": "exportLogMessages",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC",
+    "AUDIT_MODIFY"
+  ],
+  "source_tests": [
+    "SM_LOG_06",
+    "SM_AUD_01",
+    "SM_AUD_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Sicherheitsmodulanwendung ist in einem sicheren Zustand.",
+      "result": null,
+      "instruction": "Die Sicherheitsmodulanwendung ist in einem sicheren Zustand."
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller gibt eine Erklärung ab, wie der sichere Zusta",
+      "result": null,
+      "instruction": "Der Hersteller gibt eine Erklärung ab, wie der sichere Zustand verlassen werden kann."
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller stellt eine Anleitung und eventuell notwendig",
+      "result": null,
+      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden können."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller stellt eine Anleitung und eventuell notwendig",
+      "result": null,
+      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Audit-Funktionalität der Sicherheitsmodulanwendung gestoppt werden kann."
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "Sicherheitsmodul deaktivieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "disableSecureElement",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.15"
+      ],
+      "source_test": "SM_LOG_06"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementDisabled ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_LOG_06"
+    },
+    {
+      "step": 8,
+      "type": "VERIFY",
+      "title": "exitSecureState-Log prüfen (SM_LOG_06)",
+      "result": null,
+      "instruction": "exitSecureState-Log prüfen (SM_LOG_06)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "<Fehler beseitigen → TSE verlässt sicheren Zustand> → exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Log für exitSecureState vorhanden",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData bei exitSecureState ist leere ASN.1-Sequenz",
+          "expected": "EVDATA_EXITSECURE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "enterSecureState und exitSecureState paarweise",
+          "expected": "SYS_EVT_SECURE_PAIRS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EVDATA_EXITSECURE",
+          "title": "eventData bei exitSecureState ist leere ASN.1-Sequenz",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYS_EVT_SECURE_PAIRS",
+          "title": "enterSecureState und exitSecureState paarweise",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_LOG_06"
+    },
+    {
+      "step": 9,
+      "type": "ACTION",
+      "title": "SM_AUD_01 (AUDIT_MODIFY): Deaktivierung bei Audit-Einstellungsänderung",
+      "result": null,
+      "instruction": "SM_AUD_01 (AUDIT_MODIFY): Deaktivierung bei Audit-Einstellungsänderung",
+      "function": "<Audit-Einstellungen nach initialer Konfiguration ändern>",
+      "checks": [
+        {
+          "description": "Sicherheitsmodul wird nach Änderung der Audit-Einstellungen automatisch deaktiviert",
+          "expected": "Deaktivierung eingetreten",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil AUDIT_MODIFY aktiv"
+    },
+    {
+      "step": 10,
+      "type": "VERIFY",
+      "title": "SM_AUD_02: Permanente Deaktivierung bei Audit-Stopp",
+      "result": null,
+      "instruction": "SM_AUD_02: Permanente Deaktivierung bei Audit-Stopp\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "<Audit-Funktionalität stoppen> → exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Permanente Deaktivierung des Sicherheitsmoduls eingetreten",
+          "expected": "Deaktiviert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog vom Typ disableSecureElement vorhanden",
+          "expected": "DSE_LOG_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "disableSecureElement ist der letzte signierte Log-Eintrag",
+          "expected": "DSE_FINAL_LOG + STOR_EVT_DISABLE_IS_LAST",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData des disableSecureElement-Logs ist leere ASN.1-Sequenz",
+          "expected": "DSE_LOG_EVDATA_EMPTY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "DSE_LOG_PRESENT",
+          "title": "disableSecureElement-Log vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DSE_LOG_EVTYPE",
+          "title": "eventType = disableSecureElement",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DSE_LOG_EVORIGIN",
+          "title": "eventOrigin = integration-interface",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DSE_LOG_EVDATA_EMPTY",
+          "title": "eventData ist leere Sequence",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DSE_FINAL_LOG",
+          "title": "disableSecureElement ist der letzte signierte Log-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_EVT_DISABLE_IS_LAST",
+          "title": "disableSecureElement hat den höchsten signatureCounter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_LOG_06"
+    }
+  ],
+  "references": [
+    "BSI TR-03151-1 §5"
+  ]
+}

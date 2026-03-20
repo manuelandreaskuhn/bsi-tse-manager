@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorIncorrectPin" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorIncorrectPin</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function authenticateUser fails because an incorrect PIN was provided. The function attempts to authenticate a user with supplied credentials, but the provided PIN does not match the registered authentication credential, causing the authentication process to fail and reject the authentication attempt.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion authenticateUser fehlschlägt, da eine falsche PIN bereitgestellt wurde. Die Funktion versucht, einen Benutzer mit bereitgestellten Anmeldedaten zu authentifizieren, aber die bereitgestellte PIN stimmt nicht mit der registrierten Authentifizierungsberechtigung überein, was dazu führt, dass der Authentifizierungsprozess fehlschlägt und den Authentifizierungsversuch ablehnt.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PIN Verification</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorIncorrectPin that is thrown if the SE API function authenticateUser has been invoked with an incorrect PIN.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorIncorrectPin, die ausgelöst wird, wenn die SE API Funktion authenticateUser mit einer falschen PIN aufgerufen worden ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the authenticateUser function receives an incorrect PIN that does not match the user's registered authentication credential. PIN verification is a critical security operation that controls access to protected SE API functions and operations. ErrorIncorrectPin indicates that the supplied PIN does not match the registered credential stored on the Secure Element. When this exception occurs, the authentication attempt fails and the user remains unauthenticated. The Secure Element may also track failed authentication attempts and implement security countermeasures (PIN retry counter decrement, potential PIN blocking after maximum failures). Recovery requires supplying the correct PIN in a subsequent authentication attempt, or requesting PIN reset through administrative procedures if the PIN is forgotten.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion authenticateUser eine falsche PIN erhält, die nicht mit der registrierten Authentifizierungsberechtigung des Benutzers übereinstimmt. PIN-Verifizierung ist eine kritische Sicherheitsoperation, die den Zugriff auf geschützte SE API Funktionen und Operationen kontrolliert. ErrorIncorrectPin zeigt an, dass die bereitgestellte PIN nicht mit der registrierten Berechtigung auf dem Secure Element übereinstimmt. Wenn diese Ausnahme auftritt, schlägt der Authentifizierungsversuch fehl und der Benutzer bleibt nicht authentifiziert. Das Secure Element kann auch fehlgeschlagene Authentifizierungsversuche verfolgen und Sicherheitsmaßnahmen implementieren (PIN-Wiederholungszähler-Dekrement, potenzielle PIN-Blockierung nach maximalen Fehlern). Die Wiederherstellung erfordert die Bereitstellung der korrekten PIN bei einem nachfolgenden Authentifizierungsversuch oder die Anforderung eines PIN-Zurücksetzen über administrative Verfahren, wenn die PIN vergessen ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.2 User Authentication - authenticateUser</section>
+    <requirement>
+      <text xml:lang="en">The function authenticateUser SHALL authenticate a user by verifying the provided PIN against the registered authentication credential. If the provided PIN does not match the registered credential, the function SHALL raise the exception ErrorIncorrectPin and reject the authentication attempt without establishing user authentication. The Secure Element SHALL track failed authentication attempts and may implement security countermeasures including PIN retry counter management.</text>
+      <text xml:lang="de">Die Funktion authenticateUser soll einen Benutzer authentifizieren, indem die bereitgestellte PIN gegen die registrierte Authentifizierungsberechtigung verifiziert wird. Falls die bereitgestellte PIN nicht mit der registrierten Berechtigung übereinstimmt, soll die Funktion die Ausnahme ErrorIncorrectPin auslösen und den Authentifizierungsversuch ablehnen, ohne Benutzauthentifizierung zu etablieren. Das Secure Element soll fehlgeschlagene Authentifizierungsversuche verfolgen und kann Sicherheitsmaßnahmen implementieren, einschließlich PIN-Wiederholungszähler-Verwaltung.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">User authentication operations - authenticateUser function only</text>
+      <text xml:lang="de">Benutzer-Authentifizierungs-Operationen - nur Funktion authenticateUser</text>
+    </applicability>
+    <reference>authenticateUser – Function (3.5.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>authenticateUser</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls authenticateUser function with PIN parameter</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion authenticateUser mit PIN-Parameter auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PIN format and length</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PIN-Format und Länge</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks if authentication is currently allowed (not already authenticated, not in locked state)</text>
+      <text xml:lang="de">Funktion prüft, ob Authentifizierung derzeit zulässig ist (nicht bereits authentifiziert, nicht im gesperrten Zustand)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies user exists and PIN authentication is applicable for this user</text>
+      <text xml:lang="de">Funktion verifiziert, dass der Benutzer existiert und PIN-Authentifizierung für diesen Benutzer anwendbar ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares authentication command with supplied PIN</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Authentifizierungs-Befehl mit bereitgestellter PIN vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits authentication command to Secure Element with supplied PIN for verification</text>
+      <text xml:lang="de">Funktion übersendet Authentifizierungs-Befehl zu Secure Element mit bereitgestellter PIN zur Verifizierung</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If supplied PIN does NOT match registered credential → Secure Element responds with failure, ErrorIncorrectPin raised, function exits</text>
+      <text xml:lang="de">Falls bereitgestellte PIN NICHT mit registrierter Berechtigung übereinstimmt → Secure Element antwortet mit Fehler, ErrorIncorrectPin ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PIN verification confirms mismatch → Secure Element increments failed authentication counter and may apply security countermeasures</text>
+      <text xml:lang="de">Falls PIN-Verifizierung Missvhältnis bestätigt → Secure Element erhöht fehlgeschlagenen Authentifizierungs-Zähler und kann Sicherheitsmaßnahmen anwenden</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If supplied PIN matches registered credential, function receives authentication success confirmation</text>
+      <text xml:lang="de">Falls bereitgestellte PIN mit registrierter Berechtigung übereinstimmt, empfängt Funktion Authentifizierungs-Erfolgsbestätigung</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function establishes authenticated user session and records successful authentication</text>
+      <text xml:lang="de">Funktion etabliert authentifizierte Benutzersitzung und zeichnet erfolgreiche Authentifizierung auf</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns to caller with authenticated user context established</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer mit etabliertem authentifizierten Benutzerkontext zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify PIN entry - check for typos in user input</text>
+      <text xml:lang="de">PIN-Eingabe verifizieren - auf Tippfehler in der Benutzereingabe prüfen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry authentication with correct PIN</text>
+      <text xml:lang="de">Authentifizierung mit korrekter PIN wiederholen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check if PIN has been changed recently</text>
+      <text xml:lang="de">Prüfen Sie, ob die PIN kürzlich geändert worden ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use unblockPin if PIN is forgotten and PUK available</text>
+      <text xml:lang="de">Verwenden Sie unblockPin, falls PIN vergessen ist und PUK verfügbar ist</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserAlreadyAuthenticated</exception>
+    <exception>ErrorAuthenticationFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Authentication State">
+      <text xml:lang="en">User remains unauthenticated. The failed authentication attempt does not establish authentication context. The device operates in the unauthenticated state and protected operations continue to require authentication.</text>
+      <text xml:lang="de">Der Benutzer bleibt nicht authentifiziert. Der fehlgeschlagene Authentifizierungsversuch etabliert keinen Authentifizierungs-Kontext. Das Gerät läuft im nicht authentifizierten Zustand und geschützte Operationen erfordern weiterhin Authentifizierung.</text>
+    </state>
+    <state name="Failed Authentication Counter Update">
+      <text xml:lang="en">The Secure Element's failed authentication counter is typically incremented to track the authentication failure. If implemented, this counter tracks repeated failed attempts and may trigger security countermeasures (PIN blocking) after excessive failures.</text>
+      <text xml:lang="de">Der fehlgeschlagene Authentifizierungs-Zähler des Secure Element wird normalerweise erhöht, um den Authentifizierungsfehler zu verfolgen. Falls implementiert, verfolgt dieser Zähler wiederholte Fehlerversuche und kann Sicherheitsmaßnahmen (PIN-Blockierung) nach übermäßigen Fehlern auslösen.</text>
+    </state>
+    <state name="PIN Blocking Preconditions">
+      <text xml:lang="en">Repeated failed authentication attempts may eventually trigger PIN blocking or account lockout. If the failed attempt counter reaches the maximum threshold configured for PIN blocking, the next authenticateUser call may raise ErrorPinBlocked instead of ErrorIncorrectPin.</text>
+      <text xml:lang="de">Wiederholte fehlgeschlagene Authentifizierungsversuche können letztendlich PIN-Blockierung oder Konto-Sperren auslösen. Falls der fehlgeschlagene Versuchs-Zähler den für PIN-Blockierung konfigurierten maximalen Schwellenwert erreicht, kann der nächste authenticateUser-Aufruf ErrorPinBlocked statt ErrorIncorrectPin auslösen.</text>
+    </state>
+    <state name="No Credential Modification">
+      <text xml:lang="en">The registered authentication credential remains unchanged. The incorrect PIN does not modify the registered credential or authentication configuration. Subsequent authentication attempts use the same registered credential.</text>
+      <text xml:lang="de">Die registrierte Authentifizierungsberechtigung bleibt unverändert. Die falsche PIN ändert nicht die registrierte Berechtigung oder Authentifizierungs-Konfiguration. Nachfolgende Authentifizierungsversuche verwenden dieselbe registrierte Berechtigung.</text>
+    </state>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failed authentication does not affect device state, configuration, or other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Die fehlgeschlagene Authentifizierung wirkt sich nicht auf den Gerätezustand, die Konfiguration oder andere Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. User can immediately retry authentication with the correct PIN. No special recovery procedures are required unless PIN blocking is triggered or PIN reset is needed.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Der Benutzer kann sofort die Authentifizierung mit der korrekten PIN wiederholen. Keine speziellen Wiederherstellungsverfahren sind erforderlich, außer wenn PIN-Blockierung ausgelöst wird oder PIN-Zurücksetzen erforderlich ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: PIN provided does not match the stored PIN - authentication failed</text>
+      <text xml:lang="de">Anzeichen: Bereitgestellte PIN stimmt nicht mit der gespeicherten PIN überein - Authentifizierung fehlgeschlagen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authentication, PIN Management, User Verification, Access Control</text>
+      <text xml:lang="de">Themen: Authentifizierung, PIN-Verwaltung, Benutzerverfizierung, Zugriffskontrolle</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by authenticateUser when provided PIN does not match stored PIN</text>
+      <text xml:lang="de">Wird von authenticateUser ausgelöst, wenn die bereitgestellte PIN nicht mit der gespeicherten PIN übereinstimmt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Authentication function verifies PIN via Secure Element comparison</text>
+      <text xml:lang="de">Authentifizierungs-Funktion verifiziert PIN über Secure Element Vergleich</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains PIN secret and retry counter</text>
+      <text xml:lang="de">Gerät verwaltet PIN-Geheimnis und Wiederholungs-Zähler</text>
+    </note>
+    <note>
+      <text xml:lang="en">PIN mismatch indicates failed authentication attempt</text>
+      <text xml:lang="de">PIN-Missvhältnis zeigt fehlgeschlagenen Authentifizierungsversuch an</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,25 @@
+flowchart TD
+    Start([Nutzer: getComponentVersions<br/>aufrufen])
+    Start --> CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| GatherInfo[Sammle Device-Informationen:<br/>- Hersteller<br/>- Modellnummer<br/>- Hardware-Version<br/>- Software/Firmware-Version<br/>- Komponenten-Details]
+    
+    GatherInfo --> CheckGather{Sammeln<br/>erfolgreich?}
+    
+    CheckGather -->|Nein| ErrorGet[Exception:<br/>ErrorGetComponentVersionsFailed]
+    CheckGather -->|Ja| EncodeASN1[Kodiere als ASN.1 DER:<br/>DeviceInformationSet]
+    
+    EncodeASN1 --> Return[Rückgabe:<br/>deviceInformationSet<br/>octet array]
+    
+    Return --> End([Ende])
+    
+    ErrorInit --> End
+    ErrorGet --> End
+    
+    style GatherInfo fill:#87CEEB
+    style EncodeASN1 fill:#DDA0DD
+    style Return fill:#90EE90
+    
+    Note1[Verwendung:<br/>- Inventarverwaltung<br/>- Kompatibilitätsprüfung<br/>- Update-Planung<br/>- Support/Diagnose]
+    Return -.-> Note1

@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetSupportedUpdateVariantsFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetSupportedUpdateVariantsFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getSupportedUpdateVariants fails to retrieve the list of supported firmware update variants. The function attempts to determine which update mechanisms and variant configurations the Secure Element supports, but the retrieval process fails before the supported update variants can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getSupportedUpdateVariants fehlschlägt, um die Liste der unterstützten Firmware-Update-Varianten abzurufen. Die Funktion versucht zu bestimmen, welche Update-Mechanismen und Variantenkonfigurationen das Secure Element unterstützt, aber der Abrufprozess schlägt fehl, bevor die unterstützten Update-Varianten bestimmt und zurückgegeben werden können.</text>
+  </description>
+  <category>Device Update</category>
+  <subcategory>Update Variants Query</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>getSupportedTransactionUpdateVariants</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetSupportedUpdateVariantsFailed that is thrown if the determination of the supported update variants failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetSupportedUpdateVariantsFailed, die ausgelöst wird, wenn die Bestimmung der unterstützten Update-Varianten fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getSupportedUpdateVariants function cannot retrieve the list of supported firmware update variants from the Secure Element. Supported update variants information describes which update mechanisms (delta, full image, modular, etc.) and configuration variants the Secure Element supports for firmware updates. ErrorGetSupportedUpdateVariantsFailed indicates that the Secure Element cannot provide the supported variants list due to hardware failure, firmware information storage corruption, internal device information system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no supported variants list is returned and applications cannot determine which update strategies are available for this device. Recovery typically involves device verification, device information subsystem diagnostics, and firmware inspection if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getSupportedUpdateVariants die Liste der unterstützten Firmware-Update-Varianten nicht vom Secure Element abrufen kann. Die Informationen zu unterstützten Update-Varianten beschreiben, welche Update-Mechanismen (Delta, vollständiges Image, modular usw.) und Konfigurationsvarianten das Secure Element für Firmware-Updates unterstützt. ErrorGetSupportedUpdateVariantsFailed zeigt an, dass das Secure Element die Liste der unterstützten Varianten aufgrund eines Hardware-Ausfalls, Speicherbeschädigung von Firmware-Informationen, interner Geräteinformations-Systemfehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird keine Liste der unterstützten Varianten zurückgegeben und Anwendungen können nicht bestimmen, welche Update-Strategien für dieses Gerät verfügbar sind. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Geräteinformations-Subsystem-Diagnose und Firmware-Untersuchung, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Device Update - getSupportedUpdateVariants</section>
+    <requirement>
+      <text xml:lang="en">The function getSupportedUpdateVariants SHALL query the Secure Element to determine the list of all supported firmware update variants. If the Secure Element cannot provide or return the required supported variants information, the function SHALL raise the exception ErrorGetSupportedUpdateVariantsFailed and exit without returning any update variant data. The supported update variants retrieval failure indicates the Secure Element's device information query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getSupportedUpdateVariants soll das Secure Element abfragen, um die Liste aller unterstützten Firmware-Update-Varianten zu bestimmen. Falls das Secure Element die erforderlichen Informationen zu unterstützten Varianten nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetSupportedUpdateVariantsFailed auslösen und beenden, ohne Update-Variantendaten zurückzugeben. Der Fehler beim Abrufen der unterstützten Update-Varianten zeigt an, dass die Abfragefunktionalität der Geräteinformationen des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device update operations - getSupportedUpdateVariants function only</text>
+      <text xml:lang="de">Geräteupdate-Operationen - nur Funktion getSupportedUpdateVariants</text>
+    </applicability>
+    <reference>getSupportedUpdateVariants – Function (3.3.2)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getSupportedUpdateVariants function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getSupportedUpdateVariants auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for device capabilities information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Gerätefähigkeits-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and device information is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und die Geräteinformation betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares device capabilities query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Gerätefähigkeiten-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits capabilities query command to Secure Element requesting list of all supported update variants</text>
+      <text xml:lang="de">Funktion übersendet Fähigkeiten-Abfrage-Befehl zu Secure Element und fordert Liste aller unterstützten Update-Varianten an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (information error, capabilities error, metadata error) → ErrorGetSupportedUpdateVariantsFailed raised, function exits without variants list</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Informationsfehler, Fähigkeitsfehler, Metadatenfehler) → ErrorGetSupportedUpdateVariantsFailed ausgelöst, Funktion beendet ohne Variantenliste</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetSupportedUpdateVariantsFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetSupportedUpdateVariantsFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives supported update variants list from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Liste der unterstützten Update-Varianten von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates supported variants list for correctness (format, variant identifier validity, configuration consistency)</text>
+      <text xml:lang="de">Funktion validiert Liste der unterstützten Varianten auf Korrektheit (Format, Variantenbezeichner-Gültigkeit, Konfigurationskonsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid supported update variants list to caller</text>
+      <text xml:lang="de">Funktion gibt gültige Liste der unterstützten Update-Varianten an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry update variant query</text>
+      <text xml:lang="de">Wiederholen Sie die Update-Varianten-Abfrage</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device specification for update methods</text>
+      <text xml:lang="de">Prüfen Sie die Gerätespezifikation auf Update-Methoden</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorUpdateFailed</exception>
+    <exception>ErrorGetComponentVersionsFailed</exception>
+    <exception>ErrorGetDescriptionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve supported update variants does not affect device initialization state, update capabilities, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs der unterstützten Update-Varianten wirkt sich nicht auf den Geräteinitialisierungszustand, Update-Fähigkeiten, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Supported Variants Return Status">
+      <text xml:lang="en">No supported update variants list is returned to the caller. The function exits without providing any update variant information. Applications must not assume default update variants or cached information; they must handle the exception as indicating update capabilities enumeration is unavailable.</text>
+      <text xml:lang="de">Es wird keine Liste der unterstützten Update-Varianten an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Informationen zu Update-Varianten bereitzustellen. Anwendungen dürfen nicht mit Standard-Update-Varianten oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Update-Fähigkeiten-Enumeration nicht verfügbar ist.</text>
+    </state>
+    <state name="Secure Element Device Information State">
+      <text xml:lang="en">Secure Element device information subsystem remains unchanged by the failed query. No state modifications, capability changes, or device configuration changes occur. Device information operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Geräteinformations-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Fähigkeitsänderungen oder Gerätekonfigurationsänderungen vorgenommen. Geräteinformations-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Firmware Update Capability Continuity">
+      <text xml:lang="en">Firmware update capabilities continue to be maintained internally in the Secure Element. The failure to retrieve the supported variants list does not affect device update capabilities or update operations. Variant queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Firmware-Update-Fähigkeiten werden intern im Secure Element weiterhin verwaltet. Das Fehlschlagen des Abrufs der Liste der unterstützten Varianten wirkt sich nicht auf die Geräteupdate-Fähigkeiten oder Update-Operationen aus. Variantenabfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the capabilities query failure. Device internal consistency is maintained. Other SE API functions and device operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Fähigkeiten-Abfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Geräteoperationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, information system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Informationssystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of supported update variants failed - update options unknown</text>
+      <text xml:lang="de">Anzeichen: Abruf der unterstützten Update-Varianten fehlgeschlagen - Update-Optionen unbekannt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Updates, Update Operations, Device Capabilities, Update Management</text>
+      <text xml:lang="de">Themen: Geräteupdate, Update-Operationen, Gerätefähigkeiten, Update-Management</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getSupportedTransactionUpdateVariants when update options retrieval fails</text>
+      <text xml:lang="de">Wird von getSupportedTransactionUpdateVariants ausgelöst, wenn der Abruf von Update-Optionen fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Capability function queries supported transaction update methods</text>
+      <text xml:lang="de">Fähigkeitsfunktion fragt unterstützte Transaktions-Update-Methoden ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device specifies available update variant implementations</text>
+      <text xml:lang="de">Das Gerät gibt verfügbare Update-Varianten-Implementierungen an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents update capability information</text>
+      <text xml:lang="de">Abruffehler verhindert Update-Fähigkeits-Informationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

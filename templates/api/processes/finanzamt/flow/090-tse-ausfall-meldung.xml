@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>090</processId>
+    <processName>
+        <text xml:lang="de">TSE-Ausfall Behandlung</text>
+        <text xml:lang="en">TSE Failure Handling</text>
+    </processName>
+    <description>
+        <text xml:lang="de">Prozess zur Behandlung von TSE-Ausfällen gemäß AEAO zu § 146a, Nr. 1.14. Definiert die Schritte zur Dokumentation, Kennzeichnung und Behebung von TSE-Ausfällen.</text>
+        <text xml:lang="en">Process for handling TSE failures according to AEAO to § 146a, No. 1.14. Defines steps for documentation, marking, and resolution of TSE failures.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="de">Unternehmer/Betreiber</text>
+            <text xml:lang="en">Entrepreneur/Operator</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Kassensystem</text>
+            <text xml:lang="en">Point of Sale System</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">TSE</text>
+            <text xml:lang="en">TSE</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <order>1</order>
+            <action>
+                <text xml:lang="de">TSE-Ausfall feststellen</text>
+                <text xml:lang="en">Detect TSE failure</text>
+            </action>
+        </step>
+        <step>
+            <order>2</order>
+            <action>
+                <text xml:lang="de">Ausfallzeiten und Ausfallgrund dokumentieren (automatisiert oder manuell)</text>
+                <text xml:lang="en">Document downtime and reason for failure (automated or manual)</text>
+            </action>
+            <reference>AEAO zu § 146, Nr. 2.1.6</reference>
+        </step>
+        <step>
+            <order>3</order>
+            <action>
+                <text xml:lang="de">Prüfen, ob System ohne TSE weiterbetrieben werden kann</text>
+                <text xml:lang="en">Check if system can continue operation without TSE</text>
+            </action>
+        </step>
+        <step>
+            <order>4</order>
+            <action>
+                <text xml:lang="de">Bei Weiterbetrieb: Ausfall auf Beleg kennzeichnen (fehlende Transaktionsnummer oder eindeutige Kennzeichnung)</text>
+                <text xml:lang="en">If continuing operation: Mark failure on receipt (missing transaction number or clear indicator)</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 1.14.2</reference>
+        </step>
+        <step>
+            <order>5</order>
+            <action>
+                <text xml:lang="de">Unverzüglich Maßnahmen zur Behebung treffen</text>
+                <text xml:lang="en">Immediately take measures for resolution</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 1.14.4</reference>
+        </step>
+        <step>
+            <order>6</order>
+            <action>
+                <text xml:lang="de">Sicherstellen, dass Anforderungen des § 146a AO schnellstmöglich wieder eingehalten werden</text>
+                <text xml:lang="en">Ensure requirements of § 146a AO are met again as quickly as possible</text>
+            </action>
+        </step>
+    </steps>
+    <outcomes>
+        <outcome>
+            <type>success</type>
+            <description>
+                <text xml:lang="de">TSE-Ausfall behoben, System wieder vollständig funktionsfähig</text>
+                <text xml:lang="en">TSE failure resolved, system fully functional again</text>
+            </description>
+        </outcome>
+        <outcome>
+            <type>partial</type>
+            <description>
+                <text xml:lang="de">System läuft im Notbetrieb weiter, Beleg wird mit Kennzeichnung ausgegeben</text>
+                <text xml:lang="en">System continues in emergency mode, receipt issued with failure indicator</text>
+            </description>
+        </outcome>
+    </outcomes>
+    <references>
+        <reference>AO § 146a</reference>
+        <reference>KassenSichV</reference>
+        <reference>AEAO zu § 146a, Nr. 1.14</reference>
+        <reference>AEAO zu § 146, Nr. 2.1.6</reference>
+    </references>
+    <notes>
+        <text xml:lang="de">Belegausgabepflicht bleibt auch bei TSE-Ausfall bestehen. Bei Ausfall nur der TSE wird Weiterbetrieb nicht beanstandet. Bei vollständigem Ausfall des Systems entfällt die Belegausgabepflicht. Ausfallzeiten und Ausfallgrund müssen dokumentiert werden (automatisiert oder manuell). Unverzügliche Behebung der Ausfallursache ist erforderlich.</text>
+        <text xml:lang="en">Receipt obligation remains even during TSE failure. If only TSE fails, continued operation is not objected. If complete system failure occurs, receipt obligation lapses. Downtime and reason for failure must be documented (automated or manual). Immediate resolution of failure cause is required.</text>
+    </notes>
+</process>

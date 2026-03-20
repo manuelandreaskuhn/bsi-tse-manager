@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SelfTestResultSet" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SelfTestResultSet</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>SEQUENCE OF SelfTestResult</description>
+  <asn1Definition>SelfTestResultSet ::= SEQUENCE OF SelfTestResult</asn1Definition>
+</type>

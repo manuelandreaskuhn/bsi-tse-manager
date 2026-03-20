@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorClientNotRegistered" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorClientNotRegistered</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if an SE API function is invoked with a clientId that has not been registered using registerClient beforehand, or if the clientId has been previously deregistered. The exception serves as a critical guard against unauthorized or invalid client access to transaction operations within the Secure Element API. ErrorClientNotRegistered enforces strict client registration requirements and prevents operations that would violate the SE API's client lifecycle management protocol. This exception represents a fundamental contract violation in the client-server transaction model, where every client must be explicitly registered before participating in any transaction operations (startTransaction, updateTransaction, finishTransaction) or being deregistered from the system. The exception is raised after the Secure Element verifies that the provided clientId does not exist in the currently active client registry.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine SE-API-Funktion mit einer clientId aufgerufen wird, die nicht zuvor mit registerClient registriert wurde, oder wenn die clientId zuvor abgemeldet wurde. Die Ausnahme dient als kritischer Schutz gegen unbefugten oder ungültigen Client-Zugriff auf Transaktionsvorgänge innerhalb der Secure Element API. ErrorClientNotRegistered erzwingt strenge Client-Registrierungsanforderungen und verhindert Vorgänge, die gegen das Client-Lifecycle-Verwaltungsprotokoll der SE-API verstoßen. Diese Ausnahme stellt eine grundlegende Vertragsverletzung im Client-Server-Transaktionsmodell dar, wobei jeder Client explizit registriert werden muss, bevor er an Transaktionsvorgängen (startTransaction, updateTransaction, finishTransaction) teilnimmt oder aus dem System abgemeldet wird. Die Ausnahme wird ausgelöst, nachdem das Secure Element überprüft hat, dass die bereitgestellte clientId nicht in der aktuell aktiven Client-Registry vorhanden ist.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Client Validation</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorClientNotRegistered that is thrown if an SE API function is invoked with a clientId, that has not been registered using registerClient beforehand. The clientId is therefore not registered.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorClientNotRegistered, die ausgelöst wird, wenn eine SE-API-Funktion mit einer clientId aufgerufen wird, die nicht zuvor mit registerClient registriert wurde. Die clientId ist daher nicht registriert.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The passed clientId is not registered. This exception is raised when attempting to invoke transaction functions (startTransaction, updateTransaction, finishTransaction) or deregister a client using an unregistered clientId.</text>
+      <text xml:lang="de">Die übergebene clientId ist nicht registriert. Diese Ausnahme wird ausgelöst, wenn versucht wird, Transaktionsfunktionen (startTransaction, updateTransaction, finishTransaction) aufzurufen oder einen Client mit einer nicht registrierten clientId abzumelden.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.7.5.4 and 3.7.6.4 and 3.7.7.4</section>
+    <requirement>
+      <text xml:lang="en">If the function registerClient is implemented, the function SHALL check if the ID passed as parameter clientId is registered using the function registerClient. If the ID is not registered, the function SHALL raise the exception ErrorClientNotRegistered and exit the function.</text>
+      <text xml:lang="de">Falls die Funktion registerClient implementiert ist, sollte die Funktion prüfen, ob die als Parameter clientId übergebene ID mit der Funktion registerClient registriert ist. Falls die ID nicht registriert ist, sollte die Funktion die Ausnahme ErrorClientNotRegistered auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations when client registration is required</text>
+      <text xml:lang="de">Transaktionsvorgänge, wenn eine Client-Registrierung erforderlich ist</text>
+    </applicability>
+    <reference>startTransaction – Exceptions, updateTransaction – Exceptions, finishTransaction – Exceptions, deregisterClient – Exceptions</reference>
+  </specification>
+  <thrownBy>
+    <function>startTransaction</function>
+    <function>updateTransaction</function>
+    <function>finishTransaction</function>
+    <function>deregisterClient</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Register the client first using registerClient before operations</text>
+      <text xml:lang="de">Registrieren Sie den Client zuerst mit registerClient vor Vorgängen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify clientId is valid and registered with getRegisteredClients</text>
+      <text xml:lang="de">Stellen Sie sicher, dass clientId gültig und mit getRegisteredClients registriert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check that client deregistration did not occur unexpectedly</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Client-Abmeldung nicht unerwartet aufgetreten ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure application maintains client registration state</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Anwendung den Client-Registrierungszustand verwaltet</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review client lifecycle in application code</text>
+      <text xml:lang="de">Prüfen Sie den Client-Lifecycle im Anwendungscode</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorClientAlreadyRegistered</exception>
+    <exception>ErrorClientLimitReached</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorDeregisterClientFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached with clientId parameter provided (or null if operation type doesn't require clientId)</text>
+      <text xml:lang="de">Der Einstiegspunkt der Funktion wird mit bereitgestelltem clientId-Parameter erreicht (oder null, wenn der Operationstyp clientId nicht erfordert)</text>
+    </step>
+    <step number="2" name="Parameter Validation">
+      <text xml:lang="en">Basic parameter validation checks are performed to ensure inputs are non-null and properly formatted for initial processing</text>
+      <text xml:lang="de">Grundlegende Parametervalidierungschecks werden durchgeführt, um sicherzustellen, dass Eingaben nicht null sind und für die initiale Verarbeitung ordnungsgemäß formatiert sind</text>
+    </step>
+    <step number="3" name="Client Registry Access">
+      <text xml:lang="en">Secure Element acquires read access to the internal client registry data structure to retrieve the list of currently registered clients</text>
+      <text xml:lang="de">Secure Element erwerbt Lesezugriff auf die interne Client-Registry-Datenstruktur, um die Liste der aktuell registrierten Clients abzurufen</text>
+    </step>
+    <step number="4" name="ClientId Lookup">
+      <text xml:lang="en">Secure Element performs a registry lookup to determine whether the provided clientId exists as a registered entry in the current client list</text>
+      <text xml:lang="de">Secure Element führt eine Registry-Suche durch, um zu bestimmen, ob die bereitgestellte clientId als registrierter Eintrag in der aktuellen Client-Liste vorhanden ist</text>
+    </step>
+    <step number="5" name="Registration Status Check">
+      <text xml:lang="en">The lookup result is evaluated: if clientId is found in registry, execution continues to step 9; if not found, execution branches to step 6</text>
+      <text xml:lang="de">Das Suchergebnis wird ausgewertet: Falls clientId in der Registry gefunden wird, setzt sich die Ausführung bei Schritt 9 fort; falls nicht gefunden, wird die Ausführung zu Schritt 6 verzweigt</text>
+    </step>
+    <step number="6" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including the unregistered clientId value, operation type (startTransaction, updateTransaction, finishTransaction, or deregisterClient), and additional diagnostic information</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich des nicht registrierten clientId-Werts, des Operationstyps (startTransaction, updateTransaction, finishTransaction oder deregisterClient) und zusätzlicher Diagnoseinformationen</text>
+    </step>
+    <step number="7" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorClientNotRegistered exception instance is created with appropriate error message detailing the unregistered clientId and attempted operation</text>
+      <text xml:lang="de">ErrorClientNotRegistered-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die die nicht registrierte clientId und den versuchten Vorgang detailliert beschreibt</text>
+    </step>
+    <step number="8" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, allowing error handling at application level</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, was Fehlerbehandlung auf Anwendungsebene ermöglicht</text>
+    </step>
+    <step number="9" name="Operation Continuation">
+      <text xml:lang="en">If clientId was found in registry (step 5), operation continues with transaction-specific logic or deregistration processing</text>
+      <text xml:lang="de">Falls clientId in der Registry gefunden wurde (Schritt 5), setzt sich der Vorgang mit transaktionsspezifischer Logik oder Abmeldungsverarbeitung fort</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorClientNotRegistered exception has been created and raised, containing the unregistered clientId, attempted operation type, and diagnostic timestamp</text>
+      <text xml:lang="de">Eine ErrorClientNotRegistered-Ausnahme wurde erstellt und ausgelöst und enthält die nicht registrierte clientId, den versuchten Operationstyp und einen Diagnostic-Zeitstempel</text>
+    </state>
+    <state name="Registry State">
+      <text xml:lang="en">The Secure Element client registry remains in its previous state; no registration or deregistration occurred. All currently registered clients remain unchanged.</text>
+      <text xml:lang="de">Die Client-Registry des Secure Elements bleibt in ihrem vorherigen Zustand; es erfolgte keine Registrierung oder Abmeldung. Alle derzeit registrierten Clients bleiben unverändert.</text>
+    </state>
+    <state name="Transaction State">
+      <text xml:lang="en">For transaction operations (startTransaction, updateTransaction, finishTransaction), no transaction has been created or modified. The transaction log remains in its previous state.</text>
+      <text xml:lang="de">Für Transaktionsvorgänge (startTransaction, updateTransaction, finishTransaction) wurde keine Transaktion erstellt oder geändert. Das Transaktionsprotokoll bleibt in seinem vorherigen Zustand.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits abnormally via exception propagation without completing its intended operation or side effects</text>
+      <text xml:lang="de">Die Funktion wird anomal über Ausnahmepropagation beendet, ohne ihren beabsichtigten Vorgang oder Nebenwirkungen abzuschließen</text>
+    </state>
+    <state name="Caller State">
+      <text xml:lang="en">The calling application receives the exception and must implement application-level error handling to recover or retry with a properly registered clientId</text>
+      <text xml:lang="de">Die aufrufende Anwendung erhält die Ausnahme und muss Fehlerbehandlung auf Anwendungsebene implementieren, um mit einer ordnungsgemäß registrierten clientId wiederherzustellen oder erneut zu versuchen</text>
+    </state>
+    <state name="Device Availability">
+      <text xml:lang="en">The Secure Element remains available and operational for subsequent API calls. The device itself has not failed; only this specific operation was rejected due to client registration validation</text>
+      <text xml:lang="de">Das Secure Element bleibt für nachfolgende API-Aufrufe verfügbar und funktionsfähig. Das Gerät selbst ist nicht fehlgeschlagen; nur dieser spezifische Vorgang wurde wegen Client-Registrierungsvalidierung abgelehnt</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Operation attempted on a client ID that is not registered or has been deregistered</text>
+      <text xml:lang="de">Anzeichen: Vorgang versucht auf einer Client-ID, die nicht registriert ist oder abgemeldet wurde</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Registration Status, Client Validation, Transaction Operations</text>
+      <text xml:lang="de">Themen: Client-Verwaltung, Registrierungsstatus, Client-Validierung, Transaktionsvorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by transaction functions (startTransaction, finishTransaction, updateTransaction) for unregistered clientId</text>
+      <text xml:lang="de">Wird von Transaktionsfunktionen (startTransaction, finishTransaction, updateTransaction) für nicht registrierte clientId ausgelöst</text>
+    </note>
+    <note>
+      <text xml:lang="en">Transaction operations require client to be registered before use</text>
+      <text xml:lang="de">Transaktionsvorgänge erfordern, dass der Client vor der Verwendung registriert ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device validates client registration status during transaction initialization</text>
+      <text xml:lang="de">Gerät validiert den Client-Registrierungsstatus während der Transaktionsinitialisierung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Client must be registered via registerClient before transaction operations</text>
+      <text xml:lang="de">Client muss über registerClient vor Transaktionsvorgängen registriert werden</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,48 @@
+sequenceDiagram
+    participant User as Taxpayer/Admin
+    participant TSE as TSE
+    participant SM as Security Module
+    participant Storage as Storage Medium
+
+    User->>TSE: Login as Admin
+    activate TSE
+    TSE->>TSE: authenticateUser("admin", adminPIN)
+    TSE-->>User: Login successful
+    
+    User->>TSE: initialize()
+    Note over TSE: Check: Admin authenticated
+    
+    TSE->>SM: Generate Key Pair
+    activate SM
+    SM->>SM: Create Signature Key
+    SM-->>TSE: Public Key, Certificate Request
+    deactivate SM
+    
+    TSE->>TSE: Get Certificate from PKI
+    
+    TSE->>SM: Initialize Counters
+    activate SM
+    SM->>SM: transactionCounter = 0
+    SM->>SM: signatureCounter = 0
+    SM-->>TSE: OK
+    deactivate SM
+    
+    TSE->>SM: Create Initialize Log
+    activate SM
+    SM->>SM: Create System Log Message
+    SM->>SM: signatureCounter++
+    SM->>SM: Sign Log Message
+    SM-->>TSE: Log Message + Signature
+    deactivate SM
+    
+    TSE->>Storage: Save Log Message
+    activate Storage
+    Storage-->>TSE: OK
+    deactivate Storage
+    
+    TSE->>TSE: Set Status: INITIALIZED
+    
+    TSE-->>User: Initialization successful
+    deactivate TSE
+    
+    Note over User,Storage: TSE is now ready for operation

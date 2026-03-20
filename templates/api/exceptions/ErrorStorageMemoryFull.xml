@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorStorageMemoryFull" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorStorageMemoryFull</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the storage memory of the device is full and cannot accommodate new data. The Secure Element uses storage for device configuration, transaction logs, user data, and audit trail information. When storage reaches capacity, no new data can be written until storage is freed by deleting or exporting logs. ErrorStorageMemoryFull indicates the device storage is exhausted and write operations must be blocked. Common causes include: excessive transaction volume, accumulation of log messages, inadequate storage capacity for workload, or logs not being regularly exported/archived. ErrorStorageMemoryFull is a Critical condition that prevents new transactions and data storage operations until storage space is freed.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der Speicher des Geräts voll ist und keine neuen Daten aufnehmen kann. Das Secure Element nutzt Speicher für Gerätekonfiguration, Transaktionsprotokolle, Benutzerdaten und Audit-Trail-Informationen. Wenn der Speicher voll ist, können keine neuen Daten geschrieben werden, bis der Speicher durch Löschen oder Exportieren von Protokollen freigegeben wird. ErrorStorageMemoryFull zeigt an, dass der Gerätespeicher erschöpft ist und Schreibvorgänge blockiert werden müssen. Häufige Ursachen sind: übermäßiges Transaktionsvolumen, Ansammlung von Log-Messages, unzureichende Speicherkapazität für die Arbeitslast oder Protokolle, die nicht regelmäßig exportiert/archiviert werden. ErrorStorageMemoryFull ist ein kritischer Zustand, der neue Transaktionen und Datenspeicheroperationen blockiert, bis Speicherplatz freigegeben wird.</text>
+  </description>
+  <category>Storage</category>
+  <subcategory>Storage Capacity - Memory Full</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorStorageMemoryFull that is thrown if the storage memory is full.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorStorageMemoryFull, die ausgelöst wird, wenn der Speicher voll ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the device storage capacity is exhausted and no additional data can be written. The device storage holds configuration, transaction logs, user data, and audit trail information. ErrorStorageMemoryFull indicates the storage has reached full capacity and write operations cannot proceed. Common causes include: accumulation of transaction logs, excessive transaction volume, inadequate storage capacity for application workload, or logs not regularly exported or archived. ErrorStorageMemoryFull is a Critical severity exception because it blocks new transactions and prevents critical operations that require storage writes. The device cannot accept new transactions when storage is full. Recovery requires freeing storage space by exporting and deleting logs, or implementing archive procedures to manage storage utilization.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Gerätespeicherkapazität erschöpft ist und keine zusätzlichen Daten geschrieben werden können. Der Gerätespeicher speichert Konfiguration, Transaktionsprotokolle, Benutzerdaten und Audit-Trail-Informationen. ErrorStorageMemoryFull zeigt an, dass der Speicher die volle Kapazität erreicht hat und Schreibvorgänge nicht fortgesetzt werden können. Häufige Ursachen sind: Ansammlung von Transaktionsprotokollen, übermäßiges Transaktionsvolumen, unzureichende Speicherkapazität für die Anwendungsarbeitslast oder Protokolle, die nicht regelmäßig exportiert oder archiviert werden. ErrorStorageMemoryFull ist eine Ausnahme mit kritischer Schweregrad, da sie neue Transaktionen blockiert und kritische Operationen verhindert, die Speicherschreibvorgänge erfordern. Das Gerät kann keine neuen Transaktionen annehmen, wenn der Speicher voll ist. Die Wiederherstellung erfordert das Freigeben von Speicherplatz durch Exportieren und Löschen von Protokollen oder die Implementierung von Archivierungsverfahren zur Verwaltung der Speichernutzung.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2 Secure Element Storage Capacity and 3.3 SE API Functions - Storage Write Requirements</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element storage has finite capacity for holding configuration, transaction logs, and audit trail data. When storage reaches full capacity, the device cannot accept new write operations. Any SE API function that requires writing to storage SHALL raise ErrorStorageMemoryFull if storage is full. Write operations that cannot proceed due to full storage include: transaction logging, configuration updates, log restoration, and data storage. The device must not silently drop data if storage is full. Storage management operations (export, delete) can free space to enable new writes. Adequate storage capacity planning is essential for system operation.</text>
+      <text xml:lang="de">Der Secure Element-Speicher hat eine begrenzte Kapazität für die Speicherung von Konfiguration, Transaktionsprotokollen und Audit-Trail-Daten. Wenn der Speicher die volle Kapazität erreicht, kann das Gerät keine neuen Schreibvorgänge akzeptieren. Jede SE-API-Funktion, die das Schreiben in den Speicher erfordert, SOLL ErrorStorageMemoryFull auslösen, wenn der Speicher voll ist. Schreibvorgänge, die nicht fortgesetzt werden können, da der Speicher voll ist, umfassen: Transaktionsprotokollierung, Konfigurationsaktualisierungen, Log-Wiederherstellung und Datenspeicherung. Das Gerät darf Daten nicht stillschweigend verwerfen, wenn der Speicher voll ist. Speicherverwaltungsvorgänge (Export, Löschung) können Platz freigeben, um neue Schreibvorgänge zu ermöglichen. Eine angemessene Speicherkapazitätsplanung ist für den Systembetrieb unbedingt erforderlich.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Storage write operations: setDescription, startTransaction, updateTransaction, finishTransaction, restoreLogsFromBackup</text>
+      <text xml:lang="de">Speicherschreiboperationen: setDescription, startTransaction, updateTransaction, finishTransaction, restoreLogsFromBackup</text>
+    </applicability>
+    <reference>Secure Element Storage Capacity (3.2), SE API Functions (3.3)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function that requires storage write (e.g., finishTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE-API-Funktion auf, die Speicherschreiben erfordert (z.B. finishTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives request</text>
+      <text xml:lang="de">Secure Element empfängt Anfrage</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks storage capacity and available free space</text>
+      <text xml:lang="de">Secure Element prüft Speicherkapazität und verfügbaren freien Platz</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If storage is full and cannot accommodate new data → ErrorStorageMemoryFull raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speicher voll ist und keine neuen Daten aufnehmen kann → ErrorStorageMemoryFull ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If storage has available space → proceed to step 6</text>
+      <text xml:lang="de">Wenn Speicher verfügbaren Platz hat → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element performs requested storage write operation</text>
+      <text xml:lang="de">Secure Element führt angeforderte Speicherschreiboperation aus</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If storage fills during write → ErrorStorageMemoryFull raised, write may be rolled back</text>
+      <text xml:lang="de">Wenn Speicher während des Schreibens vollLäuft → ErrorStorageMemoryFull ausgelöst, Schreiben kann zurückgerollt werden</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 7</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich ist → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element confirms write completion</text>
+      <text xml:lang="de">Secure Element bestätigt Schreibabschluss</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an die Funktion zurück</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function processes result and returns to caller</text>
+      <text xml:lang="de">Funktion verarbeitet Ergebnis und kehrt zum Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check used and free memory using getUsedMemory and getFreeMemory</text>
+      <text xml:lang="de">Prüfen Sie den verwendeten und freien Speicher mit getUsedMemory und getFreeMemory</text>
+    </step>
+    <step>
+      <text xml:lang="en">Export and delete old log messages to free space</text>
+      <text xml:lang="de">Exportieren und löschen Sie alte Log-Messages, um Platz freizugeben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Archive data externally to reduce device storage usage</text>
+      <text xml:lang="de">Archivieren Sie Daten extern, um die Speichernutzung des Geräts zu verringern</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan data management to prevent storage full conditions</text>
+      <text xml:lang="de">Planen Sie die Datenverwaltung, um Speicher-voll-Bedingungen zu vermeiden</text>
+    </step>
+    <step>
+      <text xml:lang="en">If necessary, migrate to device with larger storage</text>
+      <text xml:lang="de">Bei Bedarf zu einem Gerät mit größerem Speicher migrieren</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorLimitOfSimultaneousOpenTransactionsReached</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Storage Write Not Performed">
+      <text xml:lang="en">The requested storage write operation is not completed.</text>
+      <text xml:lang="de">Die angeforderte Speicherschreiboperation wird nicht abgeschlossen.</text>
+    </state>
+    <state name="Data Not Stored">
+      <text xml:lang="en">New data is not stored on the device.</text>
+      <text xml:lang="de">Neue Daten werden nicht auf dem Gerät gespeichert.</text>
+    </state>
+    <state name="Transaction Not Recorded">
+      <text xml:lang="en">Transaction logs are not recorded when storage is full.</text>
+      <text xml:lang="de">Transaktionsprotokolle werden nicht aufgezeichnet, wenn der Speicher voll ist.</text>
+    </state>
+    <state name="Storage Capacity Unchanged">
+      <text xml:lang="en">Storage remains full - no free space is created.</text>
+      <text xml:lang="de">Der Speicher bleibt voll - es wird kein freier Platz erstellt.</text>
+    </state>
+    <state name="Configuration Not Updated">
+      <text xml:lang="en">Configuration changes cannot be stored when storage is full.</text>
+      <text xml:lang="de">Konfigurationschanges können nicht gespeichert werden, wenn der Speicher voll ist.</text>
+    </state>
+    <state name="Manual Intervention Required">
+      <text xml:lang="en">Storage management (export, delete) is needed to free space.</text>
+      <text xml:lang="de">Speicherverwaltung (Export, Löschung) ist erforderlich, um Platz freizugeben.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Storage memory is full - no space available for new data</text>
+      <text xml:lang="de">Anzeichen: Speicher ist voll - kein Platz für neue Daten verfügbar</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Storage Operations, Memory Management, Storage Capacity, Resource Limits</text>
+      <text xml:lang="de">Themen: Speicheroperationen, Speicherverwaltung, Speicherkapazität, Ressourcenlimits</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when device storage capacity exhausted</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn die Gerätespeicherkapazität erschöpft ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Storage capacity monitoring detects full condition</text>
+      <text xml:lang="de">SpeicherkapazitätsÜberwachung erkennt Voll-Bedingung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device cannot accept new data when storage full</text>
+      <text xml:lang="de">Das Gerät kann keine neuen Daten akzeptieren, wenn der Speicher voll ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Full condition prevents write operations</text>
+      <text xml:lang="de">Voll-Bedingung verhindert Schreibvorgänge</text>
+    </note>
+  </implementationContext>
+</exception>
+

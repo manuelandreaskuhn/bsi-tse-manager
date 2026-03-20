@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>030</processId>
+    <processName>
+        <text xml:lang="en">Get Last Log Message</text>
+        <text xml:lang="de">Letzte Log-Nachricht abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the last log message created by the security module (Transaction-Log, System-Log, or Audit-Log). Useful for debugging and status checking.</text>
+        <text xml:lang="de">Abruf der zuletzt vom Sicherheitsmodul erstellten Log-Nachricht (Transaction-Log, System-Log oder Audit-Log). Nützlich für Debugging und Statusprüfung.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Message</text>
+            <text xml:lang="de">Log-Nachricht</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getLastLogMessage</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>logMessageFileName</name>
+            <type>string</type>
+            <description>
+                <text xml:lang="en">Filename of the log message as it would appear in the TAR export</text>
+                <text xml:lang="de">Dateiname der Log-Nachricht wie sie im TAR-Export erscheinen würde</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>logMessageContent</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Content of the last log message</text>
+                <text xml:lang="de">Inhalt der letzten Log-Nachricht</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log</dataObject>
+        <dataObject>System-Log</dataObject>
+        <dataObject>Audit-Log</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorNoLogMessageFound</exception>
+        <exception>ErrorReadingLogMessage</exception>
+        <exception>ErrorSecureElementDisabled</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorFunctionFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.8</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This function is MANDATORY. Available to all user roles except timeadmin. The function returns the last log message processed by the security module, regardless of type (Transaction, System, or Audit). If no log message exists yet, ErrorNoLogMessageFound is thrown.</text>
+        <text xml:lang="de">Funktion ist verpflichtend. Für alle Nutzerrollen außer timeadmin verfügbar. Die Funktion gibt die zuletzt vom Sicherheitsmodul verarbeitete Log-Nachricht zurück, unabhängig vom Typ (Transaction, System oder Audit). Wenn noch keine Log-Nachricht existiert, wird ErrorNoLogMessageFound geworfen.</text>
+    </notes>
+</process>

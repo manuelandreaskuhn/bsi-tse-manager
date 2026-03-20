@@ -1,0 +1,334 @@
+{
+  "testcase_id": "TC-EXP-INF-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "info.csv: Format mit verschiedenen Beschreibungszuständen (Hersteller/Nutzer gesetzt)",
+  "description": "Prüft das Format der exportierten info.csv in drei Zuständen: keine Beschreibung gesetzt, Herstellerbeschreibung gesetzt (Nutzer nicht geändert), Nutzerbeschreibung geändert.",
+  "purpose": "Prüfung der exportierten Datei info.csv. Der Test prüft das Format der Datei. Die Beschreibung der TSE wurde durch den Hersteller gesetzt und durch den Nutzer nicht geändert.",
+  "module": "Export",
+  "submodule": "EXP_INF",
+  "function": "exportLogMessages",
+  "test_type": "PT",
+  "priority": "conditional",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "EXP_INF_06",
+    "EXP_INF_07"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Beschreibung der TSE wurde durch den Nutzer nicht gesetz",
+      "result": null,
+      "instruction": "Die Beschreibung der TSE wurde durch den Nutzer nicht gesetzt."
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Es wird eine neue Beschreibung der TSE beim Funktionsaufruf übergeben.",
+      "function": "setDescription",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "EXP_INF_06"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "TAR-Export ohne gesetzte Beschreibung (DESCRIPTION_NOT_SET)",
+      "result": null,
+      "instruction": "TAR-Export ohne gesetzte Beschreibung (DESCRIPTION_NOT_SET)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "info.csv korrekt; description leer oder fehlend",
+          "expected": "EXP_INF_05",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "EXP_INF_06"
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "TAR-Export mit Herstellerbeschreibung (DESCRIPTION_SET)",
+      "result": null,
+      "instruction": "TAR-Export mit Herstellerbeschreibung (DESCRIPTION_SET)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "description:-Zeile enthält Hersteller-Beschreibung korrekt",
+          "expected": "EXP_INF_06",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_06",
+          "title": "",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "EXP_INF_06",
+      "notes": "Nur wenn Profil DESCRIPTION_SET aktiv"
+    },
+    {
+      "step": 8,
+      "type": "VERIFY",
+      "title": "TAR-Export nach Nutzer-Änderung der Beschreibung",
+      "result": null,
+      "instruction": "TAR-Export nach Nutzer-Änderung der Beschreibung\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "description:-Zeile enthält Nutzer-Beschreibung korrekt",
+          "expected": "EXP_INF_07",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_07",
+          "title": "",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
+        }
+      ],
+      "source_test": "EXP_INF_06"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Strukturelle Konsistenz aller drei Exporte vergleichen",
+      "result": null,
+      "instruction": "Strukturelle Konsistenz aller drei Exporte vergleichen",
+      "checks": [
+        {
+          "description": "Alle drei TAR-Exporte haben identische info.csv-Struktur; nur description-Inhalt variiert",
+          "expected": "Konsistent",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.4.2"
+  ]
+}

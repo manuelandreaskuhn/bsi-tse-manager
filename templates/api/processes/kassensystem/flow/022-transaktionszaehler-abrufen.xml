@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>022</processId>
+    <processName>
+        <text xml:lang="en">Transaction Counter Query</text>
+        <text xml:lang="de">Transaktionszähler abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the current status of the transaction counter. The counter is incremented with each startTransaction and shows the total number of transactions started since initialization.</text>
+        <text xml:lang="de">Abruf des aktuellen Standes des Transaktionszählers. Der Zähler wird mit jeder startTransaction erhöht und zeigt die Gesamtzahl der gestarteten Transaktionen seit Initialisierung.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Counter</text>
+            <text xml:lang="de">Transaktionszähler</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getCurrentTransactionCounter</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>transactionCounter</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Current status of the transaction counter</text>
+                <text xml:lang="de">Aktueller Stand des Transaktionszählers</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetTransactionCounterFailed</exception>
+        <exception>ErrorFunctionFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.8</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Function is available to all user roles (including unauthenticated). The transaction counter is a mandatory function and must be implemented by every TSE. Used for plausibility checks and monitoring.</text>
+        <text xml:lang="de">Funktion ist für alle Nutzerrollen (auch unauthenticated) verfügbar. Der Transaktionszähler ist eine verpflichtende Funktion und muss von jeder TSE implementiert werden. Wird für Plausibilitätsprüfungen und Monitoring verwendet.</text>
+    </notes>
+</process>

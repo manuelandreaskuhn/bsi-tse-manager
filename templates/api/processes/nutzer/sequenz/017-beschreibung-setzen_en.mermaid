@@ -1,0 +1,51 @@
+sequenceDiagram
+    participant Admin as Admin
+    participant TSE as TSE
+    participant SM as Security Module
+    participant Storage as Storage Medium
+
+    Admin->>TSE: Login as Admin
+    TSE-->>Admin: Login successful
+    
+    Admin->>TSE: setDescription(description)
+    activate TSE
+    
+    Note over TSE: Check: Admin authenticated
+    
+    TSE->>TSE: Validate description:<br/>- Length <= 64 characters
+    
+    alt Description too long
+        TSE-->>Admin: Exception:<br/>ErrorParameterTooLong
+    else Description valid
+        TSE->>Storage: Save Description
+        activate Storage
+        
+        alt Saving failed
+            Storage-->>TSE: Error
+            TSE->>TSE: Reset description<br/>to previous state
+            TSE-->>Admin: Exception:<br/>ErrorStoringDataFailed
+        else Saving successful
+            Storage-->>TSE: OK
+            deactivate Storage
+            
+            TSE->>SM: Create setDescription System Log
+            activate SM
+            SM->>SM: Log Data:<br/>- description<br/>- eventTriggeredByUser
+            SM->>SM: signatureCounter++
+            SM->>SM: Create Signature
+            SM-->>TSE: Log Message + Signature
+            deactivate SM
+            
+            TSE->>Storage: Save setDescription Log
+            activate Storage
+            Storage-->>TSE: OK
+            deactivate Storage
+            
+            TSE->>TSE: Update info.csv:<br/>description field
+            
+            TSE-->>Admin: Description set
+        end
+    end
+    deactivate TSE
+    
+    Note over Admin,Storage: New description will<br/>be visible in exports

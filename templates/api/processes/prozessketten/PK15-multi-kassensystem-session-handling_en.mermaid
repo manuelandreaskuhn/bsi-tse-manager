@@ -1,0 +1,150 @@
+sequenceDiagram
+    actor Logger1 as Cash Register 1 (Logger)
+    actor Admin as Administrator
+    actor Logger2 as Cash Register 2 (Logger)
+    participant TSE as TSE
+    participant SM as Security Module
+
+    Note over Logger1,SM: Scenario: Multiple Cash Registers using one TSE
+
+    %% Initial Setup - Client Registration
+    rect rgb(230, 240, 255)
+    Note over Logger1,SM: PHASE 1: Client Registration
+
+    Logger1->>TSE: registerClient(clientId="KASSE-001")
+    activate TSE
+    TSE->>TSE: Register Client
+    TSE-->>Logger1: Client successfully registered
+    deactivate TSE
+
+    Logger2->>TSE: registerClient(clientId="KASSE-002")
+    activate TSE
+    TSE->>TSE: Register Client
+    TSE-->>Logger2: Client successfully registered
+    deactivate TSE
+    end
+
+    %% Logger1 starts working
+    rect rgb(200, 255, 200)
+    Note over Logger1,SM: PHASE 2: Cash Register 1 is working
+
+    Logger1->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Check PIN
+    activate SM
+    SM->>SM: PIN correct → Status: "authenticated"
+    SM->>SM: Create authenticateUser Log
+    SM-->>TSE: OK + Log Parts
+    deactivate SM
+    TSE-->>Logger1: Authentication successful
+    deactivate TSE
+
+    Note over Logger1,TSE: Logger processes transactions
+
+    loop Transactions from Cash Register 1
+        Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+        TSE-->>Logger1: Transaction started
+        Logger1->>TSE: updateTransaction(...)
+        TSE-->>Logger1: Transaction updated
+        Logger1->>TSE: finishTransaction(...)
+        TSE-->>Logger1: Transaction completed
+    end
+    end
+
+    %% Admin wants to perform administrative tasks
+    rect rgb(255, 235, 200)
+    Note over Admin,SM: PHASE 3: Admin Intervention Required
+
+    Note over Admin: Admin needs to change configuration<br/>(e.g. exportData, setDescription)
+
+    Admin->>TSE: authenticateUser(userId="admin", PIN)
+    activate TSE
+    TSE->>SM: Check PIN (admin)
+    activate SM
+    alt PIN correct
+        SM->>SM: Detect: Different user (logger) is logged in
+        Note over SM: Automatic logout of previous user
+        SM->>SM: Create logOut Log for logger<br/>logOutCause = "differentUserLoggedIn" (1)
+        SM->>SM: Signature Counter++
+        SM->>SM: Set Status: "not authenticated" for logger
+        
+        SM->>SM: Set Status: "authenticated" for admin
+        SM->>SM: Create authenticateUser Log for admin
+        SM->>SM: Signature Counter++
+        SM-->>TSE: OK + Log Parts (both logs)
+        deactivate SM
+        TSE-->>Admin: Authentication successful<br/>(Logger was automatically logged out)
+    end
+    deactivate TSE
+
+    Note over Logger1: ⚠️ Logger session is now terminated
+    Admin->>TSE: exportData(...)
+    TSE-->>Admin: Export successful
+
+    Admin->>TSE: setDescription(...)
+    TSE-->>Admin: Description set
+
+    Admin->>TSE: logOut()
+    activate TSE
+    TSE->>SM: Create logOut Log
+    activate SM
+    SM->>SM: Set Status: "not authenticated"
+    SM-->>TSE: Log Parts
+    deactivate SM
+    TSE-->>Admin: Logout successful
+    deactivate TSE
+    end
+
+    %% Logger1 tries to continue but is logged out
+    rect rgb(255, 200, 200)
+    Note over Logger1,SM: PHASE 4: Cash Register 1 detects logout
+
+    Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+    activate TSE
+    TSE->>TSE: Check: Is logger authenticated?
+    TSE->>TSE: ❌ No! (Was logged out by admin)
+    TSE-->>Logger1: Error: ErrorNotAuthenticated
+    deactivate TSE
+
+    Note over Logger1: ⚠️ Cash register detects:<br/>Session was interrupted
+
+    Logger1->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Check PIN
+    activate SM
+    SM->>SM: PIN correct → Status: "authenticated"
+    SM->>SM: Create authenticateUser Log
+    SM-->>TSE: OK + Log Parts
+    deactivate SM
+    TSE-->>Logger1: Authentication successful
+    deactivate TSE
+
+    Note over Logger1,TSE: Logger can now continue working
+
+    Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+    TSE-->>Logger1: Transaction started ✓
+    end
+
+    %% Another logger wants to work
+    rect rgb(200, 255, 255)
+    Note over Logger2,SM: PHASE 5: Cash Register 2 takes over
+
+    Logger2->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Check PIN (logger)
+    activate SM
+    SM->>SM: Detect: Logger is logged in
+    SM->>SM: Set Status: "authenticated" for logger
+    SM->>SM: Create authenticateUser Log for logger
+    SM-->>TSE: OK + Log Parts
+    deactivate SM
+    TSE-->>Logger2: Authentication successful
+    deactivate TSE
+
+    loop Transactions from Cash Register 2
+        Logger2->>TSE: startTransaction(clientId="KASSE-002", ...)
+        TSE-->>Logger2: Transaction started
+        Logger2->>TSE: finishTransaction(...)
+        TSE-->>Logger2: Transaction completed
+    end
+    end

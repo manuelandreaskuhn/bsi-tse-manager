@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="UpdateDeviceEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>UpdateDeviceEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type UpdateDeviceEventData.</description>
+  <asn1Definition>UpdateDeviceEventData ::= SEQUENCE {
+  deviceInformationBeforeUpdate  DeviceInformationSet
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>deviceInformationBeforeUpdate</name>
+      <type>DeviceInformationSet</type>
+      <optional>false</optional>
+      <description>Field deviceInformationBeforeUpdate of type DeviceInformationSet</description>
+    </field>
+  </fields>
+</type>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>025</processId>
+    <processName>
+        <text xml:lang="en">Query Memory Information</text>
+        <text xml:lang="de">Speicherabfragen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying memory information from the TSE device. Three separate functions provide total memory, used memory, and free memory measurements in bytes.</text>
+        <text xml:lang="de">Abfrage von Speicherinformationen vom TSE-Gerät. Drei separate Funktionen liefern die Gesamtspeicher-, genutzte Speicher- und verfügbare Speichermessungen in Bytes.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Memory Information</text>
+            <text xml:lang="de">Speicherinformation</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getTotalMemory</function>
+        <function>getUsedMemory</function>
+        <function>getFreeMemory</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>totalMemory</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Total memory available in bytes</text>
+                <text xml:lang="de">Gesamtspeicher verfügbar in Bytes</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>usedMemory</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Currently used memory in bytes</text>
+                <text xml:lang="de">Aktuell genutzter Speicher in Bytes</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>freeMemory</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Currently free memory in bytes</text>
+                <text xml:lang="de">Aktuell freier Speicher in Bytes</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>MemoryInformation</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingMemoryInformationFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.2</reference>
+        <reference>BSI TR-03153-1 Chapter 5.6.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">These are optional functions accessible to all users. All measurements are in bytes. The relationship is: totalMemory = usedMemory + freeMemory. If used memory exceeds 90% of total memory, backup should be performed as part of maintenance planning. Each function returns the current state at the time of the query.</text>
+        <text xml:lang="de">Dies sind optionale Funktionen, die für alle Nutzer zugänglich sind. Alle Messungen sind in Bytes. Die Beziehung ist: Gesamtspeicher = Genutzter Speicher + Freier Speicher. Wenn der genutzte Speicher 90% des Gesamtspeichers überschreitet, sollte ein Backup als Teil der Wartungsplanung durchgeführt werden. Jede Funktion gibt den aktuellen Zustand zum Zeitpunkt der Abfrage zurück.</text>
+    </notes>
+</process>

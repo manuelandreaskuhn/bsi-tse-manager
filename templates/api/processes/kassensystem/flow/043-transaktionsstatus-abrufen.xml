@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>043</processId>
+    <processName>
+        <text xml:lang="en">Transaction Status Query</text>
+        <text xml:lang="de">Transaktionsstatus abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the status of a specific transaction (started, updated, finished or abandoned)</text>
+        <text xml:lang="de">Abruf des Status einer spezifischen Transaktion (started, updated, finished oder abandoned)</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction</text>
+            <text xml:lang="de">Transaktion</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Status</text>
+            <text xml:lang="de">Transaktionsstatus</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getTransactionState</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>unsigned long</type>
+            <description>
+                <text xml:lang="en">Transaction number of the transaction to be checked</text>
+                <text xml:lang="de">Transaktionsnummer der zu prüfenden Transaktion</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>transactionState</name>
+            <type>enum TransactionState</type>
+            <description>
+                <text xml:lang="en">Status: started, updated, finished or abandoned</text>
+                <text xml:lang="de">Status: started, updated, finished oder abandoned</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>TransactionState (enum)</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorTransactionNotFound</exception>
+        <exception>ErrorGetTransactionStateFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.8</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. Status can be: started (only start), updated (start + updates), finished (completed), abandoned (orphaned).</text>
+        <text xml:lang="de">OPTIONAL. Status kann sein: started (nur start), updated (start+updates), finished (abgeschlossen), abandoned (verwaist).</text>
+    </notes>
+</process>

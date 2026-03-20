@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="SlewSettings" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>SlewSettings</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Supporting type SlewSettings used in system log event data.</description>
+  <asn1Definition>SlewSettings ::= SEQUENCE {
+  slewStepMicroSeconds  INTEGER,
+  slewRateMicroSecondsPerSecond  INTEGER
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>slewStepMicroSeconds</name>
+      <type>INTEGER</type>
+      <optional>false</optional>
+      <description>Field slewStepMicroSeconds of type INTEGER</description>
+    </field>
+    <field>
+      <name>slewRateMicroSecondsPerSecond</name>
+      <type>INTEGER</type>
+      <optional>false</optional>
+      <description>Field slewRateMicroSecondsPerSecond of type INTEGER</description>
+    </field>
+  </fields>
+</type>

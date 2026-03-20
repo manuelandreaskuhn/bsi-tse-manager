@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorPukTemporarilyBlocked" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorPukTemporarilyBlocked</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function unblockPin fails because the PUK (PIN Unblock Key) is temporarily blocked due to excessive failed PUK entry attempts. The device tracks failed PUK attempts and temporarily blocks the PUK to prevent brute-force attacks. When the PUK is temporarily blocked, attempts to unblock a PIN cannot proceed. ErrorPukTemporarilyBlocked indicates that the PUK is in a temporary lockout state and must wait for the timeout period to expire before unblocking operations can resume.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion unblockPin fehlschlägt, weil der PUK (PIN Unblock Key) aufgrund übermäßiger fehlgeschlagener PUK-Eingabeversuche temporär blockiert wurde. Das Gerät verfolgt fehlgeschlagene PUK-Versuche und blockiert den PUK temporär, um Brute-Force-Angriffe zu verhindern. Wenn der PUK temporär blockiert ist, können Versuche, eine PIN zu entsperren, nicht fortgesetzt werden. ErrorPukTemporarilyBlocked zeigt an, dass der PUK im temporären Lockout-Zustand ist und bis zum Ablauf des Timeout-Zeitraums warten muss, bevor Entsperrvorgänge fortgesetzt werden können.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PUK Temporary Lockout</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorPukTemporarilyBlocked that is thrown if the PUK is temporarily blocked due to excessive failed attempts.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorPukTemporarilyBlocked, die ausgelöst wird, wenn der PUK aufgrund übermäßiger fehlgeschlagener Versuche temporär blockiert wurde.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the unblockPin function attempts to unblock a user's PIN but the PUK is in a temporarily blocked state. The PUK (PIN Unblock Key) has a temporary lockout mechanism to protect against brute-force attacks. When a user provides an incorrect PUK multiple times in succession, the device temporarily blocks the PUK for a specified timeout period (e.g., 30 minutes). During this timeout period, the unblockPin function cannot verify or use the PUK, so it cannot unblock any PINs. ErrorPukTemporarilyBlocked indicates that the PUK is currently locked out and the caller must wait for the timeout period to expire before attempting PIN unblocking again. This is different from a permanent PUK block (ErrorPukBlocked) - the temporary block expires automatically after the timeout. Recovery requires waiting for the temporary block to expire or using administrative procedures to reset the timeout.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion unblockPin versucht, eine PIN eines Benutzers zu entsperren, aber der PUK im temporär blockierten Zustand ist. Der PUK (PIN Unblock Key) hat einen temporären Lockout-Mechanismus zum Schutz vor Brute-Force-Angriffen. Wenn ein Benutzer mehrmals hintereinander einen falschen PUK bereitstellt, blockiert das Gerät den PUK temporär für einen angegebenen Timeout-Zeitraum (z. B. 30 Minuten). Während dieses Timeout-Zeitraums kann die Funktion unblockPin den PUK nicht verifizieren oder verwenden, daher kann sie keine PINs entsperren. ErrorPukTemporarilyBlocked zeigt an, dass der PUK derzeit blockiert ist und der Aufrufer bis zum Ablauf des Timeout-Zeitraums warten muss, bevor ein weiterer Versuch zum Entsperren der PIN unternommen wird. Dies unterscheidet sich von einer permanenten PUK-Blockierung (ErrorPukBlocked) - die temporäre Blockierung läuft automatisch nach dem Timeout ab. Die Wiederherstellung erfordert Warten auf das Ablaufen der temporären Blockierung oder Verwendung von administrativen Verfahren zum Zurücksetzen des Timeout.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2 PIN Unblocking - unblockPin</section>
+    <requirement>
+      <text xml:lang="en">The function unblockPin SHALL unblock a user's blocked PIN by verifying the provided PUK. The device maintains a temporary lockout mechanism for the PUK to prevent brute-force attacks. If a user provides an incorrect PUK multiple times in succession (typically 3-5 failed attempts depending on device configuration), the device SHALL temporarily block the PUK for a specified timeout period (typically 30 minutes or configurable). During the temporary block period, the unblockPin function SHALL raise the exception ErrorPukTemporarilyBlocked for any attempt to use the PUK. The temporary block automatically expires after the timeout period expires, at which point the PUK can be used again. ErrorPukTemporarilyBlocked indicates that the caller must wait or use administrative procedures to proceed.</text>
+      <text xml:lang="de">Die Funktion unblockPin soll eine blockierte PIN eines Benutzers entsperren, indem der bereitgestellte PUK verifiziert wird. Das Gerät verwaltet einen temporären Lockout-Mechanismus für den PUK, um Brute-Force-Angriffe zu verhindern. Falls ein Benutzer mehrmals hintereinander einen falschen PUK bereitstellt (typischerweise 3-5 fehlgeschlagene Versuche je nach Gerätekonfiguration), soll das Gerät den PUK für einen angegebenen Timeout-Zeitraum temporär blockieren (typischerweise 30 Minuten oder konfigurierbar). Während des temporären Blockierungszeitraums soll die Funktion unblockPin die Ausnahme ErrorPukTemporarilyBlocked für jeden Versuch, den PUK zu verwenden, auslösen. Die temporäre Blockierung läuft automatisch ab, wenn der Timeout-Zeitraum abgelaufen ist. Danach kann der PUK wieder verwendet werden. ErrorPukTemporarilyBlocked zeigt an, dass der Aufrufer warten muss oder administrative Verfahren verwenden muss, um fortzufahren.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">PIN unblocking operations - unblockPin function only, when PUK is temporarily blocked</text>
+      <text xml:lang="de">PIN-Entsperrvorgänge - nur Funktion unblockPin, wenn PUK temporär blockiert ist</text>
+    </applicability>
+    <reference>unblockPin – Function (3.1.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>unblockPin</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls unblockPin function with user ID and PUK</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion unblockPin mit Benutzer-ID und PUK auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PUK format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PUK-Format</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function transmits unblock command with PUK to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet Entsperrbefehl mit PUK an Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks if the PUK is in temporarily blocked state</text>
+      <text xml:lang="de">Secure Element prüft, ob sich der PUK im temporär blockierten Zustand befindet</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If PUK is temporarily blocked → ErrorPukTemporarilyBlocked raised, function exits</text>
+      <text xml:lang="de">Falls PUK temporär blockiert ist → ErrorPukTemporarilyBlocked wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If PUK is not temporarily blocked → proceed to step 6</text>
+      <text xml:lang="de">Falls PUK nicht temporär blockiert ist → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element verifies the provided PUK against the stored PUK</text>
+      <text xml:lang="de">Secure Element verifiziert den bereitgestellten PUK gegen den gespeicherten PUK</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If PUK is correct → proceed to step 8</text>
+      <text xml:lang="de">Falls PUK korrekt ist → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PUK is incorrect → proceed to step 7</text>
+      <text xml:lang="de">Falls PUK falsch ist → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element increments failed PUK attempt counter and checks threshold</text>
+      <text xml:lang="de">Secure Element erhöht den Zähler fehlgeschlagener PUK-Versuche und prüft Schwelle</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If threshold exceeded → temporarily blocks PUK and raises ErrorPukTemporarilyBlocked</text>
+      <text xml:lang="de">Falls Schwelle überschritten → blockiert PUK temporär und löst ErrorPukTemporarilyBlocked aus</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If threshold not exceeded → raises ErrorIncorrectPuk</text>
+      <text xml:lang="de">Falls Schwelle nicht überschritten → löst ErrorIncorrectPuk aus</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function returns successfully with PIN unblocked and new PIN set</text>
+      <text xml:lang="de">Funktion gibt erfolgreich zurück mit entsperrter PIN und neu gesetzter PIN</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Wait for PUK temporary blocking timeout to expire</text>
+      <text xml:lang="de">Warten Sie, bis das temporäre Blockierungs-Timeout des PUK abläuft</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry unblock operation after blocking timer expires</text>
+      <text xml:lang="de">Wiederholen Sie den Entsperrvorgang, nachdem der Blockierungs-Timer abläuft</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure correct PUK is used on retry</text>
+      <text xml:lang="de">Stellen Sie sicher, dass beim Wiederholen der richtige PUK verwendet wird</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorIncorrectPuk</exception>
+    <exception>ErrorPukBlocked</exception>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorUnblockPinFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="PIN Not Unblocked">
+      <text xml:lang="en">The user's PIN remains in blocked state. The unblockPin operation is not completed.</text>
+      <text xml:lang="de">Die PIN des Benutzers bleibt im blockierten Zustand. Der Entsperrvorgang wird nicht abgeschlossen.</text>
+    </state>
+    <state name="PUK Remains Temporarily Blocked">
+      <text xml:lang="en">The PUK remains in temporarily blocked state. The timeout period continues to count down.</text>
+      <text xml:lang="de">Der PUK bleibt im temporär blockierten Zustand. Der Timeout-Zeitraum läuft weiter ab.</text>
+    </state>
+    <state name="Failed Attempt Not Counted">
+      <text xml:lang="en">Failed attempts during the temporary block period typically do not increment the failure counter further.</text>
+      <text xml:lang="de">Fehlgeschlagene Versuche während des temporären Blockierungszeitraums erhöhen typischerweise den Fehlerszähler nicht weiter.</text>
+    </state>
+    <state name="User Account Locked">
+      <text xml:lang="en">The user account remains locked because the PIN is still blocked and could not be unblocked.</text>
+      <text xml:lang="de">Das Benutzerkonto bleibt gesperrt, da die PIN immer noch blockiert ist und nicht entsperrt werden konnte.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged except for the persistent PUK temporary block state.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt unverändert, mit Ausnahme des persistenten temporären PUK-Blockierungszustands.</text>
+    </state>
+    <state name="Timeout Continues">
+      <text xml:lang="en">The PUK remains in temporary block state with the timeout period continuing until expiration.</text>
+      <text xml:lang="de">Der PUK bleibt im temporären Blockierungszustand, wobei der Timeout-Zeitraum bis zum Ablaufen verläuft.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: PUK is temporarily blocked after too many incorrect attempts</text>
+      <text xml:lang="de">Anzeichen: PUK ist nach zu vielen falschen Versuchen temporär blockiert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authentication, PIN Management, Security, Unblocking, Temporary Blocks</text>
+      <text xml:lang="de">Themen: Authentifizierung, PIN-Verwaltung, Sicherheit, Entsperrung, Temporäre Blockierungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by unblockPin when PUK attempt counter indicates temporary block</text>
+      <text xml:lang="de">Wird von unblockPin ausgelöst, wenn PUK-Versuchszähler temporäre Blockierung anzeigt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unblock function implements temporary PUK blocking</text>
+      <text xml:lang="de">Entsperrfunktion implementiert temporäre PUK-Blockierung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device prevents rapid PUK attempts via blocking timer</text>
+      <text xml:lang="de">Gerät verhindert schnelle PUK-Versuche über Blockierungs-Timer</text>
+    </note>
+    <note>
+      <text xml:lang="en">Temporary block delays retry attempts</text>
+      <text xml:lang="de">Temporäre Blockierung verzögert Wiederholungsversuche</text>
+    </note>
+  </implementationContext>
+</exception>
+

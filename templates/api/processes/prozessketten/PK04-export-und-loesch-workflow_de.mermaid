@@ -1,0 +1,44 @@
+sequenceDiagram
+    actor Pruefer as Prüfer/Admin
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+    participant Extern as Externes Sicherungssystem
+
+    Note over Pruefer,Extern: Regelmäßiger Export-und-Lösch-Zyklus
+
+    Pruefer->>TSE: exportLogMessages()
+    activate TSE
+    TSE->>Speicher: Sammle alle Log-Nachrichten
+    activate Speicher
+    Speicher-->>TSE: Log-Dateien
+    deactivate Speicher
+    TSE->>Speicher: Sammle Zertifikate
+    activate Speicher
+    Speicher-->>TSE: Zertifikatsdateien
+    deactivate Speicher
+    TSE->>TSE: Erstelle TAR-Archiv mit:<br/>- Logs<br/>- Zertifikate<br/>- info.csv
+    TSE->>TSE: Markiere alle Logs als "exportiert"
+    TSE-->>Pruefer: TAR-Archiv + Dateiname
+    deactivate TSE
+
+    Pruefer->>Extern: Speichere TAR-Archiv sicher<br/>(Backup, Archiv)
+    Extern-->>Pruefer: Gesichert
+
+    Note over Pruefer,Extern: Export erfolgreich - Logs können gelöscht werden
+
+    Pruefer->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Pruefer: Authentifiziert
+
+    Pruefer->>TSE: deleteLogMessages()
+    activate TSE
+    TSE->>TSE: Erstelle deleteLogMessages-Log
+    TSE->>Speicher: Speichere deleteLogMessages-Log
+    TSE->>Speicher: Lösche alle EXPORTIERTEN Logs<br/>(außer deleteLogMessages-Log selbst)
+    activate Speicher
+    Speicher->>Speicher: Behalte:<br/>- Nicht exportierte Logs<br/>- deleteLogMessages-Log<br/>- Optional: Offene Transaktionen
+    Speicher-->>TSE: Gelöscht
+    deactivate Speicher
+    TSE-->>Pruefer: Speicher freigegeben
+    deactivate TSE
+
+    Note over Pruefer,Extern: ERGEBNIS:<br/>- Daten extern gesichert<br/>- Speicherplatz freigegeben<br/>- Lückenlose Dokumentation

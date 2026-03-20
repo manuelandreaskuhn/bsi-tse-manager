@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>031</processId>
+    <processName>
+        <text xml:lang="en">Configure Logging</text>
+        <text xml:lang="de">Logging konfigurieren</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Configuring event logging in the TSE. Allows enabling or disabling logging for specific components and events. This function has restricted access due to security implications.</text>
+        <text xml:lang="de">Konfiguration der Ereignisprotokollierung in der TSE. Ermöglicht das Aktivieren oder Deaktivieren der Protokollierung für spezifische Komponenten und Ereignisse. Diese Funktion hat eingeschränkten Zugriff aufgrund von Sicherheitsauswirkungen.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Manufacturer/Initialization Agent</text>
+            <text xml:lang="de">Hersteller/Initialisierungsagent</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Logging Configuration</text>
+            <text xml:lang="de">Logging-Konfiguration</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log</text>
+            <text xml:lang="de">System-Log</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>configureLogging</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>componentName</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Name of the component for which logging is to be configured</text>
+                <text xml:lang="de">Name der Komponente, für die die Protokollierung konfiguriert werden soll</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>eventName</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Name of the event to be enabled or disabled</text>
+                <text xml:lang="de">Name des Ereignisses, das aktiviert oder deaktiviert werden soll</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>eventEnabled</name>
+            <type>BOOLEAN</type>
+            <description>
+                <text xml:lang="en">Flag to enable (true) or disable (false) the event logging</text>
+                <text xml:lang="de">Flag zum Aktivieren (true) oder Deaktivieren (false) der Ereignisprotokollierung</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (configureLogging)</dataObject>
+        <dataObject>LoggingConfiguration</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorInvalidComponentName</exception>
+        <exception>ErrorInvalidEventName</exception>
+        <exception>ErrorConfiguringLoggingFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.8</reference>
+        <reference>BSI TR-03153-1 Chapter 7 (System Log)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">IMPORTANT: This function is NOT ACCESSIBLE to any user role (not even admin). Access is typically restricted to the TSE manufacturer and may only be available during device initialization. Attempting to call this function without proper authorization will result in ErrorUserNotAuthorized. This restriction is intentional to preserve system security and logging integrity.</text>
+        <text xml:lang="de">WICHTIG: Diese Funktion ist für KEINE Nutzerrolle zugänglich (nicht einmal für Admin). Der Zugriff ist typischerweise auf den TSE-Hersteller beschränkt und kann nur während der Geräteinitialisierung verfügbar sein. Der Versuch, diese Funktion ohne ordnungsgemäße Autorisierung aufzurufen, führt zu ErrorUserNotAuthorized. Diese Einschränkung ist beabsichtigt, um die Systemsicherheit und Protokollintegrität zu bewahren.</text>
+    </notes>
+</process>

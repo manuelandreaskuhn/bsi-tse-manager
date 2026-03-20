@@ -1,0 +1,28 @@
+flowchart TD
+    Start([User: getEndOfUsageDate<br/>call])
+    Start --> CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| DetermineDate[Determine earliest date<br/>after which input functions<br/>are no longer usable]
+    
+    DetermineDate --> CheckCert[Check:<br/>- Certificate Expiry Date<br/>- Planned Obsolescence<br/>- Hardware Limits]
+    
+    CheckCert --> IgnoreLocks[Ignore:<br/>- disableSecureElement<br/>- lockTransactionLogging]
+    
+    IgnoreLocks --> CheckDetermine{Determination<br/>successful?}
+    
+    CheckDetermine -->|No| ErrorGet[Exception:<br/>ErrorGetEndOfUsageDateFailed]
+    CheckDetermine -->|Yes| Return[Return:<br/>endOfUsageDate DateTime]
+    
+    Return --> CheckDate{Date<br/>approaching soon?}
+    
+    CheckDate -->|<90 Days| WarnExpire[Warning:<br/>TSE expiring soon!<br/>Plan replacement]
+    CheckDate -->|>90 Days| End([End])
+    
+    WarnExpire --> End
+    ErrorInit --> End
+    ErrorGet --> End
+    
+    style DetermineDate fill:#87CEEB
+    style Return fill:#90EE90
+    style WarnExpire fill:#FFD700

@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSignatureCounterOverflow" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSignatureCounterOverflow</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the signature counter reaches its logical maximum value. The signature counter is a monotonically increasing value that provides audit trail integrity and replay attack protection for transactions. The counter has a maximum value (e.g., 2^64-1 for a 64-bit counter) and cannot be incremented further once this maximum is reached. ErrorSignatureCounterOverflow indicates that the signature counter has reached its logical limit and cannot accept new transactions. This is an extremely rare condition that typically requires device replacement or counter reset procedures. Common causes include: device has processed an extraordinarily large number of transactions over its lifetime, counter implementation limits reached, or counter not properly designed for system lifetime.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der Signaturzähler seinen logischen Maximalwert erreicht. Der Signaturzähler ist ein monoton steigender Wert, der Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe für Transaktionen bietet. Der Zähler hat einen Maximalwert (z. B. 2^64-1 für einen 64-Bit-Zähler) und kann nach Erreichen dieses Maximalwertes nicht weiter erhöht werden. ErrorSignatureCounterOverflow zeigt an, dass der Signaturzähler seine logische Grenze erreicht hat und keine neuen Transaktionen akzeptieren kann. Dies ist eine äußerst seltene Bedingung, die typischerweise Geräteaustausch oder Zähler-Rücksetzverfahren erfordert. Häufige Ursachen sind: Gerät hat eine außergewöhnlich große Anzahl von Transaktionen über seine Lebensdauer verarbeitet, Zähler-Implementierungsgrenzen erreicht oder Zähler nicht ordnungsgemäß für die Systemlebensdauer ausgelegt.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Signature Counter - Overflow</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSignatureCounterOverflow that is thrown if the signature counter reaches its logical maximum.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSignatureCounterOverflow, die ausgelöst wird, wenn der Signaturzähler sein logisches Maximum erreicht.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the signature counter reaches its logical maximum value and cannot be incremented further. The signature counter is a critical component that maintains a monotonically increasing counter for transaction signatures, providing audit trail integrity and replay attack protection. The counter has a defined maximum value (implementation-dependent, e.g., 2^64-1 for a 64-bit counter). ErrorSignatureCounterOverflow indicates that the counter has reached this logical limit. This is an extremely rare condition in practice because the maximum is typically very large. Common causes include: device has processed an extraordinarily large number of transactions (billions or trillions), counter design does not match system transaction volume, or counter has been in production for an exceptionally long time with high transaction load. ErrorSignatureCounterOverflow is a Critical severity exception because it permanently prevents transaction processing. The counter cannot wrap around to zero (which would compromise audit trail integrity). The device is effectively unusable and requires replacement or counter reset procedures.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der Signaturzähler seinen logischen Maximalwert erreicht und nicht weiter erhöht werden kann. Der Signaturzähler ist eine kritische Komponente, die einen monoton steigenden Zähler für Transaktionssignaturen aufrechtehält und Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe bietet. Der Zähler hat einen definierten Maximalwert (implementierungsabhängig, z. B. 2^64-1 für einen 64-Bit-Zähler). ErrorSignatureCounterOverflow zeigt an, dass der Zähler diese logische Grenze erreicht hat. Dies ist in der Praxis eine äußerst seltene Bedingung, da der Maximalwert typischerweise sehr groß ist. Häufige Ursachen sind: Gerät hat eine außergewöhnlich große Anzahl von Transaktionen verarbeitet (Milliarden oder Billionen), Zähler-Design entspricht nicht dem Systemtransaktionsvolumen, oder Zähler war in der Produktion für einen außergewöhnlich langen Zeitraum mit hoher Transaktionslast. ErrorSignatureCounterOverflow ist eine Ausnahme mit kritischem Schweregrad, da sie die Transaktionsverarbeitung dauerhaft verhindert. Der Zähler kann nicht auf Null umschlagen (was die Audit-Trail-Integrität beeinträchtigen würde). Das Gerät ist praktisch unbrauchbar und erfordert Austausch oder Zähler-Rücksetzverfahren.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Transaction Operations and 3.3.3 Logging Operations - Signature Counter Management</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element maintains a signature counter that is incremented for each transaction, providing audit trail integrity and replay attack protection. The signature counter is monotonically increasing and has a defined maximum value (implementation-dependent). When the signature counter reaches its logical maximum value, the device cannot increment it further and SHALL raise ErrorSignatureCounterOverflow on any operation requiring counter increment (startTransaction, updateTransaction, finishTransaction, configureLogging). The device must not accept new transactions when counter is at maximum, as wrapping to zero would compromise audit trail integrity. This is an extremely rare condition expected to occur only after processing an extraordinarily large number of transactions over many years.</text>
+      <text xml:lang="de">Das Secure Element verwaltet einen Signaturzähler, der für jede Transaktion erhöht wird und Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe bietet. Der Signaturzähler ist monoton steigend und hat einen definierten Maximalwert (implementierungsabhängig). Wenn der Signaturzähler seinen logischen Maximalwert erreicht, kann das Gerät ihn nicht weiter erhöhen und MUSS ErrorSignatureCounterOverflow bei jeder Operation auslösen, die einen Zähler-Inkrement erfordert (startTransaction, updateTransaction, finishTransaction, configureLogging). Das Gerät darf keine neuen Transaktionen akzeptieren, wenn der Zähler beim Maximum ist, da das Umschlagen auf Null die Audit-Trail-Integrität beeinträchtigen würde. Dies ist eine äußerst seltene Bedingung, die voraussichtlich nur nach der Verarbeitung einer außergewöhnlich großen Anzahl von Transaktionen über viele Jahre hinweg auftritt.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations requiring signature counter increment: startTransaction, updateTransaction, finishTransaction, configureLogging</text>
+      <text xml:lang="de">Transaktionsoperationen, die Signaturzähler-Inkrement erfordern: startTransaction, updateTransaction, finishTransaction, configureLogging</text>
+    </applicability>
+    <reference>Transaction Operations (3.3.2), Logging Operations (3.3.3), Signature Counter Management</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls transaction operation that requires signature counter increment (e.g., startTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Transaktionsoperation auf, die Signaturzähler-Inkrement erfordert (z. B. startTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsanfrage</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks current signature counter value</text>
+      <text xml:lang="de">Secure Element prüft aktuellen Signaturzählerwert</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If counter is at maximum → ErrorSignatureCounterOverflow raised, operation aborted</text>
+      <text xml:lang="de">Wenn Zähler am Maximum → ErrorSignatureCounterOverflow ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If counter is below maximum → proceed to step 6</text>
+      <text xml:lang="de">Wenn Zähler unter Maximum → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element processes transaction operation</text>
+      <text xml:lang="de">Secure Element verarbeitet Transaktionsoperation</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element calculates new counter value = current counter + 1</text>
+      <text xml:lang="de">Secure Element berechnet neuen Zählerwert = aktueller Zähler + 1</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element verifies new counter does not exceed maximum</text>
+      <text xml:lang="de">Secure Element vergewissert sich, dass neuer Zähler Maximum nicht überschreitet</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If new counter would exceed maximum → ErrorSignatureCounterOverflow raised, operation aborted</text>
+      <text xml:lang="de">Wenn neuer Zähler Maximum überschreiten würde → ErrorSignatureCounterOverflow ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If new counter is valid → proceed to step 9</text>
+      <text xml:lang="de">Wenn neuer Zähler gültig → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element increments signature counter</text>
+      <text xml:lang="de">Secure Element erhöht Signaturzähler</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element writes updated counter value to storage</text>
+      <text xml:lang="de">Secure Element schreibt aktualisierten Zählerwert in Speicher</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element completes transaction operation</text>
+      <text xml:lang="de">Secure Element schließt Transaktionsoperation ab</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an Funktion zurück</text>
+    </step>
+    <step number="13">
+      <text xml:lang="en">Function returns successfully</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check current counter value approaching maximum</text>
+      <text xml:lang="de">Prüfen Sie, dass der aktuelle Zählerwert sich dem Maximum nähert</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan for counter overflow - stop logging operations</text>
+      <text xml:lang="de">Planen Sie für ZählerÜberlauf - stoppen Sie Protokollierungsoperationen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Implement overflow mitigation in application</text>
+      <text xml:lang="de">Implementieren Sie Überlauf-Minderung in der Anwendung</text>
+    </step>
+    <step>
+      <text xml:lang="en">Monitor counter approaching maximum threshold</text>
+      <text xml:lang="de">Beobachten Sie Zähler, der sich dem Maximumschwellenwert nähert</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorSignatureCounterExhausted</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorLimitOfSimultaneousOpenTransactionsReached</exception>
+    <exception>ErrorOpenTransactionFound</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Not Created">
+      <text xml:lang="en">The requested transaction is not created due to counter overflow.</text>
+      <text xml:lang="de">Die angeforderte Transaktion wird nicht erstellt, da ZählerÜberlauf auftritt.</text>
+    </state>
+    <state name="Signature Counter Not Incremented">
+      <text xml:lang="en">The counter remains at maximum and cannot be incremented.</text>
+      <text xml:lang="de">Der Zähler bleibt am Maximum und kann nicht erhöht werden.</text>
+    </state>
+    <state name="Device Cannot Process Transactions">
+      <text xml:lang="en">The device cannot process any new transactions - counter overflow is permanent.</text>
+      <text xml:lang="de">Das Gerät kann keine neuen Transaktionen verarbeiten - ZählerÜberlauf ist dauerhaft.</text>
+    </state>
+    <state name="Audit Trail Protection Broken">
+      <text xml:lang="en">Allowing counter to wrap would compromise audit trail integrity.</text>
+      <text xml:lang="de">Wenn der Zähler umschlagen kann, würde die Audit-Trail-Integrität beeinträchtigt werden.</text>
+    </state>
+    <state name="Device Effectively Decommissioned">
+      <text xml:lang="en">The device has reached the end of its useful transaction processing life.</text>
+      <text xml:lang="de">Das Gerät hat das Ende seiner nützlichen Transaktionsverarbeitungsdauer erreicht.</text>
+    </state>
+    <state name="Device Requires Replacement">
+      <text xml:lang="en">The device must be replaced or decommissioned.</text>
+      <text xml:lang="de">Das Gerät muss ausgetauscht oder außer Betrieb genommen werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Signature counter would overflow - maximum capacity exceeded</text>
+      <text xml:lang="de">Anzeige: Signaturzähler würde Überlauf verursachen - Maximumkapazität überschritten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Signature Operations, Counter Management, Resource Limits, Overflow Protection</text>
+      <text xml:lang="de">Themen: Signaturoperationen, Zählerverwaltung, Ressourcengrenzen, Überlaufschutz</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when signature counter would overflow</text>
+      <text xml:lang="de">Ausgelöst durch Protokollierungsfunktionen, wenn Signaturzähler Überlauf verursachen würde</text>
+    </note>
+    <note>
+      <text xml:lang="en">Overflow protection prevents counter value wrap-around</text>
+      <text xml:lang="de">Overflow-Schutz verhindert Zählerwert-Umschlag</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device detects impending counter maximum</text>
+      <text xml:lang="de">Gerät erkennt bevorstehendes Zähler-Maximum</text>
+    </note>
+    <note>
+      <text xml:lang="en">Overflow condition blocks further signatures</text>
+      <text xml:lang="de">Overflow-Bedingung blockiert weitere Signaturen</text>
+    </note>
+  </implementationContext>
+</exception>
+

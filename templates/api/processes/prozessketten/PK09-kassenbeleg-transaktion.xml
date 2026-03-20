@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK09</chainId>
+    <name>
+        <text xml:lang="en">Kassenbeleg Transaction (DSFinV-K)</text>
+        <text xml:lang="de">Kassenbeleg-Transaktion (DSFinV-K)</text>
+    </name>
+    <description>
+        <text xml:lang="en">DSFinV-K specific transaction process for processType 'Kassenbeleg-V1'. This represents standard receipt transactions in point-of-sale systems. The transaction is started immediately, no updates are used, and processData is only provided at finish.</text>
+        <text xml:lang="de">DSFinV-K-spezifischer Transaktionsprozess für processType 'Kassenbeleg-V1'. Dies repräsentiert Standard-Belegvorgänge in Kassensystemen. Die Transaktion wird sofort gestartet, Updates werden nicht verwendet, und processData werden erst bei finish übergeben.</text>
+    </description>
+    <category>
+        <text xml:lang="en">DSFinV-K Transaction Types</text>
+        <text xml:lang="de">DSFinV-K Transaktionstypen</text>
+    </category>
+    <actors>
+        <actor>
+            <text xml:lang="en">Customer</text>
+            <text xml:lang="de">Kunde</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Cashier</text>
+            <text xml:lang="de">Kassierer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">POS System</text>
+            <text xml:lang="de">Kassensystem</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">Receipt Data (Kassenbeleg)</text>
+            <text xml:lang="de">Belegdaten (Kassenbeleg)</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Type: Kassenbeleg-V1</text>
+            <text xml:lang="de">Transaktionstyp: Kassenbeleg-V1</text>
+        </object>
+        <object>
+            <text xml:lang="en">KassenbelegV1Data Structure</text>
+            <text xml:lang="de">KassenbelegV1Data Struktur</text>
+        </object>
+        <object>
+            <text xml:lang="en">QR-Code for Receipt</text>
+            <text xml:lang="de">QR-Code für Beleg</text>
+        </object>
+    </usedObjects>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized</text>
+            <text xml:lang="de">TSE ist initialisiert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Client is registered</text>
+            <text xml:lang="de">Client ist registriert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Time is set</text>
+            <text xml:lang="de">Zeit ist gesetzt</text>
+        </prerequisite>
+    </prerequisites>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Start Transaction (empty data)</text>
+                <text xml:lang="de">Transaktion starten (leere Daten)</text>
+            </name>
+            <function>
+                <name>startTransaction</name>
+                <linkedProcess>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call startTransaction with empty processData and empty processType. For DSFinV-K Kassenbeleg-V1, the transaction is started immediately when the sales process begins (e.g., scanning first item or opening the transaction).</text>
+                <text xml:lang="de">Aufruf von startTransaction mit leerem processData und leerem processType. Bei DSFinV-K Kassenbeleg-V1 wird die Transaktion sofort beim Beginn des Verkaufsvorgangs gestartet (z.B. Scannen des ersten Artikels oder Öffnen der Transaktion).</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Registered client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>Empty (byte[0])</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>Empty string</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Sales Process</text>
+                <text xml:lang="de">Verkaufsvorgang</text>
+            </name>
+            <description>
+                <text xml:lang="en">Items are scanned, prices are calculated, customer selects payment method. During this phase, NO updateTransaction calls are made for Kassenbeleg-V1. All data is collected internally in the POS system.</text>
+                <text xml:lang="de">Artikel werden gescannt, Preise berechnet, Kunde wählt Zahlungsart. In dieser Phase werden bei Kassenbeleg-V1 KEINE updateTransaction-Aufrufe durchgeführt. Alle Daten werden intern im Kassensystem gesammelt.</text>
+            </description>
+            <note>
+                <text xml:lang="en">This is a key difference from Bestellung-V1: updateTransaction is NOT used for Kassenbeleg-V1</text>
+                <text xml:lang="de">Dies ist ein wichtiger Unterschied zu Bestellung-V1: updateTransaction wird bei Kassenbeleg-V1 NICHT verwendet</text>
+            </note>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Finish Transaction (with complete data)</text>
+                <text xml:lang="de">Transaktion abschließen (mit vollständigen Daten)</text>
+            </name>
+            <function>
+                <name>finishTransaction</name>
+                <linkedProcess>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call finishTransaction with complete processData in KassenbelegV1Data format and processType 'Kassenbeleg-V1'. The processData contains: Vorgangstyp (e.g., 'Beleg'), tax amounts for all 5 tax rates, and payment details.</text>
+                <text xml:lang="de">Aufruf von finishTransaction mit vollständigem processData im KassenbelegV1Data-Format und processType 'Kassenbeleg-V1'. Die processData enthalten: Vorgangstyp (z.B. 'Beleg'), Steuerbeträge für alle 5 Steuersätze und Zahlungsdetails.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Same client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>transactionNumber</name>
+                    <value>From startTransaction response</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>KassenbelegV1Data: "Beleg^10.50_2.30_0.00_0.00_0.00^12.80:Bar"</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>"Kassenbeleg-V1"</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Print Receipt with QR-Code</text>
+                <text xml:lang="de">Beleg mit QR-Code drucken</text>
+            </name>
+            <description>
+                <text xml:lang="en">Print the receipt including the TSE signature data as QR-code. The QR-code contains: transaction number, signature counter, timestamps, signature value, public key, processType, and processData.</text>
+                <text xml:lang="de">Beleg inklusive TSE-Signaturdaten als QR-Code drucken. Der QR-Code enthält: Transaktionsnummer, Signaturzähler, Zeitstempel, Signaturwert, Public Key, processType und processData.</text>
+            </description>
+        </step>
+    </steps>
+    <outcome>
+        <processData>
+            <format>
+                <text xml:lang="en">&lt;Vorgangstyp&gt;^&lt;Brutto-Steuerumsätze&gt;^&lt;Zahlungen&gt;</text>
+                <text xml:lang="de">&lt;Vorgangstyp&gt;^&lt;Brutto-Steuerumsätze&gt;^&lt;Zahlungen&gt;</text>
+            </format>
+            <separator>^ (Unicode U+005E)</separator>
+            <field>
+                <name>Vorgangstyp</name>
+                <description>
+                    <text xml:lang="en">One of: Beleg, AVTransfer, AVBestellung, AVTraining, AVBelegabbruch, AVSachbezug, AVSonstige, AVRechnung</text>
+                    <text xml:lang="de">Einer von: Beleg, AVTransfer, AVBestellung, AVTraining, AVBelegabbruch, AVSachbezug, AVSonstige, AVRechnung</text>
+                </description>
+            </field>
+            <field>
+                <name>Brutto-Steuerumsätze</name>
+                <description>
+                    <text xml:lang="en">Five amounts with exactly 2 decimals, separated by "_": General_Reduced_Average3_Average1_0%</text>
+                    <text xml:lang="de">Fünf Beträge mit exakt 2 Dezimalstellen, getrennt durch "_": Allgemein_Ermäßigt_Durchschnitt3_Durchschnitt1_0%</text>
+                </description>
+            </field>
+            <field>
+                <name>Zahlungen</name>
+                <description>
+                    <text xml:lang="en">&lt;Amount&gt;:&lt;PaymentType&gt;:&lt;Currency&gt;, multiple payments with "_", ordered: Cash EUR, Cash Foreign, NonCash EUR, NonCash Foreign</text>
+                    <text xml:lang="de">&lt;Betrag&gt;:&lt;Zahlungsart&gt;:&lt;Währung&gt;, mehrere Zahlungen mit "_", Reihenfolge: Bar EUR, Bar Fremdwährung, Unbar EUR, Unbar Fremdwährung</text>
+                </description>
+            </field>
+        </processData>
+        <artifacts>
+            <artifact>
+                <text xml:lang="en">Printed receipt with QR-code containing TSE signature</text>
+                <text xml:lang="de">Gedruckter Beleg mit QR-Code der TSE-Signatur enthält</text>
+            </artifact>
+            <artifact>
+                <text xml:lang="en">Transaction log entry in TSE</text>
+                <text xml:lang="de">Transaktions-Log-Eintrag in der TSE</text>
+            </artifact>
+        </artifacts>
+    </outcome>
+    <useCases>
+        <useCase>
+            <name>
+                <text xml:lang="en">Supermarket/Retail (Scanner Checkout)</text>
+                <text xml:lang="de">Supermarkt/Einzelhandel (Scanner-Kasse)</text>
+            </name>
+            <description>
+                <text xml:lang="en">Typical scanner checkout: Customer arrives, items are scanned, customer pays, receipt is printed. Transaction is very short, no updates needed. This is the ideal use case for Kassenbeleg-V1.</text>
+                <text xml:lang="de">Typische Scanner-Kasse: Kunde kommt, Artikel werden gescannt, Kunde zahlt, Beleg wird gedruckt. Transaktion ist sehr kurz, keine Updates notwendig. Dies ist der ideale Anwendungsfall für Kassenbeleg-V1.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Bakery (Quick Service)</text>
+                <text xml:lang="de">Bäckerei (Schnellservice)</text>
+            </name>
+            <description>
+                <text xml:lang="en">Items are entered manually, prices are accumulated, payment is immediate. No need for intermediate updates.</text>
+                <text xml:lang="de">Artikel werden manuell eingegeben, Preise werden aufaddiert, Bezahlung erfolgt sofort. Keine Notwendigkeit für Zwischenupdates.</text>
+            </description>
+        </useCase>
+    </useCases>
+    <importantNotes>
+        <note type="advantage">
+            <text xml:lang="en">Simple process flow: Only 2 TSE calls (start + finish)</text>
+            <text xml:lang="de">Einfacher Prozessablauf: Nur 2 TSE-Aufrufe (start + finish)</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">No open transactions: Transaction is closed immediately after payment</text>
+            <text xml:lang="de">Keine offenen Transaktionen: Transaktion wird sofort nach Zahlung geschlossen</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Receipt is immediately verifiable with QR-code containing processData</text>
+            <text xml:lang="de">Beleg ist sofort prüfbar mit QR-Code, der processData enthält</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Minimal TSE load: No update operations</text>
+            <text xml:lang="de">Minimale TSE-Belastung: Keine Update-Operationen</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Not suitable for long-running transactions (e.g., restaurant orders spanning hours)</text>
+            <text xml:lang="de">Nicht geeignet für langläufige Transaktionen (z.B. Restaurantbestellungen über Stunden)</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">All data must be available at finish time</text>
+            <text xml:lang="de">Alle Daten müssen zum Zeitpunkt des Abschlusses verfügbar sein</text>
+        </note>
+    </importantNotes>
+    <references>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex I: processType definitions</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang I: processType Definitionen</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex H Diagram 2: Scanner checkout process</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang H Folie 2: Scanner-Kassen Prozess</text>
+        </reference>
+        <reference>Type: KassenbelegV1Data</reference>
+        <reference>Enum: Vorgangstypen</reference>
+        <reference>Enum: ZahlungsartenTSE</reference>
+        <reference>Function: startTransaction</reference>
+        <reference>Function: finishTransaction</reference>
+    </references>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+</processChain>

@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorRestoreFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorRestoreFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function restoreLogsFromBackup fails to restore transaction log messages from a backup into the Secure Element. The function attempts to restore previously exported log data back into the device's logging storage, but the restore operation fails due to device error, incompatible backup data, device storage issues, or other failure conditions. ErrorRestoreFailed indicates that the backup data could not be successfully restored and the device's log storage remains in its state prior to the restore attempt.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion restoreLogsFromBackup fehlschlägt beim Wiederherstellen von Transaktionsprotokollnachrichten aus einer Sicherung in das Secure Element. Die Funktion versucht, zuvor exportierte Protokolldaten in den Protokollspeicher des Geräts zurückzurestaurieren, aber die Wiederherstellungsoperation schlägt fehl aufgrund von Gerätefehlern, inkompatiblen Sicherungsdaten, Gerätespeicherproblemen oder anderen Fehlerzuständen. ErrorRestoreFailed zeigt an, dass die Sicherungsdaten nicht erfolgreich wiederhergestellt werden konnten und der Protokollspeicher des Geräts in seinem Zustand vor dem Wiederherstellungsversuch bleibt.</text>
+  </description>
+  <category>Data Management</category>
+  <subcategory>Backup Restore Failure</subcategory>
+  <severity>Critical</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorRestoreFailed that is thrown if the backup restore operation fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorRestoreFailed, die ausgelöst wird, wenn die Sicherungswiederherstellungsoperation fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the restoreLogsFromBackup function attempts to restore transaction log messages from a backup but encounters a failure. Backup restore is a critical operation used to recover previously logged data or migrate logs between devices. ErrorRestoreFailed indicates that the restore operation could not be completed successfully. Common causes include: incompatible backup data format, corrupted backup data, device storage issues, insufficient device storage capacity, device communication failures, or device internal errors. ErrorRestoreFailed is a Critical severity exception because it indicates data recovery has failed and audit trail information may be lost. Recovery requires investigating the backup data integrity, device state, and resolving the underlying issue before attempting restore again.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die restoreLogsFromBackup-Funktion versucht, Transaktionsprotokollnachrichten aus einer Sicherung wiederherzustellen, aber fehlschlägt. Die Sicherungswiederherstellung ist eine kritische Operation, die verwendet wird, um zuvor protokollierte Daten wiederherzustellen oder Protokolle zwischen Geräten zu migrieren. ErrorRestoreFailed zeigt an, dass die Wiederherstellungsoperation nicht erfolgreich abgeschlossen werden konnte. Häufige Ursachen sind: inkompatibles Sicherungsdatenformat, beschädigte Sicherungsdaten, Gerätespeicherprobleme, unzureichende Gerätespeicherkapazität, Gerätekommunikationsfehler oder interne Gerätefehler. ErrorRestoreFailed ist eine Ausnahme mit kritischem Schweregrad, da sie anzeigt, dass die Datenwiederherstellung fehlgeschlagen ist und Audit-Trail-Informationen möglicherweise verloren gehen. Die Wiederherstellung erfordert das Untersuchen der Integrität der Sicherungsdaten, des Gerätezustands und die Lösung des zugrunde liegenden Problems, bevor versucht wird, die Wiederherstellung erneut durchzuführen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.4 Backup and Restore Operations - restoreLogsFromBackup</section>
+    <requirement>
+      <text xml:lang="en">The function restoreLogsFromBackup SHALL restore transaction log messages from a backup (previously exported log data) into the Secure Element's logging storage. If the restore operation cannot be completed successfully due to incompatible backup data, corrupted backup, device storage issues, insufficient capacity, communication failure, or other device-level error, the function SHALL raise the exception ErrorRestoreFailed. The backup data must be in the correct format and structure for the device and backup period to restore successfully. If the restore fails, the device's log storage remains unchanged - partial restores are not committed to the device.</text>
+      <text xml:lang="de">Die restoreLogsFromBackup-Funktion MUSS Transaktionsprotokollnachrichten aus einer Sicherung (zuvor exportierte Protokolldaten) in den Protokollspeicher des Secure Element wiederherstellen. Wenn die Wiederherstellungsoperation nicht erfolgreich abgeschlossen werden kann aufgrund von inkompatiblen Sicherungsdaten, beschädigter Sicherung, Gerätespeicherproblemen, unzureichender Kapazität, Kommunikationsfehler oder anderen Geräteebenenfehlern, MUSS die Funktion die Ausnahme ErrorRestoreFailed auslösen. Die Sicherungsdaten müssen im richtigen Format und in der richtigen Struktur für das Gerät und den Sicherungszeitraum vorliegen, um erfolgreich wiederhergestellt zu werden. Wenn die Wiederherstellung fehlschlägt, bleibt der Protokollspeicher des Geräts unverändert - teilweise Wiederherstellungen werden nicht auf das Gerät übertragen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Backup restore operations - restoreLogsFromBackup function only</text>
+      <text xml:lang="de">Sicherungswiederherstellungsoperationen - nur restoreLogsFromBackup-Funktion</text>
+    </applicability>
+    <reference>restoreLogsFromBackup – Function (3.3.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>restoreLogsFromBackup</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls restoreLogsFromBackup function with backup data and parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft restoreLogsFromBackup-Funktion mit Sicherungsdaten und Parametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and backup data format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und Sicherungsdatenformat</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks device compatibility with backup data format and version</text>
+      <text xml:lang="de">Funktion prüft die Gerätekompatibilität mit dem Sicherungsdatenformat und der Version</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If backup format incompatible with device → ErrorRestoreFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Sicherungsformat nicht mit Gerät kompatibel → ErrorRestoreFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If backup format compatible → proceed to step 4</text>
+      <text xml:lang="de">Wenn Sicherungsformat kompatibel → Fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function validates backup data integrity (checksums, structure validation)</text>
+      <text xml:lang="de">Funktion validiert die Integrität der Sicherungsdaten (Checksummen, Strukturvalidierung)</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If backup data corrupted or invalid → ErrorRestoreFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Sicherungsdaten beschädigt oder ungültig → ErrorRestoreFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If backup data valid → proceed to step 5</text>
+      <text xml:lang="de">Wenn Sicherungsdaten gültig → Fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks device storage capacity for restore</text>
+      <text xml:lang="de">Funktion prüft die Gerätespeicherkapazität zur Wiederherstellung</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If insufficient storage → ErrorRestoreFailed raised, function exits</text>
+      <text xml:lang="de">Wenn unzureichender Speicher → ErrorRestoreFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If sufficient storage → proceed to step 6</text>
+      <text xml:lang="de">Wenn ausreichender Speicher → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function transmits restore command with backup data to Secure Element</text>
+      <text xml:lang="de">Funktion überträgt Wiederherstellungsbefehl mit Sicherungsdaten an Secure Element</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If communication fails → ErrorRestoreFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Kommunikation schlägt fehl → ErrorRestoreFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If communication succeeds → proceed to step 8</text>
+      <text xml:lang="de">Wenn Kommunikation erfolgreich → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element receives and processes backup data</text>
+      <text xml:lang="de">Secure Element empfängt und verarbeitet Sicherungsdaten</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element validates backup data format and content</text>
+      <text xml:lang="de">Secure Element validiert das Sicherungsdatenformat und den Inhalt</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element writes restored log data to storage</text>
+      <text xml:lang="de">Secure Element schreibt wiederhergestellte Protokolldaten in den Speicher</text>
+    </step>
+    <step number="10a">
+      <text xml:lang="en">If storage write fails → ErrorRestoreFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Speicherschreiben schlägt fehl → ErrorRestoreFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="10b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 11</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich → Fahren Sie mit Schritt 11 fort</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function receives acknowledgment from Secure Element</text>
+      <text xml:lang="de">Funktion empfängt Bestätigung vom Secure Element</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="13">
+      <text xml:lang="en">Function returns successfully with logs restored</text>
+      <text xml:lang="de">Funktion gibt erfolgreich mit wiederhergestellten Protokollen zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify backup source is accessible and valid</text>
+      <text xml:lang="de">Vergewissern Sie sich, dass die Sicherungsquelle zugänglich und gültig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm device storage has sufficient space</text>
+      <text xml:lang="de">Bestätigen Sie, dass der Gerätespeicher ausreichend Platz hat</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check backup data format compatibility</text>
+      <text xml:lang="de">Prüfen Sie die Kompatibilität des Sicherungsdatenformats</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry restoration after confirming prerequisites</text>
+      <text xml:lang="de">Wiederherstellung wiederholen, nachdem Vorbedingungen bestätigt wurden</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorDeleteLogMessagesFailed</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorReadingLogMessage</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Backup Not Restored">
+      <text xml:lang="en">The backup data is not restored into the device. The restore operation fails before any data is committed.</text>
+      <text xml:lang="de">Die Sicherungsdaten werden nicht auf dem Gerät wiederhergestellt. Die Wiederherstellungsoperation schlägt fehl, bevor Daten übertragen werden.</text>
+    </state>
+    <state name="Device Log Storage Unchanged">
+      <text xml:lang="en">The device's log storage remains in its state prior to the restore attempt. No partial restores are committed.</text>
+      <text xml:lang="de">Der Protokollspeicher des Geräts bleibt in seinem Zustand vor dem Wiederherstellungsversuch. Keine teilweisen Wiederherstellungen werden übertragen.</text>
+    </state>
+    <state name="Backup Data Preserved">
+      <text xml:lang="en">The backup data remains unchanged and available for retry or alternative actions.</text>
+      <text xml:lang="de">Die Sicherungsdaten bleiben unverändert und verfügbar für Wiederholung oder alternative Maßnahmen.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged. The failed restore does not affect normal device operation.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt unverändert. Die fehlgeschlagene Wiederherstellung hat keinen Einfluss auf den normalen Gerätebetrieb.</text>
+    </state>
+    <state name="No Data Loss">
+      <text xml:lang="en">No existing log data on the device is lost by the failed restore attempt - the restore is read-only from device perspective.</text>
+      <text xml:lang="de">Keine vorhandenen Protokolldaten auf dem Gerät gehen durch den fehlgeschlagenen Wiederherstellungsversuch verloren - die Wiederherstellung ist aus Geräteperspektive schreibgeschützt.</text>
+    </state>
+    <state name="Retry Possible">
+      <text xml:lang="en">The restore operation can be retried after addressing the underlying cause of the failure.</text>
+      <text xml:lang="de">Die Wiederherstellungsoperation kann wiederholt werden, nachdem die zugrunde liegende Fehlerursache behoben wurde.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Restoration of logs from backup failed - logs could not be restored</text>
+      <text xml:lang="de">Anzeige: Wiederherstellung von Protokollen aus der Sicherung ist fehlgeschlagen - Protokolle konnten nicht wiederhergestellt werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Backup Operations, Log Management, Data Recovery, Restoration</text>
+      <text xml:lang="de">Themen: Sicherungsoperationen, Protokollverwaltung, Datenwiederherstellung, Wiederherstellung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by restoreLogsFromBackup when restoration operation fails</text>
+      <text xml:lang="de">Ausgelöst von restoreLogsFromBackup, wenn die Wiederherstellungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Restore function reconstructs log data from backup source</text>
+      <text xml:lang="de">Wiederherstellungsfunktion rekonstruiert Protokolldaten aus Sicherungsquelle</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device attempts to recover log messages from backup</text>
+      <text xml:lang="de">Gerät versucht, Protokollnachrichten aus der Sicherung wiederherzustellen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Restore failure prevents log recovery</text>
+      <text xml:lang="de">Wiederherstellungsfehler verhindert die Protokollwiederherstellung</text>
+    </note>
+  </implementationContext>
+</exception>
+

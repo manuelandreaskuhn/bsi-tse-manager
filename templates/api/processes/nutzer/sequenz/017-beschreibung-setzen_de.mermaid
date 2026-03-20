@@ -1,0 +1,51 @@
+sequenceDiagram
+    participant Admin as Admin
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    Admin->>TSE: Anmeldung als Admin
+    TSE-->>Admin: Anmeldung erfolgreich
+    
+    Admin->>TSE: setDescription(description)
+    activate TSE
+    
+    Note over TSE: Prüfe: Admin authentifiziert
+    
+    TSE->>TSE: Validiere description:<br/>- Länge <= 64 Zeichen
+    
+    alt Beschreibung zu lang
+        TSE-->>Admin: Exception:<br/>ErrorParameterTooLong
+    else Beschreibung gültig
+        TSE->>Speicher: Speichere Beschreibung
+        activate Speicher
+        
+        alt Speichern fehlgeschlagen
+            Speicher-->>TSE: Fehler
+            TSE->>TSE: Setze Beschreibung zurück<br/>auf vorherigen Zustand
+            TSE-->>Admin: Exception:<br/>ErrorStoringDataFailed
+        else Speichern erfolgreich
+            Speicher-->>TSE: OK
+            deactivate Speicher
+            
+            TSE->>SM: Erstelle setDescription System-Log
+            activate SM
+            SM->>SM: Log-Daten:<br/>- description<br/>- eventTriggeredByUser
+            SM->>SM: signatureCounter++
+            SM->>SM: Erstelle Signatur
+            SM-->>TSE: Log-Nachricht + Signatur
+            deactivate SM
+            
+            TSE->>Speicher: Speichere setDescription Log
+            activate Speicher
+            Speicher-->>TSE: OK
+            deactivate Speicher
+            
+            TSE->>TSE: Aktualisiere info.csv:<br/>description Feld
+            
+            TSE-->>Admin: Beschreibung gesetzt
+        end
+    end
+    deactivate TSE
+    
+    Note over Admin,Speicher: Neue Beschreibung wird<br/>in Exporten sichtbar

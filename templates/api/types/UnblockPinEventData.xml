@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="UnblockPinEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>UnblockPinEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type UnblockPinEventData.</description>
+  <asn1Definition>UnblockPinEventData ::= SEQUENCE {
+  userToUnblock  UserId,
+  unblockResult  UnblockResult
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>userToUnblock</name>
+      <type>UserId</type>
+      <optional>false</optional>
+      <description>Field userToUnblock of type UserId</description>
+    </field>
+    <field>
+      <name>unblockResult</name>
+      <type>UnblockResult</type>
+      <optional>false</optional>
+      <description>Field unblockResult of type UnblockResult</description>
+    </field>
+  </fields>
+</type>

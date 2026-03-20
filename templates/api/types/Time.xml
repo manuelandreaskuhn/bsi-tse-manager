@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<type id="Time" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>Time</name>
+  <category>Time and Date Types</category>
+  <source>BSI TR-03151</source>
+  <baseType>CHOICE</baseType>
+  <description>Represents a point in time. Can be expressed either in UTC (Coordinated Universal Time) or as generalized time.</description>
+  <choices>
+    <choice>
+      <name>utcTime</name>
+      <type>UTCTime</type>
+      <description>Time in UTC format (YYMMDDhhmmssZ)</description>
+    </choice>
+    <choice>
+      <name>generalizedTime</name>
+      <type>GeneralizedTime</type>
+      <description>Time in generalized format (YYYYMMDDhhmmss[.f]Z)</description>
+    </choice>
+  </choices>
+  <asn1Definition>Time ::= CHOICE {
+  utcTime          UTCTime,
+  generalizedTime  GeneralizedTime
+}</asn1Definition>
+  <usage>Used in log messages to represent the point in time when a signature was created (signatureCreationTime).</usage>
+</type>

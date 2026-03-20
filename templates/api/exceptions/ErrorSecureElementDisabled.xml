@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSecureElementDisabled" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSecureElementDisabled</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if SE API functions are invoked which require an active and enabled Secure Element, but the Secure Element has been disabled. A disabled Secure Element cannot execute any SE API operations that require cryptographic operations, authentication, logging, transactions, or other core functionality. The Secure Element is typically disabled through administrative action (disable operation) or due to security policy. ErrorSecureElementDisabled indicates that the requested operation cannot proceed because the device is not in the enabled state required for operation. All state-changing operations and data access operations require an enabled Secure Element.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn SE-API-Funktionen aufgerufen werden, die ein aktives und aktiviertes Secure Element erfordern, aber das Secure Element deaktiviert wurde. Ein deaktiviertes Secure Element kann keine SE-API-Operationen ausführen, die kryptografische Operationen, Authentifizierung, Protokollierung, Transaktionen oder andere Kernfunktionen erfordern. Das Secure Element wird in der Regel durch administrative Maßnahmen (Deaktivierungsoperation) oder aufgrund der Sicherheitsrichtlinie deaktiviert. ErrorSecureElementDisabled zeigt an, dass die angeforderte Operation nicht fortgesetzt werden kann, da sich das Gerät nicht im aktivierten Zustand befindet, der für den Betrieb erforderlich ist. Alle statusverändernden Operationen und Datenzugriffsoperationen erfordern ein aktiviertes Secure Element.</text>
+  </description>
+  <category>Secure Element State</category>
+  <subcategory>Device Disabled</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getCurrentSeTime</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getEndOfUsageDate</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getOpenTransactions</function>
+    <function>getRegisteredClients</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getTimeSyncVariant</function>
+    <function>getTransactionState</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSecureElementDisabled that is thrown if SE API operations are invoked on a disabled Secure Element.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSecureElementDisabled, die ausgelöst wird, wenn SE-API-Operationen auf einem deaktivierten Secure Element aufgerufen werden.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when SE API functions requiring an active Secure Element are called but the device is disabled. A disabled Secure Element cannot perform cryptographic operations, authentication, transaction processing, logging, or device operations. ErrorSecureElementDisabled indicates that the device is not in the operational state required for the requested function. Common reasons for disabled state include: administrative disable operation, security policy enforcement, device deactivation, or lifecycle management. ErrorSecureElementDisabled is a Critical severity exception because it blocks all SE API operations. The device must be re-enabled before operations can resume. Recovery requires administrative intervention or security policy updates. All functions that require an active Secure Element will raise this exception if the device is disabled.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn SE-API-Funktionen aufgerufen werden, die ein aktives Secure Element erfordern, aber das Gerät deaktiviert ist. Ein deaktiviertes Secure Element kann keine kryptografischen Operationen, Authentifizierung, Transaktionsverarbeitung, Protokollierung oder Geräteoperationen ausführen. ErrorSecureElementDisabled zeigt an, dass sich das Gerät nicht im Betriebszustand befindet, der für die angeforderte Funktion erforderlich ist. Häufige Gründe für den deaktivierten Zustand sind: administrative Deaktivierungsoperation, Durchsetzung der Sicherheitsrichtlinie, Gerätedeaktivierung oder Lebenszyklusköverwaltung. ErrorSecureElementDisabled ist eine Ausnahme mit kritischem Schweregrad, da sie alle SE-API-Operationen blockiert. Das Gerät muss erneut aktiviert werden, bevor Operationen fortgesetzt werden können. Die Wiederherstellung erfordert administrative Intervention oder Updates der Sicherheitsrichtlinie. Alle Funktionen, die ein aktives Secure Element erfordern, wirken diese Ausnahme auf, wenn das Gerät deaktiviert ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.1 Secure Element State Management and 3.3 SE API Functions - General Requirements</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element can be in enabled or disabled state. When disabled, the Secure Element cannot execute SE API operations that require active processing. Any SE API function requiring an enabled Secure Element SHALL raise ErrorSecureElementDisabled if invoked on a disabled device. The disabled state is typically set through administrative action or security policy. The device must be explicitly enabled to resume normal operations. All cryptographic operations, authentication, transaction processing, logging, and data operations require an enabled Secure Element.</text>
+      <text xml:lang="de">Das Secure Element kann sich in aktiviertem oder deaktiviertem Zustand befinden. Wenn deaktiviert, kann das Secure Element keine SE-API-Operationen ausführen, die aktive Verarbeitung erfordern. Jede SE-API-Funktion, die ein aktiviertes Secure Element erfordert, MUSS ErrorSecureElementDisabled auslösen, wenn sie auf einem deaktivierten Gerät aufgerufen wird. Der deaktivierte Zustand wird in der Regel durch administrative Maßnahmen oder Sicherheitsrichtlinie festgelegt. Das Gerät muss explizit aktiviert werden, um den normalen Betrieb fortzusetzen. Alle kryptografischen Operationen, Authentifizierung, Transaktionsverarbeitung, Protokollierung und Datenvorgänge erfordern ein aktiviertes Secure Element.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All SE API functions requiring an active Secure Element: authenticateUser, logOut, unblockPin, setDescription, selfTest, updateDevice, updateTime, getCurrentSeTime, configureLogging, exportLogMessages, registerClient, deregisterClient, startTransaction, updateTransaction, finishTransaction, lockTransactionLogging, unlockTransactionLogging</text>
+      <text xml:lang="de">Alle SE-API-Funktionen, die ein aktives Secure Element erfordern: authenticateUser, logOut, unblockPin, setDescription, selfTest, updateDevice, updateTime, getCurrentSeTime, configureLogging, exportLogMessages, registerClient, deregisterClient, startTransaction, updateTransaction, finishTransaction, lockTransactionLogging, unlockTransactionLogging</text>
+    </applicability>
+    <reference>Secure Element State Management (3.2.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function that requires an enabled Secure Element (e.g., authenticateUser)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE-API-Funktion auf, die ein aktiviertes Secure Element erfordert (z. B. authenticateUser)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks Secure Element state (enabled/disabled)</text>
+      <text xml:lang="de">Funktion prüft Secure Element Zustand (aktiviert/deaktiviert)</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If Secure Element is disabled → ErrorSecureElementDisabled raised, function exits immediately</text>
+      <text xml:lang="de">Wenn Secure Element deaktiviert → ErrorSecureElementDisabled ausgelöst, Funktion beendet sofort</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If Secure Element is enabled → proceed to step 4</text>
+      <text xml:lang="de">Wenn Secure Element aktiviert → Fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function sends operation request to Secure Element</text>
+      <text xml:lang="de">Funktion sendet Operationsanfrage an Secure Element</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element receives request and validates its operational state</text>
+      <text xml:lang="de">Secure Element empfängt Anfrage und validiert seinen Betriebszustand</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element executes requested operation</text>
+      <text xml:lang="de">Secure Element führt die angeforderte Operation aus</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an Funktion zurück</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function processes result and returns to caller</text>
+      <text xml:lang="de">Funktion verarbeitet Ergebnis und kehrt zum Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Enable Secure Element for operations requiring cryptography</text>
+      <text xml:lang="de">Aktivieren Sie das Secure Element für Operationen, die Kryptografie erfordern</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify SE status and connectivity</text>
+      <text xml:lang="de">Vergewissern Sie sich, dass der SE-Status und die Konnektivität</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry operation after enabling SE</text>
+      <text xml:lang="de">Wiederholen Sie die Operation nach Aktivierung von SE</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device support if SE cannot be enabled</text>
+      <text xml:lang="de">Kontaktieren Sie den Geräte-Support, wenn SE nicht aktiviert werden kann</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorSecureElementNotInitialized</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorClientNotRegistered</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Operation Not Executed">
+      <text xml:lang="en">The requested SE API operation is not executed because the Secure Element cannot operate while disabled.</text>
+      <text xml:lang="de">Die angeforderte SE-API-Operation wird nicht ausgeführt, da das Secure Element im deaktivierten Zustand nicht betrieben werden kann.</text>
+    </state>
+    <state name="Device State Unchanged">
+      <text xml:lang="en">The device's state remains unchanged - disabled state persists.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt unverändert - deaktivierter Zustand bleibt bestehen.</text>
+    </state>
+    <state name="No Data Modified">
+      <text xml:lang="en">No transaction data, log messages, or device configuration is modified by the failed operation.</text>
+      <text xml:lang="de">Keine Transaktionsdaten, Protokollnachrichten oder Gerätekonfiguration werden durch die fehlgeschlagene Operation geändert.</text>
+    </state>
+    <state name="Caller Receives Exception">
+      <text xml:lang="en">The caller receives ErrorSecureElementDisabled exception instead of normal operation result.</text>
+      <text xml:lang="de">Der Aufrufer empfängt die Ausnahme ErrorSecureElementDisabled anstelle des normalen Operationsergebnisses.</text>
+    </state>
+    <state name="Device Remains Disabled">
+      <text xml:lang="en">The device remains in disabled state - the operation failure does not automatically re-enable it.</text>
+      <text xml:lang="de">Das Gerät bleibt im deaktivierten Zustand - der Operationsfehler aktiviert es nicht automatisch erneut.</text>
+    </state>
+    <state name="Manual Intervention Required">
+      <text xml:lang="en">Re-enabling the device requires administrative action or management interface interaction.</text>
+      <text xml:lang="de">Das erneute Aktivieren des Geräts erfordert administrative Maßnahmen oder Verwaltungsschnittstellen-Interaktion.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: The Secure Element is disabled and cannot perform required operations</text>
+      <text xml:lang="de">Anzeige: Das Secure Element ist deaktiviert und kann erforderliche Operationen nicht ausführen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Secure Element Management, Device State, SE Operations, Device Status</text>
+      <text xml:lang="de">Themen: Secure Element Verwaltung, Gerätezustand, SE-Operationen, Gerätestatus</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when Secure Element is not operational</text>
+      <text xml:lang="de">Ausgelöst durch Funktionen, wenn Secure Element nicht betriebsbereit ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device state indicates SE disabled or not available</text>
+      <text xml:lang="de">Gerätezustand zeigt an, dass SE deaktiviert oder nicht verfügbar ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Functions requiring SE cryptography cannot execute</text>
+      <text xml:lang="de">Funktionen, die SE-Kryptografie erfordern, können nicht ausgeführt werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">SE must be enabled for operation execution</text>
+      <text xml:lang="de">SE muss zur Operationsausführung aktiviert werden</text>
+    </note>
+  </implementationContext>
+</exception>
+

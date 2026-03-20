@@ -1,0 +1,48 @@
+sequenceDiagram
+    participant Nutzer as Steuerpflichtiger/Admin
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    Nutzer->>TSE: Anmeldung als Admin
+    activate TSE
+    TSE->>TSE: authenticateUser("admin", adminPIN)
+    TSE-->>Nutzer: Anmeldung erfolgreich
+    
+    Nutzer->>TSE: initialize()
+    Note over TSE: Prüfe: Admin authentifiziert
+    
+    TSE->>SM: Generiere Schlüsselpaar
+    activate SM
+    SM->>SM: Erzeuge Signaturschlüssel
+    SM-->>TSE: Public Key, Certificate Request
+    deactivate SM
+    
+    TSE->>TSE: Hole Zertifikat von PKI
+    
+    TSE->>SM: Initialisiere Zähler
+    activate SM
+    SM->>SM: transactionCounter = 0
+    SM->>SM: signatureCounter = 0
+    SM-->>TSE: OK
+    deactivate SM
+    
+    TSE->>SM: Erstelle Initialize-Log
+    activate SM
+    SM->>SM: Erstelle System-Log-Nachricht
+    SM->>SM: signatureCounter++
+    SM->>SM: Signiere Log-Nachricht
+    SM-->>TSE: Log-Nachricht + Signatur
+    deactivate SM
+    
+    TSE->>Speicher: Speichere Log-Nachricht
+    activate Speicher
+    Speicher-->>TSE: OK
+    deactivate Speicher
+    
+    TSE->>TSE: Setze Status: INITIALIZED
+    
+    TSE-->>Nutzer: Initialisierung erfolgreich
+    deactivate TSE
+    
+    Note over Nutzer,Speicher: TSE ist nun betriebsbereit

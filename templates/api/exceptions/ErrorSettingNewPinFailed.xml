@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSettingNewPinFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSettingNewPinFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function unblockPin fails to set the new PIN during the unblock operation. The unblockPin function attempts to unblock a blocked or locked PIN by using the PUK (PIN Unblock Key) and setting a new PIN value. If the new PIN setting operation fails after successful PUK authentication, ErrorSettingNewPinFailed indicates the PIN change could not be completed. Common causes include: device storage errors, invalid PIN format, PIN policy violations, device internal errors, or communication failures. ErrorSettingNewPinFailed indicates the unblock operation is incomplete - the old PIN remains blocked and the new PIN was not set.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion unblockPin die neue PIN-Einstellung während des Entsperrvorgangs nicht festlegen kann. Die unblockPin-Funktion versucht, eine blockierte oder gesperrte PIN durch Verwendung des PUK (PIN Unblock Key) und Festlegung eines neuen PIN-Wertes freizuschalten. Wenn der Vorgang zur neuen PIN-Einstellung nach erfolgreicher PUK-Authentifizierung fehlschlägt, zeigt ErrorSettingNewPinFailed an, dass die PIN-Änderung nicht abgeschlossen werden konnte. Häufige Ursachen sind: Gerätespeicherfehler, ungültige PIN-Format, PIN-Richtlinienverletzungen, Geräteinterne Fehler oder Kommunikationsfehler. ErrorSettingNewPinFailed zeigt an, dass der Entsperrvorgang unvollständig ist - die alte PIN bleibt blockiert und die neue PIN wurde nicht eingestellt.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PIN Management - PIN Setting Failure</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSettingNewPinFailed that is thrown if new PIN setting fails during unblock.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSettingNewPinFailed, die ausgelöst wird, wenn die neue PIN-Einstellung während des Entsperrens fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the unblockPin function attempts to set a new PIN value during the PIN unblock operation but encounters a failure. The unblockPin function first validates the PUK (PIN Unblock Key) and then attempts to set the new PIN to replace the blocked PIN. ErrorSettingNewPinFailed indicates that the new PIN setting step has failed, leaving the PIN in a blocked state. Common causes include: device storage errors, invalid new PIN format, PIN policy violations (minimum length, character requirements), device internal errors, or communication failures. ErrorSettingNewPinFailed is a High severity exception because it prevents PIN recovery and blocks user authentication. The user remains unable to authenticate with the blocked PIN. Recovery requires investigating the specific failure reason and retrying the unblock operation with a valid PIN.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die unblockPin-Funktion versucht, einen neuen PIN-Wert während des PIN-Entsperrvorgangs einzustellen, aber auf einen Fehler stößt. Die unblockPin-Funktion validiert zuerst den PUK (PIN Unblock Key) und versucht dann, die neue PIN einzustellen, um die blockierte PIN zu ersetzen. ErrorSettingNewPinFailed zeigt an, dass der Schritt zur neuen PIN-Einstellung fehlgeschlagen ist und die PIN in einem blockierten Zustand verbleibt. Häufige Ursachen sind: Gerätespeicherfehler, ungültiges neues PIN-Format, PIN-Richtlinienverletzungen (Mindestlänge, Zeichenanforderungen), Geräteinterne Fehler oder Kommunikationsfehler. ErrorSettingNewPinFailed ist eine Ausnahme mit hohem Schweregrad, da sie die PIN-Wiederherstellung verhindert und die Benutzerauthentifizierung blockiert. Der Benutzer kann sich weiterhin nicht mit der blockierten PIN authentifizieren. Die Wiederherstellung erfordert Untersuchung des spezifischen Fehlergrundes und erneuter Versuch des Entsperrvorgangs mit einer gültigen PIN.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1 Authentication Operations - unblockPin</section>
+    <requirement>
+      <text xml:lang="en">The function unblockPin SHALL unblock a blocked PIN by authenticating with the PUK (PIN Unblock Key) and setting a new PIN value. The operation proceeds in two steps: (1) PUK authentication validation, (2) New PIN setting. If the new PIN setting operation fails after successful PUK authentication, the function SHALL raise ErrorSettingNewPinFailed. The new PIN must meet security policy requirements including minimum length and character restrictions. If the new PIN does not meet requirements or the device fails to store the new PIN, ErrorSettingNewPinFailed is raised. The original blocked PIN remains blocked if the new PIN setting fails.</text>
+      <text xml:lang="de">Die Funktion unblockPin MUSS eine blockierte PIN freischalten, indem sie sich mit dem PUK (PIN Unblock Key) authentifiziert und einen neuen PIN-Wert einstellt. Der Vorgang verläuft in zwei Schritten: (1) PUK-Authentifizierungsvalidierung, (2) Neue PIN-Einstellung. Wenn der Vorgang zur neuen PIN-Einstellung nach erfolgreicher PUK-Authentifizierung fehlschlägt, MUSS die Funktion ErrorSettingNewPinFailed auslösen. Die neue PIN muss den Anforderungen der Sicherheitsrichtlinie entsprechen, einschließlich Mindestlänge und Zeichenbeschränkungen. Wenn die neue PIN die Anforderungen nicht erfüllt oder das Gerät die neue PIN nicht speichern kann, wird ErrorSettingNewPinFailed ausgelöst. Die ursprüngliche blockierte PIN bleibt blockiert, wenn die neue PIN-Einstellung fehlschlägt.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">PIN unblock operations - unblockPin function only</text>
+      <text xml:lang="de">PIN-Entsperrvorgänge - nur unblockPin-Funktion</text>
+    </applicability>
+    <reference>unblockPin – Function (3.3.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>unblockPin</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls unblockPin function with PUK and new PIN parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft unblockPin-Funktion mit PUK- und neuen PIN-Parametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters (PUK and new PIN)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter (PUK und neue PIN)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks new PIN against security policy</text>
+      <text xml:lang="de">Funktion prüft neue PIN gegen Sicherheitsrichtlinie</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If new PIN violates policy → ErrorSettingNewPinFailed raised, function exits</text>
+      <text xml:lang="de">Wenn neue PIN Richtlinie verletzt → ErrorSettingNewPinFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If new PIN meets policy requirements → proceed to step 4</text>
+      <text xml:lang="de">Wenn neue PIN Richtlinienanforderungen erfüllt → Fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function sends unblock request with PUK and new PIN to Secure Element</text>
+      <text xml:lang="de">Funktion sendet Entsperrungsanfrage mit PUK und neuer PIN an Secure Element</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element receives unblock request</text>
+      <text xml:lang="de">Secure Element empfängt Entsperrungsanfrage</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element authenticates using PUK</text>
+      <text xml:lang="de">Secure Element authentifiziert sich mit PUK</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If PUK authentication fails → ErrorUnblockingPinFailed raised</text>
+      <text xml:lang="de">Wenn PUK-Authentifizierung fehlschlägt → ErrorUnblockingPinFailed ausgelöst</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If PUK authentication succeeds → proceed to step 8</text>
+      <text xml:lang="de">Wenn PUK-Authentifizierung erfolgreich → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element validates new PIN format</text>
+      <text xml:lang="de">Secure Element validiert neues PIN-Format</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If new PIN invalid → ErrorSettingNewPinFailed raised, function exits</text>
+      <text xml:lang="de">Wenn neue PIN ungültig → ErrorSettingNewPinFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If new PIN valid → proceed to step 9</text>
+      <text xml:lang="de">Wenn neue PIN gültig → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element writes new PIN to secure storage</text>
+      <text xml:lang="de">Secure Element schreibt neue PIN in sicheren Speicher</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If storage write fails → ErrorSettingNewPinFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Speicherschreib fehlschlägt → ErrorSettingNewPinFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 10</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich → Fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element confirms new PIN is now active (old PIN no longer blocked)</text>
+      <text xml:lang="de">Secure Element bestätigt, dass neue PIN nun aktiv ist (alte PIN nicht mehr blockiert)</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns success acknowledgment to function</text>
+      <text xml:lang="de">Secure Element gibt Bestätigung des Erfolgs an Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="13">
+      <text xml:lang="en">Function returns successfully - PIN unblocked with new PIN set</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück - PIN freigegeben mit neuer PIN eingestellt</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify new PIN meets format requirements</text>
+      <text xml:lang="de">Vergewissern Sie sich, dass die neue PIN die Formatanforderungen erfüllt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass Secure Element betriebsbereit ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry PIN setting after confirming preconditions</text>
+      <text xml:lang="de">Versuchen Sie die PIN-Einstellung erneut, nachdem Sie die Vorbedingungen bestätigt haben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device support if setting unavailable</text>
+      <text xml:lang="de">Kontaktieren Sie den Geräte-Support, wenn die Einstellung nicht verfügbar ist</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorUnblockingPinFailed</exception>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorPukTemporarilyBlocked</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterTooLong</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="New PIN Not Set">
+      <text xml:lang="en">The new PIN is not set on the device. The new PIN setting operation fails before completion.</text>
+      <text xml:lang="de">Die neue PIN wird auf dem Gerät nicht eingestellt. Der Vorgang zur neuen PIN-Einstellung schlägt vor Abschluss fehl.</text>
+    </state>
+    <state name="Original PIN Remains Blocked">
+      <text xml:lang="en">The original blocked PIN remains in blocked state. The PIN is not unblocked.</text>
+      <text xml:lang="de">Die ursprüngliche blockierte PIN bleibt im blockierten Zustand. Die PIN wird nicht freigegeben.</text>
+    </state>
+    <state name="Device Storage Unchanged">
+      <text xml:lang="en">The device's PIN storage is not modified by the failed new PIN setting attempt.</text>
+      <text xml:lang="de">Der PIN-Speicher des Geräts wird durch den fehlgeschlagenen Versuch zur neuen PIN-Einstellung nicht geändert.</text>
+    </state>
+    <state name="Authentication Still Blocked">
+      <text xml:lang="en">User authentication remains blocked with the original blocked PIN.</text>
+      <text xml:lang="de">Die Benutzerauthentifizierung bleibt mit der ursprünglichen blockierten PIN blockiert.</text>
+    </state>
+    <state name="PUK May Be Consumed">
+      <text xml:lang="en">The PUK may have been consumed during the failed unblock attempt, depending on device behavior.</text>
+      <text xml:lang="de">Der PUK kann während des fehlgeschlagenen Entsperrversuchs verbraucht worden sein, je nach Geräteverhalten.</text>
+    </state>
+    <state name="Retry Possible">
+      <text xml:lang="en">The unblock operation can be retried after addressing the PIN format or policy issue.</text>
+      <text xml:lang="de">Der Entsperrvorgang kann wiederholt werden, nachdem das PIN-Format oder -Richtlinienproblem behoben wurde.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Setting of new PIN failed - PIN could not be updated</text>
+      <text xml:lang="de">Anzeige: Einstellung der neuen PIN fehlgeschlagen - PIN konnte nicht aktualisiert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: PIN Management, Authentication, Password Management, User Management</text>
+      <text xml:lang="de">Themen: PIN-Verwaltung, Authentifizierung, Passwortverwaltung, Benutzerverwaltung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by unblockPin when new PIN assignment fails</text>
+      <text xml:lang="de">Ausgelöst durch unblockPin, wenn die Zuweisung der neuen PIN fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">PIN update operation stores new PIN in SE</text>
+      <text xml:lang="de">PIN-Aktualisierungsvorgang speichert neue PIN in SE</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device sets new PIN value during unblocking</text>
+      <text xml:lang="de">Gerät legt neuen PIN-Wert während des Entsperrens fest</text>
+    </note>
+    <note>
+      <text xml:lang="en">Setting failure prevents PIN update</text>
+      <text xml:lang="de">Einstellungsfehler verhindert PIN-Aktualisierung</text>
+    </note>
+  </implementationContext>
+</exception>
+

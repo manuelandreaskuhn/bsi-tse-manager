@@ -1,0 +1,341 @@
+{
+  "testcase_id": "TC-II-DLM-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "deleteLogMessages: Nur nach vollständigem Export, Fehlerfälle",
+  "description": "Prüft, dass deleteLogMessages nur nach vollständigem Export löscht, und bei nicht-exportierten Daten korrekt fehlschlägt.",
+  "purpose": "Prüfung, ob nach dem Aufruf der Funktionalität zum Löschen der Log-Nachrichten alle Daten im Speichermedium gelöscht werden, \nwenn alle Daten im Speichermedium bereits exportiert wurden. \nZusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_DLM",
+  "function": "deleteLogMessages",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_DELETELOGS"
+  ],
+  "source_tests": [
+    "II_DLM_01",
+    "II_DLM_02",
+    "II_DLM_03",
+    "II_DLM_04"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind jeweils mehrere Transaktions-, S",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert. Alle gespeicherten Log-Nachrichten wurden bereits exportiert."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind jeweils mehrere Transaktions-, S",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert."
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "deleteLogMessages aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Löschen der Log-Nachrichten.",
+      "function": "deleteLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_DLM_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_DLM_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "deleteLogMessages aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Löschen der Log-Nachrichten. Es wird ein Fehler provoziert, der bewirkt, dass die Funktionalität zum Löschen der Log-Nachrichten die zu löschenden Log-Nachrichten nicht löschen kann.",
+      "function": "deleteLogMessages",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorDeleteLogMessagesFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_DLM_01"
+    },
+    {
+      "step": 10,
+      "type": "VERIFY",
+      "title": "Alle Daten exportieren, dann löschen",
+      "result": null,
+      "instruction": "Alle Daten exportieren, dann löschen\n\nAufruf der Funktionalität zum Löschen der Log-Nachrichten.",
+      "function": "exportLogMessages → deleteLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Löschen nach vollständigem Export erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für deleteLogMessages erstellt",
+          "expected": "DLM_LOG_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventType = deleteLogMessages im Log",
+          "expected": "DLM_LOG_EVTYPE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData ist leere ASN.1-Sequenz",
+          "expected": "DLM_LOG_EVDATA_EMPTY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TAR nach Löschen enthält keine Transaktions-Logs mehr",
+          "expected": "DEL_TAR_NO_LOGS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "DLM_LOG_PRESENT",
+          "title": "deleteLogMessages-Log vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DLM_LOG_EVTYPE",
+          "title": "eventType = deleteLogMessages",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DLM_LOG_EVORIGIN",
+          "title": "eventOrigin = integration-interface",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DLM_LOG_EVDATA_EMPTY",
+          "title": "eventData ist leere Sequence",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DLM_LOG_MINIMAL",
+          "title": "Minimaler TAR-Inhalt nach Löschvorgang",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DEL_TAR_NO_LOGS",
+          "title": "Keine Log-Nachrichten nach dem Löschen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "DEL_TAR_STRUCT",
+          "title": "Minimale TAR-Struktur nach dem Löschen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_DLM_01"
+    },
+    {
+      "step": 11,
+      "type": "NEGATIVE",
+      "title": "Löschen bei nicht-exportierten Daten ablehnen",
+      "result": null,
+      "instruction": "Löschen bei nicht-exportierten Daten ablehnen [NT]\n\nAufruf der Funktionalität zum Löschen der Log-Nachrichten.",
+      "function": "deleteLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorUnexportedLogMessages zurückgegeben",
+          "expected": "errorCode = ErrorUnexportedLogMessages",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Daten gelöscht",
+          "expected": "Daten noch vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_DLM_01"
+    },
+    {
+      "step": 12,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle",
+      "result": null,
+      "instruction": "Fehlerfälle [NT].",
+      "checks": [
+        {
+          "description": "Verbindungsunterbrechung zum Speichermedium: ErrorDeleteLogMessagesFailed",
+          "expected": "errorCode = ErrorDeleteLogMessagesFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Technischer Löschfehler: ErrorDeleteLogMessagesFailed",
+          "expected": "errorCode = ErrorDeleteLogMessagesFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

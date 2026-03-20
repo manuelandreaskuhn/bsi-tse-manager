@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant Nutzer as Nutzer
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+
+    Nutzer->>TSE: exportSerialNumbers()
+    activate TSE
+    
+    TSE->>TSE: Prüfe: TSE initialisiert
+    
+    TSE->>SM: Sammle alle Seriennummern
+    activate SM
+    
+    SM->>SM: Für jeden verwendeten Schlüssel:<br/>- Hash über Public Key<br/>- Log-Typ-Zuordnung
+    
+    SM->>SM: Erstelle SerialNumberSet:<br/>- Transaction-Log Key<br/>- System-Log Key<br/>- Audit-Log Key (falls vorhanden)
+    
+    SM-->>TSE: Seriennummern-Liste
+    deactivate SM
+    
+    TSE->>TSE: Kodiere als ASN.1 DER:<br/>SerialNumberSet
+    
+    TSE-->>Nutzer: serialNumbers<br/>(octet array)
+    deactivate TSE
+    
+    Note over Nutzer: Eine Seriennummer ist ein<br/>Hash über den Public Key<br/>des verwendeten Schlüsselpaares
+    
+    Note over Nutzer: Verwendung:<br/>- Identifikation der TSE<br/>- Zuordnung Log-Typen<br/>- Export-Verifikation

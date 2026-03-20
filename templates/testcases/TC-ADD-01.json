@@ -1,0 +1,166 @@
+{
+  "testcase_id": "TC-ADD-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Herstellerspezifische Funktionalitäten: Dokumentation, Unterscheidbarkeit, Abwandlungen und BSI-Abstimmung",
+  "description": "Prüft herstellerspezifische Zusatzfunktionen auf vollständige Dokumentation, Unterscheidbarkeit von Standardfunktionen, Methoden-Konformität und BSI-Freigabe.",
+  "purpose": "Prüfung, ob der Hersteller eine detaillierte Beschreibung der zusätzlichen Funktionalitäten der Einbindungsschnittstelle bereitstellt.",
+  "module": "Integration Interface",
+  "submodule": "ADD",
+  "function": "herstellerspezifische Funktionen",
+  "test_type": "FP",
+  "priority": "conditional",
+  "profiles": [
+    "ADDITIONAL_FUNCTIONALITIES"
+  ],
+  "source_tests": [
+    "ADD_DOC_01",
+    "ADD_DOC_02",
+    "ADD_DOC_03",
+    "ADD_DIF_01",
+    "ADD_ABW_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Für zusätzliche Funktionalitäten der Einbindungsschnittstell",
+      "result": null,
+      "instruction": "Für zusätzliche Funktionalitäten der Einbindungsschnittstelle stellt der Hersteller eine hinreichende Dokumentation zur Verfügung."
+    },
+    {
+      "step": 2,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Prüfung, ob der Hersteller eine detaillierte Beschreibung der zusätzlichen Funktionalitäten der Einbindungsschnittstelle bereitgestellt hat.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Für zusätzliche Funktionalitäten der Einbindungsschnittstelle hat der Hersteller eine hinreichende Dokumentation zur Verfügung gestellt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "ADD_DOC_01"
+    },
+    {
+      "step": 3,
+      "type": "VERIFY",
+      "title": "Dokumentation der Zusatzfunktionen prüfen (ADD_DOC_01)",
+      "result": null,
+      "instruction": "Dokumentation der Zusatzfunktionen prüfen (ADD_DOC_01)",
+      "checks": [
+        {
+          "description": "Alle herstellerspezifischen Funktionalitäten vollständig dokumentiert",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dokumentation enthält Funktionsbeschreibung, Parameter, Rückgaben, Fehlerfälle",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "Methoden-Konformität und BSI-Abstimmung prüfen (ADD_DOC_02/03)",
+      "result": null,
+      "instruction": "Methoden-Konformität und BSI-Abstimmung prüfen (ADD_DOC_02/03)",
+      "checks": [
+        {
+          "description": "ADD_DOC_02: Zusatzfunktionen entsprechen Methoden, Abläufen und Sicherheitsvorgaben der TRs/Schutzprofile",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ADD_DOC_03: Zusatzfunktionen mit zuständigem BSI-Referat abgestimmt und freigegeben",
+          "expected": "Freigabe dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "type": "VERIFY",
+      "title": "Unterscheidbarkeit von Standardfunktionen prüfen (ADD_DIF_01)",
+      "result": null,
+      "instruction": "Unterscheidbarkeit von Standardfunktionen prüfen (ADD_DIF_01)",
+      "checks": [
+        {
+          "description": "Herstellerspezifische Funktionen klar erkennbar von BSI TR-03153-1 Standardfunktionen unterscheidbar",
+          "expected": "Klar unterscheidbar",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "Abwandlungen von Standardfunktionen prüfen (ADD_ABW_01)",
+      "result": null,
+      "instruction": "Abwandlungen von Standardfunktionen prüfen (ADD_ABW_01)",
+      "function": "Abgewandelte Funktionen aufrufen und Verhalten prüfen",
+      "checks": [
+        {
+          "description": "Abwandlungen vollständig dokumentiert",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Verhalten der Abwandlungen konform mit Dokumentation und BSI-Abstimmung",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6"
+  ]
+}

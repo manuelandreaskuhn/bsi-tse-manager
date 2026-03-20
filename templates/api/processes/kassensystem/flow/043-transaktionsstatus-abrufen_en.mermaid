@@ -1,0 +1,16 @@
+flowchart TD
+    Start([User: getTransactionState<br/>transactionNumber])
+    Start --> CheckExists{Transaction<br/>exists?}
+    CheckExists -->|No| ErrorNotFound[Exception: ErrorTransactionNotFound]
+    CheckExists -->|Yes| GetState[Determine transaction status]
+    GetState --> WhichState{Status?}
+    WhichState -->|started| ReturnStarted[Return: started]
+    WhichState -->|updated| ReturnUpdated[Return: updated]
+    WhichState -->|finished| ReturnFinished[Return: finished]
+    WhichState -->|abandoned| ReturnAbandoned[Return: abandoned]
+    ReturnStarted --> End([End])
+    ReturnUpdated --> End
+    ReturnFinished --> End
+    ReturnAbandoned --> End
+    ErrorNotFound --> End
+    style GetState fill:#87CEEB

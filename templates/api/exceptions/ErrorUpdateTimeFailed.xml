@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUpdateTimeFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUpdateTimeFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the execution of the Secure Element functionality for setting or synchronizing the device time fails. The updateTime function synchronizes device time with provided time data using the specified variant method. Time synchronization is essential for transaction timestamps, audit trails, and security operations. ErrorUpdateTimeFailed is raised when the Secure Element's time update functionality encounters failures during execution, which may occur due to invalid time data, hardware errors, device state issues, verification failures, or other operational problems. ErrorUpdateTimeFailed is a High severity exception because proper time management is critical to device security and transaction integrity.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Ausführung der Secure Element-Funktionalität zum Festlegen oder Synchronisieren der Gerätezeit fehlschlägt. Die Funktion updateTime synchronisiert die Gerätezeit mit bereitgestellten Zeitdaten unter Verwendung der angegebenen Variantenmethode. Die Zeitsynchronisierung ist unerlaulich für Transaktionszeitstem pel, Audit-Trails und Sicherheitsvorgänge. ErrorUpdateTimeFailed wird ausgelöst, wenn die Secure Element-Zeitaktualisierungsfunktionalität während der Ausführung Fehler aufweist, die durch ungültige Zeitdaten, Hardwarefehler, Gerätestatusfragen, Verifikationsfehlschlag oder andere Betriebsprobleme verursacht werden können. ErrorUpdateTimeFailed ist eine Ausnahme mit hohem Schweregrad, da eine ordnungsgemäße Zeitverwaltung für die Gerätesicherheit und Transaktionsintegrität kritisch ist.</text>
+  </description>
+  <category>Time Management</category>
+  <subcategory>Time Update Failure</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUpdateTimeFailed that is thrown if the Secure Element time update functionality fails during execution.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUpdateTimeFailed, die ausgelöst wird, wenn die Secure Element-Zeitaktualisierungsfunktionalität während der Ausführung fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the updateTime function fails to successfully update device time in the Secure Element. Time synchronization is essential for transaction timestamps, audit trails, and cryptographic operations. The updateTime function sets device time using provided data and the specified variant method. If the Secure Element time update functionality encounters errors during execution, verification fails, hardware issues prevent completion, or device state issues block the operation, ErrorUpdateTimeFailed is raised. This indicates the time update could not be successfully completed in the Secure Element. Device time may remain unchanged or in inconsistent state. ErrorUpdateTimeFailed is a High severity exception because time accuracy is critical to security. Recovery requires investigating the failure cause and retrying time synchronization.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion updateTime die Gerätezeit im Secure Element nicht erfolgreich aktualisieren kann. Die Zeitsynchronisierung ist unerlaulich für Transaktionszeitstempel, Audit-Trail-Integrität und kryptographische Vorgänge. Die Funktion updateTime legt die Gerätezeit mit bereitgestellten Daten und der angegebenen Variantenmethode fest. Wenn die Secure Element-Zeitaktualisierungsfunktionalität während der Ausführung Fehler aufweist, die Verifizierung fehlschlägt, Hardwareprobleme den Abschluss verhindern oder Gerätestatusfragen den Vorgang blockieren, wird ErrorUpdateTimeFailed ausgelöst. Dies zeigt an, dass die Zeitaktualisierung im Secure Element nicht erfolgreich abgeschlossen werden konnte. Die Gerätezeit kann unverändert oder in einem inkonsistenten Zustand bleiben. ErrorUpdateTimeFailed ist eine Ausnahme mit hohem Schweregrad, da die Zeitgenauigkeit für die Sicherheit kritisch ist. Die Wiederherstellung erfordert Untersuchung der Fehlerursache und Wiederholung der Zeitsynchronisierung.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.6.2 Time Management - Time Synchronization Operations</section>
+    <requirement>
+      <text xml:lang="en">The updateTime function synchronizes device time by sending time data to the Secure Element using the specified variant method. The Secure Element's time update functionality receives the time data, validates format and range, and updates device clock. Time synchronization is essential for transaction timestamps, audit trail integrity, and security operations. If the Secure Element time update functionality encounters failures during execution (validation errors, hardware issues, device state incompatibility, verification failures), the Secure Element SHALL raise ErrorUpdateTimeFailed. This indicates time update could not be successfully completed. Device time may remain unchanged or inconsistent. ErrorUpdateTimeFailed is a High severity exception because time accuracy is critical to security and transaction integrity. Recovery requires investigating the failure and retrying time synchronization.</text>
+      <text xml:lang="de">Die Funktion updateTime synchronisiert die Gerätezeit, indem sie Zeitdaten unter Verwendung der angegebenen Variantenmethode an das Secure Element sendet. Die Secure Element-Zeitaktualisierungsfunktionalität empfängt die Zeitdaten, validiert Format und Bereich und aktualisiert die Geräteuhr. Die Zeitsynchronisierung ist unerlaulich für Transaktionszeitstempel, Audit-Trail-Integrität und Sicherheitsvorgänge. Wenn die Secure Element-Zeitaktualisierungsfunktionalität während der Ausführung Ausfallfälle aufweist (Validierungsfehler, Hardwareprobleme, Gerätestatusinkompatibilität, Verifikationsfehlschlag), MUSS das Secure Element ErrorUpdateTimeFailed auslösen. Dies zeigt an, dass die Zeitaktualisierung nicht erfolgreich abgeschlossen werden konnte. Die Gerätezeit kann unverändert oder inkonsistent bleiben. ErrorUpdateTimeFailed ist eine Ausnahme mit hohem Schweregrad, da die Zeitgenauigkeit für die Sicherheit und Transaktionsintegrität kritisch ist. Die Wiederherstellung erfordert Untersuchung des Fehlers und Wiederholung der Zeitsynchronisierung.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time synchronization operations: updateTime</text>
+      <text xml:lang="de">Zeitsynchronisierungsvorgänge: updateTime</text>
+    </applicability>
+    <reference>Time Management (3.6.2), Time Synchronization (3.6.2), updateTime – Function (3.6.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>updateTime</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls updateTime function with time data and variant parameter</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion updateTime mit Zeitdaten und Variantenparameter auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including time data format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich des Zeitdatenformats</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If parameters invalid → may raise ErrorParameterSyntax or ErrorParameterMismatch</text>
+      <text xml:lang="de">Wenn Parameter ungültig → kann ErrorParameterSyntax oder ErrorParameterMismatch auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If parameters valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Parameter gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function validates variant is supported</text>
+      <text xml:lang="de">Funktion validiert, dass die Variante unterstützt wird</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If variant unsupported → may raise ErrorUnsupportedTimeSyncVariant</text>
+      <text xml:lang="de">Wenn Variante nicht unterstützt → kann ErrorUnsupportedTimeSyncVariant auslösen</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If variant supported → proceed to step 4</text>
+      <text xml:lang="de">Wenn Variante unterstützt → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element receives time update request</text>
+      <text xml:lang="de">Secure Element empfängt Zeitaktualisierungsanforderung</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element validates time data format and range</text>
+      <text xml:lang="de">Secure Element validiert Zeitdatenformat und -bereich</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If time data invalid → ErrorUpdateTimeFailed raised, operation aborted</text>
+      <text xml:lang="de">Wenn Zeitdaten ungültig → ErrorUpdateTimeFailed ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If time data valid → proceed to step 7</text>
+      <text xml:lang="de">Wenn Zeitdaten gültig → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element validates device state is compatible</text>
+      <text xml:lang="de">Secure Element validiert, dass der Gerätestatus kompatibel ist</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If device state incompatible → ErrorUpdateTimeFailed raised</text>
+      <text xml:lang="de">Wenn Gerätestatus nicht kompatibel → ErrorUpdateTimeFailed ausgelöst</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If state compatible → proceed to step 8</text>
+      <text xml:lang="de">Wenn Status kompatibel → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element updates device clock with provided time</text>
+      <text xml:lang="de">Secure Element aktualisiert die Geräteuhr mit bereitgestellter Zeit</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If hardware error during update → ErrorUpdateTimeFailed raised</text>
+      <text xml:lang="de">Wenn Hardwarefehler während der Aktualisierung → ErrorUpdateTimeFailed ausgelöst</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If update proceeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Aktualisierung fortfährt → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element verifies time update completion</text>
+      <text xml:lang="de">Secure Element verifiziert den Abschluss der Zeitaktualisierung</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If verification fails → ErrorUpdateTimeFailed raised</text>
+      <text xml:lang="de">Wenn Verifizierung fehlschlägt → ErrorUpdateTimeFailed ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If verification succeeds → proceed to step 10</text>
+      <text xml:lang="de">Wenn Verifizierung erfolgreich → fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element logs time update event for audit trail</text>
+      <text xml:lang="de">Secure Element protokolliert Zeitaktualisierungsereignis für Audit-Protokoll</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns to caller indicating time successfully updated</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück und zeigt an, dass die Zeit erfolgreich aktualisiert wurde</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device time update is supported</text>
+      <text xml:lang="de">Stellen Sie sicher, dass die Geräteaktualisierung unterstützt wird</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm time value format is correct</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Zeitwertformat korrekt ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry time synchronization after confirming prerequisites</text>
+      <text xml:lang="de">Versuchen Sie die Zeitsynchronisierung nach Bestätigung der Vorbedingungen erneut</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check Secure Element time update capability</text>
+      <text xml:lang="de">Prüfen Sie die Secure Element-Zeitaktualisierungsfunktion</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorTimeNotSet</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorUnsupportedTimeSyncVariant</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Time Update Not Completed">
+      <text xml:lang="en">Time update operation does not complete successfully.</text>
+      <text xml:lang="de">Die Zeitaktualisierungsoperation wird nicht erfolgreich abgeschlossen.</text>
+    </state>
+    <state name="Device Time Unchanged">
+      <text xml:lang="en">Device time is not updated - remains at previous value.</text>
+      <text xml:lang="de">Die Gerätezeit wird nicht aktualisiert - bleibt beim vorherigen Wert.</text>
+    </state>
+    <state name="Device Time May Be Inconsistent">
+      <text xml:lang="en">Device time state may be undefined after failed update.</text>
+      <text xml:lang="de">Der Gerätezeitzustand kann nach fehlgeschlagener Aktualisierung nicht definiert sein.</text>
+    </state>
+    <state name="Secure Element Time Not Synchronized">
+      <text xml:lang="en">Secure Element time remains unsynchronized.</text>
+      <text xml:lang="de">Die Secure Element-Zeit bleibt nicht synchronisiert.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUpdateTimeFailed High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorUpdateTimeFailed an den Aufrufer zurück.</text>
+    </state>
+    <state name="Transaction Timestamps Unreliable">
+      <text xml:lang="en">Transaction timestamps may be inaccurate until time is properly synchronized.</text>
+      <text xml:lang="de">Die Transaktionszeitstempel können ungenau sein, bis die Zeit ordnungsgemäß synchronisiert ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Update of device time failed - time could not be synchronized</text>
+      <text xml:lang="de">Anzeichen: Aktualisierung der Gerätezeit fehlgeschlagen - Zeit konnte nicht synchronisiert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Time Synchronization, Time Operations, System Configuration</text>
+      <text xml:lang="de">Themen: Zeitverwaltung, Zeitsynchronisierung, Zeitvorgänge, Systemkonfiguration</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by updateTime when time synchronization fails</text>
+      <text xml:lang="de">Wird von updateTime ausgelöst, wenn die Zeitsynchronisierung fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Time function synchronizes device time to provided value</text>
+      <text xml:lang="de">Die Zeitfunktion synchronisiert die Gerätezeit mit dem bereitgestellten Wert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device updates internal time via Secure Element</text>
+      <text xml:lang="de">Das Gerät aktualisiert die interne Zeit über Secure Element</text>
+    </note>
+    <note>
+      <text xml:lang="en">Update failure prevents time synchronization</text>
+      <text xml:lang="de">Aktualisierungsfehlschlag verhindert Zeitsynchronisierung</text>
+    </note>
+  </implementationContext>
+</exception>
+

@@ -1,0 +1,8 @@
+flowchart TD
+    Start([User: getCurrentNumberOfTransactions])
+    Start --> Get[Determine number<br/>of open transactions]
+    Get --> Return[Return: currentNumberTransactions]
+    Return --> End([End])
+    style Get fill:#87CEEB
+    Note1[Open transactions:<br/>startTransaction called,<br/>finishTransaction not yet]
+    Get -.-> Note1

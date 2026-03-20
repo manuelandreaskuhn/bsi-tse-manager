@@ -1,0 +1,44 @@
+sequenceDiagram
+    actor Auditor as Auditor/Admin
+    participant TSE as TSE
+    participant Storage as Storage Medium
+    participant Extern as External Backup System
+
+    Note over Auditor,Extern: Regular Export and Delete Cycle
+
+    Auditor->>TSE: exportLogMessages()
+    activate TSE
+    TSE->>Storage: Collect all Log Messages
+    activate Storage
+    Storage-->>TSE: Log Files
+    deactivate Storage
+    TSE->>Storage: Collect Certificates
+    activate Storage
+    Storage-->>TSE: Certificate Files
+    deactivate Storage
+    TSE->>TSE: Create TAR Archive with:<br/>- Logs<br/>- Certificates<br/>- info.csv
+    TSE->>TSE: Mark all Logs as "exported"
+    TSE-->>Auditor: TAR Archive + Filename
+    deactivate TSE
+
+    Auditor->>Extern: Save TAR Archive securely<br/>(Backup, Archive)
+    Extern-->>Auditor: Secured
+
+    Note over Auditor,Extern: Export successful - Logs can be deleted
+
+    Auditor->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Auditor: Authenticated
+
+    Auditor->>TSE: deleteLogMessages()
+    activate TSE
+    TSE->>TSE: Create deleteLogMessages Log
+    TSE->>Storage: Save deleteLogMessages Log
+    TSE->>Storage: Delete all EXPORTED Logs<br/>(except deleteLogMessages Log itself)
+    activate Storage
+    Storage->>Storage: Keep:<br/>- Non-exported Logs<br/>- deleteLogMessages Log<br/>- Optional: Open Transactions
+    Storage-->>TSE: Deleted
+    deactivate Storage
+    TSE-->>Auditor: Storage freed
+    deactivate TSE
+
+    Note over Auditor,Extern: RESULT:<br/>- Data secured externally<br/>- Storage space freed<br/>- Complete documentation

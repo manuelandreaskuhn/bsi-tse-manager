@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>008</processId>
+    <processName>
+        <text xml:lang="en">Log Verification</text>
+        <text xml:lang="de">Log-Verifikation</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Verification of exported log messages by auditors with validation of signatures, certificates, and plausibility checks</text>
+        <text xml:lang="de">Verifikation der exportierten Log-Nachrichten durch Prüfer mit Validierung der Signaturen, Zertifikate und Plausibilitätsprüfungen</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Tax Authority/Auditor</text>
+            <text xml:lang="de">Finanzbehörde/Prüfer</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TAR Archive</text>
+            <text xml:lang="de">TAR-Archiv</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Messages</text>
+            <text xml:lang="de">Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate Chain</text>
+            <text xml:lang="de">Zertifikatskette</text>
+        </object>
+        <object>
+            <text xml:lang="en">info.csv</text>
+            <text xml:lang="de">info.csv</text>
+        </object>
+        <object>
+            <text xml:lang="en">Public Key</text>
+            <text xml:lang="de">Public Key</text>
+        </object>
+        <object>
+            <text xml:lang="en">Audit Report</text>
+            <text xml:lang="de">Prüfbericht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>tarArchive</name>
+            <type>File</type>
+            <description>
+                <text xml:lang="en">TAR archive with exported data</text>
+                <text xml:lang="de">TAR-Archiv mit exportierten Daten</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>verificationReport</name>
+            <type>Document</type>
+            <description>
+                <text xml:lang="en">Audit report with verification results</text>
+                <text xml:lang="de">Prüfbericht mit Ergebnissen der Verifikation</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log</dataObject>
+        <dataObject>System-Log</dataObject>
+        <dataObject>Audit-Log</dataObject>
+        <dataObject>X.509-Certificates</dataObject>
+        <dataObject>CRL (Certificate Revocation List)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>InvalidCertificateChain</exception>
+        <exception>CertificateRevoked</exception>
+        <exception>InvalidSignature</exception>
+        <exception>InconsistentCounters</exception>
+        <exception>InvalidSerialNumber</exception>
+        <exception>ImplausibleTimestamp</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03153-1 Chapter 10.2 (Certificate Verification)</reference>
+        <reference>BSI TR-03153-1 Chapter 10.3 (Log Message Verification)</reference>
+        <reference>BSI TR-03111 (Signature Verification)</reference>
+        <reference>RFC 5280 (X.509 Certificates)</reference>
+        <reference>RFC 4820 (Certificate Chain Validation)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Verification is performed offline by the auditor. Verification values must be checked using the public key from the validated TSE certificate. Serial numbers in log messages must correspond to the hash of the public key. Signature counters, transaction counters, and timestamps must be checked for plausibility. Log messages MUST NOT be verified using only a public key (e.g., from QR code) without certificate verification.</text>
+        <text xml:lang="de">Die Verifikation erfolgt offline durch den Prüfer. Prüfwerte müssen mit dem öffentlichen Schlüssel aus dem validierten TSE-Zertifikat geprüft werden. Seriennummern in Log-Nachrichten müssen dem Hash über den Public Key entsprechen. Signaturzähler, Transaktionszähler und Zeitstempel müssen auf Plausibilität geprüft werden. Log-Nachrichten dürfen NICHT nur anhand eines Public Keys (z.B. aus QR-Code) ohne Zertifikatsprüfung verifiziert werden.</text>
+    </notes>
+</process>

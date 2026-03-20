@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSignatureCounterExhausted" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSignatureCounterExhausted</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the physical memory of the signature counter can no longer guarantee error-free operation. The signature counter is a critical component that maintains a monotonically increasing counter value for digital signatures on transactions, providing audit trail integrity and replay attack protection. The physical storage backing the signature counter has limited write cycles. When the physical memory approaches or exceeds its safe operational limits, the device can no longer guarantee the integrity of the signature counter. ErrorSignatureCounterExhausted indicates the signature counter storage is exhausted and the device cannot safely continue operations that require signature counter increments. This is a Critical condition requiring immediate administrative attention and device maintenance or replacement.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der physikalische Speicher des Signaturzählers nicht mehr den fehlerfreien Betrieb gewährleisten kann. Der Signaturzähler ist eine kritische Komponente, die einen monoton steigenden Zählerwert für digitale Signaturen bei Transaktionen aufrechtereält und Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe bietet. Der physikalische Speicher, der den Signaturzähler unterstützt, hat begrenzte Schreibzyklen. Wenn sich der physikalische Speicher seinen sicheren Betriebsgrenzen nähert oder diese überschreitet, kann das Gerät die Integrität des Signaturzählers nicht mehr gewährleisten. ErrorSignatureCounterExhausted zeigt an, dass der Signaturzählerspeicher erschöpft ist und das Gerät Operationen, die Signaturzähler-Inkremente erfordern, nicht mehr sicher fortsetzen kann. Dies ist eine kritische Bedingung, die sofortige administratorische Aufmerksamkeit und Gerätewartung oder -austausch erfordert.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Signature Counter - Memory Exhaustion</subcategory>
+  <severity>Critical</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSignatureCounterExhausted that is thrown if signature counter physical memory is exhausted.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSignatureCounterExhausted, die ausgelöst wird, wenn der physikalische Speicher des Signaturzählers erschöpft ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the physical memory backing the signature counter has reached exhaustion or a state where it can no longer guarantee error-free operation. The signature counter is a critical component that maintains a monotonically increasing counter for transaction signatures, providing audit trail integrity and replay attack protection. The physical storage has limited write cycles (typically Flash or EEPROM memory). ErrorSignatureCounterExhausted indicates that the memory has been written so many times that future writes cannot be guaranteed to succeed reliably. Common causes include: excessive transaction volume over device lifetime, signature counter write-through on every transaction, exceeding expected device lifecycle, or device reaching end-of-life. ErrorSignatureCounterExhausted is a Critical severity exception because it prevents further transaction processing and indicates device requires maintenance or replacement. The device cannot safely accept new transactions if the signature counter cannot reliably record them.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn der physikalische Speicher, der den Signaturzähler unterstützt, die Erschöpfung erreicht hat oder sich in einem Zustand befindet, in dem er nicht mehr den fehlerfreien Betrieb gewährleisten kann. Der Signaturzähler ist eine kritische Komponente, die einen monoton steigenden Zähler für Transaktionssignaturen aufrechtehält und Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe bietet. Der physikalische Speicher hat begrenzte Schreibzyklen (typischerweise Flash- oder EEPROM-Speicher). ErrorSignatureCounterExhausted zeigt an, dass der Speicher so viele Male geschrieben wurde, dass zukünftige Schreibvorgänge nicht mehr zuverlässig erfolgreich sein können. Häufige Ursachen sind: übermäßiges Transaktionsvolumen während der Gerätelebensdauer, Signaturzähler-Durchschreibvorgänge bei jeder Transaktion, Überschreitung der erwarteten Gerätelebensdauer oder Gerät erreicht End-of-Life. ErrorSignatureCounterExhausted ist eine Ausnahme mit kritischem Schweregrad, da sie weitere Transaktionsverarbeitung verhindert und anzeigt, dass das Gerät Wartung oder Austausch erfordert. Das Gerät kann nicht sicher neue Transaktionen akzeptieren, wenn der Signaturzähler sie nicht zuverlässig aufzeichnen kann.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Transaction Operations and 3.3.3 Logging Operations - Signature Counter Management</section>
+    <requirement>
+      <text xml:lang="en">The Secure Element maintains a signature counter that is incremented for each transaction, providing audit trail integrity and replay attack protection. The signature counter is backed by physical memory with limited write endurance (typically 100,000 to 1,000,000 write cycles for Flash/EEPROM). When the physical memory backing the signature counter approaches or exceeds its safe operational limits, the device SHALL raise ErrorSignatureCounterExhausted on any operation requiring signature counter increment (startTransaction, updateTransaction, finishTransaction, configureLogging). The device must not accept new transactions when signature counter memory is exhausted, as this compromises audit trail integrity.</text>
+      <text xml:lang="de">Das Secure Element verwaltet einen Signaturzähler, der für jede Transaktion erhöht wird und Audit-Trail-Integrität und Schutz gegen Wiederholungsangriffe bietet. Der Signaturzähler wird durch physikalischen Speicher mit begrenzte Schreibausdauer (typischerweise 100.000 bis 1.000.000 Schreibzyklen für Flash/EEPROM) unterstützt. Wenn sich der physikalische Speicher, der den Signaturzähler unterstützt, seinen sicheren Betriebsgrenzen nähert oder diese überschreitet, MUSS das Gerät ErrorSignatureCounterExhausted bei jeder Operation auslösen, die einen Signaturzähler-Inkrement erfordert (startTransaction, updateTransaction, finishTransaction, configureLogging). Das Gerät darf keine neuen Transaktionen akzeptieren, wenn der Signaturzählerspeicher erschöpft ist, da dies die Audit-Trail-Integrität beeinträchtigt.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction operations requiring signature counter increment: startTransaction, updateTransaction, finishTransaction, configureLogging</text>
+      <text xml:lang="de">Transaktionsoperationen, die Signaturzähler-Inkrement erfordern: startTransaction, updateTransaction, finishTransaction, configureLogging</text>
+    </applicability>
+    <reference>Transaction Operations (3.3.2), Logging Operations (3.3.3), Signature Counter Management</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls transaction operation that requires signature counter increment (e.g., startTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Transaktionsoperation auf, die Signaturzähler-Inkrement erfordert (z. B. startTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsanfrage</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks signature counter memory status</text>
+      <text xml:lang="de">Secure Element prüft Signaturzählerspeicherstatus</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If signature counter memory exhausted → ErrorSignatureCounterExhausted raised, operation aborted</text>
+      <text xml:lang="de">Wenn Signaturzählerspeicher erschöpft → ErrorSignatureCounterExhausted ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If signature counter memory available → proceed to step 6</text>
+      <text xml:lang="de">Wenn Signaturzählerspeicher verfügbar → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element processes transaction operation</text>
+      <text xml:lang="de">Secure Element verarbeitet Transaktionsoperation</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element increments signature counter</text>
+      <text xml:lang="de">Secure Element erhöht Signaturzähler</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If counter increment fails due to memory → ErrorSignatureCounterExhausted raised, operation aborted</text>
+      <text xml:lang="de">Wenn Zähler-Inkrement aufgrund von Speicher schlägt → ErrorSignatureCounterExhausted ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If counter increment succeeds → proceed to step 8</text>
+      <text xml:lang="de">Wenn Zähler-Inkrement erfolgreich → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element writes updated counter value to storage</text>
+      <text xml:lang="de">Secure Element schreibt aktualisierten Zählerwert in Speicher</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If storage write fails due to exhausted memory → ErrorSignatureCounterExhausted raised, operation aborted</text>
+      <text xml:lang="de">Wenn Speicherschreiben aufgrund von erschöpftem Speicher fehlschlägt → ErrorSignatureCounterExhausted ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If storage write succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Speicherschreiben erfolgreich → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element completes transaction operation</text>
+      <text xml:lang="de">Secure Element schließt Transaktionsoperation ab</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns successfully</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check current counter using getCurrentLoggingSignatureCounters</text>
+      <text xml:lang="de">Prüfen Sie den aktuellen Zähler mit getCurrentLoggingSignatureCounters</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan for counter exhaustion - device cannot log further</text>
+      <text xml:lang="de">Planen Sie für Zählererschöpfung - Gerät kann nicht weiter protokollieren</text>
+    </step>
+    <step>
+      <text xml:lang="en">If counter exhausted, device logging capacity reached</text>
+      <text xml:lang="de">Wenn Zähler erschöpft, ist die Geräteprotokollierungskapazität erreicht</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device vendor about counter reset options</text>
+      <text xml:lang="de">Kontaktieren Sie den Gerätehersteller zu Zähler-Rücksetzoptionen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorLimitOfSimultaneousOpenTransactionsReached</exception>
+    <exception>ErrorOpenTransactionFound</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Not Created">
+      <text xml:lang="en">The requested transaction is not created due to signature counter exhaustion.</text>
+      <text xml:lang="de">Die angeforderte Transaktion wird nicht erstellt, da der Signaturzähler erschöpft ist.</text>
+    </state>
+    <state name="Signature Counter Not Incremented">
+      <text xml:lang="en">The signature counter is not incremented because the memory is exhausted.</text>
+      <text xml:lang="de">Der Signaturzähler wird nicht erhöht, da der Speicher erschöpft ist.</text>
+    </state>
+    <state name="Device Cannot Process Transactions">
+      <text xml:lang="en">The device cannot reliably process new transactions with a reliable signature counter.</text>
+      <text xml:lang="de">Das Gerät kann neue Transaktionen mit einem zuverlässigen Signaturzähler nicht zuverlässig verarbeiten.</text>
+    </state>
+    <state name="Audit Trail Integrity Compromised">
+      <text xml:lang="en">The device can no longer provide reliable audit trail protection when signature counter cannot be maintained.</text>
+      <text xml:lang="de">Das Gerät kann keinen zuverlässigen Audit-Trail-Schutz mehr bieten, wenn der Signaturzähler nicht aufrechterhalten werden kann.</text>
+    </state>
+    <state name="Device Operational But Unusable for Transactions">
+      <text xml:lang="en">The device is technically operational but unusable for its primary transaction function.</text>
+      <text xml:lang="de">Das Gerät ist technisch betriebsbereit, aber für seine primäre Transaktionsfunktion nicht nutzbar.</text>
+    </state>
+    <state name="Device Requires Replacement">
+      <text xml:lang="en">The device has reached end-of-life and requires replacement or maintenance.</text>
+      <text xml:lang="de">Das Gerät hat das Ende seiner Lebensdauer erreicht und erfordert Austausch oder Wartung.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Signature counter has reached its maximum value - no more signatures possible</text>
+      <text xml:lang="de">Anzeige: Signaturzähler hat seinen maximalen Wert erreicht - keine weiteren Signaturen möglich</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Signature Operations, Counter Management, Resource Limits, Signing Capacity</text>
+      <text xml:lang="de">Themen: Signaturoperationen, Zählerverwaltung, Ressourcengrenzen, Signierungskapazität</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when signature counter reaches maximum</text>
+      <text xml:lang="de">Ausgelöst durch Protokollierungsfunktionen, wenn Signaturzähler Maximum erreicht</text>
+    </note>
+    <note>
+      <text xml:lang="en">Logging subsystem tracks signature count for audit trail</text>
+      <text xml:lang="de">Protokollierungssubsystem verfolgt Signaturanzahl für Audit-Trail</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains counter of signed log messages</text>
+      <text xml:lang="de">Gerät verwaltet Zähler signierter Protokollnachrichten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Exhaustion prevents further log message creation</text>
+      <text xml:lang="de">Erschöpfung verhindert weitere Protokollmeldungserstellung</text>
+    </note>
+  </implementationContext>
+</exception>
+

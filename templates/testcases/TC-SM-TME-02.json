@@ -1,0 +1,338 @@
+{
+  "testcase_id": "TC-SM-TME-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Zeitführung: Neustart nach Stromlosigkeit und zentrale Zeitstellung",
+  "description": "Prüft Zeitführungs-Verhalten nach Stromlosigkeit (NO_CENTRAL_TIME) und korrekte updateTime-Logs bei zentraler Zeitstellung (CENTRAL_TIME).",
+  "purpose": "Prüfung, ob die interne Zeit im Sicherheitsmodul nach einer Phase der Stromlosigkeit der Technischen Sicherheitseinrichtung, bei der eine korrekt laufende Zeitführung nicht aufrechterhalten werden konnte, mit einem definierten Wert neu startet, welcher eine \"Nicht-Stellung\" der Uhrzeit eindeutig erkennbar macht.",
+  "module": "Security Module",
+  "submodule": "SM_TME",
+  "function": "updateTime / exportLogMessages",
+  "test_type": "PT",
+  "priority": "conditional",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_TME_10"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Zeitaktualisierungsfunktion.",
+      "function": "updateTime",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "SM_TME_10"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung von Nutzern.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_TME_10"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_TME_10"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers in dem TAR-Container.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds signatureCreationTime entspricht einem Wert der die \"Nicht-Stellung\" der Uhrzeit erkennbar macht.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_TME_10"
+    },
+    {
+      "step": 8,
+      "type": "ACTION",
+      "title": "Stromlosigkeit simulieren",
+      "result": null,
+      "instruction": "Stromlosigkeit simulieren",
+      "function": "<Herstellerspezifisches Verfahren zur Simulation>",
+      "checks": [
+        {
+          "description": "TSE startet korrekt neu nach Stromlosigkeit",
+          "expected": "Neustart erfolgreich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Ungültige Zeitführung erkennen lassen",
+      "result": null,
+      "instruction": "Ungültige Zeitführung erkennen lassen",
+      "checks": [
+        {
+          "description": "TSE erkennt, dass Zeit nicht mehr valide ist",
+          "expected": "Signalisierung vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE macht ungültige Zeit in Log-Nachrichten erkennbar",
+          "expected": "Erkennbarkeit im Export bestätigt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "type": "VERIFY",
+      "title": "Zeit erneut stellen und exportieren",
+      "result": null,
+      "instruction": "Zeit erneut stellen und exportieren\n\nAufruf der Zeitaktualisierungsfunktion.",
+      "function": "updateTime → exportLogMessages",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Neue Zeitsetzung korrekt nach Stromlosigkeit dokumentiert",
+          "expected": "POWERLOSS_UPDATETIME_AFTER_REENTER",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Wiederaufnahme von Transaktionen nach Stromlosigkeit",
+          "expected": "POWERLOSS_NO_ABANDONED_TXN_RESUME",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Sperrzustand nach Stromlosigkeit zurückgesetzt",
+          "expected": "POWERLOSS_LOCK_STATE_RESET",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "POWERLOSS_UPDATETIME_AFTER_REENTER",
+          "title": "Neue Zeitsetzung nach Stromlosigkeit",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "POWERLOSS_NO_ABANDONED_TXN_RESUME",
+          "title": "Keine Fortsetzung von Transaktionen nach Stromlosigkeit",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "POWERLOSS_LOCK_STATE_RESET",
+          "title": "Sperrzustand nach Stromlosigkeit zurückgesetzt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "SM_TME_10"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §5.2"
+  ]
+}

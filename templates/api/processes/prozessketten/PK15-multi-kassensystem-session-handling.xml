@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK15</chainId>
+    <name>
+        <text xml:lang="en">Multi Cash Register System - Session Handling</text>
+        <text xml:lang="de">Multi-Kassensystem - Session-Verwaltung</text>
+    </name>
+    <description>
+        <text xml:lang="en">Demonstrates session handling when multiple cash register systems share a single TSE, including automatic logout mechanisms and the single-session constraint</text>
+        <text xml:lang="de">Zeigt die Session-Verwaltung wenn mehrere Kassensysteme eine gemeinsame TSE nutzen, inklusive automatischem Logout-Mechanismus und der Single-Session-Beschränkung</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>002</id>
+            <name>
+                <text xml:lang="en">Client Registration</text>
+                <text xml:lang="de">Client-Registrierung</text>
+            </name>
+        </process>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication</text>
+                <text xml:lang="de">Nutzer-Authentifizierung</text>
+            </name>
+        </process>
+        <process>
+            <id>015</id>
+            <name>
+                <text xml:lang="en">User Logout</text>
+                <text xml:lang="de">Nutzer-Abmeldung</text>
+            </name>
+        </process>
+        <process>
+            <id>020</id>
+            <name>
+                <text xml:lang="en">Start Transaction</text>
+                <text xml:lang="de">Transaktion starten</text>
+            </name>
+        </process>
+        <process>
+            <id>022</id>
+            <name>
+                <text xml:lang="en">Finish Transaction</text>
+                <text xml:lang="de">Transaktion beenden</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized and operational</text>
+            <text xml:lang="de">TSE ist initialisiert und betriebsbereit</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Multiple cash register systems are connected to the same TSE</text>
+            <text xml:lang="de">Mehrere Kassensysteme sind mit derselben TSE verbunden</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Each cash register has a unique clientId (serial number)</text>
+            <text xml:lang="de">Jedes Kassensystem hat eine eindeutige clientId (Seriennummer)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">User credentials (userId, PIN) are configured for all users (logger, admin, timeadmin)</text>
+            <text xml:lang="de">Nutzer-Credentials (userId, PIN) sind für alle Nutzer konfiguriert (logger, admin, timeadmin)</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">Cash Register System 1 (Logger Role)</text>
+            <text xml:lang="de">Kassensystem 1 (Logger-Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Cash Register System 2 (Logger Role)</text>
+            <text xml:lang="de">Kassensystem 2 (Logger-Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Administrator</text>
+            <text xml:lang="de">Administrator</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Client Registration</text>
+                <text xml:lang="de">Client-Registrierung</text>
+            </name>
+            <function>
+                <name>registerClient</name>
+                <linkedProcess>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Client Registration</text>
+                        <text xml:lang="de">Client-Registrierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Each cash register system must register its clientId (serial number) with the TSE before it can start transactions. This is a one-time setup step.</text>
+                <text xml:lang="de">Jedes Kassensystem muss seine clientId (Seriennummer) bei der TSE registrieren, bevor es Transaktionen starten kann. Dies ist ein einmaliger Setup-Schritt.</text>
+            </description>
+            <note>
+                <text xml:lang="en">Example: registerClient(clientId="KASSE-001") for Cash Register 1, registerClient(clientId="KASSE-002") for Cash Register 2</text>
+                <text xml:lang="de">Beispiel: registerClient(clientId="KASSE-001") für Kassensystem 1, registerClient(clientId="KASSE-002") für Kassensystem 2</text>
+            </note>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Logger Authentication - Cash Register 1</text>
+                <text xml:lang="de">Logger-Authentifizierung - Kassensystem 1</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Cash Register 1 authenticates with logger credentials to start its work session. Only one user can be authenticated at a time across the entire TSE.</text>
+                <text xml:lang="de">Kassensystem 1 authentifiziert sich mit Logger-Credentials, um seine Arbeitssession zu starten. Es kann immer nur ein Nutzer gleichzeitig auf der gesamten TSE authentifiziert sein.</text>
+            </description>
+            <note>
+                <text xml:lang="en">The TSE enforces a single-session constraint: only ONE authenticated user at any given time</text>
+                <text xml:lang="de">Die TSE erzwingt eine Single-Session-Beschränkung: nur EIN authentifizierter Nutzer zu jedem Zeitpunkt</text>
+            </note>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Transaction Processing - Cash Register 1</text>
+                <text xml:lang="de">Transaktionsverarbeitung - Kassensystem 1</text>
+            </name>
+            <functions>
+                <function>
+                    <name>startTransaction</name>
+                    <linkedProcess>
+                        <id>020</id>
+                        <name>
+                            <text xml:lang="en">Start Transaction</text>
+                            <text xml:lang="de">Transaktion starten</text>
+                        </name>
+                    </linkedProcess>
+                </function>
+                <function>
+                    <name>updateTransaction</name>
+                </function>
+                <function>
+                    <name>finishTransaction</name>
+                    <linkedProcess>
+                        <id>022</id>
+                        <name>
+                            <text xml:lang="en">Finish Transaction</text>
+                            <text xml:lang="de">Transaktion beenden</text>
+                        </name>
+                    </linkedProcess>
+                </function>
+            </functions>
+            <description>
+                <text xml:lang="en">While authenticated, Cash Register 1 processes transactions normally using its registered clientId. The logger role has permission to execute transaction-related functions.</text>
+                <text xml:lang="de">Während der Authentifizierung verarbeitet Kassensystem 1 normal Transaktionen unter Verwendung seiner registrierten clientId. Die Logger-Rolle hat die Berechtigung, transaktionsbezogene Funktionen auszuführen.</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Administrator Login - Automatic Logout of Logger 1</text>
+                <text xml:lang="de">Administrator-Login - Automatischer Logout von Logger 1</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">When an administrator needs to perform administrative tasks, they call authenticateUser with admin credentials. The TSE automatically performs the following steps: 1) Validates the admin PIN, 2) Detects that a different user (logger) is currently authenticated, 3) Creates a logOut log entry for logger with logOutCause="differentUserLoggedIn" (value=1), 4) Sets logger status to "not authenticated", 5) Sets admin status to "authenticated", 6) Creates authenticateUser log for admin. Both log entries are created and signed in this atomic operation.</text>
+                <text xml:lang="de">Wenn ein Administrator administrative Aufgaben durchführen muss, ruft er authenticateUser mit Admin-Credentials auf. Die TSE führt automatisch folgende Schritte aus: 1) Validiert die Admin-PIN, 2) Erkennt, dass ein anderer Nutzer (logger) aktuell authentifiziert ist, 3) Erstellt einen logOut-Log-Eintrag für logger mit logOutCause="differentUserLoggedIn" (Wert=1), 4) Setzt logger-Status auf "nicht authentifiziert", 5) Setzt Admin-Status auf "authentifiziert", 6) Erstellt authenticateUser-Log für Admin. Beide Log-Einträge werden in dieser atomaren Operation erstellt und signiert.</text>
+            </description>
+            <note>
+                <text xml:lang="en">Critical mechanism: The automatic logout is logged with cause "differentUserLoggedIn" (1) to document the reason in the audit trail</text>
+                <text xml:lang="de">Kritischer Mechanismus: Der automatische Logout wird mit Ursache "differentUserLoggedIn" (1) protokolliert, um den Grund im Audit-Trail zu dokumentieren</text>
+            </note>
+        </step>
+        <step>
+            <stepNumber>5</stepNumber>
+            <name>
+                <text xml:lang="en">Administrator Tasks</text>
+                <text xml:lang="de">Administrator-Aufgaben</text>
+            </name>
+            <functions>
+                <function>
+                    <name>exportData</name>
+                </function>
+                <function>
+                    <name>setDescription</name>
+                </function>
+            </functions>
+            <description>
+                <text xml:lang="en">The administrator executes functions requiring admin privileges. During this time, no logger can perform transaction operations.</text>
+                <text xml:lang="de">Der Administrator führt Funktionen aus, die Admin-Rechte erfordern. Während dieser Zeit kann kein Logger Transaktionsoperationen durchführen.</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>6</stepNumber>
+            <name>
+                <text xml:lang="en">Administrator Logout</text>
+                <text xml:lang="de">Administrator-Abmeldung</text>
+            </name>
+            <function>
+                <name>logOut</name>
+                <linkedProcess>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">After completing administrative tasks, the administrator explicitly logs out, freeing the session for other users.</text>
+                <text xml:lang="de">Nach Abschluss der administrativen Aufgaben meldet sich der Administrator explizit ab und gibt die Session für andere Nutzer frei.</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>7</stepNumber>
+            <name>
+                <text xml:lang="en">Cash Register 1 Detects Session Loss</text>
+                <text xml:lang="de">Kassensystem 1 erkennt Session-Verlust</text>
+            </name>
+            <description>
+                <text xml:lang="en">When Cash Register 1 attempts to start a new transaction, it receives ErrorNotAuthenticated. The cash register software must handle this error and understand that its session was interrupted.</text>
+                <text xml:lang="de">Wenn Kassensystem 1 versucht, eine neue Transaktion zu starten, erhält es ErrorNotAuthenticated. Die Kassensystem-Software muss diesen Fehler behandeln und verstehen, dass ihre Session unterbrochen wurde.</text>
+            </description>
+            <possibleErrors>
+                <error>
+                    <name>ErrorNotAuthenticated</name>
+                    <description>
+                        <text xml:lang="en">Indicates that the current user is no longer authenticated and must log in again</text>
+                        <text xml:lang="de">Zeigt an, dass der aktuelle Nutzer nicht mehr authentifiziert ist und sich erneut anmelden muss</text>
+                    </description>
+                </error>
+            </possibleErrors>
+        </step>
+        <step>
+            <stepNumber>8</stepNumber>
+            <name>
+                <text xml:lang="en">Re-Authentication - Cash Register 1</text>
+                <text xml:lang="de">Erneute Authentifizierung - Kassensystem 1</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Cash Register 1 re-authenticates with its logger credentials and can resume transaction processing. This demonstrates the resilience requirement for cash register software.</text>
+                <text xml:lang="de">Kassensystem 1 authentifiziert sich erneut mit seinen Logger-Credentials und kann die Transaktionsverarbeitung fortsetzen. Dies demonstriert die Resilienz-Anforderung für Kassensystem-Software.</text>
+            </description>
+            <note>
+                <text xml:lang="en">Cash register software must implement automatic re-authentication handling when receiving ErrorNotAuthenticated</text>
+                <text xml:lang="de">Kassensystem-Software muss automatisches Re-Authentifizierungs-Handling implementieren, wenn ErrorNotAuthenticated empfangen wird</text>
+            </note>
+        </step>
+        <step>
+            <stepNumber>9</stepNumber>
+            <name>
+                <text xml:lang="en">Cash Register 2 Takes Over - Automatic Logout of Logger 1</text>
+                <text xml:lang="de">Kassensystem 2 übernimmt - Automatischer Logout von Logger 1</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">When Cash Register 2 authenticates, the session is refreshed: logger (Cash Register 2) becomes the authenticated user.</text>
+                <text xml:lang="de">Wenn sich Kassensystem 2 authentifiziert, wird der Session nur aufgefrischt: logger (Kassensystem 2) wird der authentifizierte Nutzer.</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>10</stepNumber>
+            <name>
+                <text xml:lang="en">Transaction Processing - Cash Register 2</text>
+                <text xml:lang="de">Transaktionsverarbeitung - Kassensystem 2</text>
+            </name>
+            <functions>
+                <function>
+                    <name>startTransaction</name>
+                    <linkedProcess>
+                        <id>020</id>
+                        <name>
+                            <text xml:lang="en">Start Transaction</text>
+                            <text xml:lang="de">Transaktion starten</text>
+                        </name>
+                    </linkedProcess>
+                </function>
+                <function>
+                    <name>finishTransaction</name>
+                    <linkedProcess>
+                        <id>022</id>
+                        <name>
+                            <text xml:lang="en">Finish Transaction</text>
+                            <text xml:lang="de">Transaktion beenden</text>
+                        </name>
+                    </linkedProcess>
+                </function>
+            </functions>
+            <description>
+                <text xml:lang="en">Cash Register 2 now processes transactions using its own registered clientId while Cash Register 1's session remains inactive.</text>
+                <text xml:lang="de">Kassensystem 2 verarbeitet nun Transaktionen unter Verwendung seiner eigenen registrierten clientId, während die Session von Kassensystem 1 inaktiv bleibt.</text>
+            </description>
+        </step>
+    </steps>
+    <outcome>
+        <state>
+            <text xml:lang="en">Multi-user environment with automatic session management operational</text>
+            <text xml:lang="de">Multi-User-Umgebung mit automatischer Session-Verwaltung betriebsbereit</text>
+        </state>
+        <logMessages>
+            <logMessage>
+                <text xml:lang="en">System-Log (authenticateUser) - for each user login</text>
+                <text xml:lang="de">System-Log (authenticateUser) - für jeden Nutzer-Login</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (logOut) with logOutCause="differentUserLoggedIn" (1) - for automatic logouts</text>
+                <text xml:lang="de">System-Log (logOut) mit logOutCause="differentUserLoggedIn" (1) - für automatische Logouts</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (logOut) with logOutCause="userInitiated" - for manual logouts</text>
+                <text xml:lang="de">System-Log (logOut) mit logOutCause="userInitiated" - für manuelle Logouts</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">Transaction-Logs for all transactions executed by the cash registers</text>
+                <text xml:lang="de">Transaktions-Logs für alle von den Kassensystemen ausgeführten Transaktionen</text>
+            </logMessage>
+        </logMessages>
+    </outcome>
+    <importantNotes>
+        <note>
+            <text xml:lang="en">Single Session Constraint: The TSE allows only ONE authenticated user at any given time, regardless of the user's role (logger, admin, timeadmin)</text>
+            <text xml:lang="de">Single-Session-Beschränkung: Die TSE erlaubt nur EINEN authentifizierten Nutzer zu jedem Zeitpunkt, unabhängig von der Nutzer-Rolle (logger, admin, timeadmin)</text>
+        </note>
+        <note>
+            <text xml:lang="en">Automatic Logout: When a new user authenticates, the TSE automatically logs out the previously authenticated user and documents this with logOutCause="differentUserLoggedIn" (value=1)</text>
+            <text xml:lang="de">Automatischer Logout: Wenn sich ein neuer Nutzer authentifiziert, meldet die TSE den zuvor authentifizierten Nutzer automatisch ab und dokumentiert dies mit logOutCause="differentUserLoggedIn" (Wert=1)</text>
+        </note>
+        <note>
+            <text xml:lang="en">Error Handling: Cash register software must handle ErrorNotAuthenticated and implement automatic re-authentication when the session is interrupted</text>
+            <text xml:lang="de">Fehlerbehandlung: Kassensystem-Software muss ErrorNotAuthenticated behandeln und automatische Re-Authentifizierung implementieren, wenn die Session unterbrochen wird</text>
+        </note>
+        <note>
+            <text xml:lang="en">Client Registration: Each cash register must register its unique clientId before it can start transactions, but authentication is per-user, not per-client</text>
+            <text xml:lang="de">Client-Registrierung: Jedes Kassensystem muss seine eindeutige clientId registrieren, bevor es Transaktionen starten kann, aber die Authentifizierung erfolgt pro Nutzer, nicht pro Client</text>
+        </note>
+        <note>
+            <text xml:lang="en">Audit Trail: All authentication and logout events are logged and signed, ensuring complete traceability of who accessed the TSE and when</text>
+            <text xml:lang="de">Audit-Trail: Alle Authentifizierungs- und Logout-Ereignisse werden protokolliert und signiert, wodurch vollständige Nachverfolgbarkeit gewährleistet ist, wer wann auf die TSE zugegriffen hat</text>
+        </note>
+        <note>
+            <text xml:lang="en">Inter-Role Competition: The automatic logout mechanism applies equally when switching between different roles (e.g., logger to admin, admin to logger)</text>
+            <text xml:lang="de">Rollen-übergreifende Konkurrenz: Der automatische Logout-Mechanismus gilt gleichermaßen beim Wechsel zwischen verschiedenen Rollen (z.B. logger zu admin, admin zu logger)</text>
+        </note>
+    </importantNotes>
+    <rules>
+        <rule>
+            <text xml:lang="en">Implement robust error handling in cash register software to detect and recover from ErrorNotAuthenticated</text>
+            <text xml:lang="de">Implementieren Sie robuste Fehlerbehandlung in der Kassensystem-Software, um ErrorNotAuthenticated zu erkennen und sich davon zu erholen</text>
+        </rule>
+        <rule>
+            <text xml:lang="en">Administrators should explicitly call logOut after completing their tasks to free the session for cash register operations</text>
+            <text xml:lang="de">Administratoren sollten explizit logOut aufrufen nach Abschluss ihrer Aufgaben, um die Session für Kassensystem-Operationen freizugeben</text>
+        </rule>
+        <rule>
+            <text xml:lang="en">Monitor system logs for frequent "differentUserLoggedIn" events, which may indicate coordination issues between users</text>
+            <text xml:lang="de">Überwachen Sie System-Logs auf häufige "differentUserLoggedIn"-Ereignisse, die auf Koordinationsprobleme zwischen Nutzern hinweisen können</text>
+        </rule>
+    </rules>
+    <securityAspects>
+        <aspect>
+            <text xml:lang="en">The single-session constraint is a security feature that ensures clear attribution of actions to specific users</text>
+            <text xml:lang="de">Die Single-Session-Beschränkung ist ein Sicherheitsmerkmal, das eine klare Zuordnung von Aktionen zu spezifischen Nutzern gewährleistet</text>
+        </aspect>
+        <aspect>
+            <text xml:lang="en">The automatic logout mechanism prevents unauthorized concurrent access but requires careful coordination in multi-user environments</text>
+            <text xml:lang="de">Der automatische Logout-Mechanismus verhindert unbefugten gleichzeitigen Zugriff, erfordert aber sorgfältige Koordination in Multi-User-Umgebungen</text>
+        </aspect>
+        <aspect>
+            <text xml:lang="en">Every user switch is logged and signed, creating an immutable audit trail for forensic analysis</text>
+            <text xml:lang="de">Jeder Nutzerwechsel wird protokolliert und signiert, wodurch ein unveränderlicher Audit-Trail für forensische Analysen entsteht</text>
+        </aspect>
+    </securityAspects>
+    <securityMechanisms>
+        <mechanism>
+            <text xml:lang="en">Single-session enforcement through automatic logout when a new user authenticates</text>
+            <text xml:lang="de">Single-Session-Durchsetzung durch automatischen Logout bei Authentifizierung eines neuen Nutzers</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Audit logging with logOutCause parameter to document the reason for each logout event</text>
+            <text xml:lang="de">Audit-Logging mit logOutCause-Parameter zur Dokumentation des Grundes für jedes Logout-Ereignis</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">PIN-based authentication with role-based access control (logger, admin, timeadmin)</text>
+            <text xml:lang="de">PIN-basierte Authentifizierung mit rollenbasierter Zugriffskontrolle (logger, admin, timeadmin)</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Cryptographic signing of all authentication and logout log entries</text>
+            <text xml:lang="de">Kryptographische Signierung aller Authentifizierungs- und Logout-Log-Einträge</text>
+        </mechanism>
+    </securityMechanisms>
+    <usageScenario>
+        <text xml:lang="en">Restaurants, retail stores, or other businesses where multiple cash registers share one TSE and require occasional administrative access</text>
+        <text xml:lang="de">Restaurants, Einzelhandelsgeschäfte oder andere Unternehmen, bei denen mehrere Kassensysteme eine TSE gemeinsam nutzen und gelegentlichen administrativen Zugriff benötigen</text>
+    </usageScenario>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4 (authenticateUser)</reference>
+        <reference>BSI TR-03151-1 Chapter 3.5 (logOut)</reference>
+        <reference>BSI TR-03153-1 Chapter 6.2 (Session Management)</reference>
+        <reference>BSI TR-03153-1 Chapter 7.1 (Multi-Client Scenarios)</reference>
+    </references>
+</processChain>

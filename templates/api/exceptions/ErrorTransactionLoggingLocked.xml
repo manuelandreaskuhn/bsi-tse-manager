@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorTransactionLoggingLocked" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorTransactionLoggingLocked</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if transaction logging functionality is currently locked and prevents transaction recording. Transaction logging is a critical security feature that records all executed transactions for audit, authenticity, and non-repudiation purposes. The logging functionality can be temporarily or permanently locked for administrative reasons, maintenance, or security policies. When transaction operations are attempted while logging is locked, ErrorTransactionLoggingLocked is raised. This prevents execution of transactions that cannot be properly logged. ErrorTransactionLoggingLocked is a High severity exception because it blocks transaction functionality to maintain audit trail integrity. Transactions cannot proceed if they cannot be logged, ensuring all executed transactions are properly recorded.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Transaktionsprotokollierungsfunktion derzeit gesperrt ist und die Transaktionsaufzeichnung verhindert. Die Transaktionsprotokollierung ist eine kritische Sicherheitsfunktion, die alle ausgeführten Transaktionen für Audit-, Authentizitäts- und Nichtabstreitbarkeitszwecke aufzeichnet. Die Protokollierungsfunktion kann für administrative, Wartungs- oder Sicherheitsrichtliniengründe vorübergehend oder dauerhaft gesperrt sein. Wenn Transaktionsoperationen versucht werden, während die Protokollierung gesperrt ist, wird ErrorTransactionLoggingLocked ausgelöst. Dies verhindert die Aus führung von Transaktionen, die nicht ordnungsgemäß protokolliert werden können. ErrorTransactionLoggingLocked ist eine Ausnahme mit hohem Schweregrad, da sie die Transaktionsfunktionalität blockiert, um die Audit-Trail-Integrität zu wahren. Transaktionen können nicht fortgesetzt werden, wenn sie nicht protokolliert werden können, was gewährleistet, dass alle ausgeführten Transaktionen ordnungsgemäß aufgezeichnet werden.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Logging Lock</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorTransactionLoggingLocked that is thrown if transaction logging functionality is currently locked.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorTransactionLoggingLocked, die ausgelöst wird, wenn die Transaktionsprotokollierungsfunktion derzeit gesperrt ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when transaction operations are attempted while transaction logging is locked. Transaction logging records all executed transactions for audit, authenticity, and non-repudiation. The logging functionality can be locked for administrative, maintenance, or security policy reasons. When logging is locked, all transaction operations (startTransaction, updateTransaction, finishTransaction) cannot proceed because transactions cannot be properly logged. ErrorTransactionLoggingLocked is a High severity exception because audit trail integrity is critical. Transactions are blocked to ensure all executed transactions are properly recorded in the audit log. Recovery requires unlocking the logging functionality through appropriate administrative procedures.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn Transaktionsoperationen versucht werden, während die Transaktionsprotokollierung gesperrt ist. Die Transaktionsprotokollierung zeichnet alle ausgeführten Transaktionen für Audit-, Authentizitäts- und Nichtabstreitbarkeitszwecke auf. Die Protokollierungsfunktion kann aus administrativen, Wartungs- oder Sicherheitsrichtliniengründen gesperrt sein. Wenn die Protokollierung gesperrt ist, können alle Transaktionsoperationen (startTransaction, updateTransaction, finishTransaction) nicht fortgesetzt werden, da Transaktionen nicht ordnungsgemäß protokolliert werden können. ErrorTransactionLoggingLocked ist eine Ausnahme mit hohem Schweregrad, da die Audit-Trail-Integrität kritisch ist. Transaktionen werden blockiert, um sicherzustellen, dass alle ausgeführten Transaktionen ordnungsgemäß im Audit-Protokoll aufgezeichnet werden. Die Wiederherstellung erfordert das Entsperren der Protokollierungsfunktion durch angemessene Verwaltungsverfahren.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.2 Transaction Management - Transaction Logging</section>
+    <requirement>
+      <text xml:lang="en">Transaction logging records all executed transactions for audit, authenticity, and non-repudiation purposes. Logging functionality can be locked administratively or by security policy for maintenance, audit preservation, or security reasons. When logging is locked, the Secure Element SHALL raise ErrorTransactionLoggingLocked if transaction operations are attempted. This prevents execution of transactions that cannot be properly logged, ensuring all executed transactions are recorded in the audit trail. ErrorTransactionLoggingLocked is a High severity exception because audit trail integrity is critical to the security model. Transactions cannot proceed without logging capability to maintain authentic, non-repudiable transaction records.</text>
+      <text xml:lang="de">Die Transaktionsprotokollierung zeichnet alle ausgeführten Transaktionen für Audit-, Authentizitäts- und Nichtabstreitbarkeitszwecke auf. Die Protokollierungsfunktion kann für Wartungs-, Audit-Erhaltungs- oder Sicherheitsgründe administrativ oder durch Sicherheitsrichtlinien gesperrt sein. Wenn die Protokollierung gesperrt ist, SOLL das Secure Element ErrorTransactionLoggingLocked auslösen, wenn Transaktionsoperationen versucht werden. Dies verhindert die Aus führung von Transaktionen, die nicht ordnungsgemäß protokolliert werden können, und gewährleistet, dass alle ausgeführten Transaktionen im Audit-Trail aufgezeichnet werden. ErrorTransactionLoggingLocked ist eine Ausnahme mit hohem Schweregrad, da die Audit-Trail-Integrität für das Sicherheitsmodell kritisch ist. Transaktionen können nicht ohne Protokollierungsfunktion fortgesetzt werden, um authentische, nicht abstreitbare Transaktionsdatensätze zu verwalten.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All transaction operations when logging locked: startTransaction, updateTransaction, finishTransaction</text>
+      <text xml:lang="de">Alle Transaktionsoperationen, wenn die Protokollierung gesperrt ist: startTransaction, updateTransaction, finishTransaction</text>
+    </applicability>
+    <reference>Transaction Management (3.2.2), Transaction Logging (3.2.2), startTransaction – Function (3.2.2), updateTransaction – Function (3.2.2), finishTransaction – Function (3.2.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>startTransaction</function>
+    <function>updateTransaction</function>
+    <function>finishTransaction</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls transaction operation (e.g., startTransaction, updateTransaction, finishTransaction)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Transaktionsoperation auf (z.B. startTransaction, updateTransaction, finishTransaction)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and transaction prerequisites</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und Transaktionsvorbedingungen</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives transaction operation request</text>
+      <text xml:lang="de">Secure Element empfängt Transaktionsoperationsanforderung</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element checks transaction logging lock status</text>
+      <text xml:lang="de">Secure Element prüft den Status der Transaktionsprotokollierungssperre</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If logging locked → ErrorTransactionLoggingLocked raised, operation aborted</text>
+      <text xml:lang="de">Wenn Protokollierung gesperrt → ErrorTransactionLoggingLocked ausgelöst, Operation abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If logging unlocked → proceed to step 6</text>
+      <text xml:lang="de">Wenn Protokollierung entsperrt → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element prepares transaction record for logging</text>
+      <text xml:lang="de">Secure Element bereitet Transaktionsdatensatz für Protokollierung vor</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element prepares counter increment</text>
+      <text xml:lang="de">Secure Element bereitet Zählererhöhung vor</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element validates logging capability to accept transaction record</text>
+      <text xml:lang="de">Secure Element validiert, dass Protokollierung Transaktionsdatensatz akzeptieren kann</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If logging becomes locked during operation → ErrorTransactionLoggingLocked raised</text>
+      <text xml:lang="de">Wenn Protokollierung während der Operation gesperrt wird → ErrorTransactionLoggingLocked ausgelöst</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If logging available → proceed to step 9</text>
+      <text xml:lang="de">Wenn Protokollierung verfügbar → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element writes transaction record to logging storage</text>
+      <text xml:lang="de">Secure Element schreibt Transaktionsdatensatz in Protokollspeicher</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element increments transaction counter</text>
+      <text xml:lang="de">Secure Element erhöht Transaktionszähler</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns to caller indicating transaction recorded and logged</text>
+      <text xml:lang="de">Funktion kehrt zu Aufrufer zurück und zeigt an, dass Transaktion aufgezeichnet und protokolliert wurde</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check transaction logging lock status</text>
+      <text xml:lang="de">Prüfen Sie den Status der Transaktionsprotokollierungssperre</text>
+    </step>
+    <step>
+      <text xml:lang="en">Transaction creation is blocked while logging locked</text>
+      <text xml:lang="de">Die Transaktionserstellung wird blockiert, während die Protokollierung gesperrt ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Wait for logging to be unlocked if temporarily locked</text>
+      <text xml:lang="de">Warten Sie, bis die Protokollierung entsperrt wird, wenn sie vorübergehend gesperrt ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use unlockTransactionLogging to resume transactions</text>
+      <text xml:lang="de">Verwenden Sie unlockTransactionLogging, um Transaktionen fortzusetzen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Operations Blocked">
+      <text xml:lang="en">Transaction operations cannot proceed (startTransaction, updateTransaction, finishTransaction).</text>
+      <text xml:lang="de">Transaktionsoperationen können nicht fortgesetzt werden (startTransaction, updateTransaction, finishTransaction).</text>
+    </state>
+    <state name="Transaction Not Recorded">
+      <text xml:lang="en">Transaction record is not written to logging storage.</text>
+      <text xml:lang="de">Transaktionsdatensatz wird nicht in den Protokollspeicher geschrieben.</text>
+    </state>
+    <state name="Counter Not Incremented">
+      <text xml:lang="en">Transaction counter remains unchanged.</text>
+      <text xml:lang="de">Der Transaktionszähler bleibt unverändert.</text>
+    </state>
+    <state name="Logging Remains Locked">
+      <text xml:lang="en">Logging lock status unchanged - remains locked.</text>
+      <text xml:lang="de">Der Protokollierungssperrststatus bleibt unverändert - bleibt gesperrt.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorTransactionLoggingLocked High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorTransactionLoggingLocked an den Aufrufer zurück.</text>
+    </state>
+    <state name="Audit Trail Protected">
+      <text xml:lang="en">Audit trail integrity protected by preventing unlogged transactions.</text>
+      <text xml:lang="de">Die Audit-Trail-Integrität ist durch die Verhinderung nicht protokollierter Transaktionen geschützt.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Transaction logging is locked and cannot be modified</text>
+      <text xml:lang="de">Anzeichen: Die Transaktionsprotokollierung ist gesperrt und kann nicht geändert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Logging, Logging Control, Lock Operations, Access Control</text>
+      <text xml:lang="de">Themen: Transaktionsprotokollierung, Protokollierungskontrolle, Sperroperationen, Zugriffskontrolle</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by transaction functions when transaction logging is locked</text>
+      <text xml:lang="de">Wird von Transaktionsfunktionen ausgelöst, wenn die Transaktionsprotokollierung gesperrt ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">State validation checks transaction logging lock status</text>
+      <text xml:lang="de">Die Statusvalidierung prüft den Status der Transaktionsprotokollierungssperre</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device prevents transaction creation when logging locked</text>
+      <text xml:lang="de">Das Gerät verhindert die Transaktionserstellung, wenn die Protokollierung gesperrt ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Locked state blocks transaction operations</text>
+      <text xml:lang="de">Der Sperrzustand blockiert Transaktionsoperationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

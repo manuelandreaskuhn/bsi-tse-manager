@@ -1,0 +1,571 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="registerClient" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>registerClient</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">The function registerClient can be used to register the ID of a client application. If this function is implemented, the input functions startTransaction, updateTransaction and finishTransaction raise an exception if they are invoked with an unregistered ID as input for the parameter clientId.</text>
+    <text xml:lang="de">Die Funktion registerClient kann verwendet werden, um die ID einer Clientanwendung zu registrieren. Falls diese Funktion implementiert ist, werfen die Eingabefunktionen startTransaction, updateTransaction und finishTransaction eine Exception, wenn sie mit einer nicht registrierten ID als Parameter clientId aufgerufen werden.</text>
+  </description>
+  <authorizedRoles>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <standardStep number="3">
+        <shortCommand xml:lang="de">Zeit-Prüfung</shortCommand>
+        <shortCommand xml:lang="en">Time Verification</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the current time in the SE is not set, the function SHALL raise the exception ErrorTimeNotSet and exit the function.</text>
+        <text xml:lang="de">Falls die aktuelle Zeit im SE nicht gesetzt ist: Werfe ErrorTimeNotSet und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF current time in SE NOT set THEN
+  THROW ErrorTimeNotSet
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN aktuelle Zeit im SE NICHT gesetzt DANN
+  WERFE ErrorTimeNotSet
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTimeNotSet</exception>
+        <trigger>
+          <text xml:lang="en">The current time in SE is not set</text>
+          <text xml:lang="de">Die aktuelle Zeit im SE ist nicht gesetzt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">The function SHALL check if the devices maximum number of clients has been reached. If the number has been reached, the function SHALL raise the exception ErrorClientLimitReached and exit the function.</text>
+        <text xml:lang="de">Prüfe, ob die maximale Anzahl von Clients erreicht ist. Falls ja: Exception ErrorClientLimitReached, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF maximum number of clients reached THEN
+  THROW ErrorClientLimitReached
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN maximale Anzahl von Clients erreicht DANN
+  WERFE ErrorClientLimitReached
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorClientLimitReached</exception>
+        <trigger>
+          <text xml:lang="en">The maximum number of clients is reached</text>
+          <text xml:lang="de">Die maximale Anzahl von Clients ist erreicht</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <description>
+        <text xml:lang="en">The function SHALL check if the passed clientId consists only of valid characters. If the passed clientId contains invalid characters, the function SHALL raise the exception ErrorInvalidClientIdCharacter and exit the function.</text>
+        <text xml:lang="de">Prüfe, ob die ClientID nur aus gültigen Zeichen besteht. Falls nicht: Exception ErrorInvalidClientIdCharacter, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF clientId contains invalid characters THEN
+  THROW ErrorInvalidClientIdCharacter
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN ClientID ungültige Zeichen enthält DANN
+  WERFE ErrorInvalidClientIdCharacter
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorInvalidClientIdCharacter</exception>
+        <trigger>
+          <text xml:lang="en">The passed clientId contains invalid characters</text>
+          <text xml:lang="de">Die übergebene ClientID enthält ungültige Zeichen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>6</number>
+      <description>
+        <text xml:lang="en">The function SHALL check if the passed clientId is already registered. If the passed clientId is already registered, the function SHALL raise the exception ErrorClientAlreadyRegistered and exit the function.</text>
+        <text xml:lang="de">Prüfe, ob die ClientID bereits registriert ist. Falls ja: Exception ErrorClientAlreadyRegistered, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF clientId already registered THEN
+  THROW ErrorClientAlreadyRegistered
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN ClientID bereits registriert DANN
+  WERFE ErrorClientAlreadyRegistered
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorClientAlreadyRegistered</exception>
+        <trigger>
+          <text xml:lang="en">The clientId is already registered</text>
+          <text xml:lang="de">Die ClientID ist bereits registriert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>7</number>
+      <standardStep number="5">
+        <shortCommand xml:lang="de">SE-Funktionalität Log-Erstellung</shortCommand>
+        <shortCommand xml:lang="en">SE Log Message Creation</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL invoke the functionality of the Secure Element to create the log message parts to log the registration of the client. If the execution fails, the function SHALL raise the exception ErrorSigningEventDataFailed and exit the function.</text>
+        <text xml:lang="de">Rufe SE-Funktionalität auf, um Log-Nachricht-Teile zu erstellen. Falls Ausführung fehlschlägt: Exception ErrorSigningEventDataFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  INVOKE SE functionality to create log message parts
+CATCH error
+  THROW ErrorSigningEventDataFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  RUFE SE-Funktion zur Log-Nachricht-Erstellung auf
+BEI_FEHLER
+  WERFE ErrorSigningEventDataFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorSigningEventDataFailed</exception>
+        <trigger>
+          <text xml:lang="en">The execution fails</text>
+          <text xml:lang="de">Die Ausführung schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>8</number>
+      <standardStep number="6">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile abrufen</shortCommand>
+        <shortCommand xml:lang="en">Retrieve Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL retrieve the parts of the log message determined by the Secure Element. If the retrieval of the log message parts fails, the function SHALL raise the exception ErrorRetrieveLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Hole die Log-Nachricht-Teile vom Secure Element. Falls der Abruf fehlschlägt: Werfe ErrorRetrieveLogMessageFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE log message parts from SE
+CATCH error
+  THROW ErrorRetrieveLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Log-Nachricht-Teile vom SE
+BEI_FEHLER
+  WERFE ErrorRetrieveLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRetrieveLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">The retrieval of log message parts fails</text>
+          <text xml:lang="de">Der Abruf der Log-Nachricht-Teile schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>9</number>
+      <description>
+        <text xml:lang="en">The function SHALL enable the invocation of the functions startTransaction, updateTransaction and finishTransaction using the passed ID as input parameter clientId until the function deregisterClient is invoked. If the enabling of the function invocation using the ID fails, the function SHALL raise the exception ErrorRegisterClientFailed and exit the function.</text>
+        <text xml:lang="de">Aktiviere die Aufrufe von startTransaction, updateTransaction und finishTransaction mit der ClientID. Bei Fehler: Exception ErrorRegisterClientFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  ENABLE function invocations with clientId
+CATCH error
+  THROW ErrorRegisterClientFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  AKTIVIERE Funktionsaufrufe mit ClientID
+BEI_FEHLER
+  WERFE ErrorRegisterClientFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRegisterClientFailed</exception>
+        <trigger>
+          <text xml:lang="en">The enabling of function invocation fails</text>
+          <text xml:lang="de">Das Aktivieren der Funktionsaufrufe schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>10</number>
+      <standardStep number="7">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile speichern</shortCommand>
+        <shortCommand xml:lang="en">Store Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the registration of the client has been successful, the data of the retrieved log message parts SHALL be stored. If the data has not been stored successfully, the function SHALL raise the exception ErrorStoringLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Nach erfolgreicher Registrierung: Speichere Log-Nachricht-Teile. Bei Fehler: Exception ErrorStoringLogMessageFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  STORE log message parts on storage medium
+CATCH error
+  THROW ErrorStoringLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SPEICHERE Log-Nachricht-Teile auf Speichermedium
+BEI_FEHLER
+  WERFE ErrorStoringLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorStoringLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">The data was not stored successfully</text>
+          <text xml:lang="de">Die Daten wurden nicht erfolgreich gespeichert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>11</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the data has been stored successfully, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Bei erfolgreicher Speicherung: Gebe ohne Exception zurück.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN without exception
+END SUCCESSFULLY</text>
+        <text xml:lang="de">RETURN ohne Exception
+BEENDE_ERFOLGREICH</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Storage successful</text>
+          <text xml:lang="de">Speicherung erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Returns success without exception</text>
+          <text xml:lang="de">Gibt Erfolg ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>clientId</name>
+      <type>String</type>
+      <description>
+        <text xml:lang="en">represents the ID of the application that wants to use the input functions.</text>
+        <text xml:lang="de">stellt die ID der Anwendung dar, die die Eingabefunktionen verwenden möchte.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>void</type>
+    <description>
+      <text xml:lang="en">This function does not return a value.</text>
+      <text xml:lang="de">Diese Funktion gibt keinen Wert zurück.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorCertificateExpired</exception>
+    <exception>ErrorClientAlreadyRegistered</exception>
+    <exception>ErrorClientLimitReached</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterTooLong</exception>
+    <exception>ErrorRegisterClientFailed</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+    <exception>ErrorSignatureCounterExhausted</exception>
+    <exception>ErrorSignatureCounterOverflow</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorTimeNotSet</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+  <systemLog>
+    <logType>system</logType>
+    <requirement>MUST</requirement>
+    <asn1Structure>
+      <logMessage>LogMessage ::= SEQUENCE {
+  version                INTEGER (3),
+  certifiedDataType      OBJECT IDENTIFIER (id-SE-API-system-log),
+  certifiedData          SystemLogMessage,  -- embedded system log
+  serialNumber           OCTET STRING (SIZE (32)),
+  signatureAlgorithm     AlgorithmIdentifier,
+  seAuditData            OCTET STRING OPTIONAL,
+  signatureCounter       INTEGER,
+  signatureCreationTime  Time,
+  signatureValue         OCTET STRING
+}</logMessage>
+      <systemLogMessage>SystemLogMessage ::= SEQUENCE {
+  version                    INTEGER (3),
+  certifiedDataType          OBJECT IDENTIFIER (id-SE-API-system-log),
+  eventType                  [0] IMPLICIT PrintableString ("registerClient"),
+  eventOrigin                [1] IMPLICIT PrintableString OPTIONAL,
+  eventTriggeredByUser       [2] IMPLICIT UserId OPTIONAL,
+  eventData                  [3] IMPLICIT RegisterClientEventData,
+  additionalInternalData     [4] IMPLICIT OCTET STRING OPTIONAL,
+  serialNumber               OCTET STRING (SIZE (32)),
+  signatureAlgorithm         AlgorithmIdentifier,
+  signatureCounter           INTEGER,
+  signatureCreationTime      Time,
+  signatureValue             OCTET STRING
+}
+
+RegisterClientEventData ::= SEQUENCE {
+    clientId  ClientId
+}</systemLogMessage>
+    </asn1Structure>
+    <structure>
+      <field>
+        <name>version</name>
+        <type>INTEGER (3)</type>
+        <required>true</required>
+        <defaultValue>3</defaultValue>
+        <description>
+          <text xml:lang="en">Version of the log message format. SHALL be set to '3'.</text>
+          <text xml:lang="de">Version des Log-Nachricht-Formats. MUSS auf '3' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>certifiedDataType</name>
+        <type>OBJECT IDENTIFIER</type>
+        <required>true</required>
+        <defaultValue>id-SE-API-system-log</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to the OID id-SE-API-system-log.</text>
+          <text xml:lang="de">MUSS auf die OID id-SE-API-system-log gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventType</name>
+        <type>PrintableString</type>
+        <tag>[0] IMPLICIT</tag>
+        <required>true</required>
+        <defaultValue>registerClient</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to 'registerClient'.</text>
+          <text xml:lang="de">MUSS auf 'registerClient' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventOrigin</name>
+        <type>PrintableString</type>
+        <tag>[1] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">Component that triggered the event (e.g., component name).</text>
+          <text xml:lang="de">Komponente, die das Ereignis ausgelöst hat (z.B. Komponentenname).</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventTriggeredByUser</name>
+        <type>UserId</type>
+        <tag>[2] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">User ID of the user that triggered the event.</text>
+          <text xml:lang="de">Benutzer-ID des Benutzers, der das Ereignis ausgelöst hat.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>eventData</name>
+        <type>RegisterClientEventData</type>
+        <tag>[3] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Function-specific event data.</text>
+          <text xml:lang="de">Funktionsspezifische Ereignisdaten.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>additionalInternalData</name>
+        <type>OCTET STRING</type>
+        <tag>[4] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">MUST NOT be present. Reserved for future use.</text>
+          <text xml:lang="de">DARF NICHT vorhanden sein. Für zukünftige Verwendung reserviert.</text>
+        </description>
+        <note>RFU</note>
+        <origin>-</origin>
+      </field>
+      <field>
+        <name>serialNumber</name>
+        <type>OCTET STRING (SIZE (32))</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Serial number of the Secure Element consisting of the hash value of the public key of the certificate used to verify system logs.</text>
+          <text xml:lang="de">Seriennummer des Secure Element bestehend aus dem Hash-Wert des öffentlichen Schlüssels des Zertifikats zur Überprüfung von Systemprotokollen.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureAlgorithm</name>
+        <type>AlgorithmIdentifier</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Information about the signature creation.</text>
+          <text xml:lang="de">Informationen über die Signaturerstellung.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureCounter</name>
+        <type>INTEGER</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Current count of signatures created with the log message signing key protected by the Secure Element.</text>
+          <text xml:lang="de">Aktueller Zähler der mit dem durch das Secure Element geschützten Log-Nachricht-Signaturschlüssel erstellten Signaturen.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureCreationTime</name>
+        <type>Time</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Point in time of the Secure Element when the log message was signed.</text>
+          <text xml:lang="de">Zeitpunkt des Secure Element, als die Log-Nachricht signiert wurde.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureValue</name>
+        <type>OCTET STRING</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Result of the signature computation encoded as octet string.</text>
+          <text xml:lang="de">Ergebnis der Signaturberechnung codiert als Oktettkette.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+    </structure>
+  </systemLog>
+</function>

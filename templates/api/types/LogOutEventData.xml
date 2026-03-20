@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="LogOutEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>LogOutEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type LogOutEventData.</description>
+  <asn1Definition>LogOutEventData ::= SEQUENCE {
+  loggedOutUserId  UserId,
+  logOutCause  LogOutCause
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>loggedOutUserId</name>
+      <type>UserId</type>
+      <optional>false</optional>
+      <description>Field loggedOutUserId of type UserId</description>
+    </field>
+    <field>
+      <name>logOutCause</name>
+      <type>LogOutCause</type>
+      <optional>false</optional>
+      <description>Field logOutCause of type LogOutCause</description>
+    </field>
+  </fields>
+</type>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>023</processId>
+    <processName>
+        <text xml:lang="en">Open Transactions Query</text>
+        <text xml:lang="de">Offene Transaktionen abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of a list of all transaction numbers of transactions that have been started but not yet completed. Useful for status monitoring and before updates.</text>
+        <text xml:lang="de">Abruf einer Liste aller Transaktionsnummern von Transaktionen, die gestartet aber noch nicht beendet wurden. Nützlich für Statusüberwachung und vor Updates.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction List</text>
+            <text xml:lang="de">Transaktionsliste</text>
+        </object>
+        <object>
+            <text xml:lang="en">Open Transactions</text>
+            <text xml:lang="de">Offene Transaktionen</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getOpenTransactions</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>openTransactions</name>
+            <type>INTEGER[]</type>
+            <description>
+                <text xml:lang="en">Array of transaction numbers of all open transactions</text>
+                <text xml:lang="de">Array von Transaktionsnummern aller offenen Transaktionen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetOpenTransactionsFailed</exception>
+        <exception>ErrorFunctionFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.7</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Function is NOT mandatory (optional). Available to all user roles (including unauthenticated). A transaction is considered 'open' when startTransaction has been called, but finishTransaction has not yet been called. Important before TSE updates, as open transactions cannot be continued after update.</text>
+        <text xml:lang="de">Funktion ist NICHT verpflichtend (optional). Für alle Nutzerrollen (auch unauthenticated) verfügbar. Eine Transaktion gilt als 'offen', wenn startTransaction aufgerufen wurde, aber finishTransaction noch nicht. Wichtig vor TSE-Updates, da offene Transaktionen nach Update nicht mehr fortgesetzt werden können.</text>
+    </notes>
+</process>

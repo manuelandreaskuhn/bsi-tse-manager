@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="ProcessTypes" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+    <name>ProcessTypes</name>
+    <category>TransactionData</category>
+    <source>DSFinV-K</source>
+    <description>Definiert die zulässigen Formate für processType gemäß DSFinV-K Anhang I. processType kennzeichnet das Format der in processData dargestellten Inhalte und wird in ASCII-Codierung dargestellt. Zur Versionierung wird ein Suffix verwendet (derzeit -V1).</description>
+    <values>
+        <value>
+            <name>Kassenbeleg-V1</name>
+            <description>Standardformat für Kassenbelege. Enthält Vorgangstyp, Brutto-Steuerumsätze (fünf Steuersätze) und Zahlungen. Die UpdateTransaction-Operation wird bei diesem processType nicht verwendet, da die processData sich erst bei FinishTransaction ändern.</description>
+        </value>
+        <value>
+            <name>Bestellung-V1</name>
+            <description>CSV-Format für die Absicherung von Bestellpositionen bei lang anhaltenden verkaufsvorbereitenden Vorgängen. Enthält Menge, Bezeichnung und Preis pro Bestellzeile.</description>
+        </value>
+        <value>
+            <name>SonstigerVorgang</name>
+            <description>Frei wählbares Format für alle Vorgänge, die nicht einem Kassenbeleg oder einer Bestellung entsprechen. Der Inhalt von processData kann vom Aufzeichnungssystem frei gewählt werden. Für ggf. relevante Vorgänge sollte nach Möglichkeit ein lesbares Textformat gewählt werden.</description>
+        </value>
+    </values>
+</enum>

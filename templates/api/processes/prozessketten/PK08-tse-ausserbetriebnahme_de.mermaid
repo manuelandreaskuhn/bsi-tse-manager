@@ -1,0 +1,62 @@
+sequenceDiagram
+    actor Admin as Admin
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+    participant Extern as Externes Archiv
+
+    Note over Admin,Extern: TSE-Außerbetriebnahme (geplant)
+
+    rect rgb(255, 240, 200)
+    Note over Admin,Extern: PHASE 1: OFFENE TRANSAKTIONEN BEENDEN
+    
+    Admin->>TSE: getOpenTransactions()
+    TSE-->>Admin: Liste offener Transaktionsnummern
+    
+    alt Offene Transaktionen vorhanden
+        loop Für jede offene Transaktion
+            Admin->>TSE: finishTransaction(clientId, transactionNumber, ...)
+            TSE-->>Admin: Transaktion abgeschlossen
+        end
+    end
+    end
+
+    rect rgb(255, 220, 200)
+    Note over Admin,Extern: PHASE 2: FINALER EXPORT
+    
+    Admin->>TSE: exportLogMessages()
+    TSE->>Speicher: Sammle ALLE Logs + Zertifikate
+    Speicher-->>TSE: Daten
+    TSE->>TSE: Erstelle TAR-Archiv
+    TSE-->>Admin: Finales TAR-Archiv
+    Admin->>Extern: Archiviere dauerhaft
+    Extern-->>Admin: Archiviert
+    end
+
+    rect rgb(255, 200, 200)
+    Note over Admin,Extern: PHASE 3: DEAKTIVIERUNG
+    
+    Admin->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Admin: Authentifiziert
+    
+    Admin->>TSE: disableSecureElement()
+    activate TSE
+    TSE->>TSE: Prüfe: Keine offenen Transaktionen
+    TSE->>SM: Erstelle disableSecureElement-Log
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM->>SM: LETZTE Signatur
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE->>Speicher: Speichere FINALE Log-Nachricht
+    TSE->>SM: Deaktiviere Sicherheitsmodul DAUERHAFT
+    activate SM
+    SM->>SM: Setze Status: DISABLED
+    SM->>SM: Lösche private Schlüssel (optional)
+    SM-->>TSE: Deaktiviert
+    deactivate SM
+    TSE-->>Admin: TSE außer Betrieb
+    deactivate TSE
+    end
+
+    Note over Admin,Extern: TSE ist nun PERMANENT deaktiviert<br/>Keine Transaktionen mehr möglich<br/>Nur noch Datenexport erlaubt

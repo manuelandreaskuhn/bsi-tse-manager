@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorFunctionNotSupported" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorFunctionNotSupported</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if an optional SE API function is invoked which is not supported by the device. ErrorFunctionNotSupported indicates that the requested function has not been implemented on the target device due to hardware limitations, firmware configuration, or intentional implementation restrictions. The exception is raised when an application attempts to call an optional SE API function that exists in the specification but is not present in this particular device's implementation. This exception distinguishes between mandatory functions that all compliant devices must support and optional functions whose availability depends on device capabilities and firmware version. The exception is raised immediately upon entry to the optional function when the device detects that the function is not implemented, preventing any attempted execution.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine optionale SE API Funktion aufgerufen wird, die das Gerät nicht unterstützt. ErrorFunctionNotSupported zeigt an, dass die angeforderte Funktion auf dem Zielgerät aufgrund von Hardwarelimits, Firmware-Konfiguration oder absichtlichen Implementierungsbeschränkungen nicht implementiert wurde. Die Ausnahme wird ausgelöst, wenn eine Anwendung versucht, eine optionale SE API Funktion aufzurufen, die in der Spezifikation existiert, aber in dieser bestimmten Geräteimplementierung nicht vorhanden ist. Diese Ausnahme unterscheidet zwischen obligatorischen Funktionen, die alle konformen Geräte unterstützen müssen, und optionalen Funktionen, deren Verfügbarkeit von Gerätefähigkeiten und Firmware-Version abhängt. Die Ausnahme wird sofort beim Eintritt in die optionale Funktion ausgelöst, wenn das Gerät erkennt, dass die Funktion nicht implementiert ist, und verhindert jeden Versuch der Ausführung.</text>
+  </description>
+  <category>Common Exception</category>
+  <subcategory>Feature Support</subcategory>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>exportSerialNumbers</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getCurrentSeTime</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getDescription</function>
+    <function>getDeviceHealth</function>
+    <function>getEndOfUsageDate</function>
+    <function>getFreeMemory</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getOpenTransactions</function>
+    <function>getRegisteredClients</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getTimeSyncVariant</function>
+    <function>getTotalMemory</function>
+    <function>getTransactionState</function>
+    <function>getUsedMemory</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorFunctionNotSupported that is thrown if an optional SE API function is invoked which is not supported by the device.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorFunctionNotSupported, die ausgelöst wird, wenn eine optionale SE API Funktion aufgerufen wird, die das Gerät nicht unterstützt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The SE API specification defines both mandatory and optional functions. This exception is raised when an application attempts to invoke an optional function that has not been implemented on the target device. When this exception occurs, the function does not execute, and the device returns no partial results. The exception indicates that the device does not support this particular function due to hardware limitations, firmware version constraints, or intentional implementation restrictions. Applications should handle this exception gracefully and either implement alternative functionality or inform users that this feature is not available on their device.</text>
+      <text xml:lang="de">Die SE API Spezifikation definiert sowohl obligatorische als auch optionale Funktionen. Diese Ausnahme wird ausgelöst, wenn eine Anwendung versucht, eine optionale Funktion aufzurufen, die auf dem Zielgerät nicht implementiert wurde. Wenn diese Ausnahme auftritt, wird die Funktion nicht ausgeführt und das Gerät gibt keine Teilergebnisse zurück. Die Ausnahme zeigt an, dass das Gerät diese bestimmte Funktion aufgrund von Hardwarelimits, Firmware-Versionsbeschränkungen oder absichtlichen Implementierungsbeschränkungen nicht unterstützt. Anwendungen sollten diese Ausnahme elegant behandeln und entweder alternative Funktionalität implementieren oder Benutzer informieren, dass diese Funktion auf ihrem Gerät nicht verfügbar ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2.1 Exception Categories</section>
+    <requirement>
+      <text xml:lang="en">ErrorFunctionNotSupported SHALL be raised when an application attempts to invoke an optional SE API function that is not implemented or supported by the device. The SE API defines both mandatory functions that all devices must support and optional functions that may or may not be implemented depending on the device hardware and firmware. This exception distinguishes between devices that do not support particular optional features.</text>
+      <text xml:lang="de">ErrorFunctionNotSupported soll ausgelöst werden, wenn eine Anwendung versucht, eine optionale SE API Funktion aufzurufen, die vom Gerät nicht implementiert oder unterstützt wird. Die SE API definiert sowohl obligatorische Funktionen, die alle Geräte unterstützen müssen, als auch optionale Funktionen, die je nach Gerätehardware und Firmware möglicherweise implementiert sind oder nicht. Diese Ausnahme unterscheidet zwischen Geräten, die bestimmte optionale Funktionen nicht unterstützen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Common exception - applicable to optional API functions that may not be supported by all device implementations</text>
+      <text xml:lang="de">Allgemeine Ausnahme - anwendbar auf optionale API-Funktionen, die möglicherweise nicht von allen Geräteimplementierungen unterstützt werden</text>
+    </applicability>
+    <reference>SE API Common Exceptions (3.1.2.1) and Function Implementation Requirements</reference>
+  </specification>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">User or application calls an optional SE API function</text>
+      <text xml:lang="de">Benutzer oder Anwendung ruft eine optionale SE API Funktion auf</text>
+    </step>
+    <step number="2" name="Request Reception">
+      <text xml:lang="en">Device receives the function invocation request</text>
+      <text xml:lang="de">Das Gerät empfängt die Funktionsaufrufsanfrage</text>
+    </step>
+    <step number="3" name="Function Support Check">
+      <text xml:lang="en">Device checks if the function is implemented in its current firmware version, hardware configuration, and device variant</text>
+      <text xml:lang="de">Das Gerät prüft, ob die Funktion in seiner aktuellen Firmware-Version, Hardware-Konfiguration und Gerätevariante implementiert ist</text>
+    </step>
+    <step number="4" name="Supported Function Path">
+      <text xml:lang="en">If the function is supported and implemented in the device, execution continues to step 5 (not taken in this exception case)</text>
+      <text xml:lang="de">Falls die Funktion im Gerät unterstützt und implementiert ist, wird die Ausführung zu Schritt 5 fortgesetzt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="5" name="Function Execution">
+      <text xml:lang="en">Supported function executes normally according to its specification (not taken in this exception case)</text>
+      <text xml:lang="de">Die unterstützte Funktion wird normal nach ihrer Spezifikation ausgeführt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="6" name="Unsupported Function Detection">
+      <text xml:lang="en">If the function is NOT supported (marked as optional and not implemented), execution branches to exception handling</text>
+      <text xml:lang="de">Falls die Funktion NICHT unterstützt wird (als optional markiert und nicht implementiert), wird die Ausführung zur Ausnahmeverarbeitung verzweigt</text>
+    </step>
+    <step number="7" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including the function name, minimum required firmware version (if applicable), and device capability information</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich des Funktionsnamens, der erforderlichen Mindestfirmware-Version (falls zutreffend) und Gerätefähigkeitsinformationen</text>
+    </step>
+    <step number="8" name="ErrorFunctionNotSupported Creation">
+      <text xml:lang="en">ErrorFunctionNotSupported exception instance is created with error message indicating the function is not supported on this device</text>
+      <text xml:lang="de">ErrorFunctionNotSupported-Ausnahminstanz wird mit Fehlermeldung erstellt, die anzeigt, dass die Funktion auf diesem Gerät nicht unterstützt wird</text>
+    </step>
+    <step number="9" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack immediately without any function processing</text>
+      <text xml:lang="de">Die Ausnahme wird sofort über den Call-Stack propagiert, ohne Funktionsverarbeitung</text>
+    </step>
+    <step number="10" name="Device State Verification">
+      <text xml:lang="en">Device state remains unchanged. The function rejection happened at the entry point before any processing or state modifications.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt unverändert. Die Funktionsablehnung erfolgte am Eintrag, bevor Verarbeitung oder Zustandsmodifikation stattfand.</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device supports required function</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät die erforderliche Funktion unterstützt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device capabilities and variant information</text>
+      <text xml:lang="de">Prüfen Sie Gerätefähigkeiten und Varianteninformationen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Implement alternative approach using supported functions</text>
+      <text xml:lang="de">Implementieren Sie einen alternativen Ansatz mit unterstützten Funktionen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Upgrade device firmware if needed</text>
+      <text xml:lang="de">Führen Sie ein Geräte-Firmware-Upgrade durch, falls erforderlich</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact vendor about function availability</text>
+      <text xml:lang="de">Kontaktieren Sie den Anbieter über die Verfügbarkeit von Funktionen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorClientNotRegistered</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Function Execution Status">
+      <text xml:lang="en">Function execution is prevented entirely. The optional function is not executed because it is not available on this device.</text>
+      <text xml:lang="de">Die Funktionsausführung wird vollständig verhindert. Die optionale Funktion wird nicht ausgeführt, da sie auf diesem Gerät nicht verfügbar ist.</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">Device state remains completely unchanged. The function rejection happens at entry point before any processing or state modifications.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt vollständig unverändert. Die Funktionsablehnung erfolgt am Eintrag, bevor Verarbeitung oder Zustandsmodifikation stattfindet.</text>
+    </state>
+    <state name="Execution Results">
+      <text xml:lang="en">No results are returned from the function. There are no partial results, incomplete data, or fallback values.</text>
+      <text xml:lang="de">Es werden keine Ergebnisse von der Funktion zurückgegeben. Es gibt keine Teilergebnisse, unvollständige Daten oder Fallback-Werte.</text>
+    </state>
+    <state name="Device Functionality">
+      <text xml:lang="en">All other supported functions (including other optional functions that are implemented) remain fully operational and accessible.</text>
+      <text xml:lang="de">Alle anderen unterstützten Funktionen (einschließlich anderer implementierter optionaler Funktionen) bleiben vollständig betriebsbereit und zugänglich.</text>
+    </state>
+    <state name="No State Inconsistency">
+      <text xml:lang="en">No state inconsistency exists. The function was rejected before any processing began, ensuring device state remains consistent.</text>
+      <text xml:lang="de">Es gibt keine Zustandsinkonsistenz. Die Funktion wurde abgelehnt, bevor eine Verarbeitung begann, um sicherzustellen, dass der Gerätezustand konsistent bleibt.</text>
+    </state>
+    <state name="Caller Responsibility">
+      <text xml:lang="en">The application must handle the exception gracefully and implement alternative functionality or notify users of the unavailable feature.</text>
+      <text xml:lang="de">Die Anwendung muss die Ausnahme elegant behandeln und entweder alternative Funktionalität implementieren oder Benutzer über die nicht verfügbare Funktion benachrichtigen.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: The requested function is not supported by this device or implementation</text>
+      <text xml:lang="de">Anzeichen: Die angeforderte Funktion wird von diesem Gerät oder Implementierung nicht unterstützt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Function Support, Device Capabilities, Feature Availability, API Compatibility</text>
+      <text xml:lang="de">Themen: Funktionsunterstützung, Gerätefähigkeiten, Funktionsverfügbarkeit, API-Kompatibilität</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised when device does not support requested function</text>
+      <text xml:lang="de">Erhoben, wenn das Gerät die angeforderte Funktion nicht unterstützt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device capability tracking indicates function unavailability</text>
+      <text xml:lang="de">Die Verfolgung der Gerätefähigkeiten zeigt Funktionsnichtverfügbarkeit an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Some functions may not be implemented in certain device variants</text>
+      <text xml:lang="de">Einige Funktionen sind möglicherweise nicht in bestimmten Gerätevarianten implementiert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application must check function availability before invocation</text>
+      <text xml:lang="de">Die Anwendung muss die Funktionsverfügbarkeit vor dem Aufruf prüfen</text>
+    </note>
+  </implementationContext>
+</exception>
+

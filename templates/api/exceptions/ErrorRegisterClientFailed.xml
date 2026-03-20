@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorRegisterClientFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorRegisterClientFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function registerClient fails to register a new client application with the Secure Element. The function attempts to add a new client to the device's registered client list, but the registration operation fails due to device error, resource limitations, capacity constraints, or other device-level failure conditions. ErrorRegisterClientFailed indicates that the client could not be registered and is not available for performing transactions on the device.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktion registerClient fehlschlägt beim Registrieren einer neuen Clientanwendung beim Secure Element. Die Funktion versucht, einen neuen Client zur Registrierungsliste des Geräts hinzuzufügen, aber die Registrierungsoperation schlägt fehl aufgrund von Gerätefehlern, Ressourcenbeschränkungen, Kapazitätsbeschränkungen oder anderen Fehlerzuständen auf Geräteebene. ErrorRegisterClientFailed zeigt an, dass der Client nicht registriert werden konnte und nicht für die Durchführung von Transaktionen auf dem Gerät verfügbar ist.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Registration Failure</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorRegisterClientFailed that is thrown if the client registration operation fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorRegisterClientFailed, die ausgelöst wird, wenn die Clientregistrierungsoperation fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the registerClient function cannot successfully register a new client application with the Secure Element. Client registration is the process by which a client application becomes known to the device and gains the ability to perform transactions and operations. ErrorRegisterClientFailed indicates that the registration process failed at some point during the registration sequence, preventing the client from being registered. Common causes include: device resource exhaustion, client capacity limit reached, device communication failure, client ID already registered, or device internal error. ErrorRegisterClientFailed is a High severity exception that prevents client registration and must be resolved before the client can perform operations. Recovery requires investigating the cause of the registration failure and taking appropriate corrective action.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die registerClient-Funktion eine neue Clientanwendung beim Secure Element nicht erfolgreich registrieren kann. Die Clientregistrierung ist der Prozess, durch den eine Clientanwendung dem Gerät bekannt wird und die Fähigkeit erlangt, Transaktionen und Operationen auszuführen. ErrorRegisterClientFailed zeigt an, dass der Registrierungsprozess irgendwann während der Registrierungssequenz fehlgeschlagen ist und verhindert, dass der Client registriert wird. Häufige Ursachen sind: Ressourcenerschöpfung des Geräts, Clientkapazitätslimit erreicht, Gerätekommunikationsfehler, Client-ID bereits registriert oder interner Gerätefehler. ErrorRegisterClientFailed ist eine Ausnahme mit hohem Schweregrad, die die Clientregistrierung verhindert und behoben werden muss, bevor der Client Operationen ausführen kann. Die Wiederherstellung erfordert das Untersuchen der Ursache des Registrierungsfehlers und das Ergreifen angemessener Korrekturmaßnahmen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.3 Client Management - registerClient</section>
+    <requirement>
+      <text xml:lang="en">The function registerClient SHALL register a new client application with the Secure Element, adding it to the device's client registry. If the registration operation cannot be completed successfully due to device error, resource limitation, capacity constraint, or other failure condition, the function SHALL raise the exception ErrorRegisterClientFailed. The client registration may fail due to: insufficient device resources, maximum client capacity reached, client ID already registered, device communication failure, or device internal error. When registration fails, the client is not added to the device's client list and is not available for subsequent operations.</text>
+      <text xml:lang="de">Die registerClient-Funktion MUSS eine neue Clientanwendung beim Secure Element registrieren und sie zur Client-Registry des Geräts hinzufügen. Wenn die Registrierungsoperation nicht erfolgreich abgeschlossen werden kann aufgrund von Gerätefehlern, Ressourcenbeschränkungen, Kapazitätsbeschränkungen oder anderen Fehlerzuständen, MUSS die Funktion die Ausnahme ErrorRegisterClientFailed auslösen. Die Clientregistrierung kann fehlschlagen aufgrund von: unzureichende Geräteressourcen, maximale Clientkapazität erreicht, Client-ID bereits registriert, Gerätekommunikationsfehler oder interner Gerätefehler. Wenn die Registrierung fehlschlägt, wird der Client nicht zur Client-Liste des Geräts hinzugefügt und ist nicht für nachfolgende Operationen verfügbar.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client registration operations - registerClient function only</text>
+      <text xml:lang="de">Clientregistrierungsoperationen - nur registerClient-Funktion</text>
+    </applicability>
+    <reference>registerClient – Function (3.2.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>registerClient</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls registerClient function with client ID and other client parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft registerClient-Funktion mit Client-ID und anderen Client-Parametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including client ID format and validity</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich Client-ID-Format und -Gültigkeit</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization and device state for client registration operations</text>
+      <text xml:lang="de">Funktion prüft Autorisierung und Gerätezustand für Clientregistrierungsoperationen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function queries device to check current registered client count and capacity</text>
+      <text xml:lang="de">Funktion fragt das Gerät ab, um die aktuelle Anzahl und Kapazität registrierter Clients zu überprüfen</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If device has reached maximum client capacity → ErrorRegisterClientFailed raised, function exits</text>
+      <text xml:lang="de">Wenn das Gerät die maximale Client-Kapazität erreicht hat → ErrorRegisterClientFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If device has available capacity → proceed to step 5</text>
+      <text xml:lang="de">Wenn das Gerät über verfügbare Kapazität verfügt → Fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks if client ID is already registered</text>
+      <text xml:lang="de">Funktion prüft, ob Client-ID bereits registriert ist</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If client ID already registered → ErrorRegisterClientFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Client-ID bereits registriert → ErrorRegisterClientFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If client ID not registered → proceed to step 6</text>
+      <text xml:lang="de">Wenn Client-ID nicht registriert → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function verifies device has sufficient resources for registration</text>
+      <text xml:lang="de">Funktion überprüft, ob das Gerät ausreichende Ressourcen für die Registrierung hat</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If insufficient resources → ErrorRegisterClientFailed raised, function exits</text>
+      <text xml:lang="de">Wenn unzureichende Ressourcen → ErrorRegisterClientFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If sufficient resources → proceed to step 7</text>
+      <text xml:lang="de">Wenn ausreichende Ressourcen → Fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function transmits client registration command with client parameters to Secure Element</text>
+      <text xml:lang="de">Funktion überträgt Clientregistrierungsbefehl mit Client-Parametern an Secure Element</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If communication fails → ErrorRegisterClientFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Kommunikation fehlschlägt → ErrorRegisterClientFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If communication succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Kommunikation erfolgreich → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function receives acknowledgment and client handle/ID from Secure Element</text>
+      <text xml:lang="de">Funktion empfängt Bestätigung und Client-Handle/ID von Secure Element</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns successfully with client registered and client handle provided</text>
+      <text xml:lang="de">Funktion gibt erfolgreich mit registriertem Client und bereitgestelltem Client-Handle zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Überprüfen Sie, ob das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check client registry capacity using getMaxNumberOfClients</text>
+      <text xml:lang="de">Überprüfen Sie die Client-Registry-Kapazität mit getMaxNumberOfClients</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure clientId is valid and unique</text>
+      <text xml:lang="de">Stellen Sie sicher, dass clientId gültig und eindeutig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry registration after confirming preconditions</text>
+      <text xml:lang="de">Registrierung wiederholen, nachdem Vorbedingungen bestätigt wurden</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorClientAlreadyRegistered</exception>
+    <exception>ErrorClientLimitReached</exception>
+    <exception>ErrorDeregisterClientFailed</exception>
+    <exception>ErrorGetRegisteredClientsFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Client Not Registered">
+      <text xml:lang="en">The new client is not registered on the device. The client is not in the registered client list.</text>
+      <text xml:lang="de">Der neue Client ist nicht auf dem Gerät registriert. Der Client ist nicht in der registrierten Client-Liste.</text>
+    </state>
+    <state name="Registered Client Count Unchanged">
+      <text xml:lang="en">The number of registered clients remains unchanged. The failed registration does not modify the client registry.</text>
+      <text xml:lang="de">Die Anzahl der registrierten Clients bleibt unverändert. Die fehlgeschlagene Registrierung ändert die Client-Registry nicht.</text>
+    </state>
+    <state name="Device Client Capacity Unchanged">
+      <text xml:lang="en">The device's client capacity and maximum client limit remain unchanged.</text>
+      <text xml:lang="de">Die Client-Kapazität des Geräts und das maximale Client-Limit bleiben unverändert.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged by the failed registration attempt. No cascading side effects occur.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt durch den fehlgeschlagenen Registrierungsversuch unverändert. Es treten keine Kaskadennebeneffekte auf.</text>
+    </state>
+    <state name="Client Cannot Perform Operations">
+      <text xml:lang="en">The unregistered client cannot perform transactions or other operations that require registration.</text>
+      <text xml:lang="de">Der nicht registrierte Client kann keine Transaktionen oder andere Operationen ausführen, die eine Registrierung erfordern.</text>
+    </state>
+    <state name="Retry Possible">
+      <text xml:lang="en">The registration operation can be retried after addressing the underlying cause of the failure.</text>
+      <text xml:lang="de">Die Registrierungsoperation kann wiederholt werden, nachdem die zugrunde liegende Fehlerursache behoben wurde.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Registration of a new client failed - client could not be registered</text>
+      <text xml:lang="de">Anzeige: Registrierung eines neuen Clients ist fehlgeschlagen - Client konnte nicht registriert werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Registration, Client Lifecycle, Registry Operations</text>
+      <text xml:lang="de">Themen: Clientverwaltung, Registrierung, Client-Lebenszyklus, Registry-Operationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by registerClient when client registration operation fails</text>
+      <text xml:lang="de">Ausgelöst von registerClient, wenn die Clientregistrierungsoperation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Client registration subsystem adds client to device registry</text>
+      <text xml:lang="de">Client-Registrierungs-Subsystem fügt Client zur Geräte-Registry hinzu</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device allocates resources for new client</text>
+      <text xml:lang="de">Gerät weist Ressourcen für neuen Client zu</text>
+    </note>
+    <note>
+      <text xml:lang="en">Registration failure prevents client from being added</text>
+      <text xml:lang="de">Registrierungsfehler verhindert das Hinzufügen des Clients</text>
+    </note>
+  </implementationContext>
+</exception>
+

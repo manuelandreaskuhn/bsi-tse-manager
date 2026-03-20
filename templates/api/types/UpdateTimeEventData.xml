@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="UpdateTimeEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>UpdateTimeEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type UpdateTimeEventData.</description>
+  <asn1Definition>UpdateTimeEventData ::= SEQUENCE {
+  seTimeBeforeUpdate  Time,
+  seTimeAfterUpdate  Time,
+  slewSettings  SlewSettings OPTIONAL
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>seTimeBeforeUpdate</name>
+      <type>Time</type>
+      <optional>false</optional>
+      <description>Field seTimeBeforeUpdate of type Time</description>
+    </field>
+    <field>
+      <name>seTimeAfterUpdate</name>
+      <type>Time</type>
+      <optional>false</optional>
+      <description>Field seTimeAfterUpdate of type Time</description>
+    </field>
+    <field>
+      <name>slewSettings</name>
+      <type>SlewSettings</type>
+      <optional>true</optional>
+      <description>Field slewSettings of type SlewSettings</description>
+    </field>
+  </fields>
+</type>

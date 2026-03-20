@@ -1,0 +1,31 @@
+flowchart TD
+    Start([ERS: registerClient aufrufen])
+    Start --> CheckAuth{Admin oder Logger<br/>authentifiziert?}
+    
+    CheckAuth -->|Nein| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Ja| CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| CheckDuplicate{Client bereits<br/>registriert?}
+    
+    CheckDuplicate -->|Ja| ErrorDup[Exception:<br/>ErrorClientAlreadyRegistered]
+    CheckDuplicate -->|Nein| CheckLimit{Max. Anzahl<br/>Clients erreicht?}
+    
+    CheckLimit -->|Ja| ErrorLimit[Exception:<br/>ErrorTooManyClients]
+    CheckLimit -->|Nein| Register[Registriere Client in TSE]
+    
+    Register --> CreateLog[Erstelle System-Log-Nachricht<br/>registerClient]
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> Return[Rückgabe an ERS:<br/>Erfolg]
+    Return --> End([Ende])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorDup --> End
+    ErrorLimit --> End
+    
+    style Register fill:#90EE90
+    style CreateLog fill:#87CEEB

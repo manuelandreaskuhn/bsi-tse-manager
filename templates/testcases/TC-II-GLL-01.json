@@ -1,0 +1,410 @@
+{
+  "testcase_id": "TC-II-GLL-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Letzte Log-Nachricht: Korrekte Ausgabe und Fehlerfall",
+  "description": "Prüft, ob getLastLogMessage die zuletzt erstellte Log-Nachricht mit korrektem Dateinamen zurückgibt.",
+  "purpose": "Prüfung, ob die Funktionalität zur Ausgabe der zuletzt erzeugten Log-Nachricht die zuletzt erstellte Log-Nachricht und einen korrekten Namen diese Log-Nachricht ausgibt. Zusätzlich erfolgt eine Prüfung, ob die Ausführung ohne Fehlermeldung beendet wird.\nDas Sicherheitsmodul der Technischen Sicherheitseinrichtung kann Daten des Vorgangs bei Aktualisierungen einer Transaktion nicht aggregieren.",
+  "module": "Integration Interface",
+  "submodule": "II_GLL",
+  "function": "getLastLogMessage",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_GLL_01",
+    "II_GLL_02",
+    "II_GLL_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "getLastLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Log-Nachricht.",
+      "function": "getLastLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert des Parameters logMessageFileName entspricht dem Dateinamen der Log-Nachricht für die Registrierung des Aufzeichnungssystems.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert des Parameters logMessageContent entspricht dem Inhalt der Log-Nachricht für die Registrierung des Aufzeichnungssystems.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "getLastLogMessage aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Log-Nachricht. Es wird ein Fehler provoziert, der bewirkt, dass die zuletzt erstellte Log-Nachricht nicht ausgegeben werden kann.",
+      "function": "getLastLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorReadingLogMessage  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 12,
+      "type": "VERIFY",
+      "title": "Letzte Log-Nachricht abrufen (SM_NOAGG)",
+      "result": null,
+      "instruction": "Letzte Log-Nachricht abrufen (SM_NOAGG)\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Log-Nachricht.",
+      "function": "getLastLogMessage",
+      "user": "logger",
+      "expected_return": {
+        "logMessageContent": {
+          "type": "BYTES",
+          "constraint": "ASN.1 der letzten Log-Nachricht"
+        },
+        "logMessageFileName": {
+          "type": "STRING",
+          "constraint": "Korrekter TAR-Dateiname"
+        }
+      },
+      "checks": [
+        {
+          "description": "Zuletzt erstellte Log-Nachricht zurückgegeben",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logMessageFileName stimmt mit Dateiname im TAR überein",
+          "expected": "GLL_FNAME_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logMessageContent stimmt mit Dateiinhalt im TAR überein",
+          "expected": "GLL_CONTENT_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "GLL_FNAME_MATCH",
+          "title": "logMessageFileName entspricht TAR-Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "GLL_CONTENT_MATCH",
+          "title": "logMessageContent entspricht TAR-Dateiinhalt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_GLL_01"
+    },
+    {
+      "step": 13,
+      "type": "VERIFY",
+      "title": "Letzte Log-Nachricht abrufen (SM_AGG)",
+      "result": null,
+      "instruction": "Letzte Log-Nachricht abrufen (SM_AGG)",
+      "checks": [
+        {
+          "description": "Gleiche Prüfungen für SM_AGG bestehen",
+          "expected": "Identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "GLL_FNAME_MATCH",
+          "title": "logMessageFileName entspricht TAR-Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "GLL_CONTENT_MATCH",
+          "title": "logMessageContent entspricht TAR-Dateiinhalt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "notes": "Gleiche Prüfungen für SM_AGG"
+    },
+    {
+      "step": 14,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall",
+      "result": null,
+      "instruction": "Fehlerfall [NT]\n\nAufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Log-Nachricht.",
+      "function": "getLastLogMessage",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorReadingLogMessage zurückgegeben",
+          "expected": "errorCode = ErrorReadingLogMessage",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GLL_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

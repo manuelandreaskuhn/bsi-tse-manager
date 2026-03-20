@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetDescriptionFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetDescriptionFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getDescription fails to retrieve the short description text of the device. The function attempts to obtain the device's descriptive identifier or display name from the Secure Element, but the retrieval process fails before the description can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getDescription fehlschlägt, um den kurzen Beschreibungstext des Geräts abzurufen. Die Funktion versucht, die Beschreibungskennung oder den Anzeigenamen des Geräts vom Secure Element zu erhalten, aber der Abrufprozess schlägt fehl, bevor die Beschreibung bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Device Management</category>
+  <subcategory>Description Retrieval</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetDescriptionFailed that is thrown if the SE API function getDescription fails to determine the short description of the device.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetDescriptionFailed, die ausgelöst wird, wenn die SE API Funktion getDescription fehlschlägt, um die kurze Beschreibung des Geräts zu bestimmen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getDescription function cannot retrieve the device's short description text from the Secure Element. The device description provides human-readable identification information for the Secure Element, such as device model, variant, or descriptive label. ErrorGetDescriptionFailed indicates that the Secure Element cannot provide the description text due to hardware failure, storage corruption, internal information system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no description data is returned and applications cannot identify or describe the device to users. Recovery typically involves device verification, information subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getDescription den kurzen Beschreibungstext des Geräts nicht vom Secure Element abrufen kann. Die Gerätebeschreibung bietet menschenlesbare Identifikationsinformationen für das Secure Element, wie z. B. Gerätemodell, Variante oder deskriptive Bezeichnung. ErrorGetDescriptionFailed zeigt an, dass das Secure Element den Beschreibungstext aufgrund eines Hardware-Ausfalls, Speicherbesch ädigung, interner Informationssystem-Fehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Beschreibungsdaten zurückgegeben und Anwendungen können das Gerät für Benutzer nicht identifizieren oder beschreiben. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Informations-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.3 Basic Device Information - getDescription</section>
+    <requirement>
+      <text xml:lang="en">The function getDescription SHALL retrieve the short description text of the Secure Element device. If the Secure Element cannot provide or return the required description information, the function SHALL raise the exception ErrorGetDescriptionFailed and exit without returning any description data. The device description retrieval failure indicates the Secure Element's information query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getDescription soll den kurzen Beschreibungstext des Secure Element Geräts abrufen. Falls das Secure Element die erforderlichen Beschreibungsinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetDescriptionFailed auslösen und beenden, ohne Beschreibungsdaten zurückzugeben. Der Fehler bei der Gerätebeschreibungsabfrage zeigt an, dass die Informationsabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device information operations - getDescription function only</text>
+      <text xml:lang="de">Geräteinformationsoperationen - nur Funktion getDescription</text>
+    </applicability>
+    <reference>getDescription – Function (3.1.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>getDescription</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getDescription function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getDescription auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for device information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Geräteinformationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and accessible</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und zugänglich ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares description query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Beschreibungsabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits description query command to Secure Element requesting device short description text</text>
+      <text xml:lang="de">Funktion übersendet Beschreibungsabfrage-Befehl zu Secure Element und fordert kurzen Gerätebeschreibungstext an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (storage error, information retrieval error, subsystem error) → ErrorGetDescriptionFailed raised, function exits without description data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Speicherfehler, Informationsabruffehler, Subsystem-Fehler) → ErrorGetDescriptionFailed ausgelöst, Funktion beendet ohne Beschreibungsdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetDescriptionFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortemfpang auftritt → ErrorGetDescriptionFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives description text from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion Beschreibungstext von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates description text for correctness (format, encoding, length validity)</text>
+      <text xml:lang="de">Funktion validiert Beschreibungstext auf Korrektheit (Format, Kodierung, Längengültigkeit)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid description text to caller</text>
+      <text xml:lang="de">Funktion gibt gültigen Beschreibungstext an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage medium is accessible</text>
+      <text xml:lang="de">Überprüfen Sie, ob das Speichermedium zugänglich ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry description query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Beschreibungsabfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify user has access permissions</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der Benutzer Zugriffsberechtigung hat</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorGetVersionFailed</exception>
+    <exception>ErrorGetSerialNumberFailed</exception>
+    <exception>ErrorGetComponentVersionsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve description does not affect device initialization state, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Beschreibungsabrufs wirkt sich nicht auf den Geräteinitialisierungszustand, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Description Data Return Status">
+      <text xml:lang="en">No description text is returned to the caller. The function exits without providing any device description information. Applications must not assume default or cached description values; they must handle the exception as indicating description information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Beschreibungstext an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Gerätebeschreibungsinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard- oder zwischengespeicherten Beschreibungswerten rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Beschreibungsinformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element State">
+      <text xml:lang="en">Secure Element remains unchanged by the failed description query. No state modifications, information updates, or device configuration changes occur. Device identification information continues to be maintained internally in the Secure Element regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Secure Element bleibt durch die fehlgeschlagene Beschreibungsabfrage unverändert. Es werden keine Zustandsänderungen, Informationsaktualisierungen oder Gerätekonfigurationsänderungen vorgenommen. Die Geräteidentifikationsinformationen werden weiterhin intern im Secure Element gepflegt, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Device Identification Continuity">
+      <text xml:lang="en">The Secure Element continues to maintain its device identification and description information internally. The failure to retrieve description text does not affect the underlying device identity or properties. The description can be queried again once the underlying issue is resolved.</text>
+      <text xml:lang="de">Das Secure Element setzt fort, seine Geräteidentifikations- und Beschreibungsinformationen intern zu pflegen. Das Fehlschlagen des Beschreibungstextes beeinflusst nicht die zugrunde liegende Geräteidentität oder Eigenschaften. Die Beschreibung kann erneut abgefragt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the description retrieval failure. Device internal consistency is maintained. Other SE API functions and device information queries continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Beschreibungsabruffehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Geräteinformationsabfragen funktionieren normal ohne Zustandsbesch ädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (storage error, communication error, information system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Speicherfehler, Kommunikationsfehler, Informationssystem-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of device description failed - description data could not be retrieved</text>
+      <text xml:lang="de">Anzeichen: Abruf der Gerätebeschreibung fehlgeschlagen - Beschreibungsdaten konnten nicht abgerufen werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Information, Data Retrieval, Device Properties, Information Management</text>
+      <text xml:lang="de">Themen: Geräteinformationen, Datenabruf, Geräteeigenschaften, Informationsverwaltung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getDescription when device description retrieval fails</text>
+      <text xml:lang="de">Wird von getDescription ausgelöst, wenn die Gerätebeschreibungsabfrage fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Description function retrieves device identifying description</text>
+      <text xml:lang="de">Beschreibungsfunktion ruft Geräteidentifizierungsbeschreibung ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains user-set description string</text>
+      <text xml:lang="de">Das Gerät verwaltet vom Benutzer festgelegten Beschreibungstext</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents description access</text>
+      <text xml:lang="de">Abruffehler verhindert Beschreibungszugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

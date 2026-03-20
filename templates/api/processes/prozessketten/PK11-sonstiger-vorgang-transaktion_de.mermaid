@@ -1,0 +1,56 @@
+flowchart TD
+    Start([Nutzer: Vorgang initiieren])
+    Start --> Identify{Art des<br/>Vorgangs?}
+    
+    Identify --> |Vorbereitungszeitstempel| PrepCase[Szenario: Mehrsystem<br/>ohne Bestellabsicherung]
+    Identify --> |Schulung| TrainCase[Szenario: Schulungsmodus]
+    Identify --> |Systemtest| TestCase[Szenario: TSE-Test]
+    Identify --> |Sonstiges| OtherCase[Szenario: Individueller Vorgang]
+    
+    PrepCase --> PrepText[Text vorbereiten:<br/>'Vorbereitung Tisch 5 - 14:23']
+    TrainCase --> TrainText[Text vorbereiten:<br/>'Schulung Mitarbeiter 4711']
+    TestCase --> TestText[Text vorbereiten:<br/>'Systemtest - TSE Konnektivität']
+    OtherCase --> OtherText[Text vorbereiten:<br/>Beschreibender Freitext]
+    
+    PrepText --> StartTx
+    TrainText --> StartTx
+    TestText --> StartTx
+    OtherText --> StartTx
+    
+    StartTx[System: startTransaction<br/>processData: leer<br/>processType: leer]
+    
+    StartTx --> StartTSE[TSE: Transaktion starten<br/>Transaktionsnummer erstellen]
+    
+    StartTSE --> TxNumber[Transaktionsnummer erhalten]
+    
+    TxNumber --> Process[Vorgang ausführen]
+    
+    Process --> FinishTx[System: finishTransaction<br/>processData: Freitext<br/>processType: 'SonstigerVorgang']
+    
+    FinishTx --> Example[Beispiele:<br/>'Vorbereitung Tisch 5 - 14:23'<br/>'Schulung Mitarbeiter-ID: 4711'<br/>'Geldentnahme Bank: 500.00 EUR']
+    
+    Example --> FinishTSE[TSE: Transaktion abschließen<br/>Signatur erstellen]
+    
+    FinishTSE --> SaveLog[Speichere Transaction-Log]
+    
+    SaveLog --> Decision{Weiteres<br/>benötigt?}
+    
+    Decision -->|Vorbereitungszeitstempel| LinkToKB[Später: Zeitstempel auf<br/>Kassenbeleg drucken]
+    Decision -->|Schulung/Test| Document[Optional: In System<br/>dokumentieren]
+    Decision -->|Sonstiges| Archive[Optional: Archivieren]
+    
+    LinkToKB --> End([Ende])
+    Document --> End
+    Archive --> End
+    
+    style StartTx fill:#e1f5ff
+    style FinishTx fill:#e1f5ff
+    style Example fill:#fff4e1
+    style PrepCase fill:#e8f5e9
+    style TrainCase fill:#fff9c4
+    style TestCase fill:#f3e5f5
+    style OtherCase fill:#fce4ec
+    
+    Note1[Hinweis: Freiform-Daten<br/>Keine strenge Struktur<br/>Lesbarer Text empfohlen]
+    
+    style Note1 fill:#fff8e1

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>006</processId>
+    <processName>
+        <text xml:lang="en">TSE Decommissioning</text>
+        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Permanent decommissioning of the TSE by deactivating/deleting the private key. After this process, no further signatures can be created.</text>
+        <text xml:lang="de">Dauerhafte Außerbetriebnahme der TSE durch Deaktivierung/Löschung des privaten Schlüssels. Nach diesem Prozess können keine weiteren Signaturen erstellt werden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Taxpayer/Admin</text>
+            <text xml:lang="de">Steuerpflichtiger/Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Tax Authority</text>
+            <text xml:lang="de">Finanzbehörde</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Key</text>
+            <text xml:lang="de">Signaturschlüssel</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>disableSecureElement</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (disableSecureElement)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorDisableSecureElementFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.3</reference>
+        <reference>BSI TR-03153-1 Chapter 3.9.4</reference>
+        <reference>BSI TR-03153-1 Chapter 9.9</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin is allowed to perform decommissioning. In case of security-relevant incidents, the certificate must additionally be revoked. Transactions started before decommissioning cannot be completed. The decommissioning must be reported to the tax authority.</text>
+        <text xml:lang="de">Nur Admin darf die Außerbetriebnahme durchführen. Bei sicherheitsrelevanten Vorfällen muss das Zertifikat zusätzlich gesperrt werden. Vor Außerbetriebnahme gestartete Transaktionen können nicht mehr abgeschlossen werden. Die Außerbetriebnahme muss der Finanzbehörde gemeldet werden.</text>
+    </notes>
+</process>

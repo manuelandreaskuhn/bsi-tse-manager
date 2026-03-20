@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" elementFormDefault="qualified">
+    
+    <xs:element name="process" type="ProcessType"/>
+    
+    <xs:complexType name="ProcessType">
+        <xs:sequence>
+            <xs:element name="processId" type="xs:string"/>
+            <xs:element name="processName" type="MultilingualTextType"/>
+            <xs:element name="description" type="MultilingualTextType"/>
+            <xs:element name="actors" type="ActorsType"/>
+            <xs:element name="usedObjects" type="UsedObjectsType"/>
+            <xs:element name="interfaceFunctions" type="InterfaceFunctionsType"/>
+            <xs:element name="inputParameters" type="ParametersType"/>
+            <xs:element name="outputParameters" type="ParametersType"/>
+            <xs:element name="usedDataObjects" type="UsedDataObjectsType"/>
+            <xs:element name="possibleExceptions" type="ExceptionsType"/>
+            <xs:element name="references" type="ReferencesType"/>
+            <xs:element name="notes" type="MultilingualTextType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="MultilingualTextType">
+        <xs:sequence>
+            <xs:element name="text" type="LanguageTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="LanguageTextType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute ref="xml:lang" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="ActorsType">
+        <xs:sequence>
+            <xs:element name="actor" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="UsedObjectsType">
+        <xs:sequence>
+            <xs:element name="object" type="MultilingualTextType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="InterfaceFunctionsType">
+        <xs:sequence>
+            <xs:element name="function" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ParametersType">
+        <xs:sequence>
+            <xs:element name="parameter" type="ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ParameterType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="description" type="MultilingualTextType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="UsedDataObjectsType">
+        <xs:sequence>
+            <xs:element name="dataObject" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ExceptionsType">
+        <xs:sequence>
+            <xs:element name="exception" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ReferencesType">
+        <xs:sequence>
+            <xs:element name="reference" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="UpdateVariants" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+    <name>UpdateVariants</name>
+    <category>TransactionManagement</category>
+    <source>BSI TR-03151</source>
+    <description>Represents the variants that are supported by the Secure Element to update transactions.</description>
+    <values>
+        <value>
+            <name>alwaysSigned</name>
+            <description>Creation of a signature value for the application data and protocol data during every update of a transaction.</description>
+        </value>
+        <value>
+            <name>aggregating</name>
+            <description>No creation of a signature value for the application data and protocol data during an update of a transaction. The data of the process is concatenated during the updates and the signature value is created directly before the finalization of the transaction or after forced log message creation (e.g. after a timeout).</description>
+        </value>
+        <value>
+            <name>alwaysSignedAndAggregating</name>
+            <description>Support of both update variants, mentioned above.</description>
+        </value>
+    </values>
+</enum>

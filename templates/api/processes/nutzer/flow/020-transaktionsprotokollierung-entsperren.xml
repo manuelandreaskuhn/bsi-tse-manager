@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>020</processId>
+    <processName>
+        <text xml:lang="en">Unlock Transaction Logging</text>
+        <text xml:lang="de">Transaktionsprotokollierung entsperren</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Unlocking the transaction logging in the TSE that was previously locked. After unlocking, transactions can be logged again in the transaction log.</text>
+        <text xml:lang="de">Entsperrung der Transaktionsprotokollierung in der TSE, die zuvor gesperrt wurde. Nach dem Entsperren können Transaktionen wieder im Transaktionsprotokoll protokolliert werden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Central Operator (Admin)</text>
+            <text xml:lang="de">Zentraler Betreiber (Admin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Logging Lock</text>
+            <text xml:lang="de">Transaktionsprotokollierung-Sperr-Flag</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>enableTransactionLogging</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (enableTransactionLogging)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorTransactionLoggingNotDisabled</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.5</reference>
+        <reference>BSI TR-03153-1 Chapter 4.1.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin is allowed to unlock transaction logging. Transaction logging must have been previously locked with lockTransactionLogging. The central operator can also unlock remotely. After unlocking, transactions are logged again.</text>
+        <text xml:lang="de">Nur Admin darf die Transaktionsprotokollierung entsperren. Die Transaktionsprotokollierung muss zuvor mit lockTransactionLogging gesperrt worden sein. Der zentrale Betreiber kann auch remote entsperren. Nach dem Entsperren werden Transaktionen wieder protokolliert.</text>
+    </notes>
+</process>

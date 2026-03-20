@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>093</processId>
+    <processName>
+        <text xml:lang="de">Belegausgabepflicht</text>
+        <text xml:lang="en">Receipt Issuance Obligation</text>
+    </processName>
+    <description>
+        <text xml:lang="de">Prozess zur Erfüllung der Belegausgabepflicht nach § 146a Abs. 2 AO. Regelt elektronische und Papier-Belegausgabe, Ausnahmen und Fristen.</text>
+        <text xml:lang="en">Process for fulfilling the receipt issuance obligation according to § 146a para. 2 AO. Governs electronic and paper receipt issuance, exceptions and deadlines.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="de">Leistender Unternehmer</text>
+            <text xml:lang="en">Service provider</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Kunde</text>
+            <text xml:lang="en">Customer</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Kassensystem</text>
+            <text xml:lang="en">Point of Sale System</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">TSE</text>
+            <text xml:lang="en">TSE</text>
+        </actor>
+    </actors>
+    <requirements>
+        <requirement>
+            <text xml:lang="de">Beleg nur für Geschäftsvorfälle mit Drittbeteiligung</text>
+            <text xml:lang="en">Receipt only for transactions involving third parties</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Unmittelbarer zeitlicher Zusammenhang zur Vorgangsbeendigung</text>
+            <text xml:lang="en">Immediate temporal connection to transaction completion</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Bei elektronischer Ausgabe: Zustimmung des Kunden erforderlich</text>
+            <text xml:lang="en">For electronic issuance: customer consent required</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Transaktion muss vor Belegbereitstellung abgeschlossen sein</text>
+            <text xml:lang="en">Transaction must be completed before receipt provision</text>
+        </requirement>
+    </requirements>
+    <steps>
+        <step>
+            <order>1</order>
+            <action>
+                <text xml:lang="de">Prüfung, ob Dritter am Geschäftsvorfall beteiligt ist</text>
+                <text xml:lang="en">Check if third party is involved in transaction</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 2.5.5</reference>
+        </step>
+        <step>
+            <order>2</order>
+            <action>
+                <text xml:lang="de">Prüfung, ob Befreiung nach § 148 AO vorliegt</text>
+                <text xml:lang="en">Check if exemption according to § 148 AO exists</text>
+            </action>
+        </step>
+        <step>
+            <order>3</order>
+            <action>
+                <text xml:lang="de">Format wählen: elektronisch oder Papier</text>
+                <text xml:lang="en">Choose format: electronic or paper</text>
+            </action>
+        </step>
+        <step>
+            <order>4</order>
+            <action>
+                <text xml:lang="de">Bei elektronischem Beleg: Zustimmung des Kunden einholen (kann konkludent erfolgen)</text>
+                <text xml:lang="en">For electronic receipt: obtain customer consent (can be implicit)</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 2.5.3</reference>
+        </step>
+        <step>
+            <order>5</order>
+            <action>
+                <text xml:lang="de">Beleg bereitstellen/anbieten</text>
+                <text xml:lang="en">Provide/offer receipt</text>
+            </action>
+            <details>
+                <item>
+                    <text xml:lang="de">Elektronisch: standardisiertes Format (JPG, PNG, PDF), z.B. QR-Code, E-Mail, Download, NFC</text>
+                    <text xml:lang="en">Electronic: standardized format (JPG, PNG, PDF), e.g. QR code, email, download, NFC</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Papier: Ausdrucken und anbieten (keine Aufbewahrungspflicht bei Nichtannahme)</text>
+                    <text xml:lang="en">Paper: Print and offer (no retention obligation if not accepted)</text>
+                </item>
+            </details>
+        </step>
+    </steps>
+    <exceptions>
+        <exception>
+            <type>no_third_party</type>
+            <description>
+                <text xml:lang="de">Keine Belegausgabepflicht bei Entnahmen, Einlagen (kein Dritter beteiligt)</text>
+                <text xml:lang="en">No receipt obligation for withdrawals, deposits (no third party involved)</text>
+            </description>
+        </exception>
+        <exception>
+            <type>exemption</type>
+            <description>
+                <text xml:lang="de">Befreiung nach § 148 AO möglich bei Verkauf an Vielzahl nicht bekannter Personen und sachlicher Härte</text>
+                <text xml:lang="en">Exemption according to § 148 AO possible for sales to many unknown persons and material hardship</text>
+            </description>
+        </exception>
+    </exceptions>
+    <outcomes>
+        <outcome>
+            <type>success</type>
+            <description>
+                <text xml:lang="de">Beleg fristgerecht ausgegeben, Belegausgabepflicht erfüllt</text>
+                <text xml:lang="en">Receipt issued on time, receipt obligation fulfilled</text>
+            </description>
+        </outcome>
+    </outcomes>
+    <references>
+        <reference>AO § 146a Abs. 2</reference>
+        <reference>AO § 148 (Befreiung)</reference>
+        <reference>BGB § 368 (Quittungsanspruch)</reference>
+        <reference>KassenSichV § 6</reference>
+        <reference>UStG § 14</reference>
+        <reference>AEAO zu § 146a, Nr. 2.4</reference>
+        <reference>AEAO zu § 146a, Nr. 2.5</reference>
+        <reference>AEAO zu § 146a, Nr. 2.5.3</reference>
+        <reference>AEAO zu § 146a, Nr. 2.5.5</reference>
+    </references>
+    <notes>
+        <text xml:lang="de">Beleg muss in unmittelbarem zeitlichem Zusammenhang mit Vorgangsbeendigung bereitgestellt werden. Nur für Geschäftsvorfälle mit Drittbeteiligung. Bei elektronischer Ausgabe ist Zustimmung des Kunden erforderlich (kann konkludent erfolgen). Elektronische Formate: JPG, PNG, PDF (z.B. QR-Code, E-Mail, Download, NFC). Sichtbarmachung am Display ohne Entnahmemöglichkeit reicht nicht aus. § 368 BGB (Quittungsanspruch) und § 14 UStG bleiben unberührt. Bei Nichtannahme des Papier-Belegs keine Aufbewahrungspflicht.</text>
+        <text xml:lang="en">Receipt must be provided in immediate temporal connection with transaction completion. Only for transactions involving third parties. For electronic issuance, customer consent is required (can be implicit). Electronic formats: JPG, PNG, PDF (e.g. QR code, email, download, NFC). Display on screen without retrieval option is insufficient. § 368 BGB (right to receipt) and § 14 UStG remain unaffected. No retention obligation if paper receipt is not accepted.</text>
+    </notes>
+</process>

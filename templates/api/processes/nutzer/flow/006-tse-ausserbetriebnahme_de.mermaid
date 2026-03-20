@@ -1,0 +1,37 @@
+flowchart TD
+    Start([Admin: disableSecureElement aufrufen])
+    Start --> AuthCheck{Admin<br/>authentifiziert?}
+    
+    AuthCheck -->|Nein| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    AuthCheck -->|Ja| InitCheck{TSE<br/>initialisiert?}
+    
+    InitCheck -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    InitCheck -->|Ja| TransCheck{Offene<br/>Transaktionen?}
+    
+    TransCheck -->|Ja| CloseWarn[Warnung: Offene Transaktionen<br/>werden nicht mehr abschließbar]
+    TransCheck -->|Nein| CreateLog
+    
+    CloseWarn --> Confirm{Nutzer<br/>bestätigt?}
+    Confirm -->|Nein| Cancel[Abbruch]
+    Confirm -->|Ja| CreateLog
+    
+    CreateLog[Erstelle System-Log-Nachricht<br/>disableSecureElement]
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle finale Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> DeactivateKeys[SM: Deaktiviere/Lösche<br/>privaten Schlüssel]
+    DeactivateKeys --> SetStatus[Setze TSE-Status:<br/>DISABLED]
+    
+    SetStatus --> Notify[Melde Außerbetriebnahme<br/>an Finanzbehörde]
+    
+    Notify --> Return[Rückgabe: Erfolg]
+    Return --> End([Ende - TSE außer Betrieb])
+    
+    Cancel --> End
+    ErrorAuth --> End
+    ErrorInit --> End
+    
+    style DeactivateKeys fill:#FFB6C1
+    style SetStatus fill:#FFB6C1
+    style End fill:#DC143C,color:#FFF

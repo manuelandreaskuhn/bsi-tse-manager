@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getCurrentNumberOfClients" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getCurrentNumberOfClients</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">The function getCurrentNumberOfClients can be used to get the number of distinct clients that started or updated transactions that have not been finished yet ("are currently involved with open transactions").</text>
+    <text xml:lang="de">Die Funktion getCurrentNumberOfClients kann verwendet werden, um die Anzahl der unterschiedlichen Clients zu ermitteln, die Transaktionen gestartet oder aktualisiert haben, die noch nicht beendet sind ("sind derzeit an offenen Transaktionen beteiligt").</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">If the device supports a practically unlimited number of clients simultaneously and at the same time does not track the current number of clients, the function SHALL raise the exception ErrorCurrentNumberOfClientsNotTracked and exit the function.</text>
+        <text xml:lang="de">Gerät unterstützt unbegrenzt viele Clients, aber zählt nicht: Exception ErrorCurrentNumberOfClientsNotTracked, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF device supports unlimited clients AND does NOT track count THEN
+  THROW ErrorCurrentNumberOfClientsNotTracked
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Gerät unbegrenzte Clients unterstützt UND zählt nicht ab DANN
+  WERFE ErrorCurrentNumberOfClientsNotTracked
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorCurrentNumberOfClientsNotTracked</exception>
+        <trigger>
+          <text xml:lang="en">The device supports practically unlimited clients</text>
+          <text xml:lang="de">Das Gerät unterstützt praktisch unbegrenzte Clients</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <description>
+        <text xml:lang="en">The function SHALL determine the number of current clients that started or updated transactions that have not been finished yet. If the determination of the current number of clients fails, the function SHALL raise the exception ErrorGetCurrentNumberOfClientsFailed and exit the function.</text>
+        <text xml:lang="de">Ermittelt aktuelle Clientanzahl. Bei Fehler: Exception ErrorGetCurrentNumberOfClientsFailed, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  DETERMINE number of current clients with open transactions
+ON ERROR
+  THROW ErrorGetCurrentNumberOfClientsFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  ERMITTLE Anzahl aktueller Clients mit offenen Transaktionen
+BEI_FEHLER
+  WERFE ErrorGetCurrentNumberOfClientsFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+        <trigger>
+          <text xml:lang="en">The determination of the client count fails</text>
+          <text xml:lang="de">Die Ermittlung der Clientanzahl schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the determination of the current number of clients has been successful, the function SHALL return the number by usage of the output parameter currentNumberClients. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Gibt aktuelle Clientanzahl zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN client count (currentNumberClients parameter)
+RETURN without exception</text>
+        <text xml:lang="de">GEBE Clientanzahl zurück (currentNumberClients Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Determination of the current number of clients was successful</text>
+          <text xml:lang="de">Die Ermittlung der aktuellen Clientanzahl war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return client count and return without exception</text>
+          <text xml:lang="de">Gibt Clientanzahl zurück und kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>long</type>
+    <description>
+      <text xml:lang="en">the number of distinct clients that started or updated transactions that have not been finished.</text>
+      <text xml:lang="de">die Anzahl der unterschiedlichen Clients, die Transaktionen gestartet oder aktualisiert haben, die noch nicht beendet sind.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorCurrentNumberOfClientsNotTracked</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

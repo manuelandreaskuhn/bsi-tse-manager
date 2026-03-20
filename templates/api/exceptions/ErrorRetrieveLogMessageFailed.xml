@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorRetrieveLogMessageFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorRetrieveLogMessageFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API functions getLastLogMessage or getLastTransactionLogMessage fail to retrieve the most recently created log message from the Secure Element. The function attempts to read the latest log message data that was previously recorded during SE API operations, but the retrieval fails due to device communication errors, storage read errors, log data corruption, or other failure conditions. ErrorRetrieveLogMessageFailed indicates that the log message could not be successfully retrieved from the device's logging storage and the audit trail information is inaccessible. This exception is distinct from ErrorNoLogMessageFound which indicates no log messages exist; ErrorRetrieveLogMessageFailed indicates that messages exist but cannot be accessed.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE-API-Funktionen getLastLogMessage oder getLastTransactionLogMessage fehlschlagen beim Abrufen der zuletzt erstellten Protokollnachricht vom Secure Element. Die Funktion versucht, die neuesten Protokollnachrichtendaten zu lesen, die zuvor während der SE-API-Operationen aufgezeichnet wurden, aber das Abrufen schlägt fehl aufgrund von Gerätekommunikationsfehlern, Speicherlesefehler, Protokolldatenbeschädigung oder anderen Fehlerzuständen. ErrorRetrieveLogMessageFailed zeigt an, dass die Protokollnachricht nicht erfolgreich aus dem Protokollspeicher des Geräts abgerufen werden konnte und auf die Audit-Trail-Informationen nicht zugegriffen werden kann. Diese Ausnahme unterscheidet sich von ErrorNoLogMessageFound, die anzeigt, dass keine Protokollnachrichten vorhanden sind; ErrorRetrieveLogMessageFailed zeigt an, dass Nachrichten vorhanden sind, aber nicht zugegriffen werden können.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Log Message Retrieval Failure</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>finishTransaction</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorRetrieveLogMessageFailed that is thrown if log message retrieval fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorRetrieveLogMessageFailed, die ausgelöst wird, wenn das Abrufen von Protokollnachrichten fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getLastLogMessage or getLastTransactionLogMessage functions attempt to retrieve the most recently created log message from the Secure Element but encounter a failure. Log message retrieval is essential for audit trail access, compliance verification, and transaction history review. ErrorRetrieveLogMessageFailed indicates that log message retrieval cannot be completed successfully. Common causes include: device communication failures, log storage read errors, corrupted log data, device internal errors, or temporary device issues. ErrorRetrieveLogMessageFailed is a High severity exception because it prevents access to critical audit trail information. Unlike ErrorNoLogMessageFound which indicates no log messages exist, ErrorRetrieveLogMessageFailed indicates that log messages exist but cannot be accessed. Recovery requires investigating the device state, communication connectivity, and log storage integrity.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die getLastLogMessage- oder getLastTransactionLogMessage-Funktionen versuchen, die zuletzt erstellte Protokollnachricht vom Secure Element abzurufen, aber fehlschlagen. Das Abrufen von Protokollnachrichten ist wesentlich für den Zugriff auf Audit-Trail, die Compliance-Verifizierung und die Überprüfung des Transaktionsverlaufs. ErrorRetrieveLogMessageFailed zeigt an, dass das Abrufen von Protokollnachrichten nicht erfolgreich abgeschlossen werden kann. Häufige Ursachen sind: Gerätekommunikationsfehler, Protokollspeicherlesefehler, beschädigte Protokolldaten, interne Gerätefehler oder vorübergehende Geräteprobleme. ErrorRetrieveLogMessageFailed ist eine Ausnahme mit hohem Schweregrad, da sie den Zugriff auf wichtige Audit-Trail-Informationen verhindert. Im Gegensatz zu ErrorNoLogMessageFound, die anzeigt, dass keine Protokollnachrichten vorhanden sind, zeigt ErrorRetrieveLogMessageFailed an, dass Protokollnachrichten vorhanden sind, aber nicht zugegriffen werden können. Die Wiederherstellung erfordert das Untersuchen des Gerätezustands, der Kommunikationskonnektivität und der Integrität des Protokollspeichers.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.3 Logging Operations - getLastLogMessage and getLastTransactionLogMessage</section>
+    <requirement>
+      <text xml:lang="en">The functions getLastLogMessage and getLastTransactionLogMessage SHALL retrieve the most recently created log message from the Secure Element's logging storage. If the retrieval cannot be completed successfully due to device communication failure, storage read error, corrupted log data, or other device-level error, the function SHALL raise the exception ErrorRetrieveLogMessageFailed. The retrieved log message contains the transaction context, timestamp, and status information. If retrieval fails, the log message data remains in the device's storage but is inaccessible to the caller.</text>
+      <text xml:lang="de">Die getLastLogMessage- und getLastTransactionLogMessage-Funktionen SOLLEN die zuletzt erstellte Protokollnachricht aus dem Protokollspeicher des Secure Element abrufen. Wenn das Abrufen nicht erfolgreich abgeschlossen werden kann aufgrund von Gerätekommunikationsfehler, Speicherlesefehler, beschädigte Protokolldaten oder anderen Geräteebenenfehlern, SOLLEN die Funktionen die Ausnahme ErrorRetrieveLogMessageFailed auslösen. Die abgerufene Protokollnachricht enthält den Transaktionskontext, den Zeitstempel und die Statusinformationen. Wenn das Abrufen fehlschlägt, bleiben die Protokollnachrichtendaten im Speicher des Geräts, sind aber für den Aufrufer nicht zugänglich.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Log message retrieval operations - getLastLogMessage and getLastTransactionLogMessage functions only</text>
+      <text xml:lang="de">Protokollnachricht-Abrufoperationen - nur getLastLogMessage- und getLastTransactionLogMessage-Funktionen</text>
+    </applicability>
+    <reference>getLastLogMessage – Function (3.3.3), getLastTransactionLogMessage – Function (3.3.3)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getLastLogMessage or getLastTransactionLogMessage function</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft getLastLogMessage- oder getLastTransactionLogMessage-Funktion auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks device state (initialized, operational)</text>
+      <text xml:lang="de">Funktion prüft Gerätezustand (initialisiert, betriebsbereit)</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If device not ready → ErrorRetrieveLogMessageFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Gerät nicht bereit → ErrorRetrieveLogMessageFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If device ready → proceed to step 4</text>
+      <text xml:lang="de">Wenn Gerät bereit → Fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function sends log retrieval request to Secure Element</text>
+      <text xml:lang="de">Funktion sendet Protokollabrufanfrage an Secure Element</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If communication fails → ErrorRetrieveLogMessageFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Kommunikation schlägt fehl → ErrorRetrieveLogMessageFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If communication succeeds → proceed to step 6</text>
+      <text xml:lang="de">Wenn Kommunikation erfolgreich → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element processes log retrieval request</text>
+      <text xml:lang="de">Secure Element verarbeitet Protokollabrufanfrage</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element locates most recently created log message</text>
+      <text xml:lang="de">Secure Element lokalisiert zuletzt erstellte Protokollnachricht</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If log message not found (separate from ErrorNoLogMessageFound) → may indicate corruption, proceed to step 8</text>
+      <text xml:lang="de">Wenn Protokollnachricht nicht gefunden (getrennt von ErrorNoLogMessageFound) → kann Beschädigung anzeigen, fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If log message found → proceed to step 8</text>
+      <text xml:lang="de">Wenn Protokollnachricht gefunden → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element reads log message data from storage</text>
+      <text xml:lang="de">Secure Element liest Protokollnachrichtendaten aus dem Speicher</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If storage read error → ErrorRetrieveLogMessageFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Speicherlesefehler → ErrorRetrieveLogMessageFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If storage read succeeds → proceed to step 9</text>
+      <text xml:lang="de">Wenn Speicherlesen erfolgreich → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element validates log message data structure and integrity</text>
+      <text xml:lang="de">Secure Element validiert die Struktur und Integrität der Protokollnachrichtendaten</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If log data corrupted → ErrorRetrieveLogMessageFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Protokolldaten beschädigt → ErrorRetrieveLogMessageFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If log data valid → proceed to step 10</text>
+      <text xml:lang="de">Wenn Protokolldaten gültig → Fahren Sie mit Schritt 10 fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element transmits log message data to calling function</text>
+      <text xml:lang="de">Secure Element überträgt Protokollnachrichtendaten an aufrufende Funktion</text>
+    </step>
+    <step number="10a">
+      <text xml:lang="en">If transmission fails → ErrorRetrieveLogMessageFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Übertragung schlägt fehl → ErrorRetrieveLogMessageFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="10b">
+      <text xml:lang="en">If transmission succeeds → proceed to step 11</text>
+      <text xml:lang="de">Wenn Übertragung erfolgreich → Fahren Sie mit Schritt 11 fort</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function receives log message data from Secure Element</text>
+      <text xml:lang="de">Funktion empfängt Protokollnachrichtendaten vom Secure Element</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function parses and validates received log message</text>
+      <text xml:lang="de">Funktion parst und validiert empfangene Protokollnachricht</text>
+    </step>
+    <step number="13">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="14">
+      <text xml:lang="en">Function returns successfully with log message data</text>
+      <text xml:lang="de">Funktion gibt erfolgreich mit Protokollnachrichtendaten zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Überprüfen Sie, ob das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational and functional</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element betriebsbereit und funktional ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage medium is connected and accessible</text>
+      <text xml:lang="de">Prüfen Sie, ob das Speichermedium verbunden und zugänglich ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry operation after confirming device state</text>
+      <text xml:lang="de">Wiederholen Sie die Operation, nachdem Sie den Gerätezustand bestätigt haben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check logging subsystem health using getDeviceHealth</text>
+      <text xml:lang="de">Prüfen Sie die Gesundheit des Protokollierungssubsystems mit getDeviceHealth</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorReadingLogMessage</exception>
+    <exception>ErrorNoLogMessageFound</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Log Message Not Retrieved">
+      <text xml:lang="en">The log message is not retrieved. The most recent log data remains in the device's storage but is inaccessible to the caller.</text>
+      <text xml:lang="de">Die Protokollnachricht wird nicht abgerufen. Die neuesten Protokolldaten bleiben im Speicher des Geräts, sind aber für den Aufrufer nicht zugänglich.</text>
+    </state>
+    <state name="Caller Receives No Data">
+      <text xml:lang="en">The function returns exception instead of log message data. The caller cannot access the audit trail information.</text>
+      <text xml:lang="de">Die Funktion gibt eine Ausnahme anstelle von Protokollnachrichtendaten zurück. Der Aufrufer kann nicht auf die Audit-Trail-Informationen zugreifen.</text>
+    </state>
+    <state name="Device State Unchanged">
+      <text xml:lang="en">The device's state remains unchanged by the failed retrieval attempt. The log message is not modified or deleted.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt durch den fehlgeschlagenen Abrufversuch unverändert. Die Protokollnachricht wird nicht geändert oder gelöscht.</text>
+    </state>
+    <state name="Log Storage Intact">
+      <text xml:lang="en">The log storage remains intact and uncorrupted. The log message remains available for future retrieval attempts.</text>
+      <text xml:lang="de">Der Protokollspeicher bleibt intakt und unbeschrädigt. Die Protokollnachricht bleibt für zukünftige Abrufversuche verfügbar.</text>
+    </state>
+    <state name="Audit Trail Inaccessible">
+      <text xml:lang="en">The audit trail information represented by the log message is temporarily inaccessible due to the retrieval failure.</text>
+      <text xml:lang="de">Die Audit-Trail-Informationen, die durch die Protokollnachricht dargestellt werden, sind aufgrund des Abruffehlers vorübergehend nicht zugänglich.</text>
+    </state>
+    <state name="Retry Possible">
+      <text xml:lang="en">The retrieval operation can be retried after addressing the underlying cause of the failure.</text>
+      <text xml:lang="de">Die Abrufoperation kann wiederholt werden, nachdem die zugrunde liegende Fehlerursache behoben wurde.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of log message failed - message data could not be obtained</text>
+      <text xml:lang="de">Anzeige: Abrufen der Protokollnachricht ist fehlgeschlagen - Nachrichtendaten konnten nicht abgerufen werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Message Retrieval, Data Access, Log Management</text>
+      <text xml:lang="de">Themen: Protokollierungsoperationen, Nachrichtenabruf, Datenzugriff, Protokollverwaltung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when log message creation or retrieval fails</text>
+      <text xml:lang="de">Ausgelöst durch Protokollierungsfunktionen, wenn die Erstellung oder das Abrufen von Protokollnachrichten schlägt fehl</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device creates log messages during function execution</text>
+      <text xml:lang="de">Gerät erstellt Protokollnachrichten während der Funktionsausführung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Logging subsystem stores messages via Secure Element</text>
+      <text xml:lang="de">Protokollierungssubsystem speichert Nachrichten über Secure Element</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure indicates logging operation incomplete</text>
+      <text xml:lang="de">Abruffehler zeigt an, dass die Protokollierungsoperation unvollständig ist</text>
+    </note>
+  </implementationContext>
+</exception>
+

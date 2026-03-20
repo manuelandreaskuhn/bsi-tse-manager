@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="Vorgangstypen" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+	<name>Vorgangstypen</name>
+    <category>TransactionData</category>
+	<source>DSFinV-K</source>
+	<description>Zulässige Vorgangstypen für den ersten Teil der processData bei Kassenbeleg-V1. Der Vorgangstyp kennzeichnet die Art des Geschäftsvorfalls und wird im BON_TYP-Feld der DSFinV-K erfasst.</description>
+	<values>
+		<value>
+			<name>Beleg</name>
+			<description>Regulärer Geschäftsvorfall.</description>
+		</value>
+		<value>
+			<name>AVTransfer</name>
+			<description>Vorgänge, die nicht für den Abrechnungsprozess verarbeitet werden.</description>
+		</value>
+		<value>
+			<name>AVBestellung</name>
+			<description>Eigenständig behandelte Bestellungen.</description>
+		</value>
+		<value>
+			<name>AVTraining</name>
+			<description>Übungsvorgänge ohne Auswirkung auf den Abschluss.</description>
+		</value>
+		<value>
+			<name>AVBelegabbruch</name>
+			<description>Nach Transaktionsbeginn abgebrochene Vorgänge.</description>
+		</value>
+		<value>
+			<name>AVSachbezug</name>
+			<description>Erfassung von Sachbezügen für Arbeitnehmer.</description>
+		</value>
+		<value>
+			<name>AVSonstige</name>
+			<description>Erfassung aller Vorgänge, die hier nicht näher definiert wurden. Eine nähere Beschreibung über BON_NAME ist zwingend erforderlich, um die Nachvollziehbarkeit und Prüfbarkeit der Daten zu gewährleisten.</description>
+		</value>
+		<value>
+			<name>AVRechnung</name>
+			<description>Spätere Rechnungsstellung bei vorangegangenem Lieferschein.</description>
+		</value>
+		<value>
+			<name>AVBelegstorno</name>
+			<description>Vollständige Stornierung eines Originalbelegs, so dass sämtliche Beträge nicht mehr im Kassenabschluss berücksichtigt werden. ACHTUNG: Dieser Vorgangstyp kann bei Systemen, die mit einer TSE abgesichert werden, nicht verwendet werden (vgl. DSFinV-K Anhang B Vorgangstyp AVBelegstorno). Mit dem AVBelegstorno ist nicht die negative Darstellung eines Beleges gemeint.</description>
+		</value>
+	</values>
+</enum>

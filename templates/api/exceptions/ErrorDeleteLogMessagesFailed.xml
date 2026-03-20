@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorDeleteLogMessagesFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorDeleteLogMessagesFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the deletion of log messages from the storage failed during execution of the deleteLogMessages function. The exception represents a critical failure in the device's ability to remove stored log messages from the logging storage subsystem. ErrorDeleteLogMessagesFailed is raised when the device attempts to delete log message files that have been previously exported and marked for deletion, but encounters an I/O error, storage access issue, or system-level failure that prevents successful removal. This exception indicates that the device's storage subsystem has rejected the deletion request due to hardware errors, file system inconsistencies, permission violations, or physical disconnection of the storage medium. The exception is raised after the device has validated deletion prerequisites but failed during the actual removal of log data from persistent storage.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn das Löschen von Protokollmeldungen aus dem Speicher während der Ausführung der Funktion deleteLogMessages fehlgeschlagen ist. Die Ausnahme stellt einen kritischen Fehler in der Fähigkeit des Geräts dar, gespeicherte Protokollmeldungen aus dem Protokollspeicher-Subsystem zu entfernen. ErrorDeleteLogMessagesFailed wird ausgelöst, wenn das Gerät versucht, Protokollmeldungsdateien zu löschen, die zuvor exportiert und zum Löschen markiert wurden, aber auf einen E/A-Fehler, ein Speicherzugriffsproblem oder einen Fehler auf Systemebene stößt, der das erfolgreiche Entfernen verhindert. Diese Ausnahme zeigt an, dass das Speicher-Subsystem des Geräts die Löschanforderung aufgrund von Hardwarefehlern, Dateisysteminkonsistenzen, Berechtigungsverletzungen oder physischer Trennung des Speichermediums abgelehnt hat. Die Ausnahme wird ausgelöst, nachdem das Gerät die Voraussetzungen für das Löschen validiert hat, aber während des eigentlichen Entfernens von Protokolldaten aus dem persistenten Speicher fehlgeschlagen ist.</text>
+  </description>
+  <category>Logging</category>
+  <subcategory>Deletion</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorDeleteLogMessagesFailed that is thrown if the deletion of log messages from the storage failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorDeleteLogMessagesFailed, die ausgelöst wird, wenn das Löschen von Protokollmeldungen aus dem Speicher fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The deletion operation of log messages from the device storage encountered a failure condition. This exception indicates that the deleteLogMessages function was unable to successfully remove stored log messages. This failure may be due to storage access issues, insufficient permissions, or system-level I/O errors during the deletion process.</text>
+      <text xml:lang="de">Der Löschvorgang von Protokollmeldungen aus dem Gerätespeicher ist auf eine Fehlerbedingung gestoßen. Diese Ausnahme zeigt an, dass die Funktion deleteLogMessages gespeicherte Protokollmeldungen nicht erfolgreich entfernen konnte. Dieser Fehler kann auf Speicherzugriffsprobleme, unzureichende Berechtigungen oder Fehler auf Systemebene während des Löschvorgangs zurückzuführen sein.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.6.4.4</section>
+    <requirement>
+      <text xml:lang="en">SHALL be raised when the deletion of log message files from the storage fails. If the deletion of the data fails, the function SHALL raise the exception ErrorDeleteLogMessagesFailed and exit the function.</text>
+      <text xml:lang="de">Soll ausgelöst werden, wenn das Löschen von Protokollmeldungsdateien aus dem Speicher fehlschlägt. Falls das Löschen der Daten fehlschlägt, soll die Funktion die Ausnahme ErrorDeleteLogMessagesFailed auslösen und die Funktion beenden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Log message deletion operations when storage removal fails</text>
+      <text xml:lang="de">Protokollmeldungs-Löschvorgänge, wenn das Speicher-Entfernen fehlschlägt</text>
+    </applicability>
+    <reference>deleteLogMessages – Exceptions (3.6.4.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>deleteLogMessages</function>
+  </thrownBy>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized and has accessible storage</text>
+      <text xml:lang="de">Überprüfen Sie, ob das Gerät initialisiert und über zugänglichen Speicher verfügt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check that log messages exist using appropriate query functions</text>
+      <text xml:lang="de">Überprüfen Sie, ob Protokollmeldungen mithilfe geeigneter Abfragefunktionen vorhanden sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure all messages are exported before deletion attempts</text>
+      <text xml:lang="de">Stellen Sie sicher, dass alle Meldungen vor Löschversuchen exportiert werden</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry deletion operation after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie den Löschvorgang nach Bestätigung der Vorbedingungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review device storage status and available capacity</text>
+      <text xml:lang="de">Überprüfen Sie den Gerätespeicherstatus und die verfügbare Kapazität</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorUnexportedLogMessages</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+  </relatedExceptions>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">Function entry point is reached with parameters specifying the log message selection criteria (date range, clientId, transaction id, or other filters)</text>
+      <text xml:lang="de">Der Funktionseinstiegspunkt wird mit Parametern erreicht, die die Auswahlkriterien für Protokollmeldungen angeben (Datumsbereich, clientId, Transaktions-ID oder andere Filter)</text>
+    </step>
+    <step number="2" name="Parameter Validation">
+      <text xml:lang="en">The Secure Element validates that filter parameters are valid and correspond to supported filtering criteria</text>
+      <text xml:lang="de">Das Secure Element validiert, dass Filterparameter gültig sind und unterstützten Filterkriterien entsprechen</text>
+    </step>
+    <step number="3" name="Pre-deletion Checks">
+      <text xml:lang="en">The device performs preliminary checks to verify that deletion preconditions are met, such as verifying all matching log messages have been exported if required by device policy</text>
+      <text xml:lang="de">Das Gerät führt vorläufige Überprüfungen durch, um zu überprüfen, dass die Löschvorbedingungen erfüllt sind, z. B. Überprüfung, dass alle übereinstimmenden Protokollmeldungen exportiert wurden, falls von der Geräterichtlinie erforderlich</text>
+    </step>
+    <step number="4" name="Storage Access Acquisition">
+      <text xml:lang="en">The device acquires access to the storage subsystem and initiates a transaction for safe log message deletion</text>
+      <text xml:lang="de">Das Gerät erwirbt Zugriff auf das Speicher-Subsystem und initiiert eine Transaktion für sichere Protokollmeldungslöschung</text>
+    </step>
+    <step number="5" name="Log Message Location">
+      <text xml:lang="en">The device locates log message files matching the specified filter criteria in the storage medium</text>
+      <text xml:lang="de">Das Gerät lokalisiert Protokollmeldungsdateien, die den angegebenen Filterkriterien im Speichermedium entsprechen</text>
+    </step>
+    <step number="6" name="Deletion Attempt">
+      <text xml:lang="en">The device attempts to delete located log message files through file system operations on the storage medium</text>
+      <text xml:lang="de">Das Gerät versucht, durch Dateisystem-Operationen auf dem Speichermedium lokalisierte Protokollmeldungsdateien zu löschen</text>
+    </step>
+    <step number="7a" name="Deletion Success">
+      <text xml:lang="en">If deletion completes successfully, execution continues to transaction commit and function completion (not taken in this exception case)</text>
+      <text xml:lang="de">Falls das Löschen erfolgreich abgeschlossen ist, wird die Ausführung zum Transaktions-Commit und zur Funktionsvollendung fortgesetzt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="7b" name="Deletion Failure">
+      <text xml:lang="en">If the storage medium or file system returns an error during deletion, execution branches to exception handling at step 8</text>
+      <text xml:lang="de">Falls das Speichermedium oder das Dateisystem einen Fehler während des Löschens zurückgibt, wird die Ausführung zur Ausnahmeverarbeitung in Schritt 8 verzweigt</text>
+    </step>
+    <step number="8" name="Transaction Rollback">
+      <text xml:lang="en">The device attempts to rollback the deletion transaction to restore consistency, though some storage systems may not support transactional deletion</text>
+      <text xml:lang="de">Das Gerät versucht, die Lösch-Transaktion zurückzurollen, um die Konsistenz wiederherzustellen, obwohl einige Speichersysteme möglicherweise nicht transaktionales Löschen unterstützen</text>
+    </step>
+    <step number="9" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including filter criteria, number of messages targeted for deletion, storage error details, and device state information</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich Filterkriterien, Anzahl der zum Löschen vorgesehenen Meldungen, Speicherfehlerdetails und Gerätestatusinformationen</text>
+    </step>
+    <step number="10" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorDeleteLogMessagesFailed exception instance is created with appropriate error message detailing the storage deletion failure</text>
+      <text xml:lang="de">ErrorDeleteLogMessagesFailed-Ausnahminstanz wird mit einer angemessenen Fehlermeldung erstellt, die den Speicherlöschfehler detailliert beschreibt</text>
+    </step>
+    <step number="11" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the calling application, allowing error handling and recovery at application level</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack an die aufrufende Anwendung propagiert, um Fehlerbehandlung und Wiederherstellung auf Anwendungsebene zu ermöglichen</text>
+    </step>
+  </executionSequence>
+  <postconditionality>
+    <state name="Exception State">
+      <text xml:lang="en">An ErrorDeleteLogMessagesFailed exception has been created and raised, containing filter criteria, targeted message count, and storage error details</text>
+      <text xml:lang="de">Eine ErrorDeleteLogMessagesFailed-Ausnahme wurde erstellt und ausgelöst, die Filterkriterien, angestrebte Meldungsanzahl und Speicherfehlerdetails enthält</text>
+    </state>
+    <state name="Log Message State">
+      <text xml:lang="en">The log messages targeted for deletion remain in storage unchanged. Deletion has not been successfully completed. Depending on device implementation, some messages may be partially deleted or marked for deletion but not fully removed.</text>
+      <text xml:lang="de">Die Protokollmeldungen, die zum Löschen vorgesehen sind, bleiben im Speicher unverändert. Das Löschen wurde nicht erfolgreich abgeschlossen. Je nach Geräteimplementierung können einige Meldungen teilweise gelöscht oder zum Löschen markiert sein, aber nicht vollständig entfernt werden.</text>
+    </state>
+    <state name="Storage State">
+      <text xml:lang="en">The storage medium and file system remain in their previous state, with all targeted log messages still present and accessible. Storage space has not been freed for the messages targeted for deletion.</text>
+      <text xml:lang="de">Das Speichermedium und das Dateisystem bleiben in ihrem vorherigen Zustand, wobei alle angestrebten Protokollmeldungen noch vorhanden und zugänglich sind. Der Speicherplatz wurde nicht für die zum Löschen vorgesehenen Meldungen freigegeben.</text>
+    </state>
+    <state name="Transaction State">
+      <text xml:lang="en">If the device supports transactional deletion, the deletion transaction has been rolled back and the storage is returned to its pre-deletion state. If transactions are not supported, storage state is indeterminate.</text>
+      <text xml:lang="de">Wenn das Gerät transaktionales Löschen unterstützt, wurde die Lösch-Transaktion zurückgerollt und der Speicher wird in seinen Vorzustand zurückversetzt. Wenn Transaktionen nicht unterstützt werden, ist der Speicherzustand unbestimmt.</text>
+    </state>
+    <state name="Function Exit">
+      <text xml:lang="en">The function exits abnormally via exception propagation without completing the log message deletion operation</text>
+      <text xml:lang="de">Die Funktion wird abnormal über Ausnahmepropagation beendet, ohne den Protokollmeldungs-Löschvorgang abzuschließen</text>
+    </state>
+    <state name="Device Availability">
+      <text xml:lang="en">The Secure Element and logging subsystem remain available for subsequent API calls, though the storage error condition may persist and affect future delete operations. The device continues to operate, but with the storage issue unresolved.</text>
+      <text xml:lang="de">Das Secure Element und das Protokoll-Subsystem bleiben für nachfolgende API-Aufrufe verfügbar, obwohl die Speicherfehler-Bedingung bestehen bleiben kann und zukünftige Löschvorgänge beeinflussen kann. Das Gerät funktioniert weiterhin, aber mit dem Speicherproblem ungelöst.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Deletion of log messages failed - log data could not be removed</text>
+      <text xml:lang="de">Anzeichen: Löschen von Protokollmeldungen fehlgeschlagen - Protokolldaten konnten nicht entfernt werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Data Deletion, Log Management, Storage Operations</text>
+      <text xml:lang="de">Themen: Protokollierungsvorgänge, Datenlöschung, Protokollverwaltung, Speichervorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by deleteLogMessages when message deletion operation fails</text>
+      <text xml:lang="de">Wird von deleteLogMessages ausgelöst, wenn der Meldungslöschvorgang fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Log deletion subsystem removes stored log messages from device storage</text>
+      <text xml:lang="de">Das Protokoll-Lösch-Subsystem entfernt gespeicherte Protokollmeldungen aus dem Gerätespeicher</text>
+    </note>
+    <note>
+      <text xml:lang="en">Operation may fail due to storage issues or message state conflicts</text>
+      <text xml:lang="de">Der Vorgang kann aufgrund von Speicherproblemen oder Meldungszustand-Konflikten fehlschlagen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains log integrity during deletion attempts</text>
+      <text xml:lang="de">Das Gerät behält die Protokollintegrität während Löschversuche bei</text>
+    </note>
+  </implementationContext>
+</exception>
+

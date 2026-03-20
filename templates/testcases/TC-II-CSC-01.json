@@ -1,0 +1,265 @@
+{
+  "testcase_id": "TC-II-CSC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "getCurrentSignatureCounter: Aktueller Stand, Format, Konsistenz mit TAR und Fehlerfall",
+  "description": "Prüft getCurrentSignatureCounter: Rückgabeformat, Übereinstimmung mit TAR-Log und Fehlerfall.",
+  "purpose": "Prüfung, ob die Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers den aktuellen Stand der Signaturzähler ausgibt. Zusätzlich erfolgen Prüfungen, ob die Ausführung ohne Fehlermeldung beendet wird und ob das richtige Format für den Rückgabeparameter verwendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_CSC",
+  "function": "getCurrentSignatureCounter",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_CSC_01",
+    "II_CSC_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Identifikation des höchsten Stands des Signaturzählers, der im Dateinamen von Log-Nachrichten gelistet ist.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht, die einen höheren Stand des Signaturzählers im Dateinamen enthält, als jede andere Datei.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CSC_01"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert im Rückgabeparameter signatureCounters entspricht der vorgegebenen ASN.1 Definition. Es wird eine DER Kodierung verwendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Das Element SignatureCounterSet enthält für genau einen Schlüssel den aktuellen Stand des Signaturzählers.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds keySerialNumber entspricht dem Hash über den öffentlichen Schlüssel, der für die Verifikation von Log-Nachrichten verwendet wird.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds counterValue entspricht dem höchsten Stand des Signaturzählers in den exportierten Daten.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CSC_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers. Es wird ein Fehler provoziert, der bewirkt, dass der aktuelle Stand des Signaturzählers nicht festgestellt werden kann.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetCurrentSignatureCounterFailed  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_CSC_01"
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "Signaturzähler abfragen",
+      "result": null,
+      "instruction": "Signaturzähler abfragen\n\nIdentifikation des höchsten Stands des Signaturzählers, der im Dateinamen von Log-Nachrichten gelistet ist.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "expected_return": {
+        "currentSignatureCounter": {
+          "type": "INTEGER",
+          "constraint": "> 0; entspricht letztem signatureCounter im Log"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabewert = signatureCounter der letzten Log-Nachricht",
+          "expected": "CSC_CROSS_LOG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Format des Rückgabewerts korrekt (gemäß BSI TR-03151-1)",
+          "expected": "CSC_CROSS_FORMAT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "CSC_CROSS_LOG",
+          "title": "Signaturzähler stimmt mit TAR-Log überein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CSC_CROSS_FORMAT",
+          "title": "Format des Signaturzähler-Rückgabewerts",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.11",
+        "BSI TR-03151-1 §6.4"
+      ],
+      "source_test": "II_CSC_01"
+    },
+    {
+      "step": 8,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall",
+      "result": null,
+      "instruction": "Fehlerfall [NT]\n\nIdentifikation des höchsten Stands des Signaturzählers, der im Dateinamen von Log-Nachrichten gelistet ist.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorGetCurrentSignatureCounterFailed zurückgegeben",
+          "expected": "errorCode = ErrorGetCurrentSignatureCounterFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.11",
+        "BSI TR-03151-1 §6.4"
+      ],
+      "source_test": "II_CSC_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9.1"
+  ]
+}

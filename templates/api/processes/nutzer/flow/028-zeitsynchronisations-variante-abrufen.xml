@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>028</processId>
+    <processName>
+        <text xml:lang="en">Query Time Synchronization Variant</text>
+        <text xml:lang="de">Zeitsynchronisations-Variante abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying which time synchronization variant the TSE supports. This is a mandatory function that returns one of three variants: automatic, manual, or both.</text>
+        <text xml:lang="de">Abfrage, welche Zeitsynchronisationsvariante die TSE unterstützt. Dies ist eine Pflichtfunktion, die eine von drei Varianten zurückgibt: automatisch, manuell oder beides.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Time Synchronization Configuration</text>
+            <text xml:lang="de">Zeitsynchronisations-Konfiguration</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getSupportedSyncVariants</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>supportedSyncVariant</name>
+            <type>enum</type>
+            <description>
+                <text xml:lang="en">Time synchronization variant: automaticSync, manualSync, or automaticAndManualSync</text>
+                <text xml:lang="de">Zeitsynchronisationsvariante: automaticSync, manualSync oder automaticAndManualSync</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>SyncVariants</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingSyncVariantsFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.3</reference>
+        <reference>BSI TR-03153-1 Chapter 4.2 (Time Synchronization)</reference>
+        <reference>BSI TR-03153-1 Chapter 5.6.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This is a MANDATORY function accessible to all users. Three variants are possible: (1) automaticSync - TSE synchronizes time automatically without user intervention; (2) manualSync - time must be synchronized by user action; (3) automaticAndManualSync - both automatic and manual synchronization are supported. The returned variant determines operational time management requirements.</text>
+        <text xml:lang="de">Dies ist eine PFLICHTFUNKTION, die für alle Nutzer zugänglich ist. Drei Varianten sind möglich: (1) automaticSync - TSE synchronisiert Zeit automatisch ohne Benutzereingriff; (2) manualSync - Zeit muss durch Benutzeraktion synchronisiert werden; (3) automaticAndManualSync - sowohl automatische als auch manuelle Synchronisierung werden unterstützt. Die zurückgegebene Variante bestimmt die Betriebszeitmanagement-Anforderungen.</text>
+    </notes>
+</process>

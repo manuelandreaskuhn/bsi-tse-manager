@@ -1,0 +1,53 @@
+flowchart TD
+    Start([Gast: Tisch besetzen])
+    Start --> StartTx["Bestellterminal: startTransaction<br/>processData: leer oder erste Items<br/>processType: leer oder Bestellung-V1"]
+    
+    StartTx --> StartTSE[TSE: Transaktion starten<br/>Transaktionsnummer erstellen]
+    StartTSE --> TxNumber[Transaktionsnummer erhalten]
+    
+    TxNumber --> FirstOrder[Kellner: Erste Bestellung<br/>aufnehmen]
+    
+    FirstOrder --> Update1{Items sofort<br/>absichern?}
+    
+    Update1 -->|Ja| UpdateTx1["Bestellterminal: updateTransaction<br/>processData: CSV Items<br/>processType: Bestellung-V1"]
+    
+    UpdateTx1 --> Example1["Beispiel:<br/>2;Schnitzel;12.50<br/>1;Bier 0,5l;4.20"]
+    
+    Example1 --> UpdateTSE1[TSE: Update absichern<br/>Signatur erstellen]
+    
+    Update1 -->|Nein| Wait1[Warten auf weitere Orders]
+    UpdateTSE1 --> Wait1
+    
+    Wait1 --> MoreOrders{Weitere<br/>Bestellungen?}
+    
+    MoreOrders -->|Ja| NextOrder[Kellner: Weitere Bestellung]
+    NextOrder --> UpdateTx2[updateTransaction<br/>mit neuen Items]
+    UpdateTx2 --> UpdateTSE2[TSE: Update absichern]
+    UpdateTSE2 --> Wait1
+    
+    MoreOrders -->|Nein| Checkout[Gast möchte zahlen]
+    
+    Checkout --> FinishTx["Bestellterminal: finishTransaction<br/>processData: finale Items oder leer<br/>processType: Bestellung-V1"]
+    
+    FinishTx --> FinishTSE[TSE: Transaktion abschließen<br/>Finale Signatur]
+    
+    FinishTSE --> SaveLog[Speichere Transaction-Logs]
+    
+    SaveLog --> CreateKB[Separate Kasse:<br/>Erstelle Kassenbeleg-Transaktion<br/>für Zahlung]
+    
+    CreateKB --> Link[Verknüpfung via<br/>ABRECHNUNGSKREIS<br/>z.B. Tischnummer]
+    
+    Link --> PrintReceipt[Drucke Rechnung<br/>mit erstem Bestellzeitstempel]
+    
+    PrintReceipt --> End([Ende])
+    
+    style StartTx fill:#e1f5ff
+    style UpdateTx1 fill:#fff9c4
+    style UpdateTx2 fill:#fff9c4
+    style FinishTx fill:#e1f5ff
+    style Example1 fill:#fff4e1
+    style Link fill:#e8f5e9
+    
+    Note1[Wichtig: Bei Bestellung-V1<br/>WIRD updateTransaction verwendet<br/>für schrittweise Absicherung]
+    
+    style Note1 fill:#e3f2fd

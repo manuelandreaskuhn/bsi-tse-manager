@@ -1,0 +1,35 @@
+graph TD
+    Start([Start: Kasse/Taxameter/<br/>Wegstreckenzähler<br/>angeschafft])
+    
+    Start --> Pruefen{Meldepflichtig nach<br/>§146a Abs. 4 AO?}
+    
+    Pruefen -->|Nein| NichtRelevant[Keine Mitteilung<br/>erforderlich]
+    Pruefen -->|Ja| Sammeln[Erforderliche Daten<br/>sammeln]
+    
+    Sammeln --> Daten[Daten erfassen:<br/>- Steuernummer<br/>- Seriennummer System<br/>- Art der TSE<br/>- Seriennummer TSE<br/>- Betriebsstätte<br/>- Anzahl Systeme<br/>- Anschaffungsdatum]
+    
+    Daten --> Frist{Innerhalb 1 Monat<br/>nach Anschaffung?}
+    
+    Frist -->|Nein| Verspaetet[ACHTUNG:<br/>Frist überschritten!]
+    Frist -->|Ja| Uebermitteln[Mitteilung elektronisch<br/>via ELSTER übermitteln]
+    
+    Verspaetet --> Uebermitteln
+    
+    Uebermitteln --> Bestaetigung{Bestätigung<br/>erhalten?}
+    
+    Bestaetigung -->|Nein| Pruefen2[Übermittlung prüfen<br/>ggf. wiederholen]
+    Bestaetigung -->|Ja| Archivieren[Bestätigung<br/>archivieren]
+    
+    Pruefen2 --> Uebermitteln
+    
+    Archivieren --> Ende([Ende: Mitteilungspflicht<br/>erfüllt])
+    NichtRelevant --> Ende2([Ende])
+    
+    style Start fill:#90EE90
+    style Ende fill:#FFB6C1
+    style Ende2 fill:#FFB6C1
+    style Pruefen fill:#FFE4B5
+    style Frist fill:#FFE4B5
+    style Bestaetigung fill:#FFE4B5
+    style Verspaetet fill:#FF6B6B
+    style Uebermitteln fill:#87CEEB

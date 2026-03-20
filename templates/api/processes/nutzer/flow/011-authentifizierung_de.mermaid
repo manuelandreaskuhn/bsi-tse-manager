@@ -1,0 +1,48 @@
+flowchart TD
+    Start([Nutzer: authenticateUser aufrufen])
+    Start --> CheckParams{Parameter<br/>vollständig?}
+    
+    CheckParams -->|Nein| ErrorParam[Exception:<br/>ErrorParameterSyntax]
+    CheckParams -->|Ja| CheckUser{UserId<br/>existiert?}
+    
+    CheckUser -->|Nein| ErrorUser[Exception:<br/>ErrorInvalidUserId]
+    CheckUser -->|Ja| CheckBlocked{PIN-Eingabe<br/>gesperrt?}
+    
+    CheckBlocked -->|Ja| ErrorBlocked[Exception:<br/>ErrorPinIsBlocked]
+    CheckBlocked -->|Nein| CheckPIN{PIN<br/>korrekt?}
+    
+    CheckPIN -->|Nein| IncrError[Fehlbedienungszähler++]
+    IncrError --> CheckMaxErrors{Fehlbedienungen >=<br/>Maximum?}
+    
+    CheckMaxErrors -->|Ja| BlockPIN[Sperre PIN-Eingabe]
+    BlockPIN --> ErrorPIN[Exception:<br/>ErrorPinIsBlocked]
+    
+    CheckMaxErrors -->|Nein| ErrorWrongPIN[Exception:<br/>ErrorWrongPin]
+    
+    CheckPIN -->|Ja| CheckPrevAuth{Anderer Nutzer<br/>angemeldet?}
+    
+    CheckPrevAuth -->|Ja| Logout["Melde vorherigen Nutzer ab:<br/>logOut()"]
+    CheckPrevAuth -->|Nein| Authenticate
+    
+    Logout --> Authenticate["Setze Nutzer-Status:<br/>AUTHENTICATED"]
+    
+    Authenticate --> ResetCounter[Setze Fehlbedienungszähler = 0]
+    
+    ResetCounter --> CreateLog[Erstelle System-Log-Nachricht<br/>authenticateUser]
+    
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> Return[Rückgabe: Erfolg]
+    Return --> End([Ende - Nutzer authentifiziert])
+    
+    ErrorParam --> End
+    ErrorUser --> End
+    ErrorBlocked --> End
+    ErrorPIN --> End
+    ErrorWrongPIN --> End
+    
+    style Authenticate fill:#90EE90
+    style CheckPIN fill:#FFE4B5
+    style BlockPIN fill:#FFB6C1

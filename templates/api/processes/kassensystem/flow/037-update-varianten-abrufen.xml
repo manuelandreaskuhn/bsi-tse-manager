@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>037</processId>
+    <processName>
+        <text xml:lang="en">Update Variants Query</text>
+        <text xml:lang="de">Update-Varianten abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the variants supported by the TSE for transaction updates: Variant A (always sign) or Variant B (collect)</text>
+        <text xml:lang="de">Abruf der von der TSE unterstützten Varianten für Transaktions-Updates: Variante A (immer signieren) oder Variante B (sammeln)</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Update Mechanism</text>
+            <text xml:lang="de">Update-Mechanismus</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getSupportedTransactionUpdateVariants</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>supportedUpdateVariants</name>
+            <type>enum UpdateVariants</type>
+            <description>
+                <text xml:lang="en">alwaysSigned, aggregating or alwaysSignedAndAggregating</text>
+                <text xml:lang="de">alwaysSigned, aggregating oder alwaysSignedAndAggregating</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>UpdateVariants (enum)</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorGetSupportedUpdateVariantsFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.1</reference>
+        <reference>BSI TR-03153-1 Chapter 3.5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">MANDATORY. For all except timeadmin. Variant A = sign immediately, Variant B = collect and sign at the end.</text>
+        <text xml:lang="de">VERPFLICHTEND. Für alle außer timeadmin. Variante A=sofort signieren, Variante B=sammeln+am Ende signieren.</text>
+    </notes>
+</process>

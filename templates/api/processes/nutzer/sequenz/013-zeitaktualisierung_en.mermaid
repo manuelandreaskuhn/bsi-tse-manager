@@ -1,0 +1,47 @@
+sequenceDiagram
+    participant Admin as Admin/TimeAdmin
+    participant TSE as TSE
+    participant SM as Security Module
+    participant Storage as Storage Medium
+    participant NTP as NTP Server (optional)
+
+    Admin->>TSE: Login as admin/timeadmin
+    TSE-->>Admin: Login successful
+    
+    opt Automatic Time Synchronization
+        TSE->>NTP: Get current time
+        NTP-->>TSE: Current time (UTC)
+    end
+    
+    Admin->>TSE: updateTime(newTime)
+    activate TSE
+    
+    Note over TSE: Check: admin or timeadmin<br/>authenticated
+    
+    TSE->>TSE: Validate newTime:<br/>- Format correct?<br/>- Plausibility
+    
+    TSE->>SM: Set new time
+    activate SM
+    SM->>SM: Update internal clock
+    SM->>SM: oldTime = currentTime
+    SM->>SM: currentTime = newTime
+    SM-->>TSE: OK
+    deactivate SM
+    
+    TSE->>SM: Create updateTime System Log
+    activate SM
+    SM->>SM: Log Data:<br/>- oldTime<br/>- newTime<br/>- eventTriggeredByUser
+    SM->>SM: signatureCounter++
+    SM->>SM: Create Signature with newTime
+    SM-->>TSE: Log Message + Signature
+    deactivate SM
+    
+    TSE->>Storage: Save updateTime Log
+    activate Storage
+    Storage-->>TSE: OK
+    deactivate Storage
+    
+    TSE-->>Admin: Time update successful
+    deactivate TSE
+    
+    Note over Admin,Storage: All subsequent signatures<br/>use the new time

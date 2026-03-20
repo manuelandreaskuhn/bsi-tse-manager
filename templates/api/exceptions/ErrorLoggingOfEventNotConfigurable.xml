@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorLoggingOfEventNotConfigurable" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorLoggingOfEventNotConfigurable</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function configureLogging fails because the specified event type is not configurable for logging. The function attempts to modify the logging configuration for a specific event type, but that event type does not support logging configuration changes on this device. ErrorLoggingOfEventNotConfigurable indicates that the event type is either not loggable at all, has a fixed logging configuration that cannot be changed, or is a system event that is not subject to user configuration.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion configureLogging fehlschlägt, weil der angegebene Ereignistyp für die Protokollierung nicht konfigurierbar ist. Die Funktion versucht, die Protokollierungskonfiguration für einen bestimmten Ereignistyp zu ändern, aber dieser Ereignistyp unterstützt keine Änderungen der Protokollierungskonfiguration auf diesem Gerät. ErrorLoggingOfEventNotConfigurable zeigt an, dass der Ereignistyp entweder überhaupt nicht protokolliert werden kann, eine feste Protokollierungskonfiguration hat, die nicht geändert werden kann, oder ein Systemereignis ist, das nicht der Benutzerkonfiguration unterliegt.</text>
+  </description>
+  <category>Event Logging</category>
+  <subcategory>Configuration Constraints</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorLoggingOfEventNotConfigurable that is thrown if the specified event is not configurable for logging.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorLoggingOfEventNotConfigurable, die ausgelöst wird, wenn das angegebene Ereignis nicht für die Protokollierung konfigurierbar ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the configureLogging function attempts to modify the logging configuration for an event type that is not configurable. Different event types have different logging properties - some events can have their logging enabled/disabled or configured, while others have fixed logging behavior that cannot be changed. ErrorLoggingOfEventNotConfigurable indicates that the specified event type does not support logging configuration changes. This may be because the event is marked as "must always be logged", the event type is not supported for logging at all, or the event has device-specific fixed logging behavior. Recovery requires identifying which event types are configurable on the device and modifying the configuration to only target those event types.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion configureLogging versucht, die Protokollierungskonfiguration für einen Ereignistyp zu ändern, der nicht konfigurierbar ist. Verschiedene Ereignistypen haben unterschiedliche Protokollierungseigenschaften - einige Ereignisse können ihre Protokollierung aktiviert/deaktiviert oder konfiguriert werden, während andere ein festes Protokollierungsverhalten aufweisen, das nicht geändert werden kann. ErrorLoggingOfEventNotConfigurable zeigt an, dass der angegebene Ereignistyp keine Änderungen der Protokollierungskonfiguration unterstützt. Dies kann daran liegen, dass das Ereignis als "muss immer protokolliert werden" markiert ist, der Ereignistyp überhaupt nicht für die Protokollierung unterstützt wird oder das Ereignis ein gerätespezifisches festes Protokollierungsverhalten hat. Die Wiederherstellung erfordert die Identifizierung der konfigurierbaren Ereignistypen auf dem Gerät und das Ändern der Konfiguration, um nur diese Ereignistypen zu verwenden.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1 Event Logging Management - configureLogging</section>
+    <requirement>
+      <text xml:lang="en">The function configureLogging SHALL modify the logging configuration for specified event types. However, not all event types are configurable. If the specified event type is not configurable (either because it must always be logged, is not supported for logging, or has fixed device-specific logging behavior), the function SHALL raise the exception ErrorLoggingOfEventNotConfigurable. Configuration changes shall not be applied to non-configurable events.</text>
+      <text xml:lang="de">Die Funktion configureLogging soll die Protokollierungskonfiguration für angegebene Ereignistypen ändern. Jedoch sind nicht alle Ereignistypen konfigurierbar. Falls der angegebene Ereignistyp nicht konfigurierbar ist (entweder weil er immer protokolliert werden muss, nicht für die Protokollierung unterstützt wird oder ein festes gerätespezifisches Protokollierungsverhalten aufweist), soll die Funktion die Ausnahme ErrorLoggingOfEventNotConfigurable auslösen. Konfigurationschanges sollen nicht auf nicht konfigurierbare Ereignisse angewendet werden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Event logging configuration operations - configureLogging function only, for non-configurable events</text>
+      <text xml:lang="de">Ereignisprotokollierungs-Konfigurationsoperationen - nur Funktion configureLogging für nicht konfigurierbare Ereignisse</text>
+    </applicability>
+    <reference>configureLogging – Function (3.3.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>configureLogging</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls configureLogging function with event type and logging configuration parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft configureLogging-Funktion mit Ereignistyp und Protokollierungskonfigurationsparametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including event type identifier and configuration values</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich Ereignistypbezeichner und Konfigurationswerte</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks device authorization and caller permissions for logging management</text>
+      <text xml:lang="de">Funktion prüft Geräteautorisierung und Berechtigungen des Aufrufers für die Protokollverwaltung</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function queries device for the list of configurable event types</text>
+      <text xml:lang="de">Funktion fragt das Gerät nach der Liste der konfigurierbaren Ereignistypen ab</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks if the specified event type is in the configurable event types list</text>
+      <text xml:lang="de">Funktion prüft, ob der angegebene Ereignistyp in der Liste der konfigurierbaren Ereignistypen enthalten ist</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If event type is NOT configurable → ErrorLoggingOfEventNotConfigurable raised, function exits</text>
+      <text xml:lang="de">Falls Ereignistyp NICHT konfigurierbar ist → ErrorLoggingOfEventNotConfigurable ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If event type IS configurable → proceed to step 6</text>
+      <text xml:lang="de">Falls Ereignistyp konfigurierbar ist → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function validates the requested configuration parameters for the specific event type</text>
+      <text xml:lang="de">Funktion validiert die angeforderten Konfigurationsparameter für den spezifischen Ereignistyp</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function transmits the logging configuration command to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet den Protokollierungskonfigurationsbefehl an Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function receives acknowledgment from Secure Element confirming configuration change</text>
+      <text xml:lang="de">Funktion erhält Bestätigung vom Secure Element, die Konfigurationschange bestätigt</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function updates internal logging configuration cache</text>
+      <text xml:lang="de">Funktion aktualisiert internen Protokollierungskonfiguration-Cache</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns successfully with new logging configuration applied</text>
+      <text xml:lang="de">Funktion gibt erfolgreich zurück mit neu angewendeter Protokollierungskonfiguration</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify which events are configurable in specification</text>
+      <text xml:lang="de">Verifizieren Sie, welche Ereignisse in der Spezifikation konfigurierbar sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use only configurable event types</text>
+      <text xml:lang="de">Verwenden Sie nur konfigurierbare Ereignistypen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Accept that certain events have fixed logging configuration</text>
+      <text xml:lang="de">Akzeptieren Sie, dass bestimmte Ereignisse eine feste Protokollierungskonfiguration haben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check logging configuration requirements</text>
+      <text xml:lang="de">Prüfen Sie die Anforderungen der Protokollierungskonfiguration</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorGetEventTypesForLoggingFailed</exception>
+    <exception>ErrorGetEventLoggingStatusFailed</exception>
+    <exception>ErrorInvalidEventType</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Logging Configuration Unchanged">
+      <text xml:lang="en">The logging configuration for the specified event type remains in its state prior to the failed configureLogging call. No partial configuration changes occur. The configuration for that event type is not modified.</text>
+      <text xml:lang="de">Die Protokollierungskonfiguration für den angegebenen Ereignistyp bleibt in ihrem Zustand vor dem fehlgeschlagenen configureLogging-Aufruf. Keine teilweisen Konfigurationseränderungen treten auf. Die Konfiguration für diesen Ereignistyp wird nicht geändert.</text>
+    </state>
+    <state name="Other Event Configurations Unaffected">
+      <text xml:lang="en">The logging configuration for other event types remains unchanged. The failure to configure one event type does not affect configurations for other events.</text>
+      <text xml:lang="de">Die Protokollierungskonfiguration für andere Ereignistypen bleibt unverändert. Das Versagen, einen Ereignistyp zu konfigurieren, wirkt sich nicht auf Konfigurationen für andere Ereignisse aus.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged by the failed configuration attempt. The event logging subsystem continues to function normally.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt durch den fehlgeschlagenen Konfigurationsversuch unverändert. Das Ereignisprotokollierungs-Subsystem funktioniert weiterhin normal.</text>
+    </state>
+    <state name="Event Logging Continues">
+      <text xml:lang="en">The event logging continues to operate with the event's original or fixed logging settings. The fact that configuration is not available does not prevent logging from occurring.</text>
+      <text xml:lang="de">Die Ereignisprotokollierung setzt sich mit den ursprünglichen oder festen Protokollierungseinstellungen des Ereignisses fort. Die Tatsache, dass die Konfiguration nicht verfügbar ist, verhindert nicht, dass die Protokollierung auftritt.</text>
+    </state>
+    <state name="Authorization State Preserved">
+      <text xml:lang="en">The caller's authorization and credentials remain unchanged. The exception indicates a configuration capability constraint, not an authorization failure.</text>
+      <text xml:lang="de">Die Autorisierung und Anmeldedaten des Aufrufers bleiben unverändert. Die Ausnahme zeigt eine Konfigurationsfähigkeitsbeschränkung an, keine Autorisierungsfehlschlag.</text>
+    </state>
+    <state name="Reconfiguration Possible for Other Events">
+      <text xml:lang="en">Other events that are configurable can still have their logging configuration modified via configureLogging calls.</text>
+      <text xml:lang="de">Andere Ereignisse, die konfigurierbar sind, können weiterhin ihre Protokollierungskonfiguration über configureLogging-Aufrufe geändert bekommen.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: The specified event type cannot be configured for logging - event not configurable</text>
+      <text xml:lang="de">Anzeichen: Der angegebene Ereignistyp kann nicht für die Protokollierung konfiguriert werden - Ereignis nicht konfigurierbar</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Configuration, Event Management, Configuration Constraints, Logging Events</text>
+      <text xml:lang="de">Themen: Protokollierungskonfiguration, Ereignisverwaltung, Konfigurationseinschränkungen, Protokollierungsereignisse</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by configureLogging when event type cannot be configured</text>
+      <text xml:lang="de">Wird von configureLogging ausgelöst, wenn Ereignistyp nicht konfiguriert werden kann</text>
+    </note>
+    <note>
+      <text xml:lang="en">Configuration constraint prevents enabling/disabling certain event types</text>
+      <text xml:lang="de">Konfigurationsbeschränkung verhindert Aktivierung/Deaktivierung bestimmter Ereignistypen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Some events have fixed logging configuration</text>
+      <text xml:lang="de">Einige Ereignisse haben eine feste Protokollierungskonfiguration</text>
+    </note>
+    <note>
+      <text xml:lang="en">Non-configurable events cannot be controlled by application</text>
+      <text xml:lang="de">Nicht konfigurierbare Ereignisse können von der Anwendung nicht gesteuert werden</text>
+    </note>
+  </implementationContext>
+</exception>
+

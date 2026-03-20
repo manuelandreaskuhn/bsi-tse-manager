@@ -1,0 +1,555 @@
+{
+  "testcase_id": "TC-II-DESC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "TSE-Beschreibung: Setzen, Auslesen und Fehlerfälle",
+  "description": "Prüft setDescription (bis 64 Zeichen), getDescription und alle Fehlerfälle inkl. verschiedener Beschreibungszustände.",
+  "purpose": "Prüfung, ob die Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE verschiedene Längen (bis zu 64 Zeichen) als Eingabeparameter akzeptiert. Zusätzlich wird geprüft, ob die neu gesetzt Beschreibung in der TSE verwendet wird, ob die Ausführung ohne Fehlermeldung beendet wird und, ob die Log-Nachricht korrekt erstellt wird.",
+  "module": "Integration Interface",
+  "submodule": "II_SDE/II_GDE",
+  "function": "setDescription / getDescription",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_SDE_01",
+    "II_SDE_02",
+    "II_GDE_01",
+    "II_GDE_02",
+    "II_GDE_03",
+    "II_GDE_04"
+  ],
+  "variables": {
+    "$description1": "Festgehaltener Rückgabewert (description1)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Beschreibung wurde durch einen Nutzer gesetzt.",
+      "result": null,
+      "instruction": "Die Beschreibung wurde durch einen Nutzer gesetzt."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Beschreibung wurde durch den Hersteller gesetzt und durc",
+      "result": null,
+      "instruction": "Die Beschreibung wurde durch den Hersteller gesetzt und durch den Nutzer nicht geändert."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die Beschreibung wurde nicht durch den Hersteller oder den N",
+      "result": null,
+      "instruction": "Die Beschreibung wurde nicht durch den Hersteller oder den Nutzer gesetzt."
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Der für description übergebene Wert wird als $description1 festgehalten. Die Zeichenlänge der Beschreibung ist 1.",
+      "function": "setDescription",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Auslesen der Beschreibung der TSE.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für das Erstellen oder Ändern der Beschreibung der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für das Erstellen oder Ändern der Beschreibung der TSE.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Erstellen oder Ändern der Beschreibung der TSE in dem TAR-Container.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht setDescription.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Es wird ein Fehler provoziert, der bewirkt, dass die neue Beschreibung nicht auf dem Speicher abgelegt werden kann.",
+      "function": "setDescription",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorStoringDataFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "setDescription aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Auslesen der Beschreibung der TSE. Es wird ein Fehler provoziert, der bewirkt, dass die gesetzte Beschreibung nicht ermittelt werden kann.",
+      "function": "setDescription",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetDescriptionFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 13,
+      "type": "ACTION",
+      "title": "Beschreibung setzen (verschiedene Längen bis 64 Zeichen)",
+      "result": null,
+      "instruction": "Beschreibung setzen (verschiedene Längen bis 64 Zeichen)\n\nAufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Der für description übergebene Wert wird als $description1 festgehalten. Die Zeichenlänge der Beschreibung ist 1.",
+      "function": "setDescription",
+      "user": "admin",
+      "parameters": {
+        "description": "<String mit 1-64 Zeichen>"
+      },
+      "checks": [
+        {
+          "description": "Beschreibung erfolgreich gesetzt",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 14,
+      "type": "VERIFY",
+      "title": "Beschreibungs-Log prüfen",
+      "result": null,
+      "instruction": "Beschreibungs-Log prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "function": "exportLogMessages",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "SystemLog für setDescription erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturzähler inkrementiert",
+          "expected": "counter > Vorwert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.4",
+        "BSI TR-03151-1 §5.2"
+      ],
+      "source_test": "II_SDE_01"
+    },
+    {
+      "step": 15,
+      "type": "ACTION",
+      "title": "Beschreibung auslesen",
+      "result": null,
+      "instruction": "Beschreibung auslesen",
+      "function": "getDescription",
+      "expected_return": {
+        "description": {
+          "type": "STRING",
+          "constraint": "≤ 64 Zeichen, entspricht gesetztem Wert"
+        }
+      },
+      "checks": [
+        {
+          "description": "Rückgabe entspricht zuletzt gesetzter Beschreibung",
+          "expected": "Übereinstimmung",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 16,
+      "type": "ACTION",
+      "title": "Herstellerbeschreibung auslesen (DESCRIPTION_SET)",
+      "result": null,
+      "instruction": "Herstellerbeschreibung auslesen (DESCRIPTION_SET)",
+      "function": "getDescription",
+      "checks": [
+        {
+          "description": "Hersteller-Beschreibung wird korrekt zurückgegeben",
+          "expected": "Herstellerwert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil DESCRIPTION_SET aktiv"
+    },
+    {
+      "step": 17,
+      "type": "ACTION",
+      "title": "Keine Beschreibung gesetzt (DESCRIPTION_NOT_SET)",
+      "result": null,
+      "instruction": "Keine Beschreibung gesetzt (DESCRIPTION_NOT_SET)",
+      "function": "getDescription",
+      "expected_return": {
+        "description": {
+          "constraint": "leerer String"
+        }
+      },
+      "checks": [
+        {
+          "description": "Leerer String wird zurückgegeben",
+          "expected": "\"\"",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil DESCRIPTION_NOT_SET aktiv"
+    },
+    {
+      "step": 18,
+      "type": "NEGATIVE",
+      "title": "Fehlerfälle",
+      "result": null,
+      "instruction": "Fehlerfälle [NT]\n\nAufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Der für description übergebene Wert wird als $description1 festgehalten. Die Zeichenlänge der Beschreibung ist 1.",
+      "function": "setDescription",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "setDescription bei Speicherfehler: ErrorStoringDataFailed",
+          "expected": "errorCode = ErrorStoringDataFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "getDescription bei Lesefehler: ErrorGetDescriptionFailed",
+          "expected": "errorCode = ErrorGetDescriptionFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_SDE_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

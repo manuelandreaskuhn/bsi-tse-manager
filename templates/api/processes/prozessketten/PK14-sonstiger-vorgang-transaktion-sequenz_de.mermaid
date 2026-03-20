@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant N as Nutzer/Personal
+    participant A as Anwendung
+    participant T as TSE
+
+    Note over N,T: SonstigerVorgang: Flexible Transaktion für spezielle Anwendungsfälle
+    
+    N->>A: Vorgang initiieren (z.B. Kassensturz, Training, Reparatur)
+    
+    A->>A: processData vorbereiten (Freiform, anwendungsspezifisch)
+    
+    Note over A,T: Transaktion starten
+    A->>T: startTransaction(clientId, processData: anwendungsspezifisch oder leer, processType: "SonstigerVorgang")
+    T->>T: Transaktionsnummer generieren
+    T-->>A: transactionNumber, logTime, signatureCounter
+    
+    opt Vorgangsabwicklung
+        N->>A: Vorgang durchführen
+        A->>A: Daten erfassen/verarbeiten
+    end
+    
+    Note over A: processData Format ist frei wählbar: Text, JSON, CSV etc., Keine DSFinV-K Formatvorgabe, Anwendung definiert Struktur
+    
+    A->>A: Finale processData erstellen
+    Note right of A: Beispiel: Kassensturz, IST 1234.56 EUR, SOLL 1234.56 EUR
+    
+    Note over A,T: Transaktion abschließen
+    A->>T: finishTransaction(clientId, transactionNumber, processData: finaler anwendungsspezifischer Inhalt, processType: "SonstigerVorgang")
+    T->>T: Signatur erstellen
+    T->>T: Transaction-Log speichern
+    T-->>A: logTime, signatureValue, signatureCounter
+    
+    A->>A: Optional: Dokumentation erstellen
+    A->>N: Vorgang abgeschlossen, Signatur vorhanden
+    
+    Note over N,T: Transaktion geschlossen, Daten sind manipulationssicher gespeichert

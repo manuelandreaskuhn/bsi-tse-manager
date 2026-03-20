@@ -1,0 +1,28 @@
+flowchart TD
+    Start([Admin/Logger: deregisterClient aufrufen])
+    Start --> CheckAuth{Admin oder Logger<br/>authentifiziert?}
+    
+    CheckAuth -->|Nein| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Ja| CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| CheckRegistered{Client<br/>registriert?}
+    
+    CheckRegistered -->|Nein| ErrorNotReg[Exception:<br/>ErrorClientNotRegistered]
+    CheckRegistered -->|Ja| CreateLog[Erstelle System-Log-Nachricht<br/>deregisterClient]
+    
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> DisableClient[Deaktiviere Client:<br/>startTransaction,<br/>updateTransaction,<br/>finishTransaction<br/>für diese clientId gesperrt]
+    
+    DisableClient --> Return[Rückgabe: Erfolg]
+    Return --> End([Ende - Client deregistriert])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorNotReg --> End
+    
+    style DisableClient fill:#FFB6C1
+    style CreateLog fill:#87CEEB

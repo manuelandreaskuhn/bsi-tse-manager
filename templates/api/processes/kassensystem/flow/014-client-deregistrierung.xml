@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>014</processId>
+    <processName>
+        <text xml:lang="en">Client Deregistration</text>
+        <text xml:lang="de">Client-Deregistrierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Deregistration of a recording system (client) from the TSE. After deregistration, the client can no longer start, update or finish transactions.</text>
+        <text xml:lang="de">Deregistrierung eines Aufzeichnungssystems (Client) von der TSE. Nach der Deregistrierung kann der Client keine Transaktionen mehr starten, aktualisieren oder beenden.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Recording System (ERS)</text>
+            <text xml:lang="de">Aufzeichnungssystem (ERS)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Client List</text>
+            <text xml:lang="de">Client-Liste</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>deregisterClient</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Serial number of the recording system to be deregistered</text>
+                <text xml:lang="de">Seriennummer des zu deregistrierenden Aufzeichnungssystems</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (deregisterClient)</dataObject>
+        <dataObject>DeregisterClientEventData</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorClientNotRegistered</exception>
+        <exception>ErrorDeregisterClientFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorTimeNotSet</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.4</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only users with role 'admin' or 'logger' are allowed to deregister clients. After deregistration, transaction functions for this clientId are blocked.</text>
+        <text xml:lang="de">Nur Nutzer mit Rolle 'admin' oder 'logger' dürfen Clients deregistrieren. Nach Deregistrierung werden Transaktionsfunktionen für diese clientId gesperrt.</text>
+    </notes>
+</process>

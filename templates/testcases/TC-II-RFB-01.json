@@ -1,0 +1,589 @@
+{
+  "testcase_id": "TC-II-RFB-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "restoreLogsFromBackup: Korrekte Wiederherstellung und Fehlerfälle",
+  "description": "Prüft Backup-Wiederherstellung (ohne/mit Namenskonflikten), Ablehnung fremder Logs und alle Fehlerfälle.",
+  "purpose": "Prüfung, ob nach einem Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten die Daten aus dem übergebenen TAR-Container nach den vorgegebenen Regeln wiederhergestellt werden.\n\nDer TAR-Container enthält keine Log-Nachrichten, zu denen bereits Log-Nachrichten mit gleichem Dateinamen im Speichermedium gespeichert sind.\nDer TAR-Container enthält keine Zertifikate, zu denen bereits Zertifikate mit gleichem Dateinamen in der TSE verwaltet werden.\nZusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_RFB",
+  "function": "restoreLogsFromBackup",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_RESTOREBACKUP"
+  ],
+  "source_tests": [
+    "II_RFB_01",
+    "II_RFB_02",
+    "II_RFB_03",
+    "II_RFB_04",
+    "II_RFB_05",
+    "II_RFB_06"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Das Speichermedium enthält Log-Nachrichten zu den Absicherun",
+      "result": null,
+      "instruction": "Das Speichermedium enthält Log-Nachrichten zu den Absicherungsschritten für mindestens vier beendete Transaktionen."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktionalität zur",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält Log-Nachrichten zu den Absicherungsschritten für mindestens drei beendete Transaktionen. Die Dateinamen dieser Log-Nachrichten entsprechen keinen Dateinamen von Log-Nachrichten, die im Speichermedium vorhanden sind."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktionalität zur",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält ausschließlich Zertifikate, zu denen keine Zertifikate mit gleichen Dateinamen in der Technischen Sicherheitseinrichtung verwaltet werden."
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die  Funktionalität zu",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die  Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält Log-Nachrichten zu den Absicherungsschritten für mindestens vier beendete Transaktionen. Die Dateinamen der Log-Nachrichten für mindestens zwei Tranaktionen entsprechen keinen Dateinamen von Log-Nachrichten, die im Speichermedium vorhanden sind. Für die Log-Nachrichten von mindestens zwei anderen Transaktionen stimmen deren Dateinamen mit den Dateinamen von Log-Nachrichten im Speichermedium überein."
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktionalität zur",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält ausschließlich Zertifikate mit Dateinamen, zu denen Zertifikate mit gleichen Dateinamen in der Technischen Sicherheitseinrichtung verwaltet werden."
+    },
+    {
+      "step": 9,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktion restoreFr",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktion restoreFromBackup enthält Log-Nachrichten zu den Absicherungsschritten für drei beendete Transaktionen."
+    },
+    {
+      "step": 10,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktion restoreFr",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktion restoreFromBackup enthält ausschließlich Zertifikate mit Dateinamen, zu denen keine Zertifikate mit gleichen Dateinamen in der Technischen Sicherheitseinrichtung verwaltet werden."
+    },
+    {
+      "step": 11,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der TAR-Container für die Übergabe an die Funktionalität zur",
+      "result": null,
+      "instruction": "Der TAR-Container für die Übergabe an die Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten enthält Log-Nachrichten, die nicht von dieser TSE erstellt wurden."
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "restoreFromBackup aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten.",
+      "function": "restoreFromBackup",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_RFB_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "restoreFromBackup aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten. Es wird ein Fehler provoziert, der bewirkt, dass die übergebenen Log-Nachrichten nicht fehlerfrei gespeichert werden können.",
+      "function": "restoreFromBackup",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorRestoreFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_RFB_01"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "restoreFromBackup aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Wiedereinspielung von Backups von Log-Nachrichten mit dem TAR-Container, welcher Log-Nachrichten enthält, die nicht von dieser TSE erstellt wurden.",
+      "function": "restoreFromBackup",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorRestoreFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_RFB_01"
+    },
+    {
+      "step": 15,
+      "type": "VERIFY",
+      "title": "Backup ohne Namenskonflikte einspielen",
+      "result": null,
+      "instruction": "Backup ohne Namenskonflikte einspielen",
+      "function": "restoreLogsFromBackup",
+      "parameters": {
+        "tarContainer": "<Backup-TAR ohne Namenskonflikte>"
+      },
+      "checks": [
+        {
+          "description": "Wiederherstellung erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Wiederhergestellte Logs im Export vorhanden",
+          "expected": "RFB_TAR_LOGS_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Duplikate nach Restore",
+          "expected": "RFB_TAR_NO_DUP",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Wiederhergestellte Logs valide",
+          "expected": "RFB_TAR_LOG_VALID",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Einheitliche Seriennummer nach Restore",
+          "expected": "RFB_TAR_CROSS_SERIAL",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_03",
+          "title": "Keine unspezifizierten Dateien",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_NOEXTRA",
+          "title": "Keine unzulässigen Dateien im TAR-Container",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_OPTYPE",
+          "title": "operationType vorhanden und gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_CLIENT",
+          "title": "clientId vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PDATA",
+          "title": "processData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_PTYPE",
+          "title": "processType vorhanden, max. 100 Zeichen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_TXNNUM",
+          "title": "transactionNumber vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME",
+          "title": "Dateiname-Schema vollständig korrekt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_FMT",
+          "title": "Zeitformat-Präfix",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_NUM",
+          "title": "No-{transactionNumber} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_TYPE",
+          "title": "TYPE stimmt (Start|Update|Finish)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TXN_FNAME_CLIENT",
+          "title": "Client-{clientId} stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_NO_ADD_INT",
+          "title": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FIELD_ADD_EXT_ABSENT",
+          "title": "additionalExternalData nur vorhanden wenn Daten übergeben wurden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "RFB_TAR_LOGS_PRESENT",
+          "title": "Wiederhergestellte Logs im Export vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "RFB_TAR_NO_DUP",
+          "title": "Keine Duplikate nach Restore",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "RFB_TAR_LOG_VALID",
+          "title": "Wiederhergestellte Log-Nachrichten valide",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "RFB_TAR_CROSS_SERIAL",
+          "title": "Einheitliche Seriennummer nach Restore",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 16,
+      "type": "ACTION",
+      "title": "Backup mit Namenskonflikten einspielen (keine Überschreibung)",
+      "result": null,
+      "instruction": "Backup mit Namenskonflikten einspielen (keine Überschreibung)",
+      "function": "restoreLogsFromBackup",
+      "parameters": {
+        "tarContainer": "<Backup mit Namenskonflikten>"
+      },
+      "checks": [
+        {
+          "description": "Vorhandene Dateien werden NICHT überschrieben",
+          "expected": "Konflikte korrekt behandelt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Wiederherstellung der nicht-konfliktierenden Dateien erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 17,
+      "type": "NEGATIVE",
+      "title": "Logs einer fremden TSE ablehnen",
+      "result": null,
+      "instruction": "Logs einer fremden TSE ablehnen [NT].",
+      "function": "restoreLogsFromBackup",
+      "parameters": {
+        "tarContainer": "<Backup mit Logs einer anderen TSE>"
+      },
+      "checks": [
+        {
+          "description": "ErrorRestoreFailed zurückgegeben",
+          "expected": "errorCode = ErrorRestoreFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Import fremder Logs abgelehnt",
+          "expected": "Keine fremden Logs übernommen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 18,
+      "type": "NEGATIVE",
+      "title": "Weitere Fehlerfälle",
+      "result": null,
+      "instruction": "Weitere Fehlerfälle [NT].",
+      "checks": [
+        {
+          "description": "Speicherfehler beim Wiederherstellen: ErrorRestoreFailed",
+          "expected": "errorCode = ErrorRestoreFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Verbindungsunterbrechung (STORAGE_REMOTE): Fehler zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

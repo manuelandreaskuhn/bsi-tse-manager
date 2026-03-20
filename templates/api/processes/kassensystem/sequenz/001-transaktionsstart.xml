@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>001</processId>
+    <processName>
+        <text xml:lang="en">Transaction Start</text>
+        <text xml:lang="de">Transaktionsstart</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Start of a new transaction by the recording system with protection by the security module</text>
+        <text xml:lang="de">Start einer neuen Transaktion durch das Aufzeichnungssystem mit Absicherung durch das Sicherheitsmodul</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Recording System (ERS)</text>
+            <text xml:lang="de">Aufzeichnungssystem (ERS)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Counter</text>
+            <text xml:lang="de">Transaktionszähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Message</text>
+            <text xml:lang="de">Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>startTransaction</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Serial number of the recording system</text>
+                <text xml:lang="de">Seriennummer des Aufzeichnungssystems</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Data of the process</text>
+                <text xml:lang="de">Daten des Vorgangs</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processType</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Type of the process</text>
+                <text xml:lang="de">Art des Vorgangs</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Unique transaction number</text>
+                <text xml:lang="de">Eindeutige Transaktionsnummer</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>logTime</name>
+            <type>GeneralizedTime</type>
+            <description>
+                <text xml:lang="en">Time of logging</text>
+                <text xml:lang="de">Zeitpunkt der Protokollierung</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>serialNumber</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Serial number of the TSE</text>
+                <text xml:lang="de">Seriennummer der TSE</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signatureCounter</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Signature counter</text>
+                <text xml:lang="de">Signaturzähler</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signature</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Digital signature</text>
+                <text xml:lang="de">Digitale Signatur</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log (startTransaction)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+        <dataObject>LogTimeType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorClientNotRegistered</exception>
+        <exception>ErrorStartTransactionFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorTimeNotSet</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.1</reference>
+        <reference>BSI TR-03153-1 Chapter 3.5.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">The first phase of transaction logging. The security module increments the transaction counter and creates a protection step.</text>
+        <text xml:lang="de">Die erste Phase der Transaktionsprotokollierung. Das Sicherheitsmodul erhöht den Transaktionszähler und erstellt einen Absicherungsschritt.</text>
+    </notes>
+</process>

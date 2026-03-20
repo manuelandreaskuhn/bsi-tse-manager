@@ -1,0 +1,125 @@
+{
+  "testcase_id": "TC-II-SM-AUD-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Deaktivierung des Sicherheitsmoduls: Audit-Einstellungsänderung",
+  "description": "Prüft, ob das Sicherheitsmodul bei Änderung der Audit-Einstellungen (AUDIT_MODIFY) deaktiviert wird.",
+  "purpose": "Prüfung, ob das Sicherheitsmodul deaktiviert wird, wenn die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden.",
+  "module": "Security Module",
+  "submodule": "SM_AUD",
+  "function": "<herstellerspezifisch>",
+  "test_type": "PT",
+  "priority": "conditional",
+  "profiles": [
+    "AUDIT_MODIFY"
+  ],
+  "source_tests": [
+    "SM_AUD_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller stellt eine Anleitung und eventuell notwendig",
+      "result": null,
+      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden können."
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "Sicherheitsmodul deaktivieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "disableSecureElement",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.15"
+      ],
+      "source_test": "SM_AUD_01"
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSecureElementDisabled ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_AUD_01"
+    },
+    {
+      "step": 5,
+      "type": "ACTION",
+      "title": "Audit-Einstellungen nach initialer Konfiguration ändern",
+      "result": null,
+      "instruction": "Audit-Einstellungen nach initialer Konfiguration ändern",
+      "function": "<herstellerspezifische Methode zum Ändern der Audit-Einstellungen>",
+      "checks": [
+        {
+          "description": "Sicherheitsmodul wird nach Änderung der Audit-Einstellungen deaktiviert",
+          "expected": "Deaktivierung eingetreten",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE signalisiert Deaktivierung korrekt",
+          "expected": "Erkennbar im Export",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9"
+  ]
+}

@@ -1,0 +1,738 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="updateTransaction" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>updateTransaction</name>
+  <category>Client- und Transaktionsverwaltung</category>
+  <description>
+    <text xml:lang="en">This function updates an existing transaction. In case the device supports unsigned updates, further control of the creation of signed and unsigned updates is possible.</text>
+    <text xml:lang="de">Diese Funktion aktualisiert eine bestehende Transaktion. Falls das Gerät unsignierte Updates unterstützt, ist weitere Kontrolle über die Erstellung signierter und unsignierter Updates möglich.</text>
+  </description>
+  <authorizedRoles>
+    <role>logger</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <standardStep number="3">
+        <shortCommand xml:lang="de">Zeit-Prüfung</shortCommand>
+        <shortCommand xml:lang="en">Time Verification</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the current time in the SE is not set, the function SHALL raise the exception ErrorTimeNotSet and exit the function.</text>
+        <text xml:lang="de">Falls die aktuelle Zeit im SE nicht gesetzt ist: Werfe ErrorTimeNotSet und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF current time in SE NOT set THEN
+  THROW ErrorTimeNotSet
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Aktuelle Zeit im SE NICHT gesetzt DANN
+  WERFE ErrorTimeNotSet
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTimeNotSet</exception>
+        <trigger>
+          <text xml:lang="en">The current time in SE is not set</text>
+          <text xml:lang="de">Die aktuelle Zeit im SE ist nicht gesetzt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="4">
+        <shortCommand xml:lang="de">Transaktionsprotokollierung-Prüfung</shortCommand>
+        <shortCommand xml:lang="en">Transaction Logging Check</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the function lockTransactionLogging is implemented, the function SHALL check if transaction logging is currently locked. If transaction logging is locked, the function SHALL raise the exception ErrorTransactionLoggingLocked and exit the function.</text>
+        <text xml:lang="de">Falls lockTransactionLogging implementiert ist: Prüfe, ob Transaktionsprotokollierung gesperrt ist. Falls ja: Werfe ErrorTransactionLoggingLocked und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF transaction logging locked THEN
+  THROW ErrorTransactionLoggingLocked
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Transaktionsprotokollierung gesperrt DANN
+  WERFE ErrorTransactionLoggingLocked
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTransactionLoggingLocked</exception>
+        <trigger>
+          <text xml:lang="en">Transaction logging is locked</text>
+          <text xml:lang="de">Die Transaktionsprotokollierung ist gesperrt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>5</number>
+      <description>
+        <text xml:lang="en">If the function registerClient is not implemented, the function SHALL check if the passed clientId consists only of valid characters. If the passed clientId contains invalid characters, the function SHALL raise the exception ErrorInvalidClientIdCharacter and exit the function.</text>
+        <text xml:lang="de">Falls registerClient nicht implementiert ist: Prüfe, ob übergebene ClientID nur gültige Zeichen enthält. Falls ungültige Zeichen: Werfe ErrorInvalidClientIdCharacter und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF clientId contains invalid characters THEN
+  THROW ErrorInvalidClientIdCharacter
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN ClientID ungültige Zeichen DANN
+  WERFE ErrorInvalidClientIdCharacter
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorInvalidClientIdCharacter</exception>
+        <trigger>
+          <text xml:lang="en">ClientID contains invalid characters</text>
+          <text xml:lang="de">Die übergebene ClientID enthält ungültige Zeichen</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>6</number>
+      <description>
+        <text xml:lang="en">If the function registerClient is implemented, the function SHALL check if the ID passed as parameter clientId is registered using the function registerClient. If the ID is not registered, the function SHALL raise the exception ErrorClientNotRegistered and exit the function.</text>
+        <text xml:lang="de">Falls registerClient implementiert ist: Prüfe, ob übergebene ClientID registriert ist. Falls nicht: Werfe ErrorClientNotRegistered und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF clientId NOT registered THEN
+  THROW ErrorClientNotRegistered
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN ClientID NICHT registriert DANN
+  WERFE ErrorClientNotRegistered
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorClientNotRegistered</exception>
+        <trigger>
+          <text xml:lang="en">ClientID is not registered</text>
+          <text xml:lang="de">Die ClientID ist nicht registriert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>7</number>
+      <description>
+        <text xml:lang="en">The Secure Element SHALL check whether the transactionNumber belongs to an open transaction. If this is not the case, the function SHALL raise the exception ErrorTransactionNumberNotFound and exit the function.</text>
+        <text xml:lang="de">Prüfe, ob die Transaktionsnummer zu einer offenen Transaktion gehört. Falls nicht: Werfe ErrorTransactionNumberNotFound und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF transactionNumber NOT belongs to open transaction THEN
+  THROW ErrorTransactionNumberNotFound
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN TransactionNumber nicht zu offener Transaktion gehört DANN
+  WERFE ErrorTransactionNumberNotFound
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorTransactionNumberNotFound</exception>
+        <trigger>
+          <text xml:lang="en">Transaction number not found</text>
+          <text xml:lang="de">Transaktionsnummer gehört nicht zu offener Transaktion</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>8</number>
+      <standardStep number="8">
+        <shortCommand xml:lang="de">SE-Teile Verbindungsprüfung</shortCommand>
+        <shortCommand xml:lang="en">SE Parts Connection Check</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the Secure Element consists of multiple logical or physical parts that need to be connected in order to perform the whole function updateTransaction without errors the function shall check that the needed parts are connected. If one or more of the mandatory connections is lost, the function SHALL raise the exception ErrorSecureElementPartsDisconnected and exit the function.</text>
+        <text xml:lang="de">Falls SE aus mehreren logischen oder physikalischen Teilen besteht: Prüfe, ob alle nötigen Teile verbunden sind. Falls nicht: Werfe ErrorSecureElementPartsDisconnected und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  CHECK if SE parts are connected
+CATCH error
+  THROW ErrorSecureElementPartsDisconnected
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  PRÜFE ob SE-Teile verbunden sind
+BEI_FEHLER
+  WERFE ErrorSecureElementPartsDisconnected
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorSecureElementPartsDisconnected</exception>
+        <trigger>
+          <text xml:lang="en">SE part is not connected</text>
+          <text xml:lang="de">Das SE-Teil ist nicht verbunden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>9</number>
+      <standardStep number="5">
+        <shortCommand xml:lang="de">SE-Funktionalität Log-Erstellung</shortCommand>
+        <shortCommand xml:lang="en">SE Log Message Creation</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL invoke the functionality of the Secure Element to update a transaction and SHALL pass all data that is to be secured, and not created or determined by Secure Element itself, to the Secure Element. If the execution fails, the function SHALL raise the exception ErrorSigningEventDataFailed and exit the function.</text>
+        <text xml:lang="de">Rufe Secure-Element-Funktionalität auf, um Transaktion zu aktualisieren. Übergebe alle zu sichernden Daten. Bei Fehler: Werfe ErrorSigningEventDataFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  INVOKE SE functionality
+  UPDATE transaction
+  PASS processData and processType
+CATCH error
+  THROW ErrorSigningEventDataFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  RUFE_AUF Secure-Element-Funktionalität
+  UPDATE_TRANSAKTION
+  ÜBERGEBE processData und processType
+BEI_FEHLER
+  WERFE ErrorSigningEventDataFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorSigningEventDataFailed</exception>
+        <trigger>
+          <text xml:lang="en">Execution fails</text>
+          <text xml:lang="de">Die Ausführung schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>10</number>
+      <standardStep number="6">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile abrufen</shortCommand>
+        <shortCommand xml:lang="en">Retrieve Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The function SHALL retrieve the parts of the log message determined by the Secure Element from it. If the retrieval of the log message parts fails, the function SHALL raise the exception ErrorRetrieveLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Hole die Log-Nachricht-Teile vom Secure Element. Falls der Abruf fehlschlägt: Werfe ErrorRetrieveLogMessageFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE log message parts from SE
+CATCH error
+  THROW ErrorRetrieveLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE Log-Nachricht-Teile vom Secure Element
+BEI_FEHLER
+  WERFE ErrorRetrieveLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorRetrieveLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">Retrieval of log message parts fails</text>
+          <text xml:lang="de">Der Abruf der Log-Nachricht-Teile schlägt fehl</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>11</number>
+      <standardStep number="7">
+        <shortCommand xml:lang="de">Log-Nachricht-Teile speichern</shortCommand>
+        <shortCommand xml:lang="en">Store Log Message Parts</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The data sent to the Secure Element and the data of the log message parts retrieved from the Secure Element (together forming the log message contents) SHALL be stored. If the data has not been stored successfully, the function SHALL raise the exception ErrorStoringLogMessageFailed and exit the function.</text>
+        <text xml:lang="de">Speichere die Daten (von SE und Log-Nachricht-Teile) als Transaktionsloginhalt. Falls Speicherung fehlschlägt: Werfe ErrorStoringLogMessageFailed und beende Funktion.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  STORE transaction log content
+CATCH error
+  THROW ErrorStoringLogMessageFailed
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  SPEICHERE Transaktionsloginhalt
+BEI_FEHLER
+  WERFE ErrorStoringLogMessageFailed
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorStoringLogMessageFailed</exception>
+        <trigger>
+          <text xml:lang="en">Data not stored successfully</text>
+          <text xml:lang="de">Die Daten wurden nicht erfolgreich gespeichert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>12</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">After the data has been stored successfully, the function SHALL return the type of performed protection on the data by performedUpdateProtection with a value of noPrevPassedProtected, the time of the log message creation by firstLogsignatureCreationTime, the signature counter by firstLogsignatureCounter and the signature value by firstLogsignatureValue. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function updateTransaction has been successful.</text>
+        <text xml:lang="de">Gebe erfolgreich die Aktualisierungsschutzart, Signaturerstellungszeit, Signaturzähler und Signaturwert zurück. Funktion kehrt ohne Exception zurück.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">RETURN (performedUpdateProtection, firstLogsignatureCreationTime, firstLogsignatureCounter, firstLogsignatureValue)
+RETURN without exception
+END SUCCESSFULLY</text>
+        <text xml:lang="de">GEBE_ZURÜCK (performedUpdateProtection, firstLogsignatureCreationTime, firstLogsignatureCounter, firstLogsignatureValue)
+RETURN ohne Exception
+BEENDE_ERFOLGREICH</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">Storage successful</text>
+          <text xml:lang="de">Speicherung war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Function returns without exception, returns all parameters</text>
+          <text xml:lang="de">Funktion kehrt ohne Exception zurück, gibt alle Parameter zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters>
+    <parameter>
+      <name>clientId</name>
+      <type>String</type>
+      <description>
+        <text xml:lang="en">represents the ID of the application that has invoked the function.</text>
+        <text xml:lang="de">stellt die ID der Anwendung dar, die die Funktion aufgerufen hat.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+    </parameter>
+    <parameter>
+      <name>transactionNumber</name>
+      <type>long</type>
+      <description>
+        <text xml:lang="en">parameter is used to unambiguously identify the current transaction.</text>
+        <text xml:lang="de">Parameter wird verwendet, um die aktuelle Transaktion eindeutig zu identifizieren.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+    </parameter>
+    <parameter>
+      <name>processData</name>
+      <type>byte[]</type>
+      <description>
+        <text xml:lang="en">represents all the new information regarding the state of the process since the start of the corresponding transaction or its last update.</text>
+        <text xml:lang="de">stellt alle neuen Informationen bezüglich des Zustands des Prozesses seit dem Start der entsprechenden Transaktion oder ihrer letzten Aktualisierung dar.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>true</required>
+      <note type="DSFinV-K">
+        <text xml:lang="en">For DSFinV-K: The UpdateTransaction operation is not used for processType Kassenbeleg-V1, as processData changes only at FinishTransaction. For processType Bestellung-V1, UpdateTransaction can be used to secure order items during the ordering process.</text>
+        <text xml:lang="de">Bei DSFinV-K: Die UpdateTransaction-Operation wird beim processType Kassenbeleg-V1 nicht verwendet, da sich die processData erst bei FinishTransaction ändern. Bei processType Bestellung-V1 kann UpdateTransaction genutzt werden, um Bestellpositionen während des Bestellvorgangs abzusichern.</text>
+      </note>
+    </parameter>
+    <parameter>
+      <name>processType</name>
+      <type>String</type>
+      <description>
+        <text xml:lang="en">identifies the type of the transaction as defined by the application. The String representing the processType shall be restricted to a length of 100.</text>
+        <text xml:lang="de">identifiziert den Transaktionstyp wie von der Anwendung definiert. Der String für processType sollte auf eine Länge von 100 begrenzt sein.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+      <note>
+        <text xml:lang="en">conditional parameter</text>
+        <text xml:lang="de">bedingter Parameter</text>
+      </note>
+      <note type="DSFinV-K">
+        <text xml:lang="en">For DSFinV-K, processType identifies the format of the content represented in processData (ASCII encoding with version suffix). See Enum ProcessTypes. Note: UpdateTransaction is not used for processType Kassenbeleg-V1.</text>
+        <text xml:lang="de">Bei DSFinV-K kennzeichnet processType das Format der in processData dargestellten Inhalte (ASCII-Codierung mit Versionssuffix). Siehe Enum ProcessTypes. Hinweis: UpdateTransaction wird bei processType Kassenbeleg-V1 nicht verwendet.</text>
+      </note>
+    </parameter>
+    <parameter>
+      <name>additionalExternalData</name>
+      <type>byte[]</type>
+      <description>
+        <text xml:lang="en">the application may send additional external data to the device.</text>
+        <text xml:lang="de">die Anwendung kann zusätzliche externe Daten an das Gerät senden.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+    </parameter>
+    <parameter>
+      <name>forceSignature</name>
+      <type>boolean</type>
+      <description>
+        <text xml:lang="en">this parameter is used to force a "signed update", for cases where "signed" and "unsigned updates" are supported.</text>
+        <text xml:lang="de">dieser Parameter wird verwendet, um ein "signiertes Update" zu erzwingen, für Fälle, in denen "signierte" und "unsignierte Updates" unterstützt werden.</text>
+      </description>
+      <direction>INPUT</direction>
+      <required>false</required>
+      <note>
+        <text xml:lang="en">Only available in overloaded version. If unsigned updates are not supported this parameter shall be ignored.</text>
+        <text xml:lang="de">Nur in überladener Version verfügbar. Wenn unsignierte Updates nicht unterstützt werden, sollte dieser Parameter ignoriert werden.</text>
+      </note>
+    </parameter>
+  </parameters>
+  <returnValue>
+    <type>UpdateTransactionResult</type>
+    <description>
+      <text xml:lang="en">an UpdateTransactionResult containing information about the updated transaction(s), including signature counter and log message data.</text>
+      <text xml:lang="de">ein UpdateTransactionResult mit Informationen über die aktualisierte(n) Transaktion(en), einschließlich Signaturzähler und Log-Nachricht-Daten.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorCertificateExpired</exception>
+    <exception>ErrorClientNotRegistered</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterTooLong</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+    <exception>ErrorSignatureCounterExhausted</exception>
+    <exception>ErrorSignatureCounterOverflow</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorStorageMemoryFull</exception>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorTimeNotSet</exception>
+    <exception>ErrorTransactionLoggingLocked</exception>
+    <exception>ErrorTransactionNumberNotFound</exception>
+    <exception>ErrorUpdateTransactionFailed</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+  <transactionLog>
+    <logType>transaction-log</logType>
+    <requirement>MUST be logged when updateTransaction function is invoked successfully.</requirement>
+    <asn1Structure>
+      <logMessage>LogMessage ::= SEQUENCE {
+  version                INTEGER (3),
+  certifiedDataType      OBJECT IDENTIFIER (id-SE-API-transaction-log),
+  certifiedData          TransactionLogMessage,  -- embedded transaction log
+  serialNumber           OCTET STRING (SIZE (32)),
+  signatureAlgorithm     AlgorithmIdentifier,
+  seAuditData            [0] IMPLICIT OCTET STRING OPTIONAL,  -- RFU
+  signatureCounter       INTEGER,
+  signatureCreationTime  Time,
+  signatureValue         OCTET STRING
+}</logMessage>
+      <transactionLogMessage>TransactionLogMessage ::= SEQUENCE {
+  version                    INTEGER (3),
+  certifiedDataType          OBJECT IDENTIFIER (id-SE-API-transaction-log),
+  operationType              [0] IMPLICIT PrintableString ("updateTransaction"),
+  clientId                   [1] IMPLICIT ClientId,
+  processData                [2] IMPLICIT OCTET STRING,
+  processType                [3] IMPLICIT PrintableString (SIZE (0..100)),
+  additionalExternalData     [4] IMPLICIT OCTET STRING OPTIONAL,
+  transactionNumber          [5] IMPLICIT INTEGER,
+  additionalInternalData     [6] IMPLICIT OCTET STRING OPTIONAL,  -- RFU, MUST NOT be present
+  serialNumber               OCTET STRING (SIZE (32)),
+  signatureAlgorithm         AlgorithmIdentifier,
+  signatureCounter           INTEGER,
+  signatureCreationTime      Time,
+  signatureValue             OCTET STRING
+}</transactionLogMessage>
+    </asn1Structure>
+    <structure>
+      <field>
+        <name>version</name>
+        <type>INTEGER (3)</type>
+        <required>true</required>
+        <defaultValue>3</defaultValue>
+        <description>
+          <text xml:lang="en">Version of the log message format. SHALL be set to '3'.</text>
+          <text xml:lang="de">Version des Log-Nachricht-Formats. MUSS auf '3' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>certifiedDataType</name>
+        <type>OBJECT IDENTIFIER</type>
+        <required>true</required>
+        <defaultValue>id-SE-API-transaction-log</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to the OID id-SE-API-transaction-log.</text>
+          <text xml:lang="de">MUSS auf die OID id-SE-API-transaction-log gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>operationType</name>
+        <type>PrintableString</type>
+        <tag>[0] IMPLICIT</tag>
+        <required>true</required>
+        <defaultValue>updateTransaction</defaultValue>
+        <description>
+          <text xml:lang="en">MUST be set to 'updateTransaction'.</text>
+          <text xml:lang="de">MUSS auf 'updateTransaction' gesetzt sein.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>clientId</name>
+        <type>ClientId</type>
+        <tag>[1] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">ID of the application that has initiated the logging of a transaction phase.</text>
+          <text xml:lang="de">ID der Anwendung, die die Protokollierung einer Transaktionsphase initiiert hat.</text>
+        </description>
+        <origin>External application</origin>
+      </field>
+      <field>
+        <name>processData</name>
+        <type>OCTET STRING</type>
+        <tag>[2] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">The process data.</text>
+          <text xml:lang="de">Die Prozessdaten.</text>
+        </description>
+        <origin>External application</origin>
+      </field>
+      <field>
+        <name>processType</name>
+        <type>PrintableString (SIZE (0..100))</type>
+        <tag>[3] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Information about the type of process.</text>
+          <text xml:lang="de">Informationen über den Prozesstyp.</text>
+        </description>
+        <origin>External application</origin>
+      </field>
+      <field>
+        <name>additionalExternalData</name>
+        <type>OCTET STRING</type>
+        <tag>[4] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">Additional data encoded as an octet string.</text>
+          <text xml:lang="de">Zusätzliche Daten kodiert als Oktettkette.</text>
+        </description>
+        <origin>External application</origin>
+      </field>
+      <field>
+        <name>transactionNumber</name>
+        <type>INTEGER</type>
+        <tag>[5] IMPLICIT</tag>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Transaction number generated by the Secure Element at the start of the transaction.</text>
+          <text xml:lang="de">Transaktionsnummer, die vom Secure Element beim Start der Transaktion generiert wird.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>additionalInternalData</name>
+        <type>OCTET STRING</type>
+        <tag>[6] IMPLICIT</tag>
+        <required>false</required>
+        <description>
+          <text xml:lang="en">MUST NOT be present. Reserved for future use.</text>
+          <text xml:lang="de">DARF NICHT vorhanden sein. Für zukünftige Verwendung reserviert.</text>
+        </description>
+        <note>RFU</note>
+        <origin>-</origin>
+      </field>
+      <field>
+        <name>serialNumber</name>
+        <type>OCTET STRING (SIZE (32))</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Serial number of the Secure Element consisting of the hash value of the public key of the certificate used to verify transaction logs.</text>
+          <text xml:lang="de">Seriennummer des Secure Element bestehend aus dem Hash-Wert des öffentlichen Schlüssels des Zertifikats zur Überprüfung von Transaktionsprotokollen.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureAlgorithm</name>
+        <type>AlgorithmIdentifier</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Information about the signature creation.</text>
+          <text xml:lang="de">Informationen über die Signaturerstellung.</text>
+        </description>
+        <origin>Provided by the device</origin>
+      </field>
+      <field>
+        <name>signatureCounter</name>
+        <type>INTEGER</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Current count of signatures created with the log message signing key protected by the Secure Element.</text>
+          <text xml:lang="de">Aktueller Zähler der mit dem durch das Secure Element geschützten Log-Nachricht-Signaturschlüssel erstellten Signaturen.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureCreationTime</name>
+        <type>Time</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Point in time of the Secure Element when the log message was signed.</text>
+          <text xml:lang="de">Zeitpunkt des Secure Element, als die Log-Nachricht signiert wurde.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+      <field>
+        <name>signatureValue</name>
+        <type>OCTET STRING</type>
+        <required>true</required>
+        <description>
+          <text xml:lang="en">Result of the signature computation encoded as octet string.</text>
+          <text xml:lang="de">Ergebnis der Signaturberechnung codiert als Oktettkette.</text>
+        </description>
+        <origin>Provided by the Secure Element</origin>
+      </field>
+    </structure>
+  </transactionLog>
+  <overloads>
+    <overload id="1">
+      <signature>UpdateTransactionResult updateTransaction(String clientId, long transactionNumber, byte[] processData, String processType, byte[] additionalExternalData, boolean forceSignature)</signature>
+      <description>
+        <text xml:lang="en">Updates a transaction with explicit control over signature creation through the forceSignature parameter.</text>
+        <text xml:lang="de">Aktualisiert eine Transaktion mit expliziter Kontrolle über die Signaturerstellung durch den forceSignature-Parameter.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>transactionNumber</param>
+        <param>processData</param>
+        <param>processType</param>
+        <param>additionalExternalData</param>
+        <param>forceSignature</param>
+      </parameters>
+      <note>
+        <text xml:lang="en">forceSignature=true forces a signed update. If false or not set, the device decides whether to create a signed or unsigned update. Only effective if the device supports both signed and unsigned updates.</text>
+        <text xml:lang="de">forceSignature=true erzwingt ein signiertes Update. Wenn false oder nicht gesetzt, entscheidet das Gerät, ob ein signiertes oder unsigniertes Update erstellt wird. Nur wirksam, wenn das Gerät sowohl signierte als auch unsignierte Updates unterstützt.</text>
+      </note>
+    </overload>
+    <overload id="2">
+      <signature>UpdateTransactionResult updateTransaction(String clientId, long transactionNumber, byte[] processData, String processType, byte[] additionalExternalData)</signature>
+      <description>
+        <text xml:lang="en">Standard update without explicit control over signature creation. The device decides whether to create a signed or unsigned update based on its configuration and capabilities.</text>
+        <text xml:lang="de">Standard-Update ohne explizite Kontrolle über die Signaturerstellung. Das Gerät entscheidet basierend auf seiner Konfiguration und seinen Fähigkeiten, ob ein signiertes oder unsigniertes Update erstellt wird.</text>
+      </description>
+      <parameters>
+        <param>clientId</param>
+        <param>transactionNumber</param>
+        <param>processData</param>
+        <param>processType</param>
+        <param>additionalExternalData</param>
+      </parameters>
+    </overload>
+  </overloads>
+  <note>
+    <text xml:lang="en">Use getSupportedTransactionUpdateVariants() to check if the device supports unsigned updates before using the forceSignature parameter.</text>
+    <text xml:lang="de">Verwenden Sie getSupportedTransactionUpdateVariants(), um zu prüfen, ob das Gerät unsignierte Updates unterstützt, bevor Sie den forceSignature-Parameter verwenden.</text>
+  </note>
+</function>

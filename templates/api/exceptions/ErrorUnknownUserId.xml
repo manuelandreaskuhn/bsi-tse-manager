@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUnknownUserId" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUnknownUserId</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if a function is invoked with a User-ID that is not registered or recognized by the device. User-IDs identify users within the device's user management system. The device maintains a registry of valid User-IDs that can authenticate and perform operations. When a function receives a User-ID that doesn't match any registered user, ErrorUnknownUserId is raised. ErrorUnknownUserId is a High severity exception because it indicates an attempt to authenticate or operate as an unrecognized user. This may represent incorrect credentials, user not registered, or invalid user parameter. Recovery requires providing a valid, registered User-ID.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine Funktion mit einer Benutzer-ID aufgerufen wird, die vom Gerät nicht registriert oder erkannt wird. Benutzer-IDs identifizieren Benutzer im Benutzerverwaltungssystem des Geräts. Das Gerät verwaltet eine Registrierung gültiger Benutzer-IDs, die sich authentifizieren und Operationen durchführen können. Wenn eine Funktion eine Benutzer-ID erhält, die keinem registrierten Benutzer entspricht, wird ErrorUnknownUserId ausgelöst. ErrorUnknownUserId ist eine Ausnahme mit hohem Schweregrad, da sie einen Versuch zur Authentifizierung oder zum Betrieb als nicht erkannter Benutzer anzeigt. Dies kann ungültige Anmeldedaten, nicht registrierten Benutzer oder ungültige Benutzerparameter darstellen. Die Wiederherstellung erfordert die Bereitstellung einer gültigen, registrierten Benutzer-ID.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>User Management</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>unblockPin</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUnknownUserId that is thrown if a function is invoked with an unknown or unregistered User-ID.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUnknownUserId, die ausgelöst wird, wenn eine Funktion mit einer unbekannten oder nicht registrierten Benutzer-ID aufgerufen wird.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when an SE API function is called with a User-ID that is not registered or recognized on the device. User-IDs identify users within the device's user management system. Functions like authenticateUser, logOut, and unblockPin require valid, registered User-IDs. If an unrecognized User-ID is provided, ErrorUnknownUserId is raised. This indicates the user is not registered on the device, the User-ID is invalid, or incorrect credentials were provided. ErrorUnknownUserId is a High severity exception because authentication with unknown user cannot proceed. The caller must provide a valid, registered User-ID for operations to succeed.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine SE-API-Funktion mit einer Benutzer-ID aufgerufen wird, die nicht auf dem Gerät registriert oder erkannt wird. Benutzer-IDs identifizieren Benutzer im Benutzerverwaltungssystem des Geräts. Funktionen wie authenticateUser, logOut und unblockPin erfordern gültige, registrierte Benutzer-IDs. Wenn eine nicht erkannte Benutzer-ID bereitgestellt wird, wird ErrorUnknownUserId ausgelöst. Dies zeigt an, dass der Benutzer auf dem Gerät nicht registriert ist, die Benutzer-ID ungültig ist oder ungültige Anmeldedaten bereitgestellt wurden. ErrorUnknownUserId ist eine Ausnahme mit hohem Schweregrad, da die Authentifizierung mit unbekanntem Benutzer nicht fortgesetzt werden kann. Der Aufrufer muss eine gültige, registrierte Benutzer-ID bereitstellen, damit Operationen erfolgreich sind.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.1 Authentication - User Management and Authentication</section>
+    <requirement>
+      <text xml:lang="en">The SE API maintains a registry of valid User-IDs that can authenticate and perform operations. Each user is uniquely identified by a User-ID. Functions that require user context (authenticateUser, logOut, unblockPin) accept User-ID parameters. If a provided User-ID is not registered or recognized in the device's user registry, the Secure Element SHALL raise ErrorUnknownUserId. This indicates the user is not registered or the User-ID is invalid. ErrorUnknownUserId is a High severity exception because authentication cannot proceed with unknown user. The caller must provide a valid, registered User-ID for operations to succeed.</text>
+      <text xml:lang="de">Die SE-API verwaltet eine Registrierung gültiger Benutzer-IDs, die sich authentifizieren und Operationen durchführen können. Jeder Benutzer wird durch eine Benutzer-ID eindeutig identifiziert. Funktionen, die Benutzerkontext erfordern (authenticateUser, logOut, unblockPin), akzeptieren Benutzer-ID-Parameter. Wenn eine bereitgestellte Benutzer-ID nicht in der Benutzerregistrierung des Geräts registriert oder erkannt wird, MUSS das Secure Element ErrorUnknownUserId auslösen. Dies zeigt an, dass der Benutzer nicht registriert ist oder die Benutzer-ID ungültig ist. ErrorUnknownUserId ist eine Ausnahme mit hohem Schweregrad, da die Authentifizierung mit unbekanntem Benutzer nicht fortgesetzt werden kann. Der Aufrufer muss eine gültige, registrierte Benutzer-ID bereitstellen, damit Operationen erfolgreich sind.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">User authentication and management operations: authenticateUser, logOut, unblockPin</text>
+      <text xml:lang="de">Benutzerauthentifizierungs- und Verwaltungsvorgänge: authenticateUser, logOut, unblockPin</text>
+    </applicability>
+    <reference>Authentication (3.5.1), User Management (3.5.1), authenticateUser – Function (3.5.1), logOut – Function (3.5.1), unblockPin – Function (3.5.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls function with User-ID parameter (e.g., authenticateUser, logOut, unblockPin)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion mit Benutzer-ID-Parameter auf (z. B. authenticateUser, logOut, unblockPin)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including User-ID format</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich Benutzer-ID-Format</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If User-ID format invalid → may raise ErrorParameterSyntax</text>
+      <text xml:lang="de">Wenn Benutzer-ID-Format ungültig → kann ErrorParameterSyntax auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If User-ID format valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Benutzer-ID-Format gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element receives request with User-ID parameter</text>
+      <text xml:lang="de">Secure Element empfängt Anforderung mit Benutzer-ID-Parameter</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element searches user registry for provided User-ID</text>
+      <text xml:lang="de">Secure Element durchsucht Benutzerregistrierung nach bereitgestellter Benutzer-ID</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element checks if User-ID exists in registry</text>
+      <text xml:lang="de">Secure Element prüft, ob Benutzer-ID in der Registrierung vorhanden ist</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If User-ID found in registry → proceed to step 7</text>
+      <text xml:lang="de">Wenn Benutzer-ID in Registrierung gefunden → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If User-ID not found in registry → ErrorUnknownUserId raised, operation aborted</text>
+      <text xml:lang="de">Wenn Benutzer-ID nicht in Registrierung gefunden → ErrorUnknownUserId ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element retrieves user information for User-ID</text>
+      <text xml:lang="de">Secure Element ruft Benutzerinformationen für Benutzer-ID ab</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element processes operation for authenticated user</text>
+      <text xml:lang="de">Secure Element verarbeitet Vorgang für authentifizierten Benutzer</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element returns result to function</text>
+      <text xml:lang="de">Secure Element gibt Ergebnis an Funktion zurück</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns result to caller</text>
+      <text xml:lang="de">Funktion gibt Ergebnis an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify userId exists in device user registry</text>
+      <text xml:lang="de">Stellen Sie sicher, dass userId in der Benutzerregistrierung des Geräts vorhanden ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check user management configuration</text>
+      <text xml:lang="de">Prüfen Sie die Benutzerverwaltungskonfiguration</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm userId spelling and format</text>
+      <text xml:lang="de">Bestätigen Sie die Schreibweise und das Format der userId</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use valid managed userId for authentication</text>
+      <text xml:lang="de">Verwenden Sie gültige verwaltete userId für die Authentifizierung</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorClientNotRegistered</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Authentication Not Performed">
+      <text xml:lang="en">User authentication does not proceed.</text>
+      <text xml:lang="de">Benutzerauthentifizierung findet nicht statt.</text>
+    </state>
+    <state name="Operation Not Executed">
+      <text xml:lang="en">Requested operation is not executed due to unknown user.</text>
+      <text xml:lang="de">Angeforderte Vorgang wird aufgrund unbekannten Benutzers nicht ausgeführt.</text>
+    </state>
+    <state name="User Not Recognized">
+      <text xml:lang="en">User-ID is not found in device registry.</text>
+      <text xml:lang="de">Benutzer-ID wird nicht in der Geräteregistrierung gefunden.</text>
+    </state>
+    <state name="User Session Not Active">
+      <text xml:lang="en">No user session is created or modified.</text>
+      <text xml:lang="de">Es wird keine Benutzersitzung erstellt oder geändert.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUnknownUserId High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorUnknownUserId an den Aufrufer zurück.</text>
+    </state>
+    <state name="Caller Must Provide Valid User-ID">
+      <text xml:lang="en">Caller must provide registered User-ID for operation to succeed.</text>
+      <text xml:lang="de">Aufrufer muss registrierte Benutzer-ID bereitstellen, damit Vorgang erfolgreich ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: The specified user ID is not known to the device - user not recognized</text>
+      <text xml:lang="de">Anzeichen: Die angegebene Benutzer-ID ist dem Gerät nicht bekannt - Benutzer nicht erkannt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: User Management, Authentication, User Identification, Access Control</text>
+      <text xml:lang="de">Themen: Benutzerverwaltung, Authentifizierung, Benutzeridentifizierung, Zugriffskontrolle</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by authenticateUser and unblockPin when userId not recognized</text>
+      <text xml:lang="de">Wird von authenticateUser und unblockPin ausgelöst, wenn userId nicht erkannt wird</text>
+    </note>
+    <note>
+      <text xml:lang="en">User validation checks userId against managed users</text>
+      <text xml:lang="de">Benutzervalidierung prüft userId gegen verwaltete Benutzer</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains list of authorized users</text>
+      <text xml:lang="de">Gerät verwaltet eine Liste autorisierter Benutzer</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unknown user prevents authentication</text>
+      <text xml:lang="de">Unbekannter Benutzer verhindert Authentifizierung</text>
+    </note>
+  </implementationContext>
+</exception>
+

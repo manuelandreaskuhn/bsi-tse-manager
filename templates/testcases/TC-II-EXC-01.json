@@ -1,0 +1,539 @@
+{
+  "testcase_id": "TC-II-EXC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Zertifikatsexport (exportLoggingCertificates): Ohne Auth, CertificateExport-TAR und Fehlerfälle",
+  "description": "Prüft exportLoggingCertificates: Aufrufbarkeit ohne Authentifizierung, CertificateExport-TAR-Format, vollständige Zertifikatskette und Fehlerfall.",
+  "purpose": "Prüfung, ob nach einem Aufruf der Funktionalität zur Ausgabe des Zertifikats der TSE und der zugehörigen Zertifikatskette ein TAR-Container mit den korrekten Zertifikaten exportiert wird.\nZusätzlich wird geprüft, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_EXC",
+  "function": "exportLoggingCertificates",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_EXC_01",
+    "II_EXC_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Es ist ein anderer Nutzer als timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "getCertificate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe des Zertifikats der TSE und der zugehörigen Zertifikatskette.",
+      "function": "getCertificate",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die TSE-Schnittstelle gibt einen TAR-Container zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Funktion gibt einen Dateinamen für einen TAR-Container zurück, der den Vorgaben der BSI TR-03151-1 entspricht.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_EXC_01"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "getCertificate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette. Es wird ein Fehler provoziert, der bewirkt, dass die Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette die benötigten Zertifikate nicht ausgeben kann.",
+      "function": "getCertificate",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorExportLoggingCertificateFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_EXC_01"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "Zertifikatsexport ohne Authentifizierung aufrufen",
+      "result": null,
+      "instruction": "Zertifikatsexport ohne Authentifizierung aufrufen",
+      "function": "exportLoggingCertificates",
+      "parameters": {
+        "authState": "unauthenticated"
+      },
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "CertificateExport-TAR"
+        }
+      },
+      "checks": [
+        {
+          "description": "Aufruf ohne Authentifizierung erfolgreich",
+          "expected": "CRTEXP_ACCESSIBLE_UNAUTHENTICATED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dateiname entspricht Schema CertificateExport_{Gent|Utc|Unixt}_{Timestamp}.tar",
+          "expected": "EXP_ARCH_NAME_CERT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zeitformat-Präfix im Dateinamen gültig (Gent/Utc/Unixt)",
+          "expected": "EXP_ARCH_FMT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine Log-Dateien im Container enthalten",
+          "expected": "CRTEXP_NOLOG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur Zertifikate und info.csv im Container",
+          "expected": "CRTEXP_FILES",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Mindestens ein TSE-Blatt- und ein Root-CA-Zertifikat",
+          "expected": "CRTEXP_CHAIN + CHAIN_COMPLETE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikate valide (V3, Algorithmen, Gültigkeit, Extensions)",
+          "expected": "CERT_RULES bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikatskette vollständig und konsistent",
+          "expected": "CHAIN_RULES bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME_CERT",
+          "title": "CertificateExport-Dateiname",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_FMT",
+          "title": "Zeitformat-Präfix im Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE_CERT",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_NOLOG",
+          "title": "Keine Log-Dateien enthalten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_FILES",
+          "title": "Nur erlaubte Dateitypen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_CHAIN",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_PRESENT",
+          "title": "Zertifikat-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_NAME",
+          "title": "Zertifikat-Dateinamen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_V3",
+          "title": "X.509 Version 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SIG_ALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CURVE",
+          "title": "Schlüsselkurve",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_DATE_ORDER",
+          "title": "Gültigkeit: notBefore < notAfter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_VALID_NOW",
+          "title": "Zertifikat aktuell gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_PKUP",
+          "title": "Private Key Usage Period",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SKI",
+          "title": "Subject Key Identifier (SKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_AKI",
+          "title": "Authority Key Identifier (AKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CRL",
+          "title": "CRL Distribution Point",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_POLICY",
+          "title": "Certificate Policies",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BC_CA",
+          "title": "Basic Constraints: CA:TRUE",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_KU_CA",
+          "title": "Key Usage: Certificate Sign + CRL Sign",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SELF_SIGN",
+          "title": "Root-CA selbst-signiert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BC_LEAF",
+          "title": "Basic Constraints: CA:FALSE",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_KU_LEAF",
+          "title": "Key Usage: Digital Signature",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BSI_OID",
+          "title": "BSI-TSE-OID im Subject",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_HASH",
+          "title": "Dateiname = Subject CN = TSE-Seriennummer",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_PUBKEY_HASH",
+          "title": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_COMPLETE",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_AKI_SKI",
+          "title": "AKI→SKI Verkettung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_VALIDITY",
+          "title": "Kindsgültigkeit ≤ Ausstellergültigkeit",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_ISSUER_MATCH",
+          "title": "Aussteller-Inhaber-Übereinstimmung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.17",
+        "BSI TR-03151-1"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "NEGATIVE",
+      "title": "Fehlerfall: Zertifikate nicht abrufbar",
+      "result": null,
+      "instruction": "Fehlerfall: Zertifikate nicht abrufbar [NT].",
+      "function": "exportLoggingCertificates",
+      "checks": [
+        {
+          "description": "ErrorExportLoggingCertificateFailed zurückgegeben",
+          "expected": "errorCode = ErrorExportLoggingCertificateFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.17",
+        "BSI TR-03151-1"
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1.17",
+    "BSI TR-03151-1"
+  ]
+}

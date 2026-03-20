@@ -1,0 +1,41 @@
+flowchart TD
+    Start([User: getDeviceHealth<br/>call])
+    Start --> CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| GatherHealth[Gather Health Data:<br/>- Storage Status<br/>- SM Status<br/>- Certificate Status<br/>- Connection Status<br/>- Error Counters]
+    
+    GatherHealth --> CheckSM{Security Module<br/>OK?}
+    CheckSM -->|Problem| WarnSM[Warning: SM Problem]
+    CheckSM -->|OK| CheckStorage
+    
+    WarnSM --> CheckStorage{Storage<br/>OK?}
+    
+    CheckStorage -->|Problem| WarnStorage[Warning: Storage Problem]
+    CheckStorage -->|OK| CheckCert
+    
+    WarnStorage --> CheckCert{Certificate<br/>valid?}
+    
+    CheckCert -->|Expired/invalid| WarnCert[Warning: Certificate Problem]
+    CheckCert -->|Valid| CheckMemory
+    
+    WarnCert --> CheckMemory{Storage<br/>almost full?}
+    
+    CheckMemory -->|>80% full| WarnMemory[Warning: Storage almost full]
+    CheckMemory -->|OK| BuildStatus
+    
+    WarnMemory --> BuildStatus[Create Status Report]
+    
+    BuildStatus --> Return[Return:<br/>deviceHealth<br/>with Status & Warnings]
+    
+    Return --> End([End])
+    
+    ErrorInit --> End
+    
+    style GatherHealth fill:#87CEEB
+    style BuildStatus fill:#87CEEB
+    style Return fill:#90EE90
+    style WarnSM fill:#FFD700
+    style WarnStorage fill:#FFD700
+    style WarnCert fill:#FFD700
+    style WarnMemory fill:#FFD700

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK07</chainId>
+    <name>
+        <text xml:lang="en">PIN Unblock</text>
+        <text xml:lang="de">PIN-Entsperrung</text>
+    </name>
+    <description>
+        <text xml:lang="en">Unlocking a locked PIN using PUK and setting a new PIN</text>
+        <text xml:lang="de">Entsperrung einer gesperrten PIN mittels PUK und Setzen einer neuen PIN</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>016</id>
+            <name>
+                <text xml:lang="en">Unblock PIN (unblockPin)</text>
+                <text xml:lang="de">PIN entsperren (unblockPin)</text>
+            </name>
+        </process>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication (authenticateUser)</text>
+                <text xml:lang="de">Nutzer-Authentifizierung (authenticateUser)</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">PIN is locked (too many failed attempts)</text>
+            <text xml:lang="de">PIN ist gesperrt (zu viele Fehlversuche)</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">PUK is known</text>
+            <text xml:lang="de">PUK ist bekannt</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">PUK is not temporarily locked</text>
+            <text xml:lang="de">PUK ist nicht temporär gesperrt</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">User</text>
+            <text xml:lang="de">Nutzer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Unblock PIN</text>
+                <text xml:lang="de">PIN entsperren</text>
+            </name>
+            <function>
+                <name>unblockPin</name>
+                <linkedProcess>
+                    <id>016</id>
+                    <name>
+                        <text xml:lang="en">Unblock PIN</text>
+                        <text xml:lang="de">PIN entsperren</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <input>
+                <text xml:lang="en">userId, PUK, new PIN</text>
+                <text xml:lang="de">userId, PUK, neue PIN</text>
+            </input>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Login with New PIN</text>
+                <text xml:lang="de">Anmeldung mit neuer PIN</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <input>
+                <text xml:lang="en">userId, new PIN</text>
+                <text xml:lang="de">userId, neue PIN</text>
+            </input>
+        </step>
+    </steps>
+    <securityMechanisms>
+        <mechanism>
+            <text xml:lang="en">PUK validation</text>
+            <text xml:lang="de">PUK-Validierung</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">PUK failed attempt counter</text>
+            <text xml:lang="de">PUK-Fehlversuchszähler</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Temporary PUK lock on too many failed attempts</text>
+            <text xml:lang="de">Temporäre PUK-Sperre bei zu vielen Fehlversuchen</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Automatic reset of failed attempt counter to 0</text>
+            <text xml:lang="de">Automatisches Setzen der Fehlversuchszähler auf 0</text>
+        </mechanism>
+    </securityMechanisms>
+    <errorCases>
+        <errorCase>
+            <error>
+                <text xml:lang="en">Wrong PUK</text>
+                <text xml:lang="de">Falsche PUK</text>
+            </error>
+            <reaction>
+                <text xml:lang="en">ErrorUnblockingPinFailed, PUK failed attempt counter++</text>
+                <text xml:lang="de">ErrorUnblockingPinFailed, PUK-Fehlversuchszähler++</text>
+            </reaction>
+        </errorCase>
+        <errorCase>
+            <error>
+                <text xml:lang="en">PUK temporarily locked</text>
+                <text xml:lang="de">PUK temporär gesperrt</text>
+            </error>
+            <reaction>
+                <text xml:lang="en">ErrorPukTemporarilyBlocked</text>
+                <text xml:lang="de">ErrorPukTemporarilyBlocked</text>
+            </reaction>
+        </errorCase>
+    </errorCases>
+    <outcome>
+        <state>
+            <text xml:lang="en">PIN is unblocked, new PIN is set, user can log in again</text>
+            <text xml:lang="de">PIN ist entsperrt, neue PIN ist gesetzt, Nutzer kann sich wieder anmelden</text>
+        </state>
+        <logMessages>
+            <logMessage>
+                <text xml:lang="en">System-Log (unblockPin)</text>
+                <text xml:lang="de">System-Log (unblockPin)</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (authenticateUser) - on successful login</text>
+                <text xml:lang="de">System-Log (authenticateUser) - bei erfolgreicher Anmeldung</text>
+            </logMessage>
+        </logMessages>
+    </outcome>
+    <usageScenario>
+        <text xml:lang="en">Admin entered wrong PIN too many times, uses PUK to reset PIN</text>
+        <text xml:lang="de">Admin hat zu oft falsche PIN eingegeben, nutzt PUK um PIN zurückzusetzen</text>
+    </usageScenario>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2.5</reference>
+    </references>
+</processChain>

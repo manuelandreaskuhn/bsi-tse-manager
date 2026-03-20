@@ -1,0 +1,381 @@
+{
+  "testcase_id": "TC-II-UDD-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "updateDevice: Externe Updates und Remote-Komponenten-Updates im Offline-Betrieb",
+  "description": "Prüft Updates fernverbundener Komponenten und Speichermedien bei Offline-Betrieb sowie externe Updates.",
+  "purpose": "Prüfung, ob bei einem Update einer fernverbundenen Komponente des Sicherheitsmoduls, während die TSE nicht in Betrieb ist, direkt beim ersten Start nach dem Update eine entsprechende Meldung protokolliert wird.\n    \n    ACHTUNG: Der Testdurchlauf ist jeweils für jede Komponenten des Sicherheitsmoduls durchzuführen.",
+  "module": "Integration Interface",
+  "submodule": "II_UDD",
+  "function": "updateDevice (extern)",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "SM_REMOTE_COMPONENTS",
+    "STORAGE_REMOTE",
+    "UPDATE_EXTERNAL"
+  ],
+  "source_tests": [
+    "II_UDD_02",
+    "II_UDD_03",
+    "II_UDD_07",
+    "II_UDD_08"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die TSE ist nicht in Betrieb.",
+      "result": null,
+      "instruction": "Die TSE ist nicht in Betrieb."
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die aktuell installierte Versionsnummer des Krypto-Kerns ist",
+      "result": null,
+      "instruction": "Die aktuell installierte Versionsnummer des Krypto-Kerns ist bekannt."
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die aktuell installierte Versionsnummer des Speichermediums ",
+      "result": null,
+      "instruction": "Die aktuell installierte Versionsnummer des Speichermediums ist bekannt."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "updateDevice aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Installation von Updates einer fernverbundenen Komponente des Sicherheitsmoduls.",
+      "function": "updateDevice",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDD_02"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "updateDevice aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Installation von Updates des fernverbundenen Speichermediums.",
+      "function": "updateDevice",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDD_02"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Offline-Update einer fernverbundenen SM-Komponente (II_UDD_02, SM_REMOTE_COMP...",
+      "result": null,
+      "instruction": "Offline-Update einer fernverbundenen SM-Komponente (II_UDD_02, SM_REMOTE_COMPONENTS)",
+      "function": "<SM-Komponenten-Update während TSE offline> → <TSE starten>",
+      "checks": [
+        {
+          "description": "Beim ersten Start nach Update: Log für Update erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Log enthält Informationen über aktualisierte Komponente",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn SM_REMOTE_COMPONENTS + UPDATE_EXTERNAL aktiv"
+    },
+    {
+      "step": 10,
+      "type": "ACTION",
+      "title": "Offline-Update des fernverbundenen Speichermediums (II_UDD_03, STORAGE_REMOTE)",
+      "result": null,
+      "instruction": "Offline-Update des fernverbundenen Speichermediums (II_UDD_03, STORAGE_REMOTE)",
+      "function": "<Speichermedium-Update während TSE offline> → <TSE starten>",
+      "checks": [
+        {
+          "description": "Beim ersten Start: Log für Speichermedium-Update erstellt",
+          "expected": "Log vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn STORAGE_REMOTE + UPDATE_EXTERNAL aktiv"
+    },
+    {
+      "step": 11,
+      "type": "VERIFY",
+      "title": "Externes Update mit Start-Log (II_UDD_07, UPDATE_EXTERNAL_LOGGED)",
+      "result": null,
+      "instruction": "Externes Update mit Start-Log (II_UDD_07, UPDATE_EXTERNAL_LOGGED)",
+      "checks": [
+        {
+          "description": "updateDevice-Log (Start) mit aktuellem Versionsstand erstellt",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateDeviceCompleted-Log mit neuem Versionsstand erstellt",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn UPDATE_EXTERNAL_LOGGED aktiv"
+    },
+    {
+      "step": 12,
+      "type": "VERIFY",
+      "title": "Externes Update ohne Start-Log (II_UDD_08, UPDATE_EXTERNAL_NOT_LOGGED)",
+      "result": null,
+      "instruction": "Externes Update ohne Start-Log (II_UDD_08, UPDATE_EXTERNAL_NOT_LOGGED)",
+      "checks": [
+        {
+          "description": "Kein updateDevice-Start-Log vorhanden",
+          "expected": "Nicht vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateDeviceCompleted-Log vollständig: componentName, manufacturer, model, version, ggf. certificationID",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn UPDATE_EXTERNAL_NOT_LOGGED aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

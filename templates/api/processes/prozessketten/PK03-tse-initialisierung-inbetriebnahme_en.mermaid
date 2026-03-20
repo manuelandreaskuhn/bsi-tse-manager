@@ -1,0 +1,62 @@
+sequenceDiagram
+    actor Admin as Admin
+    participant TSE as TSE (new/factory)
+    participant SM as Security Module
+    participant Storage as Storage Medium
+
+    Note over Admin,Storage: TSE Initial Commissioning
+
+    Admin->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Admin: Authentication successful
+
+    Admin->>TSE: initialize()
+    activate TSE
+    TSE->>TSE: Check: Not yet initialized
+    TSE->>TSE: Perform Initialization:<br/>- Load Certificates<br/>- Generate Keys<br/>- Initialize Counters
+    TSE->>SM: Create initialize Log
+    activate SM
+    SM->>SM: Signature Counter = 1
+    SM->>SM: Transaction Counter = 0
+    SM->>SM: Create first Signature
+    SM-->>TSE: Log Parts
+    deactivate SM
+    TSE->>Storage: Save System Log (initialize)
+    TSE-->>Admin: Initialization successful
+    deactivate TSE
+
+    Admin->>TSE: setDescription(description)
+    activate TSE
+    TSE->>SM: Create setDescription Log
+    activate SM
+    SM->>SM: Signature Counter++
+    SM-->>TSE: Log Parts
+    deactivate SM
+    TSE->>Storage: Save System Log + Description
+    TSE-->>Admin: Description set
+    deactivate TSE
+
+    opt Time Update if required
+        Admin->>TSE: updateTime(newDateTime)
+        TSE->>SM: Set Time + create Log
+        SM-->>TSE: OK
+        TSE->>Storage: Save System Log
+        TSE-->>Admin: Time updated
+    end
+
+    Note over Admin,Storage: TSE is now ready for operation
+
+    Admin->>TSE: registerClient(clientId_CashRegister1)
+    TSE->>SM: Create registerClient Log
+    SM-->>TSE: OK
+    TSE->>Storage: Save System Log
+    TSE-->>Admin: Client registered
+
+    Note over Admin,Storage: First Cash Register can now perform Transactions
+
+    Admin->>TSE: logOut()
+    TSE->>SM: Create logOut Log
+    SM-->>TSE: OK
+    TSE->>Storage: Save System Log
+    TSE-->>Admin: Logged out
+
+    Note over Admin,Storage: TSE Commissioning completed

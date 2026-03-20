@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorParameterTooLong" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorParameterTooLong</name>
+  <description>
+    <text xml:lang="en">This exception is thrown by SE API functions when one or more parameters exceed the maximum allowed length specified for that parameter. Different parameters have different length constraints to ensure efficient device operation, network transmission, and storage. ErrorParameterTooLong indicates that a parameter value (typically a string or data array) exceeds the device's maximum length limit for that parameter, preventing the function from processing the oversized parameter.</text>
+    <text xml:lang="de">Diese Ausnahme wird von SE API Funktionen ausgelöst, wenn ein oder mehrere Parameter die für diesen Parameter angegebene maximale zulässige Länge überschreiten. Verschiedene Parameter haben unterschiedliche Längeneinschränkungen, um einen effizienten Gerätebetrieb, Netzwerkübertragung und Speicherung zu gewährleisten. ErrorParameterTooLong zeigt an, dass ein Parameterwert (typischerweise eine Zeichenkette oder ein Daten-Array) die maximale Längenbegrenzung des Geräts für diesen Parameter überschreitet und verhindert, dass die Funktion den oversized Parameter verarbeitet.</text>
+  </description>
+  <category>Input Validation</category>
+  <subcategory>Parameter Length Constraints</subcategory>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>configureLogging</function>
+    <function>deregisterClient</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>finishTransaction</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>updateDevice</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorParameterTooLong that is thrown by any SE API method when at least one parameter exceeds maximum allowed length.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorParameterTooLong, die von jeder SE API Methode ausgelöst wird, wenn mindestens ein Parameter die maximale zulässige Länge überschreitet.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when any SE API function receives a parameter that exceeds the maximum length specified for that parameter. Different SE API functions have parameters with different length constraints. Common length-constrained parameters include: client IDs, descriptions, PIN/PUK values, transaction data, log filters, and other variable-length parameters. ErrorParameterTooLong is raised when parameter length validation occurs and a parameter is found to be longer than allowed. This is a common exception that can be raised by any SE API function that accepts length-constrained parameters. The maximum length limits are typically defined in the device specifications or BSI TR-03151-1. Recovery requires truncating, shortening, or splitting the parameter to fit within the maximum length constraint, or using alternative approaches that don't require oversized parameters.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine SE API Funktion einen Parameter empfängt, der die für diesen Parameter angegebene maximale Länge überschreitet. Verschiedene SE API Funktionen haben Parameter mit unterschiedlichen Längeneinschränkungen. Zu den häufigen längenbegrenzten Parametern gehören: Client-IDs, Beschreibungen, PIN/PUK-Werte, Transaktionsdaten, Log-Filter und andere Parameter mit variabler Länge. ErrorParameterTooLong wird ausgelöst, wenn die Parametersyntax längenvalidierung stattfindet und ein Parameter länger als zulässig befunden wird. Dies ist eine häufige Ausnahme, die von jeder SE API Funktion ausgelöst werden kann, die längenbegrenzte Parameter akzeptiert. Die maximalen Längengrenzen sind typischerweise in den Gerätespezifikationen oder BSI TR-03151-1 definiert. Die Wiederherstellung erfordert Abschneiden, verkürzen oder Teilen des Parameters, um in die maximale Längeneinschränkung zu passen, oder alternative Ansätze, die keine überdimensionierten Parameter erfordern.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1 General Error Handling and Input Validation</section>
+    <requirement>
+      <text xml:lang="en">All SE API functions SHALL validate input parameters for length compliance. Each parameter with a defined maximum length SHALL be checked against this limit. If any parameter is found to exceed the maximum length specified for that parameter, the function SHALL raise the exception ErrorParameterTooLong. The function SHALL NOT attempt to process or truncate oversized parameters. ErrorParameterTooLong is applicable to any SE API function that accepts length-constrained parameters.</text>
+      <text xml:lang="de">Alle SE API Funktionen sollen Eingabeparameter auf Längenkonformität validieren. Jeder Parameter mit einer definierten maximalen Länge soll gegen diese Grenze geprüft werden. Falls ein Parameter die für diesen Parameter angegebene maximale Länge überschreitet, soll die Funktion die Ausnahme ErrorParameterTooLong auslösen. Die Funktion soll NICHT versuchen, überdimensionierte Parameter zu verarbeiten oder abzuschneiden. ErrorParameterTooLong ist auf jede SE API Funktion anwendbar, die längenbegrenzte Parameter akzeptiert.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Input validation - applicable to SE API functions with length-constrained parameters</text>
+      <text xml:lang="de">Eingabevalidierung - anwendbar auf SE API Funktionen mit längenbegrenzten Parametern</text>
+    </applicability>
+    <reference>General Error Handling (3.1); Individual function parameter specifications</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls an SE API function with parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine SE API Funktion mit Parametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function receives the parameters</text>
+      <text xml:lang="de">Funktion empfängt die Parameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function performs length validation on each length-constrained parameter</text>
+      <text xml:lang="de">Funktion führt Längenvalidierung für jeden längenbegrenzten Parameter durch</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If all parameters are within maximum length limits → proceed to step 4</text>
+      <text xml:lang="de">Falls alle Parameter innerhalb der maximalen Längengrenzen liegen → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If any parameter exceeds maximum length → ErrorParameterTooLong raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter die maximale Länge überschreitet → ErrorParameterTooLong wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function performs other parameter validation (type, syntax, format, etc.)</text>
+      <text xml:lang="de">Funktion führt andere Parametervalidierung (Typ, Syntax, Format, usw.) durch</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function proceeds with normal operation logic</text>
+      <text xml:lang="de">Funktion fährt mit normaler Operationslogik fort</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check parameter length limits in function specification</text>
+      <text xml:lang="de">Prüfen Sie die Parameterlängengrenzen in der Funktionsspezifikation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Truncate or reduce parameter to maximum length</text>
+      <text xml:lang="de">Schneiden Sie den Parameter auf die maximale Länge ab oder reduzieren Sie ihn</text>
+    </step>
+    <step>
+      <text xml:lang="en">Break long parameters into multiple function calls if needed</text>
+      <text xml:lang="de">Teilen Sie lange Parameter bei Bedarf in mehrere Funktionsaufrufe auf</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry function with properly sized parameters</text>
+      <text xml:lang="de">Versuchen Sie die Funktion mit richtig dimensionierten Parametern erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Function Not Executed">
+      <text xml:lang="en">The function does not execute its main operation logic. Length validation failure prevents operation execution.</text>
+      <text xml:lang="de">Die Funktion führt ihre Hauptoperationslogik nicht aus. Der Längenvalidierungsfehler verhindert die Operationsausführung.</text>
+    </state>
+    <state name="Device State Unchanged">
+      <text xml:lang="en">The device's state remains completely unchanged. No device operations occur as a result of the parameter length error.</text>
+      <text xml:lang="de">Der Gerätzustand bleibt vollständig unverändert. Es finden keine Geräteoperationen als Folge des Parametersyntaxfehlers statt.</text>
+    </state>
+    <state name="No Side Effects">
+      <text xml:lang="en">The exception does not cause any side effects or state changes on the device.</text>
+      <text xml:lang="de">Die Ausnahme verursacht keine Nebenwirkungen oder Zustandsänderungen auf dem Gerät.</text>
+    </state>
+    <state name="Parameters Available for Inspection">
+      <text xml:lang="en">The oversized parameters remain available for inspection to identify the specific length issue.</text>
+      <text xml:lang="de">Die überdimensionierten Parameter bleiben zur Inspektion verfügbar, um das spezifische Längenproblem zu identifizieren.</text>
+    </state>
+    <state name="Retry Possible with Shortened Parameters">
+      <text xml:lang="en">The operation can be retried immediately after shortening the parameter to fit within the maximum length.</text>
+      <text xml:lang="de">Die Operation kann sofort nach Verkürzen des Parameters, um in die maximale Länge zu passen, wiederholt werden.</text>
+    </state>
+    <state name="No Data Loss">
+      <text xml:lang="en">The exception does not result in data loss or corruption of any kind.</text>
+      <text xml:lang="de">Die Ausnahme führt nicht zu Datenverlust oder Beschädigung jeglicher Art.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Function parameter exceeds maximum length - parameter too large</text>
+      <text xml:lang="de">Anzeichen: Funktionsparameter überschreitet maximale Länge - Parameter zu groß</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Parameter Validation, Length Validation, Input Limits, Parameter Constraints</text>
+      <text xml:lang="de">Themen: Parametervalidierung, Längenvalidierung, Eingangsgrenzen, Parametereinschränkungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when parameter exceeds maximum length</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn Parameter die maximale Länge überschreitet</text>
+    </note>
+    <note>
+      <text xml:lang="en">Length validation enforces maximum parameter size</text>
+      <text xml:lang="de">Längenvalidierung erzwingt maximale Parametergröße</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device limits parameter length to prevent buffer overflows</text>
+      <text xml:lang="de">Gerät begrenzt die Parameterlänge, um Pufferfülle zu verhindern</text>
+    </note>
+    <note>
+      <text xml:lang="en">Oversized parameter prevents function execution</text>
+      <text xml:lang="de">Oversized Parameter verhindert Funktionsausführung</text>
+    </note>
+  </implementationContext>
+</exception>
+

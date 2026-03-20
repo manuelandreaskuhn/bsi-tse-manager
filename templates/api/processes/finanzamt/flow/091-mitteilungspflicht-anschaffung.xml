@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>091</processId>
+    <processName>
+        <text xml:lang="de">Mitteilungspflicht bei Anschaffung</text>
+        <text xml:lang="en">Reporting Obligation for Acquisition</text>
+    </processName>
+    <description>
+        <text xml:lang="de">Prozess zur Erfüllung der Mitteilungspflicht nach § 146a Abs. 4 AO bei Anschaffung eines elektronischen Aufzeichnungssystems. Die Mitteilung muss innerhalb eines Monats elektronisch über ELSTER erfolgen.</text>
+        <text xml:lang="en">Process for fulfilling the reporting obligation according to § 146a para. 4 AO when acquiring an electronic recording system. The notification must be made electronically via ELSTER within one month.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="de">Steuerpflichtiger/mitteilende Person</text>
+            <text xml:lang="en">Taxpayer/reporting person</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Finanzamt</text>
+            <text xml:lang="en">Tax Authority</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">ELSTER-System</text>
+            <text xml:lang="en">ELSTER System</text>
+        </actor>
+    </actors>
+    <requirements>
+        <requirement>
+            <text xml:lang="de">Mitteilung innerhalb eines Monats nach Anschaffung</text>
+            <text xml:lang="en">Notification within one month after acquisition</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Elektronische Übermittlung über ELSTER oder kompatible Software (ERiC)</text>
+            <text xml:lang="en">Electronic submission via ELSTER or compatible software (ERiC)</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Angabe aller elektronischen Aufzeichnungssysteme einer Betriebsstätte</text>
+            <text xml:lang="en">Specification of all electronic recording systems of a business location</text>
+        </requirement>
+    </requirements>
+    <steps>
+        <step>
+            <order>1</order>
+            <action>
+                <text xml:lang="de">Prüfung, ob System mitteilungspflichtig ist (§ 146a Abs. 1 Satz 1 AO i.V.m. § 1 Abs. 1 Satz 1 und Abs. 2 KassenSichV)</text>
+                <text xml:lang="en">Check if system is subject to reporting obligation (§ 146a para. 1 sentence 1 AO in conjunction with § 1 para. 1 sentence 1 and para. 2 KassenSichV)</text>
+            </action>
+        </step>
+        <step>
+            <order>2</order>
+            <action>
+                <text xml:lang="de">Erforderliche Daten sammeln</text>
+                <text xml:lang="en">Collect required data</text>
+            </action>
+            <details>
+                <item>
+                    <text xml:lang="de">Steuernummer (später Wirtschafts-ID nach § 139c AO)</text>
+                    <text xml:lang="en">Tax number (later business ID according to § 139c AO)</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Betriebsstätte (bei Taxi/Mietwagen inkl. Kfz-Kennzeichen)</text>
+                    <text xml:lang="en">Business location (for taxi/rental car incl. license plate)</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Art der TSE (Zertifizierungs-ID und Seriennummer)</text>
+                    <text xml:lang="en">Type of TSE (certification ID and serial number)</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Art des elektronischen Aufzeichnungssystems</text>
+                    <text xml:lang="en">Type of electronic recording system</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Seriennummer des Systems</text>
+                    <text xml:lang="en">System serial number</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Anzahl der eingesetzten Systeme je Betriebsstätte</text>
+                    <text xml:lang="en">Number of systems used per business location</text>
+                </item>
+                <item>
+                    <text xml:lang="de">Datum der Anschaffung/Leasingbeginn</text>
+                    <text xml:lang="en">Date of acquisition/leasing start</text>
+                </item>
+            </details>
+        </step>
+        <step>
+            <order>3</order>
+            <action>
+                <text xml:lang="de">Mitteilung elektronisch über ELSTER übermitteln</text>
+                <text xml:lang="en">Submit notification electronically via ELSTER</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 1.16.1</reference>
+        </step>
+        <step>
+            <order>4</order>
+            <action>
+                <text xml:lang="de">Bestätigung der Übermittlung erhalten und archivieren</text>
+                <text xml:lang="en">Receive and archive transmission confirmation</text>
+            </action>
+        </step>
+    </steps>
+    <deadlines>
+        <deadline>
+            <type>mandatory</type>
+            <period>
+                <text xml:lang="de">1 Monat nach Anschaffung</text>
+                <text xml:lang="en">1 month after acquisition</text>
+            </period>
+            <reference>§ 146a Abs. 4 Satz 2 AO</reference>
+        </deadline>
+    </deadlines>
+    <outcomes>
+        <outcome>
+            <type>success</type>
+            <description>
+                <text xml:lang="de">Mitteilung fristgerecht übermittelt, Bestätigung erhalten</text>
+                <text xml:lang="en">Notification submitted on time, confirmation received</text>
+            </description>
+        </outcome>
+        <outcome>
+            <type>failure</type>
+            <description>
+                <text xml:lang="de">Frist versäumt, verspätete Mitteilung, mögliche Konsequenzen nach § 379 AO</text>
+                <text xml:lang="en">Deadline missed, late notification, possible consequences according to § 379 AO</text>
+            </description>
+        </outcome>
+    </outcomes>
+    <references>
+        <reference>AO § 146a Abs. 4</reference>
+        <reference>AO § 139c (Wirtschafts-ID)</reference>
+        <reference>KassenSichV § 1 Abs. 1 Satz 1 und Abs. 2</reference>
+        <reference>AEAO zu § 146a, Nr. 1.16</reference>
+        <reference>AEAO zu § 146a, Nr. 1.16.1</reference>
+    </references>
+    <notes>
+        <text xml:lang="de">Mitteilung muss innerhalb eines Monats nach Anschaffung elektronisch über ELSTER erfolgen. Fehlerhafte Mitteilungen müssen unverzüglich korrigiert werden. Mitteilung kann auch durch bevollmächtigte Person erfolgen. Bei Verbundsystemen ist jedes einzelne Gerät mitzuteilen. Erforderliche Daten: Steuernummer, Betriebsstätte, TSE-Art (Zertifizierungs-ID und Seriennummer), Art und Seriennummer des Systems, Anzahl der Systeme, Anschaffungsdatum.</text>
+        <text xml:lang="en">Notification must be made electronically via ELSTER within one month after acquisition. Erroneous notifications must be corrected immediately. Notification can also be made by authorized person. For networked systems, each individual device must be reported. Required data: tax number, business location, TSE type (certification ID and serial number), type and serial number of system, number of systems, acquisition date.</text>
+    </notes>
+</process>

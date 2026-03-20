@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="KassenbelegV1Data" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>KassenbelegV1Data</name>
+  <category>TransactionData</category>
+  <source>DSFinV-K</source>
+  <description>
+    <text xml:lang="en">Structure for processType 'Kassenbeleg-V1'. Format: &lt;Vorgangstyp&gt;^&lt;Brutto-Steuerumsaetze&gt;^&lt;Zahlungen&gt;. Separator: ^ (Unicode U+005E).</text>
+    <text xml:lang="de">Struktur für processType 'Kassenbeleg-V1'. Format: &lt;Vorgangstyp&gt;^&lt;Brutto-Steuerumsaetze&gt;^&lt;Zahlungen&gt;. Trennzeichen: ^ (Unicode U+005E).</text>
+    <text xml:lang="en">
+      *** DSFinV-K specific usage: ***
+      This data structure is used in the FinishTransaction operation when processType is set to 'Kassenbeleg-V1'. It represents the receipt data that must be transmitted to the TSE. The processData field is populated only at FinishTransaction and transmitted in UTF-8 or ASCII encoding. This is the primary transaction type for cash register systems.
+    </text>
+    <text xml:lang="de">
+      *** DSFinV-K-spezifische Verwendung: ***
+      Diese Datenstruktur wird bei der FinishTransaction-Operation verwendet, wenn processType auf 'Kassenbeleg-V1' gesetzt ist. Sie stellt die Belegdaten dar, die an die TSE übermittelt werden müssen. Das processData-Feld wird erst bei FinishTransaction befüllt und in UTF-8- oder ASCII-Codierung übertragen. Dies ist der primäre Vorgangstyp für Kassensysteme.
+    </text>
+  </description>
+  <asn1Definition>KassenbelegV1Data ::= SEQUENCE {
+  vorgangstyp  Vorgangstypen,
+  bruttoSteuerumsaetze  PrintableString,
+  zahlungen  PrintableString
+}</asn1Definition>
+  <fields>
+    <field>
+      <name>vorgangstyp</name>
+      <type>Vorgangstypen</type>
+      <optional>false</optional>
+      <description>Wert gemäß Enum Vorgangstypen.</description>
+    </field>
+    <field>
+      <name>bruttoSteuerumsaetze</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Fünf Bruttobeträge mit exakt zwei Dezimalstellen, getrennt durch Unterstrich "_" (Unicode U+005F). Alle anderen Dezimalstellen werden ggf. abgeschnitten. Die Bruttobeträge müssen exakt denen auf dem gedruckten Beleg entsprechen. Auch für nicht verwendete Steuersätze ist der Betrag mit 0.00 anzugeben. Reihenfolge: Allgemeiner_Ermäßigt_Durchschnitt3_Durchschnitt1_0%.</description>
+    </field>
+    <field>
+      <name>zahlungen</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Format: &lt;Betrag&gt;:&lt;Zahlungsart&gt;:&lt;Währung&gt;, Trennzeichen Doppelpunkt (Unicode U+003A). Mehrere Zahlungen mit Unterstrich "_" (Unicode U+005F) verkettet. Zahlungsbetrag immer mit exakt zwei Dezimalstellen, alle anderen Dezimalstellen werden ggf. abgeschnitten. Zahlungsart gemäß Enum ZahlungsartenTSE ("Bar" oder "Unbar"). Währung nur bei Nicht-EUR, dreistelliger Währungscode nach ISO 4217. Zahlungen von 0.00 müssen entfallen. Reihenfolge: 1) Bar EUR, 2) Bar Fremdwährung (alphabetisch), 3) Unbar EUR, 4) Unbar Fremdwährung (alphabetisch).</description>
+    </field>
+  </fields>
+</type>

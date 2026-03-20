@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>015</processId>
+    <processName>
+        <text xml:lang="en">User Logout</text>
+        <text xml:lang="de">Nutzer-Abmeldung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Explicit logout of an authenticated user from the TSE. After logout, the user only has access to unauthenticated functions.</text>
+        <text xml:lang="de">Explizite Abmeldung eines authentifizierten Nutzers von der TSE. Nach der Abmeldung hat der Nutzer nur noch Zugriff auf unauthenticated-Funktionen.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Authenticated User (logger/admin/timeadmin)</text>
+            <text xml:lang="de">Authentifizierter Nutzer (logger/admin/timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">User Session</text>
+            <text xml:lang="de">Nutzer-Session</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>logOut</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (logOut)</dataObject>
+        <dataObject>LogOutEventData</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorLogOutFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2.3</reference>
+        <reference>BSI TR-03153-1 Chapter 5.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only authenticated users can logout. The TSE can also automatically logout users after a defined inactivity period. After logout, new logins by other users become possible.</text>
+        <text xml:lang="de">Nur authentifizierte Nutzer können sich abmelden. Die TSE kann Nutzer auch automatisch abmelden nach definierter Inaktivitätszeit. Nach Abmeldung werden neue Anmeldungen anderer Nutzer möglich.</text>
+    </notes>
+</process>

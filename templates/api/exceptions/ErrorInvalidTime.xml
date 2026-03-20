@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorInvalidTime" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorInvalidTime</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function updateTime fails because the supplied time parameters are not valid or fall outside the acceptable range. The function attempts to update the Secure Element's current time, but the provided time parameters contain invalid values (out-of-range year, month, day, hour, minute, second), causing the time validation to fail.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion updateTime fehlschlägt, da die bereitgestellten Zeitparameter ungültig sind oder außerhalb des zulässigen Bereichs liegen. Die Funktion versucht, die aktuelle Zeit des Secure Element zu aktualisieren, aber die bereitgestellten Zeitparameter enthalten ungültige Werte (außerhalb des Bereichs Jahr, Monat, Tag, Stunde, Minute, Sekunde), was dazu führt, dass die Zeitvalidierung fehlschlägt.</text>
+  </description>
+  <category>Time Management</category>
+  <subcategory>Time Validation</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorInvalidTime that is thrown if the supplied time parameters are not valid or are outside valid ranges.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorInvalidTime, die ausgelöst wird, wenn die bereitgestellten Zeitparameter ungültig sind oder außerhalb gültiger Bereiche liegen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the updateTime function receives time parameters that fail validation checks. Time parameters include year, month, day, hour, minute, and second values that must fall within valid ranges for a valid date and time. ErrorInvalidTime indicates that one or more time parameters are outside the acceptable range or represent an invalid date/time combination. When this exception occurs, the time is not updated and the Secure Element's current time remains unchanged. Recovery requires supplying valid time parameters that represent a legitimate date and time within the acceptable range.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion updateTime Zeitparameter erhält, die Validierungsprüfungen nicht bestehen. Zeitparameter umfassen Jahr-, Monats-, Tages-, Stunden-, Minuten- und Sekundenwerte, die innerhalb gültiger Bereiche für ein gültiges Datum und Uhrzeit fallen müssen. ErrorInvalidTime zeigt an, dass einer oder mehrere Zeitparameter außerhalb des zulässigen Bereichs liegen oder eine ungültige Datums-/Zeituhr-Kombination darstellen. Wenn diese Ausnahme auftritt, wird die Zeit nicht aktualisiert und die aktuelle Zeit des Secure Element bleibt unverändert. Die Wiederherstellung erfordert die Bereitstellung gültiger Zeitparameter, die ein legitimes Datum und eine Uhrzeit innerhalb des zulässigen Bereichs darstellen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.3 Time Management - updateTime</section>
+    <requirement>
+      <text xml:lang="en">The function updateTime SHALL validate all supplied time parameters before updating the Secure Element's current time. Time parameters (year, month, day, hour, minute, second) must fall within valid ranges: year within supported range, month 1-12, day 1-31 (depending on month), hour 0-23, minute 0-59, second 0-59. If any time parameter is outside the valid range or represents an invalid date combination, the function SHALL raise the exception ErrorInvalidTime and reject the time update without modifying the Secure Element's time.</text>
+      <text xml:lang="de">Die Funktion updateTime soll alle bereitgestellten Zeitparameter validieren, bevor die aktuelle Zeit des Secure Element aktualisiert wird. Zeitparameter (Jahr, Monat, Tag, Stunde, Minute, Sekunde) müssen innerhalb gültiger Bereiche liegen: Jahr innerhalb unterstützten Bereichs, Monat 1-12, Tag 1-31 (abhängig von Monat), Stunde 0-23, Minute 0-59, Sekunde 0-59. Falls ein Zeitparameter außerhalb des gültigen Bereichs liegt oder eine ungültige Datumskombination darstellt, soll die Funktion die Ausnahme ErrorInvalidTime auslösen und die Zeitaktualisierung ablehnen, ohne die Zeit des Secure Element zu ändern.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time management operations - updateTime function only</text>
+      <text xml:lang="de">Zeitverwaltungsoperationen - nur Funktion updateTime</text>
+    </applicability>
+    <reference>updateTime – Function (3.2.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>updateTime</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls updateTime function with time parameters (year, month, day, hour, minute, second)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft updateTime-Funktion mit Zeitparametern auf (Jahr, Monat, Tag, Stunde, Minute, Sekunde)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function receives the time parameters from the caller</text>
+      <text xml:lang="de">Funktion empfängt die Zeitparameter vom Aufrufer</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function performs preliminary input validation on all time parameters (type checks, null checks)</text>
+      <text xml:lang="de">Funktion führt voräufige Eingabe-Validierung auf allen Zeitparametern durch (Typprüfungen, Null-Prüfungen)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function validates individual time parameter ranges (year range, month 1-12, day 1-31, hour 0-23, minute 0-59, second 0-59)</text>
+      <text xml:lang="de">Funktion validiert individuelle Zeitparameter-Bereiche (Jahrsbereich, Monat 1-12, Tag 1-31, Stunde 0-23, Minute 0-59, Sekunde 0-59)</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If any parameter is outside its valid range → ErrorInvalidTime raised, function exits</text>
+      <text xml:lang="de">Falls ein Parameter außerhalb seines gültigen Bereichs liegt → ErrorInvalidTime ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If parameter format is invalid or inconsistent → ErrorInvalidTime raised, function exits</text>
+      <text xml:lang="de">Falls Parameterformat ungültig oder inkonsistent → ErrorInvalidTime ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function validates date validity (e.g., February 29 only in leap years, day validity for the specific month)</text>
+      <text xml:lang="de">Funktion validiert Datumsgültigkeit (z. B. 29. Februar nur in Schaltjahren, Tagesgültigkeit für den spezifischen Monat)</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If the date combination is invalid → ErrorInvalidTime raised, function exits</text>
+      <text xml:lang="de">Falls die Datumskombination ungültig ist → ErrorInvalidTime ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">If all validation passes, function checks authorization and device state</text>
+      <text xml:lang="de">Falls alle Validierungen bestanden werden, prüft Funktion Autorisierung und Gerätezustand</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element and prepares time update command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element und bereitet Zeitaktualisierungs-Befehl vor</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function transmits validated time parameters to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet validierte Zeitparameter an Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function processes the Secure Element response confirming time update</text>
+      <text xml:lang="de">Funktion verarbeitet Secure Element-Antwort, die Zeitaktualisierung bestätigt</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns to caller with updated time</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer mit aktualisierter Zeit zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify time value format matches specification requirements</text>
+      <text xml:lang="de">Zeitwertformat überprüfen, um Spezifikationsanforderungen zu erfüllen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Ensure time value is within valid range</text>
+      <text xml:lang="de">Zeitwert muss innerhalb des gültigen Bereichs liegen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Correct time to proper format and range</text>
+      <text xml:lang="de">Zeit in korrektes Format und Bereich korrigieren</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry updateTime with valid time value</text>
+      <text xml:lang="de">updateTime mit gültigen Zeitwert wiederholen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorSetCurrentSeTimeFailed</exception>
+    <exception>ErrorGetCurrentSeTimeFailed</exception>
+    <exception>ErrorEndOfUsageReached</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Time Unchanged">
+      <text xml:lang="en">The Secure Element's current time remains completely unchanged. The rejected time update does not modify the device's clock or time configuration. The device continues to maintain its previous time value.</text>
+      <text xml:lang="de">Die aktuelle Zeit des Secure Element bleibt vollständig unverändert. Die abgelehnte Zeitaktualisierung ändert weder die Geräts-Uhr noch die Zeitkonfiguration. Das Gerät setzt sein vorheriges Zeitwert bei.</text>
+    </state>
+    <state name="Time Update Not Performed">
+      <text xml:lang="en">The time update operation is not performed and has no effect on the Secure Element's time. No clock adjustment occurs. The time is rejected at validation.</text>
+      <text xml:lang="de">Die Zeitaktualisierungs-Operation wird nicht durchgeführt und hat keine Auswirkung auf die Zeit des Secure Element. Keine Uhr-Anpassung findet statt. Die Zeit wird bei der Validierung abgelehnt.</text>
+    </state>
+    <state name="No Device State Modification">
+      <text xml:lang="en">No device state is modified. Configuration, stored data, and operational parameters remain unchanged. The rejection occurs at input validation before Secure Element communication.</text>
+      <text xml:lang="de">Kein Gerätezustand wird geändert. Konfiguration, gespeicherte Daten und Betriebsparameter bleiben unverändert. Die Ablehnung erfolgt bei Eingabe-Validierung vor Secure Element-Kommunikation.</text>
+    </state>
+    <state name="No Device-Secure Element Interaction">
+      <text xml:lang="en">The operation does not reach the Secure Element communication stage. The error is detected and raised before device-to-Secure Element interaction occurs.</text>
+      <text xml:lang="de">Die Operation erreicht nicht die Secure Element-Kommunikations-Stufe. Der Fehler wird erkannt und ausgelöst, bevor Gerät-zu-Secure Element-Interaktion auftritt.</text>
+    </state>
+    <state name="Function Fails Without Side Effects">
+      <text xml:lang="en">The time update operation fails cleanly without any partial effects or side effects. No state corruption or incomplete operations result from the invalid time parameters.</text>
+      <text xml:lang="de">Die Zeitaktualisierungs-Operation schlägt sauber fehl, ohne Teileffekte oder Nebenwirkungen. Keine Zustandskorruption oder unvollständige Operationen resultieren aus den ungültigen Zeitparametern.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The application can immediately retry the operation with corrected time parameters. No recovery procedures or device intervention is required - the error is input data error.</text>
+      <text xml:lang="de">Die Anwendung kann die Operation sofort mit korrigierten Zeitparametern wiederholen. Keine Wiederherstellungsverfahren oder Geräteinvention erforderlich - der Fehler ist ein Eingabe-Datenfehler.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Provided time value is invalid - time does not meet requirements</text>
+      <text xml:lang="de">Anzeichen: Bereitgestellter Zeitwert ist ungültig - Zeit erfüllt nicht die Anforderungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Input Validation, Parameter Validation, Time Operations</text>
+      <text xml:lang="de">Themen: Zeitverwaltung, Eingabe-Validierung, Parameter-Validierung, Zeitoperationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by updateTime when provided time value fails validation</text>
+      <text xml:lang="de">Wird von updateTime ausgelöst, wenn der bereitgestellte Zeitwert die Validierung fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Time update function validates time parameter format and value</text>
+      <text xml:lang="de">Zeitaktualisierungs-Funktion validiert Zeitparameter-Format und Wert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device enforces time value constraints</text>
+      <text xml:lang="de">Gerät erzwingt Zeitwert-Beschränkungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Invalid time prevents time synchronization</text>
+      <text xml:lang="de">Ungültige Zeit verhindert Zeitsynchronisierung</text>
+    </note>
+  </implementationContext>
+</exception>
+

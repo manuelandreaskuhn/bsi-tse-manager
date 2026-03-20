@@ -1,0 +1,46 @@
+sequenceDiagram
+    participant Inspector as Financial Authority/Inspector
+    participant TSE as TSE
+    participant Storage as Storage Medium
+
+    Note over Inspector: Targeted Audit<br/>of specific transactions
+
+    Inspector->>TSE: exportFilteredTransactionLogs(<br/>Filter Parameters)
+    activate TSE
+    
+    Note over TSE: Possible Filters:<br/>- transactionNumber<br/>- firstTransactionNumber & lastTransactionNumber<br/>- startDate & endDate<br/>- clientId<br/>- maximumNumberRecords
+    
+    TSE->>TSE: Check Filter Parameters
+    
+    alt Only transactionNumber
+        TSE->>Storage: Get all Logs for Transaction
+        Storage-->>TSE: Transaction-Logs + System-Logs + Audit-Logs
+    else Transaction Number Range
+        TSE->>Storage: Get Logs in Range<br/>[firstTransactionNumber, lastTransactionNumber]
+        Storage-->>TSE: Filtered Logs
+    else Time Range
+        TSE->>Storage: Get Logs in Time Range<br/>[startDate, endDate]
+        Storage-->>TSE: Filtered Logs
+    end
+    
+    opt ClientId Filter
+        TSE->>TSE: Filter by clientId
+    end
+    
+    opt MaximumNumberRecords
+        TSE->>TSE: Check Number <= maximumNumberRecords
+        alt Too many Records
+            TSE-->>Inspector: Exception:<br/>ErrorTooManyRecords
+        end
+    end
+    
+    TSE->>TSE: Get associated Certificates
+    
+    TSE->>TSE: Pack TAR Archive:<br/>- Filtered Log Messages<br/>- Certificates<br/>- info.csv
+    
+    TSE->>TSE: Generate Filename
+    
+    TSE-->>Inspector: TAR Archive + Filename
+    deactivate TSE
+    
+    Note over Inspector: Smaller TAR Archive<br/>with only relevant data

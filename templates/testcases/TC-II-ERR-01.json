@@ -1,0 +1,270 @@
+{
+  "testcase_id": "TC-II-ERR-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Allgemeine Fehlermeldungen: Vollständigkeit und Korrektheit",
+  "description": "Prüft, dass alle Funktionen gültige, spezifikationskonforme Fehlermeldungen liefern bei falschen Zuständen, nicht authentifizierten Nutzern, nicht initialiserter TSE, etc.",
+  "purpose": "",
+  "module": "Integration Interface",
+  "submodule": "II_ERR",
+  "function": "alle Funktionen",
+  "test_type": "NT",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_ERR_01",
+    "II_ERR_01_Template",
+    "II_ERR_02",
+    "II_ERR_02_Template",
+    "II_ERR_03",
+    "II_ERR_03_Template",
+    "II_ERR_04",
+    "II_ERR_04_Template",
+    "II_ERR_05",
+    "II_ERR_05_Template",
+    "II_ERR_06",
+    "II_ERR_06_Template",
+    "II_ERR_07",
+    "II_ERR_07_Template",
+    "II_ERR_08",
+    "II_ERR_08_Template",
+    "II_ERR_09",
+    "II_ERR_09_Template",
+    "II_ERR_10",
+    "II_ERR_10_Template",
+    "II_ERR_11",
+    "II_ERR_11_Template",
+    "II_ERR_12",
+    "II_ERR_12_Template",
+    "II_ERR_13",
+    "II_ERR_13_Template",
+    "II_ERR_14",
+    "II_ERR_14_Template",
+    "II_ERR_15",
+    "II_ERR_15_Template",
+    "II_ERR_16",
+    "II_ERR_16_Template",
+    "II_ERR_17",
+    "II_ERR_17_Template"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Optional: Authentifizierung mit korrektem Nutzer, um authentifizierten Zustand herzustellen. Für die Fehlerfall-Tests (NT) wird anschließend ein nicht-authentifizierter Zustand oder ein Fehlerzustand gezielt herbeigeführt.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Ausführung ohne Fehler (Grundzustand).",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_ERR_01"
+    },
+    {
+      "step": 4,
+      "type": "NEGATIVE",
+      "title": "Nicht-autorisierte Aufrufe prüfen",
+      "result": null,
+      "instruction": "Nicht-autorisierte Aufrufe prüfen [NT].",
+      "function": "<Autorisierte Funktionen ohne",
+      "checks": [
+        {
+          "description": "ErrorUserNotAuthorized bei nicht-authentifiziertem Zugriff auf autorisierte Funktionen",
+          "expected": "errorCode = ErrorUserNotAuthorized",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ErrorSecureElementNotInitialized bei Aufruf auf nicht-initialisierter TSE",
+          "expected": "errorCode = ErrorSecureElementNotInitialized",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "type": "NEGATIVE",
+      "title": "Parameterfehler prüfen",
+      "result": null,
+      "instruction": "Parameterfehler prüfen [NT].",
+      "function": "<Funktionen mit syntaktisch",
+      "checks": [
+        {
+          "description": "ErrorParameterSyntax bei ungültigen Parametern (gemäß Herstellerdokumentation)",
+          "expected": "errorCode = ErrorParameterSyntax",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle Funktionen: ErrorParameterSyntax-Provokation gemäß ICS-Übersicht möglich",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "Fehlermeldungsübersicht aus ICS prüfen",
+      "result": null,
+      "instruction": "Fehlermeldungsübersicht aus ICS prüfen",
+      "checks": [
+        {
+          "description": "Vollständige Fehlermeldungsübersicht im ICS (Funktion → Fehlercode → Situation)",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle im ICS deklarierten Fehlercodes sind tatsächlich implementiert und auslösbar",
+          "expected": "Implementiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle Fehlermeldungen menschenlesbar formuliert",
+          "expected": "Verständlich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "Kein Log bei fehlgeschlagenen Aufrufen",
+      "result": null,
+      "instruction": "Kein Log bei fehlgeschlagenen Aufrufen",
+      "function": "exportLogMessages nach fehlgeschlagenen Aufrufen",
+      "checks": [
+        {
+          "description": "Kein Transaktions-Log bei fehlgeschlagenen Transaktions-API-Aufrufen",
+          "expected": "LOG_NEG_TXN",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SM_NOAGG: Kein updateTransaction-Log ohne direkten Aufruf",
+          "expected": "LOG_NEG_UPD_SM",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein System-Log bei fehlgeschlagenen Systemaufrufen",
+          "expected": "LOG_NEG_SYS",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_NEG_TXN",
+          "title": "Kein Transaktions-Log bei fehlgeschlagenem API-Aufruf",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_NEG_UPD_SM",
+          "title": "Kein updateTransaction-Log bei SM ohne Aggregation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_NEG_SYS",
+          "title": "Kein System-Log bei fehlgeschlagenem Systemaufruf",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.2",
+    "BSI TR-03151-1 §6"
+  ]
+}

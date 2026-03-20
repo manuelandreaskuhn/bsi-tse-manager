@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetRegisteredClientsFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetRegisteredClientsFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getRegisteredClients fails to retrieve the list of currently registered clients on the Secure Element. The function attempts to obtain detailed information about all registered client applications, but the retrieval process fails before the client list can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getRegisteredClients fehlschlägt, um die Liste der derzeit registrierten Clients auf dem Secure Element abzurufen. Die Funktion versucht, detaillierte Informationen über alle registrierten Client-Anwendungen zu erhalten, aber der Abrufprozess schlägt fehl, bevor die Client-Liste bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Client Enumeration</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetRegisteredClientsFailed that is thrown if the determination of the currently registered clients failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetRegisteredClientsFailed, die ausgelöst wird, wenn die Bestimmung der derzeit registrierten Clients fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getRegisteredClients function cannot retrieve the list of registered clients from the Secure Element. Registered clients information provides detailed enumeration of all currently registered client applications, including client identifiers and status information. ErrorGetRegisteredClientsFailed indicates that the Secure Element cannot provide the client list due to hardware failure, storage corruption, internal client management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no client list is returned and applications cannot enumerate or inspect registered clients. Recovery typically involves device verification, client management subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getRegisteredClients die Liste der registrierten Clients nicht vom Secure Element abrufen kann. Die Informationen zu registrierten Clients bieten eine detaillierte Aufzählung aller derzeit registrierten Client-Anwendungen, einschließlich Client-Bezeichnern und Statusinformationen. ErrorGetRegisteredClientsFailed zeigt an, dass das Secure Element die Client-Liste aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Client-Management-Systemfehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird keine Client-Liste zurückgegeben und Anwendungen können registrierte Clients nicht aufzählen oder untersuchen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Client-Management-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.4 Client Management - getRegisteredClients</section>
+    <requirement>
+      <text xml:lang="en">The function getRegisteredClients SHALL query the Secure Element to determine the list of all currently registered clients. If the Secure Element cannot provide or return the required client list, the function SHALL raise the exception ErrorGetRegisteredClientsFailed and exit without returning any client data. The registered client retrieval failure indicates the Secure Element's client enumeration query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getRegisteredClients soll das Secure Element abfragen, um die Liste aller derzeit registrierten Clients zu bestimmen. Falls das Secure Element die erforderliche Client-Liste nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetRegisteredClientsFailed auslösen und beenden, ohne Client-Daten zurückzugeben. Der Fehler beim Abrufen der registrierten Clients zeigt an, dass die Abfragefunktionalität der Client-Enumeration des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client management operations - getRegisteredClients function only</text>
+      <text xml:lang="de">Client-Management-Operationen - nur Funktion getRegisteredClients</text>
+    </applicability>
+    <reference>getRegisteredClients – Function (3.2.4)</reference>
+  </specification>
+  <thrownBy>
+    <function>getRegisteredClients</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getRegisteredClients function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getRegisteredClients auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for client management information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Client-Management-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and client management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Client-Management betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares client enumeration query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Client-Enumeration-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits client query command to Secure Element requesting list of all registered clients</text>
+      <text xml:lang="de">Funktion übersendet Client-Abfrage-Befehl zu Secure Element und fordert Liste aller registrierten Clients an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (registry error, client enumeration error, management error) → ErrorGetRegisteredClientsFailed raised, function exits without client list</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Verwaltungsfehler, Client-Enumerationsfehler, Management-Fehler) → ErrorGetRegisteredClientsFailed ausgelöst, Funktion beendet ohne Client-Liste</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetRegisteredClientsFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetRegisteredClientsFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives registered client list from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion registrierte Client-Liste von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates client list for correctness (format, client ID validity, state consistency)</text>
+      <text xml:lang="de">Funktion validiert Client-Liste auf Korrektheit (Format, Client-ID-Gültigkeit, Zustandskonsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid registered client list to caller</text>
+      <text xml:lang="de">Funktion gibt gültige registrierte Client-Liste an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry client list query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Client-Listen-Abfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Maintain application-level client registry as backup</text>
+      <text xml:lang="de">Verwalten Sie die Client-Verwaltung auf Anwendungsebene als Sicherung</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorRegisterClientFailed</exception>
+    <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+    <exception>ErrorGetMaxNumberOfClientsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve registered clients list does not affect device initialization state, client management operations, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs der registrierten Client-Liste wirkt sich nicht auf den Geräteinitialisierungszustand, Client-Management-Operationen, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Client List Return Status">
+      <text xml:lang="en">No client list is returned to the caller. The function exits without providing any registered client information. Applications must not assume default client lists or cached information; they must handle the exception as indicating client enumeration is unavailable.</text>
+      <text xml:lang="de">Es wird keine Client-Liste an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne registrierte Client-Informationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Client-Listen oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Client-Enumeration nicht verfügbar ist.</text>
+    </state>
+    <state name="Secure Element Client Management State">
+      <text xml:lang="en">Secure Element client management subsystem remains unchanged by the failed query. No state modifications, client changes, or client management configuration changes occur. Client management operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Client-Management-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Client-Änderungen oder Client-Management-Konfigurationsiänderungen vorgenommen. Client-Management-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Registered Client Continuity">
+      <text xml:lang="en">Registered clients continue to be maintained internally in the Secure Element. The failure to retrieve the client list does not affect client registrations or client management operations. Client queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Registrierte Clients werden intern im Secure Element weiterhin verwaltet. Das Fehlschlagen des Abrufs der Client-Liste wirkt sich nicht auf Client-Registrierungen oder Client-Management-Operationen aus. Client-Abfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the client query failure. Device internal consistency is maintained. Other SE API functions and client management operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Client-Abfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Client-Management-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, management system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Management-Systemfehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of registered clients list failed - cannot determine registered clients</text>
+      <text xml:lang="de">Anzeichen: Abruf der registrierten Client-Liste fehlgeschlagen - kann registrierte Clients nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Information Retrieval, Client Registry, Client Listing</text>
+      <text xml:lang="de">Themen: Client-Management, Informationsabruf, Client-Verwaltung, Client-Auflistung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getRegisteredClients when client list retrieval fails</text>
+      <text xml:lang="de">Wird von getRegisteredClients ausgelöst, wenn der Client-Listen-Abruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Query function retrieves list of currently registered clients</text>
+      <text xml:lang="de">Abfragefunktion ruft Liste der derzeit registrierten Clients ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains client registry with active registrations</text>
+      <text xml:lang="de">Das Gerät verwaltet Client-Verwaltung mit aktiven Registrierungen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents registered client list access</text>
+      <text xml:lang="de">Abruffehler verhindert den Zugriff auf die registrierte Client-Liste</text>
+    </note>
+  </implementationContext>
+</exception>
+

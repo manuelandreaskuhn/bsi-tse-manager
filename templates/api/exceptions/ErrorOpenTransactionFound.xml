@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorOpenTransactionFound" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorOpenTransactionFound</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API functions disableSecureElement or updateDevice are called when there are open (unfinished) transactions on the device. The functions require that all transactions be in a completed state before they can execute. If one or more transactions are still in the open state when these operations are attempted, ErrorOpenTransactionFound is raised to prevent the operation from proceeding while transactions remain unfinished.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktionen disableSecureElement oder updateDevice aufgerufen werden, wenn es offene (unvollendete) Transaktionen auf dem Gerät gibt. Die Funktionen erfordern, dass alle Transaktionen sich in einem abgeschlossenen Zustand befinden, bevor sie ausgeführt werden können. Falls eine oder mehrere Transaktionen sich noch im offenen Zustand befinden, wenn diese Operationen versucht werden, wird ErrorOpenTransactionFound ausgelöst, um zu verhindern, dass die Operation fortgesetzt wird, während Transaktionen unvollkommen bleiben.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Transaction State Prerequisites</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>lockTransactionLogging</function>
+    <function>updateDevice</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorOpenTransactionFound that is thrown if there are open transactions when they must be closed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorOpenTransactionFound, die ausgelöst wird, wenn es offene Transaktionen gibt, wenn sie geschlossen werden müssen.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when disableSecureElement or updateDevice functions cannot proceed because there are open (unfinished) transactions on the device. These operations have a prerequisite that all transactions must be in a completed state before they can execute. Open transactions represent active processing contexts that must be properly finalized before certain device-level operations can be safely performed. ErrorOpenTransactionFound indicates that the attempted operation was blocked because at least one transaction is still in the open state. Recovery requires completing (finishing) all open transactions via the finishTransaction function before retrying the blocked operation. This prevents device operations from occurring while transaction processing is incomplete, protecting data consistency and transaction integrity.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn Funktionen disableSecureElement oder updateDevice nicht fortgesetzt werden können, da es offene (unvollendete) Transaktionen auf dem Gerät gibt. Diese Operationen haben eine Voraussetzung, dass sich alle Transaktionen in einem abgeschlossenen Zustand befinden müssen, bevor sie ausgeführt werden können. Offene Transaktionen stellen aktive Verarbeitungskontexte dar, die ordnungsgemäß abgeschlossen werden müssen, bevor bestimmte Geräteoperationen sicher ausgeführt werden können. ErrorOpenTransactionFound zeigt an, dass die versuchte Operation blockiert wurde, da mindestens eine Transaktion sich noch im offenen Zustand befindet. Die Wiederherstellung erfordert das Abschließen (Beenden) aller offenen Transaktionen über die Funktion finishTransaction, bevor die blockierte Operation erneut versucht wird. Dies verhindert, dass Geräteoperationen auftreten, während die Transaktionsverarbeitung unvollkommen ist, und schützt Datenkonsistenz und Transaktionsintegrität.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.1 Device State Management - disableSecureElement and 3.2.2 Device Update Operations - updateDevice</section>
+    <requirement>
+      <text xml:lang="en">The functions disableSecureElement and updateDevice require that all transactions be in a completed (finished) state before they can execute. These operations cannot proceed while open (unfinished) transactions exist on the device. If the device has any open transactions at the time these functions are called, they SHALL raise the exception ErrorOpenTransactionFound and reject the operation. The caller must complete all open transactions via finishTransaction before retrying these device-level operations.</text>
+      <text xml:lang="de">Die Funktionen disableSecureElement und updateDevice erfordern, dass sich alle Transaktionen in einem abgeschlossenen (beendeten) Zustand befinden, bevor sie ausgeführt werden können. Diese Operationen können nicht fortgesetzt werden, während offene (unvollendete) Transaktionen auf dem Gerät vorhanden sind. Falls das Gerät offene Transaktionen hat, wenn diese Funktionen aufgerufen werden, sollen sie die Ausnahme ErrorOpenTransactionFound auslösen und die Operation ablehnen. Der Aufrufer muss alle offenen Transaktionen über finishTransaction abschließen, bevor diese Geräteoperationen erneut versucht werden.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device-level operations - disableSecureElement and updateDevice functions only, when open transactions exist</text>
+      <text xml:lang="de">Geräteoperationen - nur Funktionen disableSecureElement und updateDevice, wenn offene Transaktionen vorhanden sind</text>
+    </applicability>
+    <reference>disableSecureElement – Function (3.2.1); updateDevice – Function (3.2.2)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls disableSecureElement or updateDevice function</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft disableSecureElement oder updateDevice Funktion auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authorization</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Autorisierung</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks device state and operational prerequisites</text>
+      <text xml:lang="de">Funktion prüft Gerätezustand und operationelle Voraussetzungen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function queries the number of currently open transactions on the device</text>
+      <text xml:lang="de">Funktion fragt die Anzahl der derzeit offenen Transaktionen auf dem Gerät ab</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function evaluates transaction state</text>
+      <text xml:lang="de">Funktion bewertet den Transaktionszustand</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If NO open transactions exist → proceed to step 6</text>
+      <text xml:lang="de">Falls KEINE offenen Transaktionen vorhanden sind → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If open transactions exist → ErrorOpenTransactionFound raised, function exits</text>
+      <text xml:lang="de">Falls offene Transaktionen vorhanden sind → ErrorOpenTransactionFound ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function performs pre-operation validation and preparation</text>
+      <text xml:lang="de">Funktion führt Prä-Operationsvalidierung und Vorbereitung durch</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function transmits the operation command (disable or update) to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet den Operationsbefehl (deaktivieren oder aktualisieren) an Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function receives acknowledgment from Secure Element</text>
+      <text xml:lang="de">Funktion erhält Bestätigung vom Secure Element</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function completes post-operation cleanup and state updates</text>
+      <text xml:lang="de">Funktion führt Nach-Operationsbereinigung und Zustandsaktualisierungen durch</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns successfully with operation completed</text>
+      <text xml:lang="de">Funktion gibt erfolgreich mit abgeschlossener Operation zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check open transactions using getOpenTransactions</text>
+      <text xml:lang="de">Prüfen Sie offene Transaktionen mit getOpenTransactions</text>
+    </step>
+    <step>
+      <text xml:lang="en">Finish all open transactions using finishTransaction</text>
+      <text xml:lang="de">Beenden Sie alle offenen Transaktionen mit finishTransaction</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry the operation after all transactions complete</text>
+      <text xml:lang="de">Versuchen Sie die Operation erneut, nachdem alle Transaktionen abgeschlossen sind</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review transaction lifecycle in application</text>
+      <text xml:lang="de">Überprüfen Sie den Transaktionslebenszyklus in der Anwendung</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDisableSecureElementFailed</exception>
+    <exception>ErrorDeviceUpdateFailed</exception>
+    <exception>ErrorStartTransactionFailed</exception>
+    <exception>ErrorFinishTransactionFailed</exception>
+    <exception>ErrorGetOpenTransactionsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Operation Not Performed">
+      <text xml:lang="en">The requested operation (disable or update) is not performed. Device state remains unchanged by the failed operation attempt.</text>
+      <text xml:lang="de">Die angeforderte Operation (deaktivieren oder aktualisieren) wird nicht ausgeführt. Der Gerätezustand bleibt durch den fehlgeschlagenen Operationsversuch unverändert.</text>
+    </state>
+    <state name="Device Continues Normal Operation">
+      <text xml:lang="en">The device remains in its current operational state. The failed prerequisite check does not affect normal device operations.</text>
+      <text xml:lang="de">Das Gerät bleibt in seinem aktuellen Betriebszustand. Die fehlgeschlagene Voraussetzungsprüfung beeinträchtigt nicht die normalen Geräteoperationen.</text>
+    </state>
+    <state name="Open Transactions Unchanged">
+      <text xml:lang="en">The open transactions remain in their current state. The failed operation attempt does not affect transaction state.</text>
+      <text xml:lang="de">Die offenen Transaktionen bleiben in ihrem aktuellen Zustand. Der fehlgeschlagene Operationsversuch beeinträchtigt nicht den Transaktionszustand.</text>
+    </state>
+    <state name="Device Fully Operational">
+      <text xml:lang="en">All device functionality except the blocked operation remains available and operational.</text>
+      <text xml:lang="de">Die gesamte Gerätefunktionalität außer der blockierten Operation bleibt verfügbar und operational.</text>
+    </state>
+    <state name="Recovery Action Required">
+      <text xml:lang="en">The caller must take recovery action (close open transactions) before retrying the blocked operation.</text>
+      <text xml:lang="de">Der Aufrufer muss Maßnahmen zur Wiederherstellung ergreifen (offene Transaktionen schließen), bevor die blockierte Operation erneut versucht wird.</text>
+    </state>
+    <state name="No Cascading Failures">
+      <text xml:lang="en">The exception does not trigger cascading failures or secondary exceptions.</text>
+      <text xml:lang="de">Die Ausnahme löst keine Kaskadenfehlschläge oder sekundäre Ausnahmen aus.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: An open transaction exists when it should not - transaction still active</text>
+      <text xml:lang="de">Anzeichen: Eine offene Transaktion existiert, wenn sie nicht vorhanden sein sollte - Transaktion noch aktiv</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Transaction State, Transaction Validation, State Constraints</text>
+      <text xml:lang="de">Themen: Transaktionsverwaltung, Transaktionszustand, Transaktionsvalidierung, Zustandsbeschränkungen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by lockTransactionLogging and updateDevice when open transactions exist</text>
+      <text xml:lang="de">Wird von lockTransactionLogging und updateDevice ausgelöst, wenn offene Transaktionen vorhanden sind</text>
+    </note>
+    <note>
+      <text xml:lang="en">State validation checks for incomplete transactions</text>
+      <text xml:lang="de">Zustandsvalidierung prüft auf unvollkommen Transaktionen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device prevents certain operations when transactions remain open</text>
+      <text xml:lang="de">Gerät verhindert bestimmte Operationen, wenn Transaktionen offen bleiben</text>
+    </note>
+    <note>
+      <text xml:lang="en">Presence of open transaction blocks operation execution</text>
+      <text xml:lang="de">Vorhandensein von offener Transaktion blockiert Operationsausfühhrung</text>
+    </note>
+  </implementationContext>
+</exception>
+

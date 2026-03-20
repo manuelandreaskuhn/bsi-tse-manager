@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant Inspector as Financial Authority/Inspector
+    participant TSE as TSE
+    participant Storage as Storage Medium
+
+    Inspector->>TSE: exportLoggingCertificates()<br/>(no authentication required)
+    activate TSE
+    
+    TSE->>TSE: Get current Certificate Chain
+    
+    TSE->>TSE: Collect Certificates:<br/>- TSE Certificate<br/>- Intermediate CA Certificates<br/>- Root CA Certificate
+    
+    alt Certificates not available
+        TSE-->>Inspector: Exception:<br/>ErrorExportLoggingCertificateFailed
+    else Certificates available
+        TSE->>TSE: Pack TAR Archive:<br/>only Certificates (*.crt)
+        
+        TSE->>TSE: Generate Filename:<br/>[SERIALNUMBER]_certificates.tar
+        
+        TSE-->>Inspector: TAR Archive + Filename
+    end
+    deactivate TSE
+    
+    Note over Inspector: Smaller Archive,<br/>only Certificates<br/>(no Log Messages)
+    
+    Inspector->>Inspector: Extract Certificates
+    Inspector->>Inspector: Validate Certificate Chain
+    Inspector->>Inspector: Check Validity & Revocation

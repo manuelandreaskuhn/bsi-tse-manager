@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetUsedMemoryFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetUsedMemoryFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getUsedMemory fails to retrieve the amount of storage currently consumed on the Secure Element. The function attempts to determine how much of the total storage capacity is currently in use, but the retrieval process fails before the used memory information can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getUsedMemory fehlschlägt, um die Menge des aktuell verbrauchten Speichers auf dem Secure Element abzurufen. Die Funktion versucht zu bestimmen, wie viel der gesamten Speicherkapazität derzeit verwendet wird, aber der Abrufprozess schlägt fehl, bevor die Informationen zum verwendeten Speicher bestimmt und zurückgegeben werden können.</text>
+  </description>
+  <category>Resource Management</category>
+  <subcategory>Memory Utilization Query</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetUsedMemoryFailed that is thrown if the determination of the used storage amount failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetUsedMemoryFailed, die ausgelöst wird, wenn die Bestimmung der verbrauchten Speichermenge fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getUsedMemory function cannot retrieve the current memory utilization from the Secure Element. Used memory information describes the amount of storage currently consumed by data, transactions, logging, and other internal structures on the Secure Element. ErrorGetUsedMemoryFailed indicates that the Secure Element cannot provide the used memory information due to hardware failure, memory accounting corruption, internal resource management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no used memory value is returned and applications cannot determine the current storage utilization. Recovery typically involves device verification, resource management subsystem diagnostics, and accounting verification if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getUsedMemory die aktuelle Speicherauslastung nicht vom Secure Element abrufen kann. Die Information zum verwendeten Speicher beschreibt die Menge des Speichers, der derzeit durch Daten, Transaktionen, Protokollierung und andere interne Strukturen auf dem Secure Element verbraucht wird. ErrorGetUsedMemoryFailed zeigt an, dass das Secure Element die Information zum verwendeten Speicher aufgrund eines Hardware-Ausfalls, Speicherbeschädigung bei der Speicherbuchführung, interner Ressourcenmanagement-Systemfehler, Kommunikationsfehler oder Secure Element Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, wird kein verwendeter Speicherwert zurückgegeben und Anwendungen können die aktuelle Speicherauslastung nicht bestimmen. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Ressourcenmanagement-Subsystem-Diagnose und Buchhaltungs-Verifizierung, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.4.2 Resource Management - getUsedMemory</section>
+    <requirement>
+      <text xml:lang="en">The function getUsedMemory SHALL query the Secure Element to determine the amount of storage currently in use. If the Secure Element cannot provide or return the required used memory information, the function SHALL raise the exception ErrorGetUsedMemoryFailed and exit without returning any memory utilization data. The used memory retrieval failure indicates the Secure Element's resource management query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getUsedMemory soll das Secure Element abfragen, um die Menge des aktuell verwendeten Speichers zu bestimmen. Falls das Secure Element die erforderliche Information zum verwendeten Speicher nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetUsedMemoryFailed auslösen und beenden, ohne Speichernutzungsdaten zurückzugeben. Das Abruffehler für den verwendeten Speicher zeigt an, dass die Abfragefunktionalität des Ressourcenmanagements des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Resource management operations - getUsedMemory function only</text>
+      <text xml:lang="de">Ressourcenmanagement-Operationen - nur Funktion getUsedMemory</text>
+    </applicability>
+    <reference>getUsedMemory – Function (3.4.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>getUsedMemory</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getUsedMemory function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getUsedMemory auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for resource information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Ressourcen-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and resource management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Ressourcenmanagement betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares memory utilization query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Speicherauslastungs-Abfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits utilization query command to Secure Element requesting the amount of storage currently in use</text>
+      <text xml:lang="de">Funktion übersendet Auslastungs-Abfrage-Befehl zu Secure Element und fordert die Menge des aktuell verwendeten Speichers an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (resource error, accounting error, utilization error) → ErrorGetUsedMemoryFailed raised, function exits without utilization value</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Ressourcenfehler, Buchhaltungsfehler, Auslastungsfehler) → ErrorGetUsedMemoryFailed ausgelöst, Funktion beendet ohne Auslastungswert</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetUsedMemoryFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetUsedMemoryFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives used memory value from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion verwendeten Speicherwert von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates used memory value for correctness (format, value range, consistency with total and free memory values)</text>
+      <text xml:lang="de">Funktion validiert verwendeten Speicherwert auf Korrektheit (Format, Wertebereich, Konsistenz mit Gesamt- und freien Speicherwerten)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid used memory value to caller</text>
+      <text xml:lang="de">Funktion gibt gültigen verwendeten Speicherwert an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry used memory query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Abfrage-Operation für verwendeten Speicher</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage medium connectivity</text>
+      <text xml:lang="de">Prüfen Sie die Speichermedium-Verbindung</text>
+    </step>
+    <step>
+      <text xml:lang="en">Monitor storage usage to prevent full condition</text>
+      <text xml:lang="de">Beobachten Sie die Speichernutzung, um Volllast zu verhindern</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorGetFreeMemoryFailed</exception>
+    <exception>ErrorGetTotalMemoryFailed</exception>
+    <exception>ErrorGetMaxNumberOfClientsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve used memory does not affect device initialization state, memory utilization, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs des verwendeten Speichers wirkt sich nicht auf den Geräteinitialierungszustand, die Speicherauslastung, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Used Memory Return Status">
+      <text xml:lang="en">No used memory value is returned to the caller. The function exits without providing storage utilization information. Applications must not assume default memory utilization or cached information; they must handle the exception as indicating current memory accounting is unavailable.</text>
+      <text xml:lang="de">Es wird kein verwendeter Speicherwert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne Speicherauslastungs-Informationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Speicherauslastung oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass aktuelle Speicherbuchführungs-Informationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element Resource State">
+      <text xml:lang="en">Secure Element resource management subsystem remains unchanged by the failed query. No state modifications, accounting changes, or resource utilization changes occur. Resource management operations continue normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Ressourcenmanagement-Subsystem des Secure Element bleibt durch die fehlgeschlagene Abfrage unverändert. Es werden keine Zustandsänderungen, Buchhaltungsänderungen oder Ressourcen-Auslastungsänderungen vorgenommen. Ressourcenmanagement-Operationen funktionieren normal, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Memory Utilization Continuity">
+      <text xml:lang="en">Memory utilization continues to be accurately tracked internally in the Secure Element. The failure to retrieve the used memory value does not affect actual memory utilization or resource tracking. Utilization queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Die Speicherauslastung wird intern im Secure Element weiterhin genau verfolgt. Das Fehlschlagen des Abrufs des verwendeten Speicherwerts wirkt sich nicht auf die tatsächliche Speicherauslastung oder Ressourcen-Verfolgung aus. Auslastungs-Abfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the utilization query failure. Device internal consistency is maintained. Other SE API functions and resource management operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Auslastungs-Abfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Ressourcenmanagement-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, resource management error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Ressourcenmanagement-Fehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of used memory information failed - cannot determine memory usage</text>
+      <text xml:lang="de">Anzeichen: Abruf der Information zum verwendeten Speicher fehlgeschlagen - kann Speichernutzung nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Memory Management, Device Resources, Information Retrieval, Storage Status</text>
+      <text xml:lang="de">Themen: Memory-Management, Geräteressourcen, Informationsabruf, Speicher-Status</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getUsedMemory when used memory information retrieval fails</text>
+      <text xml:lang="de">Wird von getUsedMemory ausgelöst, wenn der Abruf der Information zum verwendeten Speicher fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Memory function queries current device storage usage</text>
+      <text xml:lang="de">Memory-Funktion fragt aktuelle Geräte-Speichernutzung ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device tracks storage allocation and usage</text>
+      <text xml:lang="de">Gerät verfolgt Speicherallokation und Nutzung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents memory usage information</text>
+      <text xml:lang="de">Abruffehler verhindert Speichernutzungs-Informationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

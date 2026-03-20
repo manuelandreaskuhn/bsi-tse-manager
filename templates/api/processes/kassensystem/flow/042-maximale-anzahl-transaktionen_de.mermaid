@@ -1,0 +1,9 @@
+flowchart TD
+    Start([Nutzer: getMaxNumberOfTransactions])
+    Start --> Get[Bestimme maximale Anzahl<br/>gleichzeitig offener<br/>Transaktionen]
+    Get --> CheckUnlimited{Unbegrenzte<br/>Anzahl?}
+    CheckUnlimited -->|Ja| ReturnMax[Rückgabe: Höchster Wert unsigned long]
+    CheckUnlimited -->|Nein| ReturnActual[Rückgabe: Tatsächliches Maximum]
+    ReturnMax --> End([Ende])
+    ReturnActual --> End
+    style Get fill:#87CEEB

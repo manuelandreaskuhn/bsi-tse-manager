@@ -1,0 +1,55 @@
+flowchart TD
+    Start([Nutzer: unblockPin aufrufen])
+    Start --> CheckParams{Parameter<br/>vollständig?}
+    
+    CheckParams -->|Nein| ErrorParam[Exception:<br/>ErrorParameterSyntax]
+    CheckParams -->|Ja| CheckUser{UserId<br/>existiert?}
+    
+    CheckUser -->|Nein| ErrorUser[Exception:<br/>ErrorInvalidUserId]
+    CheckUser -->|Ja| CheckPUK{PUK<br/>korrekt?}
+    
+    CheckPUK -->|Nein| IncrPUKError[PUK-Fehlbedienungszähler++]
+    IncrPUKError --> CheckPUKLimit{PUK-Fehler >=<br/>Maximum?}
+    
+    CheckPUKLimit -->|Ja| BlockPUK[Sperre PUK temporär]
+    BlockPUK --> LogFailedPUK[Erstelle Log:<br/>unblockResult = failed]
+    LogFailedPUK --> ErrorPUKBlocked[Exception:<br/>ErrorPukIsTemporarilyBlocked]
+    
+    CheckPUKLimit -->|Nein| LogFailedAttempt[Erstelle Log:<br/>unblockResult = failed]
+    LogFailedAttempt --> ErrorWrongPUK[Exception:<br/>ErrorWrongPuk]
+    
+    CheckPUK -->|Ja| ValidateNewPIN{Neue PIN<br/>gültig?}
+    
+    ValidateNewPIN -->|Nein leer| ErrorEmptyPIN[Exception:<br/>ErrorInvalidPin]
+    ValidateNewPIN -->|Ja| SetNewPIN[Setze neue PIN für Nutzer]
+    
+    SetNewPIN --> CheckSetPIN{PIN-Setzung<br/>erfolgreich?}
+    CheckSetPIN -->|Nein| LogSetFailed[Erstelle Log:<br/>unblockResult = errorSettingNewPin]
+    LogSetFailed --> ErrorSetPIN[Exception:<br/>ErrorSettingNewPinFailed]
+    
+    CheckSetPIN -->|Ja| ResetRetry[Setze PIN-Fehlbedienungszähler<br/>auf Maximum]
+    
+    ResetRetry --> CheckReset{Reset<br/>erfolgreich?}
+    CheckReset -->|Nein| LogResetFailed[Erstelle Log:<br/>unblockResult = errorResettingRetryCounter]
+    LogResetFailed --> ErrorReset[Exception:<br/>ErrorResettingRetryCounterFailed]
+    
+    CheckReset -->|Ja| CreateLog[Erstelle System-Log-Nachricht<br/>unblockPin:<br/>unblockResult = success]
+    
+    CreateLog --> IncrSig[SM: Signaturzähler++]
+    IncrSig --> CalcSig[SM: Erstelle Signatur]
+    CalcSig --> SaveLog[Speichere Log-Nachricht]
+    
+    SaveLog --> Return[Rückgabe: Erfolg]
+    Return --> End([Ende - PIN entsperrt])
+    
+    ErrorParam --> End
+    ErrorUser --> End
+    ErrorPUKBlocked --> End
+    ErrorWrongPUK --> End
+    ErrorEmptyPIN --> End
+    ErrorSetPIN --> End
+    ErrorReset --> End
+    
+    style SetNewPIN fill:#90EE90
+    style ResetRetry fill:#90EE90
+    style BlockPUK fill:#FFB6C1

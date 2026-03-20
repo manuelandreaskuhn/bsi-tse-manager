@@ -1,0 +1,37 @@
+{
+  "schema_version": "3.0.0",
+  "description": "Vereinfachtes TSE-Testfall-Schema v3.0.0: Einheitliches steps-Array statt getrennter setup_procedure und test_steps.",
+  "changes_from_v2": [
+    "Feld 'preconditions' auf Root-Ebene entfernt (jetzt als steps mit type=PRECONDITION)",
+    "Feld 'setup_procedure' entfernt (jetzt als steps mit type=SETUP/PRECONDITION)",
+    "Feld 'test_steps' entfernt (jetzt als steps mit type=ACTION/VERIFY/NEGATIVE/FP)",
+    "Feld 'purpose' aus XML-Quelltestfällen hinzugefügt",
+    "Feld 'variables' auf Root-Ebene (Legende aller $-Variablen)",
+    "Jeder Step hat: step, type, title, result, instruction, function, user, parameters, expected_return, checks, tar_validation, references, source_test, notes"
+  ],
+  "step_types": {
+    "PRECONDITION": "Vorbedingung – muss vor Testbeginn erfüllt sein (z.B. TSE initialisieren, Zeit stellen, Client registrieren)",
+    "SETUP": "Setup-Schritt – Zustand herstellen, der für die Prüfung benötigt wird (z.B. Transaktion starten um Log-Nachrichten zu erzeugen)",
+    "ACTION": "Aktion – eigentliche Testhandlung (Funktion aufrufen, Export starten)",
+    "VERIFY": "Prüfung – Ergebnis überprüfen (TAR-Validierung, Feldinhalte, Rückgabewerte)",
+    "NEGATIVE": "Negativtest – Fehlerfall provozieren und Fehlermeldung prüfen",
+    "FP": "Formelle Prüfung – Dokumentenprüfung ohne TSE-Interaktion"
+  },
+  "result_values": [
+    "pass",
+    "fail",
+    "skip",
+    "not_run"
+  ],
+  "check_result_values": [
+    "pass",
+    "fail",
+    "skip"
+  ],
+  "outcome_types": {
+    "PASS_FAIL": "Eindeutiges pass oder fail",
+    "PASS_WARN_FAIL": "pass, Warnung oder fail",
+    "INFO": "Nur informativ",
+    "WARN_OR_OK": "Warnung oder OK"
+  }
+}

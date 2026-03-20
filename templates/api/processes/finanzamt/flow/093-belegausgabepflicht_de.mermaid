@@ -1,0 +1,49 @@
+graph TD
+    Start([Start: Geschäftsvorfall<br/>abgeschlossen])
+    
+    Start --> Dritter{Dritter am<br/>Geschäftsvorfall<br/>beteiligt?}
+    
+    Dritter -->|Nein| KeineAusgabe[Keine Belegausgabe<br/>erforderlich<br/>z.B. Entnahmen, Einlagen]
+    Dritter -->|Ja| Befreiung{Befreiung nach<br/>§148 AO vorhanden?}
+    
+    Befreiung -->|Ja| Optional[Beleg nur auf<br/>Kundenwunsch<br/>§368 BGB beachten!]
+    Befreiung -->|Nein| Format{Beleg elektronisch<br/>oder Papier?}
+    
+    Format -->|Elektronisch| Zustimmung{Kunde stimmt<br/>elektronischem<br/>Beleg zu?}
+    Format -->|Papier| DruckenVorbereiten[Beleg drucken<br/>vorbereiten]
+    
+    Zustimmung -->|Nein| DruckenVorbereiten
+    Zustimmung -->|Ja| Elektronisch[Elektronischen Beleg<br/>bereitstellen:<br/>- QR-Code<br/>- E-Mail<br/>- Download<br/>- NFC]
+    
+    DruckenVorbereiten --> Drucken[Beleg ausdrucken]
+    
+    Drucken --> Anbieten[Beleg anbieten]
+    
+    Anbieten --> Annahme{Kunde nimmt<br/>Beleg an?}
+    
+    Annahme -->|Ja| Uebergeben[Beleg übergeben]
+    Annahme -->|Nein| Entsorgen[Nicht angenommenen<br/>Beleg kann entsorgt<br/>werden]
+    
+    Elektronisch --> Zeitnah{Unmittelbar nach<br/>Vorgangsbeendigung?}
+    Uebergeben --> Zeitnah
+    Entsorgen --> Zeitnah
+    
+    Zeitnah -->|Nein| Warnung[ACHTUNG:<br/>Belegausgabepflicht<br/>nicht erfüllt!]
+    Zeitnah -->|Ja| Ende([Ende: Belegausgabepflicht<br/>erfüllt])
+    
+    KeineAusgabe --> Ende2([Ende])
+    Optional --> Ende2
+    Warnung --> Ende
+    
+    style Start fill:#90EE90
+    style Ende fill:#FFB6C1
+    style Ende2 fill:#FFB6C1
+    style Dritter fill:#FFE4B5
+    style Befreiung fill:#FFE4B5
+    style Format fill:#FFE4B5
+    style Zustimmung fill:#FFE4B5
+    style Annahme fill:#FFE4B5
+    style Zeitnah fill:#FFE4B5
+    style Warnung fill:#FF6B6B
+    style Elektronisch fill:#87CEEB
+    style Drucken fill:#87CEEB

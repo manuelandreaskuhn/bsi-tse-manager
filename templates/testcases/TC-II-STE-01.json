@@ -1,0 +1,512 @@
+{
+  "testcase_id": "TC-II-STE-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Selbsttest: Auslösung, Rückgabe, Log-Nachricht und Fehlerfall",
+  "description": "Prüft runSelfTest: Auslösung, selfTestResults-Format, SystemLog-Erstellung und Fehlerfall.",
+  "purpose": "Prüfung, ob die Funktionalität zur Auslösung eines Selbsttests einen Selbsttest auslöst und ob eine Log-Message erzeugt wird. Zusätzlich erfolgt eine Prüfung des Rückgabewerts selfTestResults, der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_STE",
+  "function": "runSelfTest",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_STE_01",
+    "II_STE_02",
+    "II_STE_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller stellt eine Liste aller Fehler- und Warnmeldu",
+      "result": null,
+      "instruction": "Der Hersteller stellt eine Liste aller Fehler- und Warnmeldungen, die im Falle eines fehlgeschlagenen Selbsttest im Element errorMessage abgelegt werden können, zur Verfügung."
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Es wird ein Wert (selfTestResults des Typs SelfTestResultSet) zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Auslösung des Selbsttests in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Auslösung des Selbsttests.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Auslösung des Selbsttests in dem TAR-Container.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds eventType entspricht selfTest.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Wert des Datenfelds eventTriggeredByUser entspricht logger.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Log-Nachricht enthält das Element SelfTestEventData mit einer Seqenz aus selfTestResults und allTestsArePositive. Das Element selfTestResults enthält für jede Komponente, die Selbsttests unterstützt ein Element vom Typ SelfTestResult. Die Inhalte dieser Elemente sind plausibel.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests. Es wird ein Fehler provoziert, der dazu führt, dass ein Selbsttest fehlschlägt.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Es wird ein Wert (selfTestResults des Typs SelfTestResultSet) zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Liste aller Fehler- und Warnmeldungen, die im Falle eines fehlgeschlagenen Selbsttest im Element errorMessage abgelegt werden können.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Alle Fehler- und Warnmeldungen enthalten einen für Menschen lesbaren und verständlichen Text, der den Grund des fehlgeschlagenen Selbsttests beschreibt.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "runSelfTest aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests. Es wird ein Fehler provoziert, der dazu führt, dass der Selbsttest abgebrochen wird.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorSelfTestFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2"
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 11,
+      "type": "VERIFY",
+      "title": "Selbsttest auslösen",
+      "result": null,
+      "instruction": "Selbsttest auslösen\n\nAufruf der Funktionalität zur Auslösung eines Selbsttests.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "expected_return": {
+        "selfTestResults": {
+          "type": "STRUCTURE",
+          "constraint": "Gemäß Spezifikation; bestanden"
+        }
+      },
+      "checks": [
+        {
+          "description": "Selbsttest erfolgreich ausgelöst",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "selfTestResults entspricht Spezifikation",
+          "expected": "Format korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SystemLog für selfTest erstellt",
+          "expected": "SYS_EVT_SELFTEST_PRESENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser im selfTest-Log korrekt",
+          "expected": "EVDATA_SELFTEST_TRIGGER",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Warnungen (falls vorhanden) sind menschenlesbar formuliert",
+          "expected": "Verständlich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_PARSE",
+          "title": "ASN.1 Parsing",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_VERSION",
+          "title": "Version = 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_OID",
+          "title": "certifiedDataType OID",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL",
+          "title": "serialNumber vorhanden (32 Byte)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SERIAL_CERT",
+          "title": "serialNumber = TSE-Zertifikat CN",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGCTR",
+          "title": "signatureCounter vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGTIME",
+          "title": "signatureCreationTime vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SIGLEN",
+          "title": "Signaturwert (96 Byte / P-384 plain)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_CTR",
+          "title": "Dateiname: Sig-{counter} stimmt",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_TIME",
+          "title": "Dateiname: Zeitstempel stimmt",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVTYPE",
+          "title": "eventType vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ORIGIN",
+          "title": "eventOrigin gültiger TSE-Komponentenbezeichner",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_TRIGGER",
+          "title": "eventTriggeredByUser",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_EVDATA",
+          "title": "eventData vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_SYS_FNAME",
+          "title": "Dateiname-Schema SystemLog",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_FNAME_EVT",
+          "title": "Dateiname: Log-Sys_{eventType}.log",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ADD_INT",
+          "title": "additionalInternalData DARF NICHT vorhanden sein",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYSLOG_RULES",
+          "title": "Erlaubte Origins und Trigger-Anforderungen je eventType",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "SYS_EVT_SELFTEST_PRESENT",
+          "title": "selfTest-Ereignis im Archiv vorhanden",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_SELFTEST_TRIGGER",
+          "title": "eventTriggeredByUser im extern ausgelösten selfTest",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_STE_01"
+    },
+    {
+      "step": 12,
+      "type": "NEGATIVE",
+      "title": "Selbsttest-Fehlerfall",
+      "result": null,
+      "instruction": "Selbsttest-Fehlerfall [NT]\n\nAufruf der Funktionalität zur Auslösung eines Selbsttests.",
+      "function": "runSelfTest",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorSelfTestFailed zurückgegeben",
+          "expected": "errorCode = ErrorSelfTestFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_STE_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

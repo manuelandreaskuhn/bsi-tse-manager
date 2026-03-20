@@ -1,0 +1,53 @@
+sequenceDiagram
+    participant G as Gast
+    participant K as Kellner
+    participant B as Bestellterminal
+    participant T as TSE
+
+    G->>K: Tisch besetzen
+    K->>B: Erste Bestellung aufnehmen
+    
+    Note over B,T: Transaktion starten
+    B->>T: startTransaction(clientId, processData: leer oder erste Items, processType: leer oder "Bestellung-V1")
+    T->>T: Transaktionsnummer generieren
+    T-->>B: transactionNumber, logTime, signatureCounter
+    
+    Note over G,T: Gast isst, weitere Bestellungen möglich
+    
+    rect rgb(255, 249, 196)
+        Note over K,T: Erste Nachbestellung
+        G->>K: Weitere Bestellung (z.B. Dessert)
+        K->>B: Items eingeben
+        B->>B: CSV erstellen
+        Note right of B: Beispiel: 2 x Schnitzel 12.50 EUR, 1 x Bier 0,5l 4.20 EUR
+        B->>T: updateTransaction(clientId, transactionNumber, processData: CSV Items, processType: "Bestellung-V1")
+        T->>T: Signatur für Update erstellen
+        T->>T: Transaction-Log Update speichern
+        T-->>B: logTime, signatureValue, signatureCounter
+    end
+    
+    rect rgb(255, 249, 196)
+        Note over K,T: Zweite Nachbestellung (optional)
+        G->>K: Noch mehr bestellen
+        K->>B: Weitere Items eingeben
+        B->>T: updateTransaction(clientId, transactionNumber, processData: neue CSV Items, processType: "Bestellung-V1")
+        T->>T: Signatur für Update erstellen
+        T-->>B: logTime, signatureValue, signatureCounter
+    end
+    
+    Note over G,T: Gast möchte zahlen
+    
+    G->>K: Rechnung bitte
+    K->>B: Abschluss initiieren
+    
+    B->>T: finishTransaction(clientId, transactionNumber, processData: finale Items oder leer, processType: "Bestellung-V1")
+    T->>T: Finale Signatur erstellen
+    T->>T: Transaction-Log abschließen
+    T-->>B: logTime, signatureValue, signatureCounter
+    
+    Note over B: Separate Kassenbeleg-Transaktion für Zahlung erstellen (PK09), Verknüpfung via ABRECHNUNGSKREIS
+    
+    B->>K: Rechnung mit erstem Bestellzeitstempel drucken
+    K->>G: Rechnung aushändigen
+    
+    Note over G,T: Bestellung-Transaktion geschlossen<br/>Separate Zahlungs-Transaktion erfolgt

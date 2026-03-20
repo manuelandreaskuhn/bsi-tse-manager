@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>011</processId>
+    <processName>
+        <text xml:lang="en">User Authentication</text>
+        <text xml:lang="de">Nutzer-Authentifizierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Login of a user (logger, admin, timeadmin) to the TSE with PIN authentication. Previously logged in users are automatically logged out.</text>
+        <text xml:lang="de">Anmeldung eines Nutzers (logger, admin, timeadmin) an der TSE mit PIN-Authentifizierung. Zuvor angemeldete Nutzer werden automatisch abgemeldet.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (logger/admin/timeadmin)</text>
+            <text xml:lang="de">Nutzer (logger/admin/timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">User Accounts</text>
+            <text xml:lang="de">Nutzer-Konten</text>
+        </object>
+        <object>
+            <text xml:lang="en">PIN</text>
+            <text xml:lang="de">PIN</text>
+        </object>
+        <object>
+            <text xml:lang="en">Misuse Counter</text>
+            <text xml:lang="de">Fehlbedienungszähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>authenticateUser</function>
+        <function>logOut</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>userId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">User ID (logger, admin, timeadmin)</text>
+                <text xml:lang="de">User-ID (logger, admin, timeadmin)</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>pin</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">PIN of the user</text>
+                <text xml:lang="de">PIN des Nutzers</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (authenticateUser)</dataObject>
+        <dataObject>System-Log (logOut)</dataObject>
+        <dataObject>AuthenticationResult</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorInvalidUserId</exception>
+        <exception>ErrorWrongPin</exception>
+        <exception>ErrorPinIsBlocked</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorParameterSyntax</exception>
+        <exception>ErrorAuthenticationFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2.2</reference>
+        <reference>BSI TR-03153-1 Chapter 5.3 (User Concept)</reference>
+        <reference>BSI TR-03153-1 Chapter 5.3.3 (Access Control)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Admin and timeadmin user accounts MUST be PIN-protected. Logger SHOULD be PIN-protected. After repeated wrong entry, PIN input is blocked. If a user is already logged in, they are automatically logged out. After successful login, the misuse counter is reset.</text>
+        <text xml:lang="de">Admin und timeadmin User-Konten MÜSSEN PIN-geschützt sein. Logger SOLLTE PIN-geschützt sein. Bei wiederholter Falscheingabe wird die PIN-Eingabe gesperrt. Wenn ein Nutzer bereits angemeldet ist, wird dieser automatisch abgemeldet. Nach erfolgreicher Anmeldung wird der Fehlbedienungszähler zurückgesetzt.</text>
+    </notes>
+</process>

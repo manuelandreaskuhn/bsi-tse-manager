@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>094</processId>
+    <processName>
+        <text xml:lang="de">Befreiung von Belegausgabepflicht beantragen</text>
+        <text xml:lang="en">Apply for Exemption from Receipt Obligation</text>
+    </processName>
+    <description>
+        <text xml:lang="de">Prozess zur Beantragung einer Befreiung von der Belegausgabepflicht nach § 148 AO. Gilt für Verkauf an Vielzahl nicht bekannter Personen bei sachlicher Härte.</text>
+        <text xml:lang="en">Process for applying for exemption from receipt obligation according to § 148 AO. Applies to sales to many unknown persons in case of material hardship.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="de">Antragsteller/Steuerpflichtiger</text>
+            <text xml:lang="en">Applicant/Taxpayer</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Finanzamt</text>
+            <text xml:lang="en">Tax Authority</text>
+        </actor>
+    </actors>
+    <requirements>
+        <requirement>
+            <text xml:lang="de">Verkauf von Waren oder Erbringung von Dienstleistungen an Vielzahl nicht bekannter Personen</text>
+            <text xml:lang="en">Sale of goods or provision of services to many unknown persons</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Nachweisbare sachliche Härte</text>
+            <text xml:lang="en">Demonstrable material hardship</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Einzelfallprüfung erforderlich</text>
+            <text xml:lang="en">Individual case review required</text>
+        </requirement>
+    </requirements>
+    <steps>
+        <step>
+            <order>1</order>
+            <action>
+                <text xml:lang="de">Prüfung der Voraussetzungen: Verkauf an Vielzahl nicht bekannter Personen?</text>
+                <text xml:lang="en">Check prerequisites: Sale to many unknown persons?</text>
+            </action>
+        </step>
+        <step>
+            <order>2</order>
+            <action>
+                <text xml:lang="de">Sachliche Härte dokumentieren und begründen</text>
+                <text xml:lang="en">Document and justify material hardship</text>
+            </action>
+            <note>
+                <text xml:lang="de">WICHTIG: Kosten allein sind KEINE sachliche Härte!</text>
+                <text xml:lang="en">IMPORTANT: Costs alone are NOT material hardship!</text>
+            </note>
+        </step>
+        <step>
+            <order>3</order>
+            <action>
+                <text xml:lang="de">Antrag nach § 148 AO beim zuständigen Finanzamt stellen</text>
+                <text xml:lang="en">File application according to § 148 AO with competent tax office</text>
+            </action>
+        </step>
+        <step>
+            <order>4</order>
+            <action>
+                <text xml:lang="de">Finanzamt prüft Einzelfall nach pflichtgemäßem Ermessen</text>
+                <text xml:lang="en">Tax office reviews individual case according to due discretion</text>
+            </action>
+        </step>
+        <step>
+            <order>5</order>
+            <action>
+                <text xml:lang="de">Entscheidung abwarten (Bewilligung oder Ablehnung)</text>
+                <text xml:lang="en">Await decision (approval or rejection)</text>
+            </action>
+        </step>
+        <step>
+            <order>6</order>
+            <action>
+                <text xml:lang="de">Bei Ablehnung: Rechtsmittel prüfen (Einspruch möglich)</text>
+                <text xml:lang="en">In case of rejection: review legal remedies (objection possible)</text>
+            </action>
+        </step>
+    </steps>
+    <outcomes>
+        <outcome>
+            <type>approval</type>
+            <description>
+                <text xml:lang="de">Befreiung gewährt - Belegausgabepflicht entfällt, aber § 368 BGB bleibt bestehen (Quittung auf Verlangen)</text>
+                <text xml:lang="en">Exemption granted - receipt obligation lapses, but § 368 BGB remains (receipt upon request)</text>
+            </description>
+        </outcome>
+        <outcome>
+            <type>rejection</type>
+            <description>
+                <text xml:lang="de">Antrag abgelehnt - Belegausgabepflicht bleibt bestehen</text>
+                <text xml:lang="en">Application rejected - receipt obligation remains</text>
+            </description>
+        </outcome>
+    </outcomes>
+    <restrictions>
+        <restriction>
+            <text xml:lang="de">TSE-Funktion darf durch Befreiung nicht eingeschränkt werden</text>
+            <text xml:lang="en">TSE function must not be restricted by exemption</text>
+        </restriction>
+        <restriction>
+            <text xml:lang="de">Befreiung gilt nur für den konkreten Einzelfall</text>
+            <text xml:lang="en">Exemption applies only to the specific individual case</text>
+        </restriction>
+        <restriction>
+            <text xml:lang="de">§ 368 BGB (Quittungsanspruch) bleibt unberührt</text>
+            <text xml:lang="en">§ 368 BGB (right to receipt) remains unaffected</text>
+        </restriction>
+    </restrictions>
+    <references>
+        <reference>AO § 146a Abs. 2 Satz 2</reference>
+        <reference>AO § 148</reference>
+        <reference>BGB § 368 (Quittungsanspruch)</reference>
+        <reference>AEAO zu § 146a, Nr. 2.5.9</reference>
+    </references>
+    <notes>
+        <text xml:lang="de">Befreiung ist nur möglich bei Verkauf/Dienstleistung an Vielzahl nicht bekannter Personen UND sachlicher Härte. Kosten allein stellen KEINE sachliche Härte dar. Ermessensentscheidung des Finanzamts nach pflichtgemäßem Ermessen - kein Rechtsanspruch. Bei Bewilligung entfällt Belegausgabepflicht, aber § 368 BGB (Quittungsanspruch auf Verlangen) bleibt bestehen. TSE-Funktion darf nicht eingeschränkt werden. Einzelfallprüfung erforderlich. Bei Ablehnung ist Einspruch möglich.</text>
+        <text xml:lang="en">Exemption is only possible for sale/service to many unknown persons AND material hardship. Costs alone do NOT constitute material hardship. Discretionary decision by tax office according to due discretion - no legal claim. If granted, receipt obligation lapses, but § 368 BGB (right to receipt upon request) remains. TSE function must not be restricted. Individual case review required. Objection possible if rejected.</text>
+    </notes>
+</process>

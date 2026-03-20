@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant ERS as Aufzeichnungssystem (ERS)
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    ERS->>TSE: startTransaction(clientId, processData, processType)
+    activate TSE
+    
+    TSE->>TSE: Prüfe Nutzerauthentifizierung
+    TSE->>TSE: Prüfe Client-Registrierung
+    
+    TSE->>SM: Erhöhe Transaktionszähler
+    activate SM
+    SM->>SM: transactionNumber++
+    SM-->>TSE: transactionNumber
+    deactivate SM
+    
+    TSE->>SM: Erstelle Prüfwert (Signatur)
+    activate SM
+    SM->>SM: Berechne Prüfwert über:<br/>- processData<br/>- transactionNumber<br/>- serialNumber<br/>- signatureCounter<br/>- signatureCreationTime
+    SM->>SM: signatureCounter++
+    SM-->>TSE: signature, signatureCounter
+    deactivate SM
+    
+    TSE->>Speicher: Speichere Log-Nachricht<br/>(Transaction-Log: start)
+    activate Speicher
+    Speicher-->>TSE: OK
+    deactivate Speicher
+    
+    TSE-->>ERS: Rückgabe:<br/>- transactionNumber<br/>- logTime<br/>- serialNumber<br/>- signatureCounter<br/>- signature
+    deactivate TSE

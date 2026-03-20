@@ -1,0 +1,53 @@
+sequenceDiagram
+    participant Admin as Admin/Manufacturer
+    participant TSE as TSE
+    participant SM as Security Module
+    participant Storage as Storage Medium
+
+    Admin->>TSE: Login as Admin
+    TSE-->>Admin: Login successful
+    
+    Admin->>TSE: updateDevice(updateData)
+    activate TSE
+    
+    Note over TSE: Check: Admin authenticated
+    
+    TSE->>TSE: Check Update Package:<br/>- Signature<br/>- Version<br/>- Compatibility
+    
+    TSE->>SM: Create updateDevice System Log
+    activate SM
+    SM->>SM: signatureCounter++
+    SM->>SM: Create Signature
+    SM-->>TSE: Log Message + Signature
+    deactivate SM
+    
+    TSE->>Storage: Save updateDevice Log
+    activate Storage
+    Storage-->>TSE: OK
+    deactivate Storage
+    
+    TSE->>TSE: Check open Transactions
+    Note over TSE: Open Transactions will<br/>become invalid after Update!
+    
+    TSE->>TSE: Execute Update:<br/>- Firmware<br/>- Configuration<br/>- Components
+    
+    TSE->>SM: Create updateDeviceCompleted Log
+    activate SM
+    SM->>SM: signatureCounter++
+    SM->>SM: Create Signature
+    SM-->>TSE: Log Message + Signature
+    deactivate SM
+    
+    TSE->>Storage: Save updateDeviceCompleted Log
+    activate Storage
+    Storage-->>TSE: OK
+    deactivate Storage
+    
+    TSE->>TSE: Restart TSE
+    
+    Note over TSE: TSE starts with new version
+    
+    TSE-->>Admin: Update successful
+    deactivate TSE
+    
+    Note over Admin,Storage: Transactions started before Update<br/>can no longer be continued

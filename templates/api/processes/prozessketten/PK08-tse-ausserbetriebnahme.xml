@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK08</chainId>
+    <name>
+        <text xml:lang="en">TSE Decommissioning</text>
+        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+    </name>
+    <description>
+        <text xml:lang="en">Orderly decommissioning of a TSE at the end of its operational life</text>
+        <text xml:lang="de">Geordnete Außerbetriebnahme einer TSE am Ende ihrer Nutzungsdauer</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>023</id>
+            <name>
+                <text xml:lang="en">Query Open Transactions</text>
+                <text xml:lang="de">Offene Transaktionen abrufen</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion (for open transactions)</text>
+                <text xml:lang="de">Transaktionsabschluss (für offene Transaktionen)</text>
+            </name>
+        </process>
+        <process>
+            <id>007</id>
+            <name>
+                <text xml:lang="en">Final Data Export</text>
+                <text xml:lang="de">Finaler Datenexport</text>
+            </name>
+        </process>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">Authentication</text>
+                <text xml:lang="de">Authentifizierung</text>
+            </name>
+        </process>
+        <process>
+            <id>006</id>
+            <name>
+                <text xml:lang="en">TSE Decommissioning (disableSecureElement)</text>
+                <text xml:lang="de">TSE-Außerbetriebnahme (disableSecureElement)</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is operational</text>
+            <text xml:lang="de">TSE ist in Betrieb</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Admin is authenticated</text>
+            <text xml:lang="de">Admin ist authentifiziert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Decision for decommissioning has been made</text>
+            <text xml:lang="de">Entscheidung zur Außerbetriebnahme ist gefallen</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">External Archive</text>
+            <text xml:lang="de">Externes Archiv</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Complete Open Transactions</text>
+                <text xml:lang="de">Offene Transaktionen beenden</text>
+            </name>
+            <description>
+                <text xml:lang="en">All running transactions must be completed</text>
+                <text xml:lang="de">Alle noch laufenden Transaktionen müssen abgeschlossen werden</text>
+            </description>
+            <critical>true</critical>
+            <function>
+                <name>finishTransaction</name>
+                <linkedProcess>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </linkedProcess>
+            </function>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Final Export</text>
+                <text xml:lang="de">Finaler Export</text>
+            </name>
+            <function>
+                <name>exportLogMessages</name>
+                <linkedProcess>
+                    <id>007</id>
+                    <name>
+                        <text xml:lang="en">Export Data for Audit</text>
+                        <text xml:lang="de">Datenexport für Prüfung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Final backup of ALL logs for archival</text>
+                <text xml:lang="de">Letzte Datensicherung ALLER Logs für Archivierung</text>
+            </description>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Deactivation</text>
+                <text xml:lang="de">Deaktivierung</text>
+            </name>
+            <function>
+                <name>disableSecureElement</name>
+                <linkedProcess>
+                    <id>006</id>
+                    <name>
+                        <text xml:lang="en">TSE Decommissioning</text>
+                        <text xml:lang="de">TSE-Außerbetriebnahme</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">PERMANENT deactivation of the TSE - NOT reversible!</text>
+                <text xml:lang="de">PERMANENTE Deaktivierung der TSE - nicht umkehrbar!</text>
+            </description>
+            <critical>true</critical>
+        </step>
+    </steps>
+    <importantNotes>
+        <note>
+            <text xml:lang="en">disableSecureElement is IRREVERSIBLE</text>
+            <text xml:lang="de">disableSecureElement ist IRREVERSIBEL</text>
+        </note>
+        <note>
+            <text xml:lang="en">ALL transactions MUST be completed beforehand</text>
+            <text xml:lang="de">Alle Transaktionen MÜSSEN vorher beendet werden</text>
+        </note>
+        <note>
+            <text xml:lang="en">Final export is LAST chance for complete data</text>
+            <text xml:lang="de">Finaler Export ist LETZTE Chance für vollständige Daten</text>
+        </note>
+        <note>
+            <text xml:lang="en">After deactivation: Only export remains possible, no transactions</text>
+            <text xml:lang="de">Nach Deaktivierung: Nur noch Export möglich, keine Transaktionen</text>
+        </note>
+    </importantNotes>
+    <outcome>
+        <state>
+            <text xml:lang="en">Security module is permanently deactivated</text>
+            <text xml:lang="de">Sicherheitsmodul ist permanent deaktiviert</text>
+        </state>
+        <logMessages>
+            <logMessage>
+                <text xml:lang="en">Transaction-Logs (finishTransaction) - for open transactions</text>
+                <text xml:lang="de">Transaction-Logs (finishTransaction) - für offene Transaktionen</text>
+            </logMessage>
+            <logMessage>
+                <text xml:lang="en">System-Log (disableSecureElement) - LAST log message</text>
+                <text xml:lang="de">System-Log (disableSecureElement) - LETZTE Log-Nachricht</text>
+            </logMessage>
+        </logMessages>
+    </outcome>
+    <importantNotes>
+        <note>
+            <text xml:lang="en">Consequences of Deactivation:</text>
+            <text xml:lang="de">Folgen der Deaktivierung:</text>
+        </note>
+        <note>
+            <text xml:lang="en">- No new transactions possible</text>
+            <text xml:lang="de">- Keine neuen Transaktionen mehr möglich</text>
+        </note>
+        <note>
+            <text xml:lang="en">- No new signatures possible</text>
+            <text xml:lang="de">- Keine neuen Signaturen mehr möglich</text>
+        </note>
+        <note>
+            <text xml:lang="en">- Private keys optionally deleted</text>
+            <text xml:lang="de">- Private Schlüssel optional gelöscht</text>
+        </note>
+        <note>
+            <text xml:lang="en">- Only data export remains available</text>
+            <text xml:lang="de">- Nur Datenexport bleibt verfügbar</text>
+        </note>
+    </importantNotes>
+    <useCases>
+        <useCase>
+            <text xml:lang="en">End of operational life (e.g., certificate expiration)</text>
+            <text xml:lang="de">Ende der Nutzungsdauer (z.B. Zertifikatsablauf)</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Planned replacement by new TSE</text>
+            <text xml:lang="de">Geplante Ablösung durch neue TSE</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Business closure</text>
+            <text xml:lang="de">Geschäftsaufgabe</text>
+        </useCase>
+        <useCase>
+            <text xml:lang="en">Migration to different system</text>
+            <text xml:lang="de">Migration zu anderem System</text>
+        </useCase>
+    </useCases>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.6</reference>
+        <reference>BSI TR-03153-1 Chapter 5</reference>
+    </references>
+</processChain>

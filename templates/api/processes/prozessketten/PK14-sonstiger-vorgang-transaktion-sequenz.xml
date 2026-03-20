@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK14</chainId>
+    <name>
+        <text xml:lang="en">SonstigerVorgang Transaction Sequence (DSFinV-K)</text>
+        <text xml:lang="de">SonstigerVorgang-Transaktion Sequenzdiagramm (DSFinV-K)</text>
+    </name>
+    <description>
+        <text xml:lang="en">Sequence diagram view of the DSFinV-K SonstigerVorgang transaction process. Shows the interaction for any transactions that do not fit Kassenbeleg-V1 or Bestellung-V1 formats. The processData content is free-form and application-specific.</text>
+        <text xml:lang="de">Sequenzdiagramm-Ansicht des DSFinV-K SonstigerVorgang Transaktionsprozesses. Zeigt die Interaktion für Vorgänge, die nicht in die Formate Kassenbeleg-V1 oder Bestellung-V1 passen. Der Inhalt von processData ist freiform und anwendungsspezifisch.</text>
+    </description>
+    <category>
+        <text xml:lang="en">DSFinV-K Transaction Types - Sequence Diagrams</text>
+        <text xml:lang="de">DSFinV-K Transaktionstypen - Sequenzdiagramme</text>
+    </category>
+    <actors>
+        <actor>
+            <text xml:lang="en">User/Staff</text>
+            <text xml:lang="de">Nutzer/Personal</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">POS System/Application</text>
+            <text xml:lang="de">Kassensystem/Anwendung</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <references>
+        <reference>
+            <text xml:lang="en">PK11: SonstigerVorgang Transaction (Flowchart)</text>
+            <text xml:lang="de">PK11: SonstigerVorgang-Transaktion (Ablaufdiagramm)</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex I: processType definitions</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang I: processType Definitionen</text>
+        </reference>
+        <reference>Function: startTransaction</reference>
+        <reference>Function: finishTransaction</reference>
+        <reference>Type: SonstigerVorgangData</reference>
+    </references>
+</processChain>

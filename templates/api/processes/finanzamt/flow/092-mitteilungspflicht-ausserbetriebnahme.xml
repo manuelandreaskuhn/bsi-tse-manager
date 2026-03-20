@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>092</processId>
+    <processName>
+        <text xml:lang="de">Mitteilungspflicht bei Außerbetriebnahme</text>
+        <text xml:lang="en">Reporting Obligation for Decommissioning</text>
+    </processName>
+    <description>
+        <text xml:lang="de">Prozess zur Erfüllung der Mitteilungspflicht nach § 146a Abs. 4 AO bei Außerbetriebnahme eines elektronischen Aufzeichnungssystems. Umfasst Veräußerung, Defekt, Ersatz und sonstige Gründe.</text>
+        <text xml:lang="en">Process for fulfilling the reporting obligation according to § 146a para. 4 AO when decommissioning an electronic recording system. Includes sale, defect, replacement, and other reasons.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="de">Steuerpflichtiger/mitteilende Person</text>
+            <text xml:lang="en">Taxpayer/reporting person</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">Finanzamt</text>
+            <text xml:lang="en">Tax Authority</text>
+        </actor>
+        <actor>
+            <text xml:lang="de">ELSTER-System</text>
+            <text xml:lang="en">ELSTER System</text>
+        </actor>
+    </actors>
+    <requirements>
+        <requirement>
+            <text xml:lang="de">Mitteilung innerhalb eines Monats nach Außerbetriebnahme</text>
+            <text xml:lang="en">Notification within one month after decommissioning</text>
+        </requirement>
+        <requirement>
+            <text xml:lang="de">Export und Aufbewahrung der TSE-Daten vor endgültiger Außerbetriebnahme</text>
+            <text xml:lang="en">Export and retention of TSE data before final decommissioning</text>
+        </requirement>
+    </requirements>
+    <steps>
+        <step>
+            <order>1</order>
+            <action>
+                <text xml:lang="de">Grund der Außerbetriebnahme feststellen (Veräußerung, Defekt, Ersatz, Sonstiges)</text>
+                <text xml:lang="en">Determine reason for decommissioning (sale, defect, replacement, other)</text>
+            </action>
+        </step>
+        <step>
+            <order>2</order>
+            <action>
+                <text xml:lang="de">Außerbetriebnahmedatum dokumentieren</text>
+                <text xml:lang="en">Document decommissioning date</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 1.16.2.7</reference>
+        </step>
+        <step>
+            <order>3</order>
+            <action>
+                <text xml:lang="de">Daten für Abmeldung vorbereiten (Seriennummer System, Außerbetriebnahmedatum, Betriebsstätte)</text>
+                <text xml:lang="en">Prepare data for deregistration (system serial number, decommissioning date, business location)</text>
+            </action>
+        </step>
+        <step>
+            <order>4</order>
+            <action>
+                <text xml:lang="de">Abmeldung elektronisch über ELSTER übermitteln</text>
+                <text xml:lang="en">Submit deregistration electronically via ELSTER</text>
+            </action>
+        </step>
+        <step>
+            <order>5</order>
+            <action>
+                <text xml:lang="de">TSE-Daten exportieren und aufbewahren (falls noch nicht erfolgt)</text>
+                <text xml:lang="en">Export and retain TSE data (if not already done)</text>
+            </action>
+            <reference>AEAO zu § 146a, Nr. 1.15</reference>
+        </step>
+    </steps>
+    <deadlines>
+        <deadline>
+            <type>mandatory</type>
+            <period>
+                <text xml:lang="de">1 Monat nach Außerbetriebnahme</text>
+                <text xml:lang="en">1 month after decommissioning</text>
+            </period>
+            <reference>§ 146a Abs. 4 Satz 2 AO</reference>
+        </deadline>
+    </deadlines>
+    <outcomes>
+        <outcome>
+            <type>success</type>
+            <description>
+                <text xml:lang="de">System ordnungsgemäß abgemeldet, TSE-Daten gesichert</text>
+                <text xml:lang="en">System properly deregistered, TSE data secured</text>
+            </description>
+        </outcome>
+    </outcomes>
+    <references>
+        <reference>AO § 146a Abs. 4</reference>
+        <reference>AO § 147 (Aufbewahrungspflicht)</reference>
+        <reference>KassenSichV</reference>
+        <reference>AEAO zu § 146a, Nr. 1.15</reference>
+        <reference>AEAO zu § 146a, Nr. 1.16</reference>
+        <reference>AEAO zu § 146a, Nr. 1.16.2.7</reference>
+    </references>
+    <notes>
+        <text xml:lang="de">Mitteilung muss innerhalb eines Monats nach Außerbetriebnahme elektronisch über ELSTER erfolgen. Untergang oder Abhandenkommen des Systems gilt ebenfalls als Außerbetriebnahme. TSE-Daten müssen vor endgültiger Außerbetriebnahme exportiert werden. Aufbewahrungspflicht nach § 147 AO bleibt bestehen. Gründe für Außerbetriebnahme: Veräußerung, Defekt, Ersatz, Sonstiges.</text>
+        <text xml:lang="en">Notification must be made electronically via ELSTER within one month after decommissioning. Loss or disappearance of the system also counts as decommissioning. TSE data must be exported before final decommissioning. Retention obligation according to § 147 AO remains. Reasons for decommissioning: sale, defect, replacement, other.</text>
+    </notes>
+</process>

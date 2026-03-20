@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorParameterMismatch" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorParameterMismatch</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API export functions exportLogMessages or exportFilteredTransactionLogs detect that the provided filter or selection parameters are incompatible, contradictory, or logically inconsistent. The parameters may violate expected constraints, have logically contradictory values, or be inconsistent with each other. ErrorParameterMismatch indicates that the combination of parameters provided cannot be used to perform a valid export operation due to parameter conflicts or incompatibilities.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Exportfunktionen exportLogMessages oder exportFilteredTransactionLogs feststellen, dass die bereitgestellten Filter- oder Auswahlparameter inkompatibel, widersprüchlich oder logisch inkonsistent sind. Die Parameter können gegen erwartete Einschränkungen verstoßen, logisch widersprüchliche Werte haben oder untereinander inkonsistent sein. ErrorParameterMismatch zeigt an, dass die Kombination der bereitgestellten Parameter nicht verwendet werden kann, um einen gültigen Exportvorgang aufgrund von Parameterkonflikten oder Inkompatibilitäten durchzuführen.</text>
+  </description>
+  <category>Data Export</category>
+  <subcategory>Parameter Validation</subcategory>
+  <severity>Medium</severity>
+  <thrownBy>
+    <function>exportFilteredTransactionLogs</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorParameterMismatch that is thrown if there is a mismatch regarding the particular parameters provided for data export operations.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorParameterMismatch, die ausgelöst wird, wenn eine Unvereinbarkeit bezüglich der bereitgestellten Parameter für Datenexportoperationen vorliegt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when exportLogMessages or exportFilteredTransactionLogs functions receive parameter values that are incompatible, contradictory, or logically inconsistent. Export functions accept filtering parameters such as date ranges, event types, client IDs, transaction states, and other selection criteria. ErrorParameterMismatch is raised when these parameters have conflicts or inconsistencies that prevent valid export operation execution. Common causes include: date range where start date is after end date, mutually exclusive filter options both specified, parameter values outside acceptable ranges or incompatible with other parameters, or parameters that violate data model constraints. Recovery requires correcting the parameter values to remove contradictions and ensure logical consistency before retrying the export operation.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn Funktionen exportLogMessages oder exportFilteredTransactionLogs Parameterwerte erhalten, die inkompatibel, widersprüchlich oder logisch inkonsistent sind. Exportfunktionen akzeptieren Filterparameter wie Datumsbereiche, Ereignistypen, Client-IDs, Transaktionszustände und andere Auswahlkriterien. ErrorParameterMismatch wird ausgelöst, wenn diese Parameter Konflikte oder Inkonsistenzen aufweisen, die eine gültige Exportvorgangsausfühhrung verhindern. Häufige Ursachen sind: Datumsbereich, bei dem das Startdatum nach dem Enddatum liegt, sich gegenseitig ausschließende Filteroptionen beide angegeben, Parameterwerte außerhalb akzeptabler Bereiche oder inkompatibel mit anderen Parametern, oder Parameter, die Datenmodelobschränkungen verletzen. Die Wiederherstellung erfordert Korrektur der Parameterwerte, um Widersprüche zu beseitigen und logische Konsistenz sicherzustellen, bevor der Exportvorgang erneut versucht wird.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.2 Data Export Operations - exportLogMessages and exportFilteredTransactionLogs</section>
+    <requirement>
+      <text xml:lang="en">The functions exportLogMessages and exportFilteredTransactionLogs accept filtering and selection parameters to specify which stored data should be exported. These functions SHALL validate the provided parameters for logical consistency and compatibility. If the parameters are found to be incompatible, contradictory, or mutually inconsistent, the functions SHALL raise the exception ErrorParameterMismatch without performing the export operation. The exception indicates that the parameter values contain conflicts or violate expected constraints.</text>
+      <text xml:lang="de">Die Funktionen exportLogMessages und exportFilteredTransactionLogs akzeptieren Filter- und Auswahlparameter, um anzugeben, welche gespeicherten Daten exportiert werden sollen. Diese Funktionen sollen die bereitgestellten Parameter auf logische Konsistenz und Kompatibilität validieren. Falls die Parameter inkompatibel, widersprüchlich oder gegenseitig inkonsistent befunden werden, sollen die Funktionen die Ausnahme ErrorParameterMismatch auslösen, ohne den Exportvorgang durchzuführen. Die Ausnahme zeigt an, dass die Parameterwerte Konflikte enthalten oder gegen erwartete Einschränkungen verstoßen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Data export operations - exportLogMessages and exportFilteredTransactionLogs functions only, when parameters are inconsistent</text>
+      <text xml:lang="de">Datenexportoperationen - nur Funktionen exportLogMessages und exportFilteredTransactionLogs, wenn Parameter inkonsistent sind</text>
+    </applicability>
+    <reference>exportLogMessages – Function (3.3.2); exportFilteredTransactionLogs – Function (3.3.2)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls exportLogMessages or exportFilteredTransactionLogs function with filter/selection parameters</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft exportLogMessages oder exportFilteredTransactionLogs Funktion mit Filter-/Auswahlparametern auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function receives and buffers the parameter values</text>
+      <text xml:lang="de">Funktion empfängt und puffert die Parameterwerte</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function performs initial parameter validation (format, type, presence)</text>
+      <text xml:lang="de">Funktion führt initiale Parametervalidierung durch (Format, Typ, Vorhandensein)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function performs consistency validation on parameters</text>
+      <text xml:lang="de">Funktion führt Konsistenzvalidierung auf Parametern durch</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If parameters are logically consistent and compatible → proceed to step 5</text>
+      <text xml:lang="de">Falls Parameter logisch konsistent und kompatibel sind → fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If parameters are inconsistent or incompatible → ErrorParameterMismatch raised, function exits</text>
+      <text xml:lang="de">Falls Parameter inkonsistent oder inkompatibel sind → ErrorParameterMismatch ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks parameter ranges and values against acceptable constraints</text>
+      <text xml:lang="de">Funktion prüft Parameterbereiche und Werte gegen akzeptable Einschränkungen</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If values are within acceptable ranges → proceed to step 6</text>
+      <text xml:lang="de">Falls Werte innerhalb akzeptabler Bereiche sind → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If values are outside acceptable ranges → ErrorParameterMismatch raised, function exits</text>
+      <text xml:lang="de">Falls Werte außerhalb akzeptabler Bereiche sind → ErrorParameterMismatch ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function validates parameters against data model constraints</text>
+      <text xml:lang="de">Funktion validiert Parameter gegen Datenmodelobschränkungen</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function transmits export command with parameters to Secure Element</text>
+      <text xml:lang="de">Funktion übersendet Exportbefehl mit Parametern an Secure Element</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function receives matching data from Secure Element</text>
+      <text xml:lang="de">Funktion erhält Übereinstimmungsdaten vom Secure Element</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function formats and packages data for export</text>
+      <text xml:lang="de">Funktion formatiert und verpackt Daten für den Export</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="12">
+      <text xml:lang="en">Function returns exported data to caller</text>
+      <text xml:lang="de">Funktion gibt exportierte Daten an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify all function parameters have correct types</text>
+      <text xml:lang="de">Stellen Sie sicher, dass alle Funktionsparameter die richtigen Typen haben</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check parameter type compatibility in application code</text>
+      <text xml:lang="de">Prüfen Sie die Parametertypkompatibilität im Anwendungscode</text>
+    </step>
+    <step>
+      <text xml:lang="en">Cast or convert parameters to correct types</text>
+      <text xml:lang="de">Konvertieren oder konvertieren Sie Parameter in korrekte Typen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry function call with type-correct parameters</text>
+      <text xml:lang="de">Versuchen Sie den Funktionsaufruf mit typkorrekten Parametern erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorInvalidEventType</exception>
+    <exception>ErrorInvalidClientIdCharacter</exception>
+    <exception>ErrorInvalidTime</exception>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="No Data Exported">
+      <text xml:lang="en">No export is performed. The operation is rejected at the parameter validation stage before any data access occurs.</text>
+      <text xml:lang="de">Kein Export wird durchgeführt. Die Operation wird in der Parametervalidierungsphase abgelehnt, bevor auf Daten zugegriffen wird.</text>
+    </state>
+    <state name="Storage Unchanged">
+      <text xml:lang="en">The device's data storage remains completely unchanged. No read or write operations occur.</text>
+      <text xml:lang="de">Der Datenspeicher des Geräts bleibt vollständig unverändert. Es finden keine Lese- oder Schreiboperationen statt.</text>
+    </state>
+    <state name="Device State Unmodified">
+      <text xml:lang="en">The device's overall state remains unchanged by the parameter validation failure.</text>
+      <text xml:lang="de">Der Gesamtzustand des Geräts bleibt durch den Parametervalidierungsfehler unverändert.</text>
+    </state>
+    <state name="No Cascading Effects">
+      <text xml:lang="en">The failed parameter validation does not trigger cascading failures or secondary exceptions.</text>
+      <text xml:lang="de">Die fehlgeschlagene Parametervalidierung löst keine Kaskadenfehlschläge oder sekundäre Ausnahmen aus.</text>
+    </state>
+    <state name="Parameters Preserved for Debugging">
+      <text xml:lang="en">The invalid parameters remain available for inspection and debugging to identify the specific mismatch.</text>
+      <text xml:lang="de">Die ungültigen Parameter bleiben zur Inspektion und zum Debuggen verfügbar, um die spezifische Unvereinbarkeit zu identifizieren.</text>
+    </state>
+    <state name="Retry Possible with Corrected Parameters">
+      <text xml:lang="en">The operation can be retried immediately after correcting the parameter values to be consistent.</text>
+      <text xml:lang="de">Die Operation kann sofort nach Korrektur der Parameterwerte, um konsistent zu sein, wiederholt werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Function parameters do not match expected types or formats</text>
+      <text xml:lang="de">Anzeichen: Funktionsparameter entsprechen nicht erwarteten Typen oder Formaten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Parameter Validation, Input Validation, Function Parameters, Type Checking</text>
+      <text xml:lang="de">Themen: Parametervalidierung, Eingabevalidierung, Funktionsparameter, Typprüfung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions when parameter types do not match expected types</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, wenn Parametertypen nicht mit erwarteten Typen übereinstimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Parameter type validation enforces strict type checking</text>
+      <text xml:lang="de">Parametertypvalidierung erzwingt strenge Typprüfung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device validates parameter compatibility</text>
+      <text xml:lang="de">Gerät validiert Parameterkompatibilität</text>
+    </note>
+    <note>
+      <text xml:lang="en">Type mismatch prevents function execution</text>
+      <text xml:lang="de">Typunvereinbarkeit verhindert Funktionsausführung</text>
+    </note>
+  </implementationContext>
+</exception>
+

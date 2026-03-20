@@ -1,0 +1,150 @@
+sequenceDiagram
+    actor Logger1 as Kassensystem 1 (Logger)
+    actor Admin as Administrator
+    actor Logger2 as Kassensystem 2 (Logger)
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+
+    Note over Logger1,SM: Szenario: Mehrere Kassensysteme nutzen eine TSE
+
+    %% Initial Setup - Client Registration
+    rect rgb(230, 240, 255)
+    Note over Logger1,SM: PHASE 1: Client-Registrierung
+
+    Logger1->>TSE: registerClient(clientId="KASSE-001")
+    activate TSE
+    TSE->>TSE: Registriere Client
+    TSE-->>Logger1: Client erfolgreich registriert
+    deactivate TSE
+
+    Logger2->>TSE: registerClient(clientId="KASSE-002")
+    activate TSE
+    TSE->>TSE: Registriere Client
+    TSE-->>Logger2: Client erfolgreich registriert
+    deactivate TSE
+    end
+
+    %% Logger1 starts working
+    rect rgb(200, 255, 200)
+    Note over Logger1,SM: PHASE 2: Kassensystem 1 arbeitet
+
+    Logger1->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Prüfe PIN
+    activate SM
+    SM->>SM: PIN korrekt → Status: "authenticated"
+    SM->>SM: Erstelle authenticateUser-Log
+    SM-->>TSE: OK + Log-Teile
+    deactivate SM
+    TSE-->>Logger1: Authentifizierung erfolgreich
+    deactivate TSE
+
+    Note over Logger1,TSE: Logger führt Transaktionen durch
+
+    loop Transaktionen von Kassensystem 1
+        Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+        TSE-->>Logger1: Transaction gestartet
+        Logger1->>TSE: updateTransaction(...)
+        TSE-->>Logger1: Transaction aktualisiert
+        Logger1->>TSE: finishTransaction(...)
+        TSE-->>Logger1: Transaction abgeschlossen
+    end
+    end
+
+    %% Admin wants to perform administrative tasks
+    rect rgb(255, 235, 200)
+    Note over Admin,SM: PHASE 3: Admin-Eingriff erforderlich
+
+    Note over Admin: Admin muss Konfiguration ändern<br/>(z.B. exportData, setDescription)
+
+    Admin->>TSE: authenticateUser(userId="admin", PIN)
+    activate TSE
+    TSE->>SM: Prüfe PIN (admin)
+    activate SM
+    alt PIN korrekt
+        SM->>SM: Erkenne: Anderer Nutzer (logger) ist angemeldet
+        Note over SM: Automatischer Logout des vorherigen Nutzers
+        SM->>SM: Erstelle logOut-Log für logger<br/>logOutCause = "differentUserLoggedIn" (1)
+        SM->>SM: Signaturzähler++
+        SM->>SM: Setze Status: "not authenticated" für logger
+        
+        SM->>SM: Setze Status: "authenticated" für admin
+        SM->>SM: Erstelle authenticateUser-Log für admin
+        SM->>SM: Signaturzähler++
+        SM-->>TSE: OK + Log-Teile (beide Logs)
+        deactivate SM
+        TSE-->>Admin: Authentifizierung erfolgreich<br/>(Logger wurde automatisch abgemeldet)
+    end
+    deactivate TSE
+
+    Note over Logger1: ⚠️ Logger Session ist nun beendet
+    Admin->>TSE: exportData(...)
+    TSE-->>Admin: Export erfolgreich
+
+    Admin->>TSE: setDescription(...)
+    TSE-->>Admin: Beschreibung gesetzt
+
+    Admin->>TSE: logOut()
+    activate TSE
+    TSE->>SM: Erstelle logOut-Log
+    activate SM
+    SM->>SM: Setze Status: "not authenticated"
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE-->>Admin: Abmeldung erfolgreich
+    deactivate TSE
+    end
+
+    %% Logger1 tries to continue but is logged out
+    rect rgb(255, 200, 200)
+    Note over Logger1,SM: PHASE 4: Kassensystem 1 bemerkt Logout
+
+    Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+    activate TSE
+    TSE->>TSE: Prüfe: Ist logger authentifiziert?
+    TSE->>TSE: ❌ Nein! (Wurde von admin ausgeloggt)
+    TSE-->>Logger1: Error: ErrorNotAuthenticated
+    deactivate TSE
+
+    Note over Logger1: ⚠️ Kassensystem erkennt:<br/>Session wurde unterbrochen
+
+    Logger1->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Prüfe PIN
+    activate SM
+    SM->>SM: PIN korrekt → Status: "authenticated"
+    SM->>SM: Erstelle authenticateUser-Log
+    SM-->>TSE: OK + Log-Teile
+    deactivate SM
+    TSE-->>Logger1: Authentifizierung erfolgreich
+    deactivate TSE
+
+    Note over Logger1,TSE: Logger kann nun weitarbeiten
+
+    Logger1->>TSE: startTransaction(clientId="KASSE-001", ...)
+    TSE-->>Logger1: Transaction gestartet ✓
+    end
+
+    %% Another logger wants to work
+    rect rgb(200, 255, 255)
+    Note over Logger2,SM: PHASE 5: Kassensystem 2 übernimmt
+
+    Logger2->>TSE: authenticateUser(userId="logger", PIN)
+    activate TSE
+    TSE->>SM: Prüfe PIN (logger)
+    activate SM
+    SM->>SM: Erkenne: Logger ist bereits angemeldet
+    SM->>SM: Setze Status: "authenticated" für logger
+    SM->>SM: Erstelle authenticateUser-Log für logger
+    SM-->>TSE: OK + Log-Teile
+    deactivate SM
+    TSE-->>Logger2: Authentifizierung erfolgreich
+    deactivate TSE
+
+    loop Transaktionen von Kassensystem 2
+        Logger2->>TSE: startTransaction(clientId="KASSE-002", ...)
+        TSE-->>Logger2: Transaction gestartet
+        Logger2->>TSE: finishTransaction(...)
+        TSE-->>Logger2: Transaction abgeschlossen
+    end
+    end

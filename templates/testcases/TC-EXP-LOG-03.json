@@ -1,0 +1,1118 @@
+{
+  "testcase_id": "TC-EXP-LOG-03",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Log-Nachrichten: Indefinite Length Encoding und Rezertifizierung",
+  "description": "Prüft korrekte Verwendung von indefinite length encoding (nur in processData von updateTransaction), processData-Tag-Korrektheit, und Konsistenz der Aufzeichnungen vor/nach Aktualisierung bei Rezertifizierung.",
+  "purpose": "Prüfung, ob sich bei einer Rezertifizierung, die durch eine Aktualisierung der TSE notwendig ist, die Art und Weise von den Aufzeichnungen vor und nach der Aktualisierung nicht unterscheiden, wenn die Beibehaltung der bereits verwendeten Signaturschlüssel geplant ist.",
+  "module": "Export",
+  "submodule": "EXP_LOG",
+  "function": "exportLogMessages",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "SM_NO_INDEF",
+    "SM_INDEF",
+    "RECERT"
+  ],
+  "source_tests": [
+    "EXP_LOG_27",
+    "EXP_LOG_28",
+    "EXP_LOG_29",
+    "EXP_LOG_30",
+    "EXP_LOG_31",
+    "EXP_LOG_32"
+  ],
+  "variables": {
+    "$data1": "Übergabewert für processData (data1)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde nicht aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Die TSE liegt in drei Versionen vor. Eine Version (im Folgen",
+      "result": null,
+      "instruction": "Die TSE liegt in drei Versionen vor. Eine Version (im Folgenden Version_Aktuell genannt) entspricht jener, die aktuell geprüft wird. Diese TSE wurde mit der neuen Version produziert. Die zweite Version (im Folgenden Version_Aktualisiert genannt) entspricht ebenfalls jener, die aktuell geprüft wird. Diese TSE wurde mit der alten Version produziert und über eine Update-Funktionalität aktualisiert. Die dritte Version (im Folgenden Version_Alt genannt) entspricht der Vorgängerversion, für welche die Beibehaltung der bereits verwendeten Signaturschlüssel geplant ist."
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Hersteller der TSE hat eine Dokumentation bereitgestellt",
+      "result": null,
+      "instruction": "Der Hersteller der TSE hat eine Dokumentation bereitgestellt, welche erklärt, wann die TSE indefinite length encoding und wann nicht verwendet und wie diese Zustände durch die Prüfstelle provoziert werden können."
+    },
+    {
+      "step": 9,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es wurde die Situtation hergestellt, in der die TSE indefini",
+      "result": null,
+      "instruction": "Es wurde die Situtation hergestellt, in der die TSE indefinite length encoding verwendet und Aktualisierungen aggregiert."
+    },
+    {
+      "step": 10,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es wurde die Situtation hergestellt in der die TSE kein inde",
+      "result": null,
+      "instruction": "Es wurde die Situtation hergestellt in der die TSE kein indefinite length encoding verwendet und Aktualisierungen aggregiert."
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin. Es wird die Version_Aktuell verwendet.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin. Es wird die Version_Alt verwendet.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin. Es wird die Version_Aktualisiert verwendet.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "TSE initialisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Initialisierung der TSE. Es wird die Version_Aktuell verwendet.",
+      "function": "initialize",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "TSE initialisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Initialisierung der TSE. Es wird die Version_Alt verwendet.",
+      "function": "initialize",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 16,
+      "type": "SETUP",
+      "title": "TSE initialisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Initialisierung der TSE. Es wird die Version_Aktualisiert verwendet.",
+      "function": "initialize",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es wird die Version_Aktuell verwendet.",
+      "function": "updateTime",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es wird die Version_Alt verwendet.",
+      "function": "updateTime",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls. Es wird die Version_Aktualisiert verwendet.",
+      "function": "updateTime",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger. Es wird die Version_Aktuell verwendet.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 21,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger. Es wird die Version_Alt verwendet.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 22,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger. Es wird die Version_Aktualisiert verwendet.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 23,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird die Version_Aktuell verwendet.",
+      "function": "registerClient",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 24,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird die Version_Alt verwendet.",
+      "function": "registerClient",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 25,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird die Version_Aktualisiert verwendet.",
+      "function": "registerClient",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 26,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Es wird die Version_Aktuell verwendet.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 27,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Es wird die Version_Alt verwendet.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 28,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Es wird die Version_Aktualisiert verwendet.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 29,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Es wird die Version_Aktuell verwendet.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 30,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Es wird die Version_Alt verwendet.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 31,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Es wird die Version_Aktualisiert verwendet.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 32,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Es wird die Version_Aktuell verwendet.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 33,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Es wird die Version_Alt verwendet.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 34,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Es wird die Version_Aktualisiert verwendet.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 35,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird die Version_Aktuell verwendet.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers admin.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 36,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird die Version_Aktuell verwendet.",
+      "function": "updateTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 37,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers logger in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es wird die Version_Aktuell verwendet.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält eine Log-Nachricht für die Authentifizierung des Nutzers logger.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 38,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 39,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben. Für den Parameter forceSignature wird nicht der Wert true übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 40,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben. Es werden Daten übergeben und diese als $data1 festgehalten. Für den Parameter forceSignature wird nicht der Wert true übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 41,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 42,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für die Transaktionsnummer wird $tn1 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "EXP_LOG_27"
+    },
+    {
+      "step": 43,
+      "type": "VERIFY",
+      "title": "SM_NO_INDEF: Kein indefinite length encoding in keiner Log-Nachricht",
+      "result": null,
+      "instruction": "SM_NO_INDEF: Kein indefinite length encoding in keiner Log-Nachricht\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien. Es wird die Version_Aktuell verwendet.",
+      "function": "exportLogMessages → Binäranalyse aller .log-Dateien auf 0x80 als Längenbyte",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Kein 0x80-Längenbyte (indefinite) in keiner Log-Nachricht",
+          "expected": "LOG_ASN1_NO_INDEFINITE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Korrektes Tag für processData (definite length encoding)",
+          "expected": "LOG_ASN1_PDATA_TAG_DEF",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_ASN1_NO_INDEFINITE",
+          "title": "Kein indefinite length encoding außerhalb von processData",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ASN1_PDATA_TAG_DEF",
+          "title": "Korrekte Struktur von processData bei definitiver Länge",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "EXP_LOG_27",
+      "notes": "Nur wenn Profil SM_NO_INDEF aktiv"
+    },
+    {
+      "step": 44,
+      "type": "VERIFY",
+      "title": "SM_INDEF: Indefinite encoding ausschließlich in processData von updateTransac...",
+      "result": null,
+      "instruction": "SM_INDEF: Indefinite encoding ausschließlich in processData von updateTransaction",
+      "checks": [
+        {
+          "description": "Indefinite encoding ausschließlich im processData-Element von updateTransaction-Nachrichten",
+          "expected": "LOG_ASN1_NO_INDEFINITE (Außerhalb)",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Korrektes Tag für processData und Unterelemente bei indefinite encoding",
+          "expected": "LOG_ASN1_PDATA_TAG_INDEF",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Korrektes Tag für processData ohne indefinite encoding",
+          "expected": "LOG_ASN1_PDATA_TAG_DEF",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_ASN1_NO_INDEFINITE",
+          "title": "Kein indefinite length encoding außerhalb von processData",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_ASN1_PDATA_TAG_INDEF",
+          "title": "Korrekte Struktur von processData bei indefiniter Länge (Aggregation)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil SM_INDEF aktiv"
+    },
+    {
+      "step": 45,
+      "type": "VERIFY",
+      "title": "RECERT: Aufzeichnungen vor/nach Firmware-Update strukturell identisch",
+      "result": null,
+      "instruction": "RECERT: Aufzeichnungen vor/nach Firmware-Update strukturell identisch",
+      "checks": [
+        {
+          "description": "Dateinamen-Schema nach TSE-Update unverändert (Beibehaltung Signaturschlüssel)",
+          "expected": "LOG_RECERT_FNAME_CONSISTENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ASN.1-Struktur der Log-Nachrichten nach Update unverändert",
+          "expected": "LOG_RECERT_STRUCT_CONSISTENT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "LOG_RECERT_FNAME_CONSISTENT",
+          "title": "Dateinamen-Schema bleibt nach Firmware-Update unverändert",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "LOG_RECERT_STRUCT_CONSISTENT",
+          "title": "ASN.1-Struktur bleibt nach Firmware-Update unverändert",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "notes": "Nur wenn Profil RECERT aktiv"
+    }
+  ],
+  "references": [
+    "BSI TR-03151-1 §5.3",
+    "BSI TR-03153-1 §9"
+  ]
+}

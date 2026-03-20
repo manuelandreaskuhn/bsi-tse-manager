@@ -1,0 +1,65 @@
+sequenceDiagram
+    actor Nutzer as Nutzer (Admin/Logger/Timeadmin)
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+
+    Note over Nutzer,SM: Nutzer-Session
+
+    Nutzer->>TSE: authenticateUser(userId, PIN)
+    activate TSE
+    TSE->>SM: Prüfe PIN
+    activate SM
+    alt PIN korrekt
+        SM->>SM: Setze Status: "authenticated"
+        SM->>SM: Setze Fehlversuchszähler = 0
+        SM->>SM: Signaturzähler++
+        SM->>SM: Erstelle authenticateUser-Log
+        SM-->>TSE: OK + Log-Teile
+        TSE-->>Nutzer: Authentifizierung erfolgreich
+    else PIN falsch
+        SM->>SM: Fehlversuchszähler++
+        SM-->>TSE: Error: ErrorAuthenticationFailed
+        alt Fehlversuchszähler >= Limit
+            SM->>SM: Sperre PIN
+            TSE-->>Nutzer: Error: ErrorPinBlocked
+        else
+            TSE-->>Nutzer: Error: ErrorAuthenticationFailed
+        end
+    end
+    deactivate SM
+    deactivate TSE
+
+    rect rgb(200, 255, 200)
+    Note over Nutzer,SM: ARBEITSPHASE - Nutzer nutzt TSE-Funktionen
+
+    loop Mehrere Funktionsaufrufe
+        Nutzer->>TSE: Funktion aufrufen (z.B. setDescription,<br/>registerClient, exportLogMessages, ...)
+        TSE->>TSE: Prüfe: Nutzer authentifiziert?
+        TSE->>TSE: Prüfe: Nutzer hat Berechtigung für Funktion?
+        TSE->>TSE: Führe Funktion aus
+        TSE-->>Nutzer: Ergebnis
+    end
+    end
+
+    alt Manuelles Logout
+        Nutzer->>TSE: logOut()
+        activate TSE
+        TSE->>SM: Erstelle logOut-Log
+        activate SM
+        SM->>SM: Signaturzähler++
+        SM->>SM: Setze Status: "not authenticated"
+        SM-->>TSE: Log-Teile
+        deactivate SM
+        TSE-->>Nutzer: Abmeldung erfolgreich
+        deactivate TSE
+    else Automatisches Logout (Timeout)
+        Note over TSE: Keine Aktivität für X Minuten
+        TSE->>SM: Erstelle automatisches logOut-Log
+        activate SM
+        SM->>SM: Signaturzähler++
+        SM->>SM: Setze Status: "not authenticated"
+        SM-->>TSE: Log-Teile
+        deactivate SM
+    end
+
+    Note over Nutzer,SM: Session beendet - Nutzer nicht mehr authentifiziert

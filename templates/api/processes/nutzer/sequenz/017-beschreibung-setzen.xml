@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>017</processId>
+    <processName>
+        <text xml:lang="en">Set Description</text>
+        <text xml:lang="de">Beschreibung setzen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Setting or changing a short description (max. 64 characters) of the TSE. The description is output in the info.csv file during exports.</text>
+        <text xml:lang="de">Setzen oder Ändern einer Kurzbeschreibung (max. 64 Zeichen) der TSE. Die Beschreibung wird in der info.csv Datei bei Exporten ausgegeben.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Admin</text>
+            <text xml:lang="de">Admin</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">TSE Description</text>
+            <text xml:lang="de">TSE-Beschreibung</text>
+        </object>
+        <object>
+            <text xml:lang="en">info.csv</text>
+            <text xml:lang="de">info.csv</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>setDescription</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>description</name>
+            <type>string&lt;64&gt;</type>
+            <description>
+                <text xml:lang="en">Short description of the TSE (maximum 64 characters)</text>
+                <text xml:lang="de">Kurzbeschreibung der TSE (maximal 64 Zeichen)</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (setDescription)</dataObject>
+        <dataObject>SetDescriptionEventData</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorParameterTooLong</exception>
+        <exception>ErrorStoringDataFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.2</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2.4.2 (info.csv)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">Only admin is allowed to set the description. The description is optional and can be pre-set by the manufacturer or changed by the user. If setting fails, the description is reverted to the previous state. The description appears in field $6 of the info.csv in TAR exports.</text>
+        <text xml:lang="de">Nur Admin darf die Beschreibung setzen. Die Beschreibung ist optional und kann vom Hersteller voreingestellt oder vom Nutzer geändert werden. Bei Fehlschlagen wird die Beschreibung auf den vorherigen Zustand zurückgesetzt. Die Beschreibung erscheint im Feld $6 der info.csv in TAR-Exporten.</text>
+    </notes>
+</process>

@@ -1,0 +1,41 @@
+flowchart TD
+    Start([User: Memory Query call])
+    Start --> Which{Which<br/>Function?}
+    
+    Which -->|getTotalMemory| GetTotal[Get total capacity<br/>of storage medium]
+    Which -->|getUsedMemory| GetUsed[Get used<br/>storage space]
+    Which -->|getFreeMemory| GetFree[Get free<br/>storage space]
+    
+    GetTotal --> CheckTotalOK{Retrieval<br/>successful?}
+    GetUsed --> CheckUsedOK{Retrieval<br/>successful?}
+    GetFree --> CheckFreeOK{Retrieval<br/>successful?}
+    
+    CheckTotalOK -->|No| ErrorTotal[Exception:<br/>ErrorGetTotalMemoryFailed]
+    CheckTotalOK -->|Yes| ReturnTotal[Return:<br/>totalMemory in Bytes]
+    
+    CheckUsedOK -->|No| ErrorUsed[Exception:<br/>ErrorGetUsedMemoryFailed]
+    CheckUsedOK -->|Yes| ReturnUsed[Return:<br/>usedMemory in Bytes]
+    
+    CheckFreeOK -->|No| ErrorFree[Exception:<br/>ErrorGetFreeMemoryFailed]
+    CheckFreeOK -->|Yes| ReturnFree[Return:<br/>freeMemory in Bytes]
+    
+    ReturnTotal --> Calc[Calculation:<br/>usedMemory = totalMemory - freeMemory<br/>Usage = usedMemory / totalMemory]
+    ReturnUsed --> Calc
+    ReturnFree --> Calc
+    
+    Calc --> CheckFull{Storage<br/>>90% full?}
+    
+    CheckFull -->|Yes| WarnFull[Warning:<br/>Storage almost full!<br/>Backup recommended]
+    CheckFull -->|No| End([End])
+    
+    WarnFull --> End
+    
+    ErrorTotal --> End
+    ErrorUsed --> End
+    ErrorFree --> End
+    
+    style GetTotal fill:#87CEEB
+    style GetUsed fill:#87CEEB
+    style GetFree fill:#87CEEB
+    style Calc fill:#DDA0DD
+    style WarnFull fill:#FFD700

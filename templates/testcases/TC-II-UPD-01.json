@@ -1,0 +1,679 @@
+{
+  "testcase_id": "TC-II-UPD-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "updateTransaction: SM_NOAGG/SM_AGG, forceSignature, Aggregierungsauslöser und Fehlerfälle",
+  "description": "Prüft updateTransaction vollständig: SM_NOAGG immer signiert, SM_AGG optional/erzwungen, Aggregierungsauslöser (anderer Client, anderer processType, MAX_PROTECTION_DELAY), Fehlerfälle.",
+  "purpose": "Prüfung, ob die Funktionalität für die Aktualisierung einer Transaktion für eine Aktualisierung mit Absicherungsschritt die folgenden Aktionen durchführt:\n\n• Abfragen der Log-Nachricht-Teile vom Sicherheitsmodul\n• Speichern der Log-Nachricht-Teile im Speichermedium \n• Rückgabe der folgenden Daten\n  o Zeitpunkt der Aktualisierung\n  o Prüfwert \n  o Signaturzähler\n\nDer Test übergibt beim Funktionsaufruf die\n• Seriennummer des Aufzeichnungssystems,\n• Transaktionsnummer, \n• Art des Vorgangs und \n• Daten des Vorgangs.\nZusätzlich erfolgt eine Prüfung der erstellten Log-Nachricht und, ob die Ausführung ohne Fehlermeldung beendet wird.",
+  "module": "Integration Interface",
+  "submodule": "II_UPD",
+  "function": "updateTransaction",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "II"
+  ],
+  "source_tests": [
+    "II_UPD_01",
+    "II_UPD_02",
+    "II_UPD_03",
+    "II_UPD_04",
+    "II_UPD_05",
+    "II_UPD_06",
+    "II_UPD_07",
+    "II_UPD_08",
+    "II_UPD_09",
+    "II_UPD_10"
+  ],
+  "variables": {
+    "$add2": "Übergabewert für additionalExternalData (add2)",
+    "$add3": "Übergabewert für additionalExternalData (add3)",
+    "$client1": "Seriennummer des Aufzeichnungssystems (client1)",
+    "$client2": "Seriennummer des Aufzeichnungssystems (client2)",
+    "$data1": "Übergabewert für processData (data1)",
+    "$data2": "Übergabewert für processData (data2)",
+    "$data3": "Übergabewert für processData (data3)",
+    "$data4": "Übergabewert für processData (data4)",
+    "$sig1": "Signaturzähler (Rückgabe, sig1)",
+    "$sig2": "Signaturzähler (Rückgabe, sig2)",
+    "$signature1": "Prüfwert/Signatur (Rückgabe, signature1)",
+    "$signature2": "Prüfwert/Signatur (Rückgabe, signature2)",
+    "$time1": "Zeitstempel der Signaturerstellung (time1)",
+    "$time2": "Zeitstempel der Signaturerstellung (time2)",
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$type1": "Übergabewert für processType (type1)",
+    "$type2": "Übergabewert für processType (type2)",
+    "$type3": "Übergabewert für processType (type3)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedUpdateProtection entspricht noPrevPassedProtected.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data4 festgehalten. Der für processType übergebene Wert wird als $type3 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogCreated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem registrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Der für clientId übergebene Wert wird als $client2 festgehalten.",
+      "function": "registerClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "exportSerialNumbers aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Transaktion mit Seriennummer des Aufzeichnungssystems=$client2 in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
+      "function": "exportSerialNumbers",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens. Es werden Log-Nachrichten mit einem Signaturzähler betrachtet, der größer ist als der zuvor als $sig1 festgehaltene Wert.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der TAR-Container enthält keine Log-Nachricht für die Aktualisierung der Transaktion.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "getCurrentSignatureCounter aufrufen",
+      "result": null,
+      "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Transaktion in dem TAR-Container. Es werden Log-Nachrichten mit einem Signaturzähler betrachtet, der größer ist als der zuvor als $sig1 festgehaltene Wert.\n\nRückgabewerte festhalten: $data2 = processData, $data3 = processData, $type2 = processType, $add2 = additionalExternalData, $add3 = additionalExternalData, $tn1 = transactionNumber.",
+      "function": "getCurrentSignatureCounter",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Der Wert des Datenfelds operationType entspricht updateTransaction.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Es wird die Seriennummer für das Aufzeichnungssystems übergeben, nie noch nie registriert war.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 14,
+      "type": "ACTION",
+      "title": "SM_NOAGG: Update mit Absicherungsschritt",
+      "result": null,
+      "instruction": "SM_NOAGG: Update mit Absicherungsschritt\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<registriert>",
+        "transactionNumber": "<offen>",
+        "processData": "<Daten>",
+        "processType": "<Typ>"
+      },
+      "expected_return": {
+        "signatureCreationTime": {
+          "constraint": "aktuell"
+        },
+        "signatureCounter": {
+          "constraint": "inkrementiert"
+        },
+        "signature": {
+          "constraint": "valide"
+        }
+      },
+      "checks": [
+        {
+          "description": "Alle Rückgabefelder vorhanden und korrekt (SM_NOAGG immer signiert)",
+          "expected": "Alle drei Felder gesetzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 15,
+      "type": "ACTION",
+      "title": "SM_NOAGG: forceSignature-Parameter wird ignoriert",
+      "result": null,
+      "instruction": "SM_NOAGG: forceSignature-Parameter wird ignoriert\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Update trotzdem signiert (forceSignature ignoriert bei SM_NOAGG)",
+          "expected": "Signatur vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 16,
+      "type": "ACTION",
+      "title": "SM_AGG: Update ohne Absicherung",
+      "result": null,
+      "instruction": "SM_AGG: Update ohne Absicherung\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "expected_return": {
+        "signatureCreationTime": {
+          "constraint": "null/nicht gesetzt"
+        },
+        "signatureCounter": {
+          "constraint": "null"
+        },
+        "signature": {
+          "constraint": "null"
+        }
+      },
+      "checks": [
+        {
+          "description": "Keine Signatur-Felder in Rückgabe bei SM_AGG ohne force",
+          "expected": "Felder null/absent",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 17,
+      "type": "ACTION",
+      "title": "SM_AGG: Erzwungener Absicherungsschritt (forceSignature=true)",
+      "result": null,
+      "instruction": "SM_AGG: Erzwungener Absicherungsschritt (forceSignature=true)\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Signatur-Felder in Rückgabe vorhanden (wie SM_NOAGG)",
+          "expected": "Alle drei Felder gesetzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 18,
+      "type": "VERIFY",
+      "title": "SM_AGG: Aggregierungsauslöser testen",
+      "result": null,
+      "instruction": "SM_AGG: Aggregierungsauslöser testen\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction mit:",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Aggregierung ausgelöst bei clientId-Änderung",
+          "expected": "Log erstellt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Aggregierung ausgelöst bei processType-Änderung",
+          "expected": "Log erstellt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Aggregierung ausgelöst nach MAX_PROTECTION_DELAY",
+          "expected": "Log erstellt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "processData des aggregierten Logs ist Konkatenation aller nicht-gesicherten Updates",
+          "expected": "AGG_PDATA_CONCAT",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "AGG_UPDATE_ABSENT",
+          "title": "Keine Log-Nachricht für nicht-signierte Zwischenupdates",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "AGG_PDATA_CONCAT",
+          "title": "processData einer aggregierten Nachricht ist Konkatenation",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_AGG_COUNT_PER_TXN",
+          "title": "Genau ein aggregiertes Update-Log pro Transaktion (SM_AGG)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 19,
+      "type": "ACTION",
+      "title": "processType bis 100 Zeichen akzeptiert",
+      "result": null,
+      "instruction": "processType bis 100 Zeichen akzeptiert\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "processType": "<100-Zeichen-String>"
+      },
+      "checks": [
+        {
+          "description": "Aufruf erfolgreich",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 20,
+      "type": "NEGATIVE",
+      "title": "Fehler: Nicht-registrierter Client",
+      "result": null,
+      "instruction": "Fehler: Nicht-registrierter Client [NT]\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "clientId": "<nicht registriert>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung zurückgegeben",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Log für fehlgeschlagenen Aufruf",
+          "expected": "LOG_NEG_TXN bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    },
+    {
+      "step": 21,
+      "type": "NEGATIVE",
+      "title": "Fehler: SM_AGG ohne direkte Log-Nachricht schlägt fehl",
+      "result": null,
+      "instruction": "Fehler: SM_AGG ohne direkte Log-Nachricht schlägt fehl [NT]\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "ErrorUpdateTransactionFailed zurückgegeben",
+          "expected": "errorCode = ErrorUpdateTransactionFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_UPD_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1",
+    "BSI TR-03151-1 §5.3"
+  ]
+}

@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorSelftestFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorSelftestFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the execution of the self-tests of the Secure Element components fails. The selfTest function performs comprehensive integrity checks of device components, cryptographic modules, storage subsystems, communication interfaces, and security functions to verify the device is operating correctly. If any self-test check fails or reports a failure condition, the device indicates a potential integrity issue or malfunction. ErrorSelftestFailed indicates that the device may not be trustworthy for security operations. Common causes include: component failures, cryptographic test failures, memory errors, communication issues, configuration problems, or manufacturing defects. The device should not be used for critical operations until the self-test failure is investigated and resolved.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Ausführung der Selbsttests der Secure Element-Komponenten fehlschlägt. Die selfTest-Funktion führt umfassende Integritätsprüfungen der Gerätekomponenten, Kryptografie-Module, Speicher-Subsysteme, Kommunikationsschnittstellen und Sicherheitsfunktionen durch, um zu überprüfen, dass das Gerät ordnungsgemäß funktioniert. Wenn eine Selbsttest-Prüfung fehlschlägt oder eine Fehlerbedingung meldet, zeigt das Gerät ein potenzielles Integritätsproblem oder eine Fehlfunktion an. ErrorSelftestFailed zeigt an, dass das Gerät möglicherweise nicht vertrauenswürdig für Sicherheitsoperationen ist. Häufige Ursachen sind: Komponentenausfalle, Kryptografie-Testfehler, Speicherfehler, Kommunikationsprobleme, Konfigurationsprobleme oder Herstellungsmängel. Das Gerät sollte nicht für kritische Operationen verwendet werden, bis der Selbsttest-Fehler untersucht und behoben ist.</text>
+  </description>
+  <category>Device Management</category>
+  <subcategory>Self-Test Failure</subcategory>
+  <severity>Critical</severity>
+  <thrownBy/>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorSelftestFailed that is thrown if device self-test execution fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorSelftestFailed, die ausgelöst wird, wenn die Ausührung des Geräteselbsttests fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the selfTest function attempts to verify the integrity and correct operation of Secure Element components but encounters a failure. Self-test is a critical diagnostic function that validates cryptographic modules, storage integrity, communication interfaces, security processor functionality, and overall device health. ErrorSelftestFailed indicates that one or more self-test checks have failed, revealing potential device malfunctions or integrity issues. Common causes include: component hardware failures, cryptographic module errors, memory corruption, communication subsystem issues, configuration errors, or manufacturing defects. ErrorSelftestFailed is a Critical severity exception because it indicates the device may not be trustworthy for security operations. Failed self-tests suggest the device should not be used for sensitive transactions. Recovery requires investigating the specific test failure, potential hardware repair, or device replacement. The device manufacturer should provide detailed self-test failure analysis capabilities.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die selfTest-Funktion versucht, die Integrität und den korrekten Betrieb der Secure Element-Komponenten zu überprüfen, aber auf einen Fehler stößt. Selbsttest ist eine kritische Diagnosefunktion, die Kryptografie-Module, Speicherintegrität, Kommunikationsschnittstellen, Sicherheitsprozessor-Funktionalität und allgemeine Gerätegesundheit validiert. ErrorSelftestFailed zeigt an, dass eine oder mehrere Selbsttest-Prüfungen fehlgeschlagen sind und potenzielle Gerätefehler oder Integritätsprobleme aufgedeckt haben. Häufige Ursachen sind: Komponentenhardwareausfalle, Kryptografie-Modulfehler, Speicherkorruption, Kommunikations-Subsystem-Probleme, Konfigurationsfehler oder Herstellungsmängel. ErrorSelftestFailed ist eine Ausnahme mit kritischem Schweregrad, da sie anzeigt, dass das Gerät möglicherweise nicht vertrauenswürdig für Sicherheitsoperationen ist. Fehlgeschlagene Selbsttests deuten darauf hin, dass das Gerät nicht für sensible Transaktionen verwendet werden sollte. Die Wiederherstellung erfordert Untersuchung des spezifischen Testfehlers, mögliche Hardwarereparatur oder Geräteaustausch. Der Gerätehersteller sollte detaillierte Analysemöglichkeiten für Selbsttest-Fehler bereitstellen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.8 Device Diagnostic Operations - selfTest</section>
+    <requirement>
+      <text xml:lang="en">The function selfTest SHALL execute comprehensive self-tests of all critical Secure Element components including cryptographic modules, storage subsystems, communication interfaces, security processors, and firmware. If any self-test check fails or detects a component malfunction, the function SHALL raise ErrorSelftestFailed. Self-tests are used to verify device integrity and correct operation. Self-test is typically invoked during device initialization, periodically during operation, or when device issues are suspected. If self-test fails, the device may not be trustworthy for security operations and should not be used until the failure is investigated and resolved.</text>
+      <text xml:lang="de">Die Funktion selfTest MUSS umfassende Selbsttests aller kritischen Secure Element-Komponenten einschließlich Kryptografie-Module, Speicher-Subsysteme, Kommunikationsschnittstellen, Sicherheitsprozessoren und Firmware ausführen. Wenn eine Selbsttest-Prüfung fehlschlägt oder einen Komponentenfehler erkennt, MUSS die Funktion ErrorSelftestFailed auslösen. Selbsttests werden verwendet, um die Geräteintegrität und den korrekten Betrieb zu überprüfen. Selbsttest wird typischerweise während der Geräteinitialisierung, periodisch während des Betriebs oder bei Verdacht auf Geräteprobleme aufgerufen. Wenn Selbsttest fehlschlägt, ist das Gerät möglicherweise nicht vertrauenswürdig für Sicherheitsoperationen und sollte nicht verwendet werden, bis der Fehler untersucht und behoben ist.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Device diagnostic self-test operations - selfTest function only</text>
+      <text xml:lang="de">Gerätediagnostische Selbsttest-Operationen - nur selfTest-Funktion</text>
+    </applicability>
+    <reference>selfTest – Function (3.2.8)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls selfTest function</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft selfTest-Funktion auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function initializes self-test execution environment</text>
+      <text xml:lang="de">Funktion initialisiert die Selbsttest-Ausführungsumgebung</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element for testing</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element zum Testen</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function executes cryptographic test vectors</text>
+      <text xml:lang="de">Funktion führt Kryptografie-Testvektoren aus</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If cryptographic tests fail → ErrorSelftestFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Kryptografie-Tests fehlschlagen → ErrorSelftestFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If cryptographic tests pass → proceed to step 5</text>
+      <text xml:lang="de">Wenn Kryptografie-Tests bestanden → Fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function performs memory integrity checks</text>
+      <text xml:lang="de">Funktion führt Speicherintegritätsprüfungen durch</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If memory errors detected → ErrorSelftestFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Speicherfehler erkannt → ErrorSelftestFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If memory checks pass → proceed to step 6</text>
+      <text xml:lang="de">Wenn Speicherprüfungen bestanden → Fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function tests component communication and connectivity</text>
+      <text xml:lang="de">Funktion testet Komponentenkommunikation und Verbindung</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If component communication fails → ErrorSelftestFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Komponentenkommunikation fällt → ErrorSelftestFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If component tests pass → proceed to step 7</text>
+      <text xml:lang="de">Wenn Komponententests bestanden → Fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function tests security processor functionality</text>
+      <text xml:lang="de">Funktion testet die Sicherheitsprozessor-Funktionalität</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If security processor tests fail → ErrorSelftestFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Sicherheitsprozessor-Tests fehlschlagen → ErrorSelftestFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If security processor tests pass → proceed to step 8</text>
+      <text xml:lang="de">Wenn Sicherheitsprozessor-Tests bestanden → Fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function performs device configuration validation</text>
+      <text xml:lang="de">Funktion führt Gerätekonfigurationsvalidierung durch</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If configuration errors detected → ErrorSelftestFailed raised, function exits</text>
+      <text xml:lang="de">Wenn Konfigurationsfehler erkannt → ErrorSelftestFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If configuration valid → proceed to step 9</text>
+      <text xml:lang="de">Wenn Konfiguration gültig → Fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function executes extended diagnostics (if available)</text>
+      <text xml:lang="de">Funktion führt erweiterte Diagnosen durch (falls verfügbar)</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">All tests completed successfully</text>
+      <text xml:lang="de">Alle Tests erfolgreich abgeschlossen</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns self-test results indicating success</text>
+      <text xml:lang="de">Funktion gibt Selbsttest-Ergebnisse zurück, die Erfolg anzeigen</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Perform self-test to identify failing components</text>
+      <text xml:lang="de">Führen Sie Selbsttest durch, um fehlerhafte Komponenten zu identifizieren</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review self-test results and error details</text>
+      <text xml:lang="de">Beachten Sie Selbsttest-Ergebnisse und Fehlerdetails</text>
+    </step>
+    <step>
+      <text xml:lang="en">Power cycle device if transient failure occurred</text>
+      <text xml:lang="de">Neustart des Geräts, wenn vorübergeh end Fehler aufgetreten ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device vendor if self-test consistently fails</text>
+      <text xml:lang="de">Kontaktieren Sie den Gerätehersteller, wenn Selbsttest wiederholt fehlschlägt</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceInitializationFailed</exception>
+    <exception>ErrorSecureElementNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorSecureElementPartsDisconnected</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Self-Test Not Completed">
+      <text xml:lang="en">The comprehensive self-test is not completed due to test failure.</text>
+      <text xml:lang="de">Der umfassende Selbsttest wird nicht abgeschlossen, da der Test fehlschlägt.</text>
+    </state>
+    <state name="Device Integrity Unverified">
+      <text xml:lang="en">The device integrity cannot be verified due to failed self-test checks.</text>
+      <text xml:lang="de">Die Geräteintegrität kann nicht verifiziert werden, da Selbsttest-Prüfungen fehlschlagen.</text>
+    </state>
+    <state name="Caller Receives Exception">
+      <text xml:lang="en">The function returns ErrorSelftestFailed exception with diagnostic information.</text>
+      <text xml:lang="de">Die Funktion gibt die Ausnahme ErrorSelftestFailed mit Diagnoseinformationen zurück.</text>
+    </state>
+    <state name="Device State Uncertain">
+      <text xml:lang="en">The device state is uncertain after self-test failure - device may be degraded or malfunctioning.</text>
+      <text xml:lang="de">Der Gerätezustand ist nach dem Selbsttest-Fehler unklar - das Gerät kann beeinträchtigt oder fehlfunktioniert sein.</text>
+    </state>
+    <state name="Device Trustworthiness Questionable">
+      <text xml:lang="en">The device should not be trusted for security operations until test passes.</text>
+      <text xml:lang="de">Das Gerät sollte nicht für Sicherheitsoperationen vertraut werden, bis der Test bestanden ist.</text>
+    </state>
+    <state name="Diagnostic Information Available">
+      <text xml:lang="en">Error message and logs contain information about which test failed.</text>
+      <text xml:lang="de">Fehlermeldung und Protokolle enthalten Informationen über welcher Test fehlgeschlagen ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Self-test of the device failed - device integrity check unsuccessful</text>
+      <text xml:lang="de">Anzeige: Selbsttest des Geräts fehlgeschlagen - Geräteintegritätsprüfung erfolglos</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Device Health, Self-Test, Diagnostics, Device Validation</text>
+      <text xml:lang="de">Themen: Gerätegesundheit, Selbsttest, Diagnosen, Gerätevalidierung</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by selfTest when device self-test operation fails</text>
+      <text xml:lang="de">Ausgelöst durch selfTest, wenn Geräteselbsttest-Operation fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Self-test function validates device integrity and health</text>
+      <text xml:lang="de">Selbsttest-Funktion validiert Geräteintegrität und Gesundheit</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device performs diagnostic tests on components</text>
+      <text xml:lang="de">Gerät führt Diagnosetests auf Komponenten durch</text>
+    </note>
+    <note>
+      <text xml:lang="en">Test failure indicates potential device malfunction</text>
+      <text xml:lang="de">Testfehler zeigt potenziellen Gerätef ehler an</text>
+    </note>
+  </implementationContext>
+</exception>
+

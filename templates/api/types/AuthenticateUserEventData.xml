@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="AuthenticateUserEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>AuthenticateUserEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type AuthenticateUserEventData.</description>
+  <asn1Definition>AuthenticateUserEventData ::= SEQUENCE {
+  userId  PrintableString,
+  role  Role,
+  authenticationResult  PinAuthenticationResult,
+  remainingRetries  INTEGER
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>userId</name>
+      <type>PrintableString</type>
+      <optional>false</optional>
+      <description>Field userId of type PrintableString</description>
+    </field>
+    <field>
+      <name>role</name>
+      <type>Role</type>
+      <optional>false</optional>
+      <description>Field role of type Role</description>
+    </field>
+    <field>
+      <name>authenticationResult</name>
+      <type>PinAuthenticationResult</type>
+      <optional>false</optional>
+      <description>Field authenticationResult of type PinAuthenticationResult</description>
+    </field>
+    <field>
+      <name>remainingRetries</name>
+      <type>INTEGER</type>
+      <optional>false</optional>
+      <description>Field remainingRetries of type INTEGER</description>
+    </field>
+  </fields>
+</type>

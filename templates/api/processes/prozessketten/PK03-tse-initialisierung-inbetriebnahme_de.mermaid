@@ -1,0 +1,62 @@
+sequenceDiagram
+    actor Admin as Admin
+    participant TSE as TSE (neu/werkseitig)
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    Note over Admin,Speicher: TSE-Erstinbetriebnahme
+
+    Admin->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Admin: Authentifizierung erfolgreich
+
+    Admin->>TSE: initialize()
+    activate TSE
+    TSE->>TSE: Prüfe: Noch nicht initialisiert
+    TSE->>TSE: Führe Initialisierung durch:<br/>- Zertifikate laden<br/>- Schlüssel generieren<br/>- Zähler initialisieren
+    TSE->>SM: Erstelle initialize-Log
+    activate SM
+    SM->>SM: Signaturzähler = 1
+    SM->>SM: Transaktionszähler = 0
+    SM->>SM: Erstelle erste Signatur
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE->>Speicher: Speichere System-Log (initialize)
+    TSE-->>Admin: Initialisierung erfolgreich
+    deactivate TSE
+
+    Admin->>TSE: setDescription(description)
+    activate TSE
+    TSE->>SM: Erstelle setDescription-Log
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM-->>TSE: Log-Teile
+    deactivate SM
+    TSE->>Speicher: Speichere System-Log + Beschreibung
+    TSE-->>Admin: Beschreibung gesetzt
+    deactivate TSE
+
+    opt Zeitaktualisierung falls erforderlich
+        Admin->>TSE: updateTime(newDateTime)
+        TSE->>SM: Setze Zeit + erstelle Log
+        SM-->>TSE: OK
+        TSE->>Speicher: Speichere System-Log
+        TSE-->>Admin: Zeit aktualisiert
+    end
+
+    Note over Admin,Speicher: TSE ist nun betriebsbereit
+
+    Admin->>TSE: registerClient(clientId_Kasse1)
+    TSE->>SM: Erstelle registerClient-Log
+    SM-->>TSE: OK
+    TSE->>Speicher: Speichere System-Log
+    TSE-->>Admin: Client registriert
+
+    Note over Admin,Speicher: Erste Kasse kann nun Transaktionen durchführen
+
+    Admin->>TSE: logOut()
+    TSE->>SM: Erstelle logOut-Log
+    SM-->>TSE: OK
+    TSE->>Speicher: Speichere System-Log
+    TSE-->>Admin: Abgemeldet
+
+    Note over Admin,Speicher: TSE-Inbetriebnahme abgeschlossen

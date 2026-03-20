@@ -1,0 +1,362 @@
+{
+  "testcase_id": "TC-II-MCU-02",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Multi-Client: Erweiterter Paralleltest und Verzögerungsdokumentation",
+  "description": "Ergänzende Tests für Multi-Client-Parallelnutzung und Dokumentation von Verzögerungen.",
+  "purpose": "Prüfung, ob mehrere Aufzeichnungssysteme parallel jeweils eine Transaktion starten, einmalig ohne Absicherungsschritt aktualisieren und beenden können.",
+  "module": "Integration Interface",
+  "submodule": "II_MCU",
+  "function": "startTransaction / updateTransaction / finishTransaction",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "MULTI_CLIENT",
+    "SM_MULTI"
+  ],
+  "source_tests": [
+    "II_MCU_02",
+    "II_MCU_03",
+    "II_MCU_04",
+    "II_MCU_05"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es sind mehrere Aufzeichnungssysteme registriert. Die Anzahl der Aufzeichnungssysteme ist kleiner als die maximale Anzahl von Aufzeichnungssystemen, die die TSE gleichzeitig für die Protokollierung von Transaktionen nutzen können. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Es wird keine geöffnete Transaktion vom Sicherheitsmodul ver",
+      "result": null,
+      "instruction": "Es wird keine geöffnete Transaktion vom Sicherheitsmodul verwaltet."
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist die maximale Anzahl von Aufzeichnungssysteme registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird durch alle angemeldeten Aufzeichnungssysteme oder alternativ bis zur maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann, wiederholt. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Seriennummer des Aufzeichnungssystems und die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedUpdateProtection entspricht noPrevPassedInMem.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Der Aufruf wird für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Seriennummer des Aufzeichnungssystems und die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird wiederholt bis die maximale Anzahl an parallel geöffneten Transaktionen erreicht ist, die das Sicherheitsmodul verwalten kann. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die Verzögerungen und Probleme die bei den Aufrufen auftreten entsprechen den vom Hersteller dokumentierten Verzögerungen und Problemen.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 11,
+      "type": "VERIFY",
+      "title": "N Clients parallel: SM_AGG ohne Absicherung (II_MCU_02)",
+      "result": null,
+      "instruction": "N Clients parallel: SM_AGG ohne Absicherung (II_MCU_02)\n\nAufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird durch alle angemeldeten Aufzeichnungssysteme oder alternativ bis zur maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann, wiederholt. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Alle N Transaktionen vollständig (SM_AGG ohne Absicherung)",
+          "expected": "Korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "processData isoliert",
+          "expected": "STOR_PARA_PDATA_ISOLATED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "STOR_PARA_ALL_STARTS",
+          "title": "Alle parallel gestarteten Transaktionen im Export vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "STOR_PARA_PDATA_ISOLATED",
+          "title": "processData paralleler Transaktionen sind isoliert",
+          "outcome_type": "WARN_OR_OK",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 12,
+      "type": "ACTION",
+      "title": "MAXIMALE Clients parallel, SM_NOAGG mit Absicherung (II_MCU_03)",
+      "result": null,
+      "instruction": "MAXIMALE Clients parallel, SM_NOAGG mit Absicherung (II_MCU_03)\n\nAufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird durch alle angemeldeten Aufzeichnungssysteme oder alternativ bis zur maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann, wiederholt. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Alle MAX Transaktionen erfolgreich, SM_NOAGG mit Absicherung",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 13,
+      "type": "ACTION",
+      "title": "MAXIMALE Clients parallel, SM_AGG ohne Absicherung (II_MCU_04)",
+      "result": null,
+      "instruction": "MAXIMALE Clients parallel, SM_AGG ohne Absicherung (II_MCU_04)\n\nAufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird durch alle angemeldeten Aufzeichnungssysteme oder alternativ bis zur maximalen Anzahl der parallel geöffneten Transaktionen, die das Sicherheitsmodul verwalten kann, wiederholt. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Alle MAX Transaktionen erfolgreich, SM_AGG ohne Absicherung",
+          "expected": "Kein Fehler",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_MCU_02"
+    },
+    {
+      "step": 14,
+      "type": "VERIFY",
+      "title": "Verzögerungsdokumentation prüfen (II_MCU_05, FP)",
+      "result": null,
+      "instruction": "Verzögerungsdokumentation prüfen (II_MCU_05, FP)",
+      "checks": [
+        {
+          "description": "Hersteller dokumentiert Verzögerungen und Probleme bei Parallelnutzung",
+          "expected": "Dokumentiert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Dokumentierte Verzögerungen plausibel und im akzeptablen Rahmen",
+          "expected": "Plausibel",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

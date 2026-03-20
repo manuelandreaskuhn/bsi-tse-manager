@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUserNotAuthenticated" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUserNotAuthenticated</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if a restricted SE API function is invoked by a user who does not have authenticated status. The device maintains user authentication state to control access to security-sensitive operations. Certain functions (configuration, logging control, device management, PIN operations) require the user to be in authenticated state. Authentication is established through successful user authentication via authenticateUser. ErrorUserNotAuthenticated is raised when a restricted function is called without the caller being in authenticated state. ErrorUserNotAuthenticated is a High severity exception because it indicates unauthorized access attempt or user session management issue. Recovery requires authenticating the user before the restricted operation can proceed.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine eingeschränkte SE API-Funktion von einem Benutzer aufgerufen wird, der keinen authentifizierten Status hat. Das Gerät verwaltet den Benutzerauthentifizierungsstatus, um den Zugriff auf sicherheitssensible Operationen zu kontrollieren. Bestimmte Funktionen (Konfiguration, Protokollierungskontrolle, Geräteverwaltung, PIN-Operationen) erfordern, dass sich der Benutzer im authentifizierten Status befindet. Die Authentifizierung wird durch erfolgreiche Benutzerauthentifizierung über authenticateUser hergestellt. ErrorUserNotAuthenticated wird ausgelöst, wenn eine eingeschränkte Funktion aufgerufen wird, ohne dass sich der Aufrufer im authentifizierten Status befindet. ErrorUserNotAuthenticated ist eine Ausnahme mit hohem Schweregrad, da sie auf einen nicht autorisierteren Zugriffsversuch oder ein Problem bei der Benutzersitzungsverwaltung hinweist. Die Wiederherstellung erfordert die Authentifizierung des Benutzers, bevor die eingeschränkte Operation fortgesetzt werden kann.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>Access Control</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>configureLogging</function>
+    <function>deleteLogMessages</function>
+    <function>deregisterClient</function>
+    <function>disableSecureElement</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>exportSerialNumbers</function>
+    <function>finishTransaction</function>
+    <function>getComponentVersions</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getCurrentSeTime</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getDescription</function>
+    <function>getDeviceHealth</function>
+    <function>getEndOfUsageDate</function>
+    <function>getFreeMemory</function>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getOpenTransactions</function>
+    <function>getRegisteredClients</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getTimeSyncVariant</function>
+    <function>getTotalMemory</function>
+    <function>getTransactionState</function>
+    <function>getUsedMemory</function>
+    <function>initialize</function>
+    <function>lockTransactionLogging</function>
+    <function>logOut</function>
+    <function>registerClient</function>
+    <function>restoreLogsFromBackup</function>
+    <function>selfTest</function>
+    <function>setDescription</function>
+    <function>startTransaction</function>
+    <function>unblockPin</function>
+    <function>unlockTransactionLogging</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>updateTransaction</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUserNotAuthenticated that is thrown if a restricted SE API function is invoked by a user without authenticated status.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUserNotAuthenticated, die ausgelöst wird, wenn eine eingeschränkte SE API-Funktion von einem Benutzer ohne Authentifizierungsstatus aufgerufen wird.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when a restricted SE API function is called by a user who is not in authenticated state. The device maintains user authentication state to control access to security-sensitive operations. Functions that modify configuration, manage logging, control PIN access, update firmware, or perform administrative tasks require authenticated status. If such a restricted function is invoked without the user being authenticated, ErrorUserNotAuthenticated is raised. This indicates the caller must first authenticate before accessing the restricted operation. ErrorUserNotAuthenticated is a High severity exception because it represents an access control violation. Recovery requires calling authenticateUser first to establish authenticated status, then retrying the restricted operation.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine eingeschränkte SE API-Funktion von einem Benutzer aufgerufen wird, der sich nicht im authentifizierten Status befindet. Das Gerät verwaltet den Benutzerauthentifizierungsstatus, um den Zugriff auf sicherheitssensible Operationen zu kontrollieren. Funktionen, die die Konfiguration ändern, die Protokollierung verwalten, den PIN-Zugriff kontrollieren, die Firmware aktualisieren oder Verwaltungsaufgaben ausführen, erfordern authentifizierten Status. Wenn eine solche eingeschränkte Funktion aufgerufen wird, ohne dass der Benutzer authentifiziert ist, wird ErrorUserNotAuthenticated ausgelöst. Dies zeigt an, dass sich der Aufrufer zuerst authentifizieren muss, bevor er auf die eingeschränkte Operation zugreifen kann. ErrorUserNotAuthenticated ist eine Ausnahme mit hohem Schweregrad, da sie einen Zugriffskontrollverstoß darstellt. Die Wiederherstellung erfordert, dass zuerst authenticateUser aufgerufen wird, um den authentifizierten Status herzustellen, und anschließend wird die eingeschränkte Operation erneut versucht.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.1 Authentication - Access Control and User State</section>
+    <requirement>
+      <text xml:lang="en">The SE API maintains user authentication state to control access to security-sensitive operations. Certain functions require the user to be in authenticated state: configuration functions (setDescription, configureLogging), device management functions (updateDevice, disableSecureElement, updateTime), PIN management (unblockPin), logging control (lockTransactionLogging, unlockTransactionLogging, deleteLogMessages, restoreLogsFromBackup), client management (registerClient, deregisterClient), maintenance functions (selfTest). If a restricted function is invoked by a user without authenticated status, the Secure Element SHALL raise ErrorUserNotAuthenticated. This indicates the caller must first establish authenticated status via authenticateUser before accessing the restricted function. ErrorUserNotAuthenticated is a High severity exception because it represents an access control violation and security policy breach.</text>
+      <text xml:lang="de">Die SE API verwaltet den Benutzerauthentifizierungsstatus, um den Zugriff auf sicherheitssensible Operationen zu kontrollieren. Bestimmte Funktionen erfordern, dass sich der Benutzer im authentifizierten Status befindet: Konfigurationsfunktionen (setDescription, configureLogging), Geräteverwaltungsfunktionen (updateDevice, disableSecureElement, updateTime), PIN-Verwaltung (unblockPin), Protokollierungskontrolle (lockTransactionLogging, unlockTransactionLogging, deleteLogMessages, restoreLogsFromBackup), Clientverwaltung (registerClient, deregisterClient), Wartungsfunktionen (selfTest). Wenn eine eingeschränkte Funktion von einem Benutzer ohne authentifizierten Status aufgerufen wird, MUSS das Secure Element ErrorUserNotAuthenticated auslösen. Dies zeigt an, dass sich der Aufrufer zuerst über authenticateUser im authentifizierten Status etablieren muss, bevor er auf die eingeschränkte Funktion zugreifen kann. ErrorUserNotAuthenticated ist eine Ausnahme mit hohem Schweregrad, da sie einen Zugriffskontrollverstoß und einen Verstoß gegen die Sicherheitsrichtlinie darstellt.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">All restricted API functions requiring authenticated user: logOut, unblockPin, setDescription, selfTest, updateDevice, disableSecureElement, updateTime, configureLogging, deleteLogMessages, restoreLogsFromBackup, registerClient, deregisterClient, lockTransactionLogging, unlockTransactionLogging</text>
+      <text xml:lang="de">Alle eingeschränkten API-Funktionen, die authentifizierten Benutzer erfordern: logOut, unblockPin, setDescription, selfTest, updateDevice, disableSecureElement, updateTime, configureLogging, deleteLogMessages, restoreLogsFromBackup, registerClient, deregisterClient, lockTransactionLogging, unlockTransactionLogging</text>
+    </applicability>
+    <reference>Authentication (3.5.1), Access Control (3.5.1), User State Management (3.5.1), authenticateUser – Function (3.5.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls restricted SE API function (e.g., setDescription, updateDevice, deleteLogMessages)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eingeschränkte SE API-Funktion auf (z. B. setDescription, updateDevice, deleteLogMessages)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks if operation requires authentication</text>
+      <text xml:lang="de">Funktion prüft, ob die Operation eine Authentifizierung erfordert</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If operation unrestricted → proceed to step 4</text>
+      <text xml:lang="de">Wenn Operation unbeschränkt → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If operation restricted → proceed to step 5</text>
+      <text xml:lang="de">Wenn Operation eingeschränkt → fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function proceeds with normal execution</text>
+      <text xml:lang="de">Funktion führt normale Ausführung durch</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function checks user authentication state</text>
+      <text xml:lang="de">Funktion prüft den Benutzerauthentifizierungsstatus</text>
+    </step>
+    <step number="5a">
+      <text xml:lang="en">If user not authenticated → ErrorUserNotAuthenticated raised, operation aborted</text>
+      <text xml:lang="de">Wenn Benutzer nicht authentifiziert → ErrorUserNotAuthenticated ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="5b">
+      <text xml:lang="en">If user authenticated → proceed to step 6</text>
+      <text xml:lang="de">Wenn Benutzer authentifiziert → fahren Sie mit Schritt 6 fort</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function validates authentication has not expired</text>
+      <text xml:lang="de">Funktion validiert, dass die Authentifizierung nicht abgelaufen ist</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If authentication expired → ErrorUserNotAuthenticated raised</text>
+      <text xml:lang="de">Wenn Authentifizierung abgelaufen → ErrorUserNotAuthenticated ausgelöst</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If authentication valid → proceed to step 7</text>
+      <text xml:lang="de">Wenn Authentifizierung gültig → fahren Sie mit Schritt 7 fort</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element receives restricted operation request</text>
+      <text xml:lang="de">Secure Element empfängt Anfrage für eingeschränkte Operation</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element verifies user authenticated status</text>
+      <text xml:lang="de">Secure Element verifiziert den authentifizierten Status des Benutzers</text>
+    </step>
+    <step number="9a">
+      <text xml:lang="en">If not authenticated → ErrorUserNotAuthenticated raised</text>
+      <text xml:lang="de">Wenn nicht authentifiziert → ErrorUserNotAuthenticated ausgelöst</text>
+    </step>
+    <step number="9b">
+      <text xml:lang="en">If authenticated → proceed with operation</text>
+      <text xml:lang="de">Wenn authentifiziert → fahren Sie mit der Operation fort</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Operation executes with authentication verified</text>
+      <text xml:lang="de">Operation führt mit verifizierter Authentifizierung aus</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Authenticate user first using authenticateUser</text>
+      <text xml:lang="de">Authentifizieren Sie den Benutzer zuerst mit authenticateUser</text>
+    </step>
+    <step>
+      <text xml:lang="en">Provide correct PIN for user authentication</text>
+      <text xml:lang="de">Geben Sie die korrekte PIN für die Benutzerauthentifizierung an</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify user identity before retrying operation</text>
+      <text xml:lang="de">Verifizieren Sie die Benutzeridentität vor einer erneuten Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry after successful user authentication</text>
+      <text xml:lang="de">Versuchen Sie nach erfolgreicher Benutzerauthentifizierung erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorUnknownUserId</exception>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Restricted Operation Not Executed">
+      <text xml:lang="en">Restricted function does not execute due to authentication requirement.</text>
+      <text xml:lang="de">Die eingeschränkte Funktion wird aufgrund der Authentifizierungsanforderung nicht ausgeführt.</text>
+    </state>
+    <state name="User Authentication Required">
+      <text xml:lang="en">User must establish authenticated status first.</text>
+      <text xml:lang="de">Der Benutzer muss zuerst den authentifizierten Status hergestellen.</text>
+    </state>
+    <state name="Operation Not Permitted">
+      <text xml:lang="en">Operation is blocked by access control policy.</text>
+      <text xml:lang="de">Die Operation wird durch die Zugriffskontrollrichtlinie blockiert.</text>
+    </state>
+    <state name="User State Not Modified">
+      <text xml:lang="en">No state changes from attempted restricted operation.</text>
+      <text xml:lang="de">Keine Statusnderungen durch versuchte eingeschränkte Operation.</text>
+    </state>
+    <state name="High Exception Returned">
+      <text xml:lang="en">Function returns ErrorUserNotAuthenticated High exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die hohe Ausnahme ErrorUserNotAuthenticated an den Aufrufer zurück.</text>
+    </state>
+    <state name="Caller Must Authenticate">
+      <text xml:lang="en">Caller must call authenticateUser before retrying restricted operation.</text>
+      <text xml:lang="de">Der Aufrufer muss authenticateUser aufrufen, bevor die eingeschränkte Operation erneut versucht wird.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: User is not authenticated - authentication required for this operation</text>
+      <text xml:lang="de">Anzeichen: Der Benutzer ist nicht authentifiziert - Authentifizierung erforderlich für diese Operation</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authentication, User Management, Access Control, Security</text>
+      <text xml:lang="de">Themen: Authentifizierung, Benutzerverwaltung, Zugriffskontrolle, Sicherheit</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by functions requiring authentication when user not authenticated</text>
+      <text xml:lang="de">Wird von Funktionen ausgelöst, die Authentifizierung erfordern, wenn der Benutzer nicht authentifiziert ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Authentication state validation checks user authentication status</text>
+      <text xml:lang="de">Authentifizierungsstatus-Validierung prüft den Benutzerauthentifizierungsstatus</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device tracks authenticated user for access control</text>
+      <text xml:lang="de">Das Gerät verfolgt den authentifizierten Benutzer für die Zugriffskontrolle</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unauthenticated state prevents operation execution</text>
+      <text xml:lang="de">Nicht authentifizierter Status verhindert die Operationsausführung</text>
+    </note>
+  </implementationContext>
+</exception>
+

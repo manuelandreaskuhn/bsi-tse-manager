@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="PinAuthenticationResult" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+  <name>PinAuthenticationResult</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Enumeration used in system log event data for PinAuthenticationResult.</description>
+  <values>
+    <value>
+      <name>success</name>
+      <numericValue>0</numericValue>
+      <description>success (0)</description>
+    </value>
+    <value>
+      <name>unknownUserId</name>
+      <numericValue>1</numericValue>
+      <description>unknownUserId (1)</description>
+    </value>
+    <value>
+      <name>incorrectPin</name>
+      <numericValue>2</numericValue>
+      <description>incorrectPin (2)</description>
+    </value>
+    <value>
+      <name>pinBlocked</name>
+      <numericValue>3</numericValue>
+      <description>pinBlocked (3)</description>
+    </value>
+  </values>
+</enum>

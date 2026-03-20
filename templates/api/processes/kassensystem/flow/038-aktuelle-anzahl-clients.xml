@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>038</processId>
+    <processName>
+        <text xml:lang="en">Current Number of Clients</text>
+        <text xml:lang="de">Aktuelle Anzahl Clients</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the number of different clients that currently have open transactions</text>
+        <text xml:lang="de">Abruf der Anzahl unterschiedlicher Clients, die aktuell offene Transaktionen haben</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Client List</text>
+            <text xml:lang="de">Client-Liste</text>
+        </object>
+        <object>
+            <text xml:lang="en">Open Transactions</text>
+            <text xml:lang="de">Offene Transaktionen</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getCurrentNumberOfClients</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>currentNumberClients</name>
+            <type>unsigned long</type>
+            <description>
+                <text xml:lang="en">Number of clients with open transactions</text>
+                <text xml:lang="de">Anzahl Clients mit offenen Transaktionen</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorCurrentNumberOfClientsNotTracked</exception>
+        <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. If TSE supports unlimited clients without tracking, ErrorCurrentNumberOfClientsNotTracked is thrown.</text>
+        <text xml:lang="de">OPTIONAL. Wenn TSE unbegrenzte Clients unterstützt ohne Tracking, wird ErrorCurrentNumberOfClientsNotTracked geworfen.</text>
+    </notes>
+</process>

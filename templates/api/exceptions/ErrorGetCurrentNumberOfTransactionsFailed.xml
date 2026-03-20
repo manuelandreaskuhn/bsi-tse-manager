@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetCurrentNumberOfTransactionsFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetCurrentNumberOfTransactionsFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the determination of the number of currently opened transactions failed. ErrorGetCurrentNumberOfTransactionsFailed represents a failure in the device's ability to retrieve and report the count of currently active transactions. This exception indicates that the getCurrentNumberOfTransactions function requested transaction count information from the device but the device cannot determine or provide the required count due to a hardware error, firmware issue, transaction registry failure, or communication breakdown. The exception is raised when the device's transaction management tracking functionality did not complete successfully, preventing applications from monitoring active transactions and device transaction utilization. The exception is raised during the transaction count retrieval phase before the count is packaged into the return structure, ensuring no partial or incomplete count data is returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Bestimmung der Anzahl der derzeit geöffneten Transaktionen fehlgeschlagen ist. ErrorGetCurrentNumberOfTransactionsFailed stellt einen Fehler in der Fähigkeit des Geräts dar, die Anzahl der derzeit aktiven Transaktionen abzurufen und zu melden. Diese Ausnahme zeigt an, dass die Funktion getCurrentNumberOfTransactions Transaktionszählinformationen vom Gerät anforderte, aber das Gerät die erforderliche Anzahl aufgrund eines Hardwarefehlers, Firmware-Problems, Transaktionsregistrierungsfehlers oder Kommunikationsfehlers nicht bestimmen oder bereitstellen kann. Die Ausnahme wird ausgelöst, wenn die Transaktions-Management-Verfolgungsfunktionalität des Geräts nicht erfolgreich abgeschlossen wurde, was verhindert, dass Anwendungen aktive Transaktionen und Gerätetransaktionsauslastung überwachen. Die Ausnahme wird während der Transaktionszählabfragephase ausgelöst, bevor die Anzahl in die Rückgabestruktur verpackt wird, um sicherzustellen, dass keine teilweisen oder unvollständigen Zähldaten zurückgegeben werden.</text>
+  </description>
+  <category>Transaction Management</category>
+  <subcategory>Information Retrieval</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetCurrentNumberOfTransactionsFailed that is thrown if the determination of the number of currently opened transactions failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetCurrentNumberOfTransactionsFailed, die ausgelöst wird, wenn die Bestimmung der Anzahl der derzeit geöffneten Transaktionen fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The getCurrentNumberOfTransactions function performs a multi-step process to determine how many transactions are currently opened and active. This exception is raised when the device cannot provide the required transaction count information during the retrieval phase. When this exception occurs, no transaction count data is returned to the user, and the function exits without providing any count information. The failure indicates that the device's transaction counting or reporting functionality did not complete successfully, preventing applications from monitoring active transactions.</text>
+      <text xml:lang="de">Die Funktion getCurrentNumberOfTransactions führt einen mehrstufigen Prozess durch, um zu bestimmen, wie viele Transaktionen derzeit geöffnet und aktiv sind. Diese Ausnahme wird ausgelöst, wenn das Gerät die erforderlichen Transaktionszählinformationen während der Abfragephase nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Transaktionszähldaten an den Benutzer zurückgegeben, und die Funktion wird beendet, ohne Zählinformationen bereitzustellen. Der Fehler zeigt an, dass die Transaktionszählung oder Berichtsfunktionalität des Geräts nicht erfolgreich abgeschlossen wurde, was verhindert, dass Anwendungen aktive Transaktionen überwachen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.16 Transaction Management - getCurrentNumberOfTransactions</section>
+    <requirement>
+      <text xml:lang="en">The function getCurrentNumberOfTransactions SHALL query the device to determine how many transactions are currently opened and active. If the device cannot provide or determine the required transaction count information, the function SHALL raise the exception ErrorGetCurrentNumberOfTransactionsFailed and exit without returning any count data. The transaction count determination failure indicates the device's transaction tracking functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getCurrentNumberOfTransactions soll das Gerät abfragen, um zu bestimmen, wie viele Transaktionen derzeit geöffnet und aktiv sind. Falls das Gerät die erforderlichen Transaktionszählinformationen nicht bereitstellen oder bestimmen kann, soll die Funktion die Ausnahme ErrorGetCurrentNumberOfTransactionsFailed auslösen und beendet werden, ohne Zähldaten zurückzugeben. Der Fehler bei der Transaktionszählbestimmung zeigt an, dass die Transaktionsverfolgungsfunktionalität des Geräts nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction management operations - getCurrentNumberOfTransactions function only</text>
+      <text xml:lang="de">Transaktions-Management-Operationen - nur Funktion getCurrentNumberOfTransactions</text>
+    </applicability>
+    <reference>getCurrentNumberOfTransactions – Function (3.3.16)</reference>
+  </specification>
+  <thrownBy>
+    <function>getCurrentNumberOfTransactions</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">User or application calls getCurrentNumberOfTransactions function</text>
+      <text xml:lang="de">Benutzer oder Anwendung ruft die Funktion getCurrentNumberOfTransactions auf</text>
+    </step>
+    <step number="2" name="Authentication Check">
+      <text xml:lang="en">The function checks authentication status if required by the implementation guideline</text>
+      <text xml:lang="de">Die Funktion prüft den Authentifizierungsstatus, falls von der Implementierungsrichtlinie erforderlich</text>
+    </step>
+    <step number="3" name="Authorization Check">
+      <text xml:lang="en">The function checks authorization to verify the caller has permission to query transaction management information</text>
+      <text xml:lang="de">Die Funktion prüft die Autorisierung, um zu verifizieren, dass der Aufrufer die Berechtigung zur Abfrage von Transaktions-Management-Informationen hat</text>
+    </step>
+    <step number="4" name="Device Initialization Verification">
+      <text xml:lang="en">The function verifies that the device is in an initialized state and ready for transaction information queries</text>
+      <text xml:lang="de">Die Funktion überprüft, dass das Gerät in einem initialisierten Zustand ist und für Transaktionsinformationsabfragen bereit ist</text>
+    </step>
+    <step number="5" name="Transaction Registry Query">
+      <text xml:lang="en">The function sends a request to the device to query the transaction registry and determine the current number of active transactions</text>
+      <text xml:lang="de">Die Funktion sendet eine Anfrage an das Gerät, um die Transaktionsregistrierung abzufragen und die aktuelle Anzahl der aktiven Transaktionen zu bestimmen</text>
+    </step>
+    <step number="5a" name="Transaction Count Retrieval Success">
+      <text xml:lang="en">If the device successfully queries the transaction registry and determines the current transaction count, execution continues to step 6 (not taken in this exception case)</text>
+      <text xml:lang="de">Falls das Gerät die Transaktionsregistrierung erfolgreich abfragt und die aktuelle Transaktionsanzahl bestimmt, wird die Ausführung zu Schritt 6 fortgesetzt (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="5b" name="Transaction Count Retrieval Failure">
+      <text xml:lang="en">If the device cannot query the registry, determine the count, or provide the required transaction count information due to storage failure, firmware error, communication loss, or security restrictions, execution branches to exception handling at step 6b</text>
+      <text xml:lang="de">Falls das Gerät die Registrierung nicht abfragen, die Anzahl bestimmen oder die erforderlichen Transaktionszählinformationen aufgrund eines Speicherfehlers, Firmware-Fehlers, Kommunikationsverlusts oder Sicherheitsbeschränkungen nicht bereitstellen kann, wird die Ausführung zur Ausnahmeverarbeitung bei Schritt 6b verzweigt</text>
+    </step>
+    <step number="6a" name="Count Validation and Return">
+      <text xml:lang="en">Upon successful transaction count retrieval, the function validates the count and prepares the return value (not taken in this exception case)</text>
+      <text xml:lang="de">Nach erfolgreicher Transaktionszählabruf validiert die Funktion die Anzahl und bereitet den Rückgabewert vor (nicht in diesem Ausnahmefall)</text>
+    </step>
+    <step number="6b" name="Exception Context Preparation">
+      <text xml:lang="en">Upon transaction count retrieval failure, exception context is prepared including device error details, transaction management context, and timestamp</text>
+      <text xml:lang="de">Bei Transaktionszählabruffehler wird der Ausnahmekontekt vorbereitet, einschließlich Geräteehlterdetails, Transaktions-Management-Kontekt und Zeitstempel</text>
+    </step>
+    <step number="7" name="Exception Instance Creation">
+      <text xml:lang="en">ErrorGetCurrentNumberOfTransactionsFailed exception instance is created with error message indicating device transaction count determination failure</text>
+      <text xml:lang="de">ErrorGetCurrentNumberOfTransactionsFailed-Ausnahminstanz wird mit Fehlermeldung erstellt, die einen Fehler bei der Geräte-Transaktionszählbestimmung anzeigt</text>
+    </step>
+    <step number="8" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack without returning any transaction count data to the caller</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack propagiert, ohne Transaktionszähldaten an den Aufrufer zurückzugeben</text>
+    </step>
+    <step number="9" name="Device State Verification">
+      <text xml:lang="en">The device and transaction registry remain in their current state with no modifications or data extraction having occurred</text>
+      <text xml:lang="de">Das Gerät und die Transaktionsregistrierung bleiben in ihrem aktuellen Zustand mit keinen Änderungen oder Datenautzügen</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry transaction count query</text>
+      <text xml:lang="de">Wiederholen Sie die Transaktionszählabfrage</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device status and SE connectivity</text>
+      <text xml:lang="de">Prüfen Sie den Gerätestatus und die SE-Konnektivität</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use application-level transaction tracking as fallback</text>
+      <text xml:lang="de">Verwenden Sie Anwendungsebene-Transaktions-Tracking als Fallback</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorClientNotRegistered</exception>
+    <exception>ErrorGetMaxNumberOfTransactionsFailed</exception>
+    <exception>ErrorGetOpenTransactionsFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Transaction Count State">
+      <text xml:lang="en">No transaction count data is returned to the caller. The transaction count retrieval has not completed and no information is provided to the user.</text>
+      <text xml:lang="de">Es werden keine Transaktionszähldaten an den Aufrufer zurückgegeben. Der Transaktionszählabruf wurde nicht abgeschlossen und es werden keine Informationen an den Benutzer bereitgestellt.</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">Device state remains completely unchanged. No modifications to internal state, configuration, or data structures have occurred during the transaction count retrieval attempt.</text>
+      <text xml:lang="de">Der Gerätezustand bleibt vollständig unverändert. Es wurden keine Änderungen am internen Zustand, der Konfiguration oder den Datenstrukturen während des Transaktionszählabrufversuches vorgenommen.</text>
+    </state>
+    <state name="Transaction Registry State">
+      <text xml:lang="en">Transaction registry remains unchanged and all active transactions remain active. No transactions have been started or finished as a result of this operation.</text>
+      <text xml:lang="de">Die Transaktionsregistrierung bleibt unverändert und alle aktiven Transaktionen bleiben aktiv. Es wurden keine Transaktionen als Ergebnis dieser Operation gestartet oder beendet.</text>
+    </state>
+    <state name="Transaction Functionality">
+      <text xml:lang="en">All currently active transactions continue to function normally. The count retrieval failure does not affect existing transaction operations.</text>
+      <text xml:lang="de">Alle derzeit aktiven Transaktionen funktionieren weiterhin normal. Der Zählabruffehler wirkt sich nicht auf bestehende Transaktionsoperationen aus.</text>
+    </state>
+    <state name="State Consistency">
+      <text xml:lang="en">No state inconsistency exists. The function exits at the transaction count retrieval phase before any data assembly or return operations.</text>
+      <text xml:lang="de">Es gibt keine Zustandsinkonsistenz. Die Funktion wird in der Transaktionszählabfragephase beendet, bevor Datenausammlung oder Rückgabevorgänge erfolgen.</text>
+    </state>
+    <state name="Device Functionality">
+      <text xml:lang="en">Device functions continue to execute normally. The device remains fully operational and all API functions remain accessible.</text>
+      <text xml:lang="de">Gerätefunktionen werden weiterhin normal ausgeführt. Das Gerät bleibt vollständig betriebsbereit und alle API-Funktionen bleiben zugänglich.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of current transaction count failed - cannot determine number of open transactions</text>
+      <text xml:lang="de">Anzeichen: Abruf der aktuellen Transaktionsanzahl fehlgeschlagen - kann die Anzahl der offenen Transaktionen nicht bestimmen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Transaction Management, Information Retrieval, Transaction Counting, Device State</text>
+      <text xml:lang="de">Themen: Transaktions-Management, Informationsabfrage, Transaktionszählung, Gerätezustand</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getCurrentNumberOfTransactions when transaction count retrieval fails</text>
+      <text xml:lang="de">Wird von getCurrentNumberOfTransactions ausgelöst, wenn der Transaktionszählabruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Information function queries number of open transactions</text>
+      <text xml:lang="de">Informationsfunktion fragt Anzahl der offenen Transaktionen ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains transaction state tracking</text>
+      <text xml:lang="de">Das Gerät verwaltet die Transaktionszustandsverfolgung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents transaction count information</text>
+      <text xml:lang="de">Abruffehler verhindert Transaktionszählinformationen</text>
+    </note>
+  </implementationContext>
+</exception>
+

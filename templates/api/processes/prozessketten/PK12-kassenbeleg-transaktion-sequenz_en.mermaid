@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant C as Customer
+    participant Ca as Cashier
+    participant P as POS System
+    participant T as TSE
+
+    C->>Ca: Bring items to checkout
+    Ca->>P: Scan first item
+    
+    Note over P,T: Transaction starts IMMEDIATELY
+    P->>T: startTransaction(clientId, processData: empty, processType: empty)
+    T->>T: Generate transaction number
+    T-->>P: transactionNumber, logTime, signatureCounter
+    
+    loop More Items
+        Ca->>P: Scan item
+        P->>P: Add price
+    end
+    
+    Note over P: No updateTransaction calls! All data stays in system
+    
+    C->>Ca: Make payment
+    Ca->>P: Enter payment method
+    
+    Note over P: Create processData: TransactionType^Taxes^Payments, e.g. "Beleg^10.50_2.30_0.00_0.00_0.00^12.80:Bar"
+    
+    P->>T: finishTransaction(clientId, transactionNumber, processData: KassenbelegV1Data, processType: "Kassenbeleg-V1")
+    T->>T: Create signature
+    T->>T: Save transaction log
+    T-->>P: logTime, signatureValue, signatureCounter
+    
+    P->>P: Generate QR-code with signature data
+    P->>Ca: Print receipt with QR-code
+    Ca->>C: Hand over receipt
+    
+    Note over C,T: Transaction closed - immediately verifiable

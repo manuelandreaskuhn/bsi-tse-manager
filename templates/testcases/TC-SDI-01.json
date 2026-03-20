@@ -1,0 +1,249 @@
+{
+  "testcase_id": "TC-SDI-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Standardschnittstelle (SDI): Implementierung, Funktionen, Fehlermeldungen und Parameter",
+  "description": "Prüft SDI-Implementierung auf Konformität mit BSI TR-03151-2 für alle Funktionen, Fehlermeldungen und Parameter.",
+  "purpose": "Prüfung, ob die Einbindungsschnittstelle in mindestens einer durch die BSI TR-03151-2 vorgegebene Implementierung vorliegt.",
+  "module": "Integration Interface",
+  "submodule": "SDI",
+  "function": "alle SDI-Funktionen (gemäß BSI TR-03151-2)",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SDI"
+  ],
+  "source_tests": [
+    "SDI_IMP_01",
+    "SDI_FUN_01",
+    "SDI_FUN_01_Template",
+    "SDI_ERR_01",
+    "SDI_ERR_01_Template",
+    "SDI_PAR_01",
+    "SDI_PAR_01_Template"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Ein Aufzeichnungssystem mit der Seriennummer $client1 ist registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der startTransaction-Funktion über die SDI-Schnittstelle gemäß BSI TR-03151-2.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Ausführung ohne Fehler.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Transaktionsnummer $tn1 zurückgegeben.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SDI_IMP_01"
+    },
+    {
+      "step": 6,
+      "type": "VERIFY",
+      "title": "Schnittstellenimplementierung prüfen (SDI_IMP_01, FP)",
+      "result": null,
+      "instruction": "Schnittstellenimplementierung prüfen (SDI_IMP_01, FP)",
+      "checks": [
+        {
+          "description": "Einbindungsschnittstelle in mindestens einer BSI TR-03151-2 Variante implementiert",
+          "expected": "Konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "Funktionsnamen auf BSI TR-03151-2 Konformität prüfen (SDI_FUN_01)",
+      "result": null,
+      "instruction": "Funktionsnamen auf BSI TR-03151-2 Konformität prüfen (SDI_FUN_01)",
+      "function": "Jede SDI-Funktion aufrufen",
+      "checks": [
+        {
+          "description": "Alle Funktionsnamen entsprechen exakt dem Standard in BSI TR-03151-2",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Eingabeparameter jeder Funktion entsprechen BSI TR-03151-2",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Rückgabeparameter jeder Funktion entsprechen BSI TR-03151-2",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "type": "VERIFY",
+      "title": "Fehlermeldungen auf BSI TR-03151-2 Konformität prüfen (SDI_ERR_01)",
+      "result": null,
+      "instruction": "Fehlermeldungen auf BSI TR-03151-2 Konformität prüfen (SDI_ERR_01)",
+      "function": "Fehlerbedingungen für jede SDI-Funktion provozieren",
+      "checks": [
+        {
+          "description": "Alle Fehlermeldungen entsprechen exakt dem Standard in BSI TR-03151-2",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlermeldungen in korrekten Situationen ausgelöst",
+          "expected": "Korrekte Auslösebedingungen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Parameter-Werte auf BSI TR-03151-2 Konformität prüfen (SDI_PAR_01)",
+      "result": null,
+      "instruction": "Parameter-Werte auf BSI TR-03151-2 Konformität prüfen (SDI_PAR_01)",
+      "checks": [
+        {
+          "description": "Datentypen aller Parameter konform mit BSI TR-03151-2",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Längen und Wertebereiche aller Parameter konform",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Formate (z.B. Zeitformate, Kodierungen) konform",
+          "expected": "Exakt konform",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03151-2"
+  ]
+}

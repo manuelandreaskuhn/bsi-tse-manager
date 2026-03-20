@@ -1,0 +1,84 @@
+sequenceDiagram
+    actor Nutzer as Nutzer/Kassensystem
+    participant KS as Kassensystem
+    participant TSE as TSE
+    participant SM as Sicherheitsmodul
+    participant Speicher as Speichermedium
+
+    Note over Nutzer,Speicher: VORAUSSETZUNG: Client ist registriert
+
+    rect rgb(200, 220, 255)
+    Note over Nutzer,Speicher: PHASE 1: TRANSAKTIONSBEGINN
+    Nutzer->>KS: Vorgang beginnt (z.B. Kunde startet Kauf)
+    KS->>TSE: startTransaction(clientId, processData, processType)
+    activate TSE
+    TSE->>SM: Inkrementiere Transaktionszähler
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM->>SM: Erstelle Signatur über Daten
+    SM-->>TSE: Transaktionsnummer, Signatur, Zeitstempel
+    deactivate SM
+    TSE->>Speicher: Speichere startTransaction-Log
+    TSE-->>KS: transactionNumber, serialNumber,<br/>signatureValue, signatureCounter, logTime
+    deactivate TSE
+    KS-->>Nutzer: Transaktion gestartet
+    end
+
+    rect rgb(255, 255, 200)
+    Note over Nutzer,Speicher: PHASE 2: UPDATES (0-n mal)
+    Nutzer->>KS: Vorgang entwickelt sich (neue Daten)
+    KS->>TSE: updateTransaction(clientId, transactionNumber,<br/>processData, processType)
+    activate TSE
+    
+    alt Variante A: Sofortige Signatur
+        TSE->>SM: Signiere Update sofort
+        activate SM
+        SM->>SM: Signaturzähler++
+        SM->>SM: Erstelle Signatur
+        SM-->>TSE: Signatur, Zeitstempel
+        deactivate SM
+        TSE->>Speicher: Speichere updateTransaction-Log
+        TSE-->>KS: signatureValue, signatureCounter, logTime
+    else Variante B: Aggregierte Signatur
+        TSE->>SM: Sammle Daten
+        activate SM
+        SM->>SM: Konkateniere mit vorherigen Updates
+        SM-->>TSE: OK
+        deactivate SM
+        TSE-->>KS: OK (keine Signatur-Rückgabe)
+    end
+    deactivate TSE
+    KS-->>Nutzer: Update erfasst
+    
+    Note over Nutzer,Speicher: (Optional weitere Updates...)
+    end
+
+    rect rgb(200, 255, 200)
+    Note over Nutzer,Speicher: PHASE 3: TRANSAKTIONSABSCHLUSS
+    Nutzer->>KS: Vorgang abgeschlossen (z.B. Zahlung erfolgt)
+    KS->>TSE: finishTransaction(clientId, transactionNumber,<br/>processData, processType)
+    activate TSE
+    
+    alt Bei Variante B: Noch ungesicherte Updates vorhanden
+        TSE->>SM: Erstelle Update-Signatur für gesammelte Daten
+        activate SM
+        SM->>SM: Signaturzähler++
+        SM->>SM: Erstelle Signatur über Updates
+        SM-->>TSE: Update-Signatur, Zeitstempel
+        deactivate SM
+        TSE->>Speicher: Speichere verzögerte updateTransaction-Log
+    end
+    
+    TSE->>SM: Erstelle finishTransaction-Signatur
+    activate SM
+    SM->>SM: Signaturzähler++
+    SM->>SM: Erstelle Signatur
+    SM-->>TSE: Signatur, Zeitstempel
+    deactivate SM
+    TSE->>Speicher: Speichere finishTransaction-Log
+    TSE-->>KS: signatureValue(s), signatureCounter(s), logTime(s)
+    deactivate TSE
+    KS-->>Nutzer: Vorgang abgeschlossen und gesichert
+    end
+
+    Note over Nutzer,Speicher: ERGEBNIS: Vollständig protokollierte Transaktion<br/>mit mindestens 2 Log-Nachrichten (start + finish)

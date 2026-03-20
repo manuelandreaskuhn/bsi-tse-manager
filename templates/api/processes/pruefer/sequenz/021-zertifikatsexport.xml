@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>021</processId>
+    <processName>
+        <text xml:lang="en">Export Certificates</text>
+        <text xml:lang="de">Zertifikatsexport</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Export of only the TSE certificate chain without log messages. Enables fast validation of certificates without complete data export.</text>
+        <text xml:lang="de">Export nur der Zertifikatskette der TSE ohne Log-Nachrichten. Ermöglicht schnelle Validierung der Zertifikate ohne vollständigen Datenexport.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Tax Authority/Auditor</text>
+            <text xml:lang="de">Finanzbehörde/Prüfer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate Chain</text>
+            <text xml:lang="de">Zertifikatskette</text>
+        </object>
+        <object>
+            <text xml:lang="en">TSE Certificate</text>
+            <text xml:lang="de">TSE-Zertifikat</text>
+        </object>
+        <object>
+            <text xml:lang="en">Intermediate CA Certificates</text>
+            <text xml:lang="de">Intermediate CA Zertifikate</text>
+        </object>
+        <object>
+            <text xml:lang="en">Root CA Certificate</text>
+            <text xml:lang="de">Root CA Zertifikat</text>
+        </object>
+        <object>
+            <text xml:lang="en">TAR Archive</text>
+            <text xml:lang="de">TAR-Archiv</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>exportLoggingCertificates</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>exportedData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">TAR archive with certificates only</text>
+                <text xml:lang="de">TAR-Archiv nur mit Zertifikaten</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>fileName</name>
+            <type>string</type>
+            <description>
+                <text xml:lang="en">Filename of the TAR archive</text>
+                <text xml:lang="de">Dateiname des TAR-Archivs</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>X.509-Certificates</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorExportLoggingCertificateFailed</exception>
+        <exception>ErrorFunctionFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.4</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+        <reference>BSI TR-03153-1 Chapter 7.3 (PKI)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">NO AUTHENTICATION required. This TAR archive contains ONLY certificates, no log messages or info.csv. Useful for quick certificate verification or when only certificates are needed.</text>
+        <text xml:lang="de">KEINE Authentifizierung erforderlich. Dieses TAR-Archiv enthält NUR Zertifikate, keine Log-Nachrichten oder info.csv. Nützlich für schnelle Zertifikatsprüfung oder wenn nur die Zertifikate benötigt werden.</text>
+    </notes>
+</process>

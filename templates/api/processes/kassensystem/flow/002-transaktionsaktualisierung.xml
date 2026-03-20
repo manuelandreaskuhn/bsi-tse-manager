@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>002</processId>
+    <processName>
+        <text xml:lang="en">Transaction Update</text>
+        <text xml:lang="de">Transaktionsaktualisierung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Update of an ongoing transaction with new data. The security module decides whether to protect the data immediately (Variant A) or to collect it (Variant B).</text>
+        <text xml:lang="de">Aktualisierung einer laufenden Transaktion mit neuen Daten. Das Sicherheitsmodul entscheidet, ob die Daten sofort abgesichert (Variante A) oder gesammelt werden (Variante B).</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Recording System (ERS)</text>
+            <text xml:lang="de">Aufzeichnungssystem (ERS)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Message</text>
+            <text xml:lang="de">Log-Nachricht</text>
+        </object>
+        <object>
+            <text xml:lang="en">Update Data Buffer</text>
+            <text xml:lang="de">Update-Daten-Puffer</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>updateTransaction</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Serial number of the recording system</text>
+                <text xml:lang="de">Seriennummer des Aufzeichnungssystems</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Transaction number of the transaction to be updated</text>
+                <text xml:lang="de">Transaktionsnummer der zu aktualisierenden Transaktion</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">New data of the process</text>
+                <text xml:lang="de">Neue Daten des Vorgangs</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processType</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Type of the process</text>
+                <text xml:lang="de">Art des Vorgangs</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>logTime</name>
+            <type>GeneralizedTime</type>
+            <description>
+                <text xml:lang="en">Time of logging (only in Variant A)</text>
+                <text xml:lang="de">Zeitpunkt der Protokollierung (nur bei Variante A)</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signatureCounter</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Signature counter (only in Variant A)</text>
+                <text xml:lang="de">Signaturzähler (nur bei Variante A)</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signature</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Digital signature (only in Variant A)</text>
+                <text xml:lang="de">Digitale Signatur (nur bei Variante A)</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log (updateTransaction)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+        <dataObject>LogTimeType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorClientNotRegistered</exception>
+        <exception>ErrorTransactionNumberNotFound</exception>
+        <exception>ErrorUpdateTransactionFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorTimeNotSet</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.2</reference>
+        <reference>BSI TR-03153-1 Chapter 3.5.2</reference>
+        <reference>BSI TR-03153-1 Chapter 3.5.4</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">The second phase of transaction logging. The security module can either protect updates immediately (Variant A) or collect them (Variant B).</text>
+        <text xml:lang="de">Die zweite Phase der Transaktionsprotokollierung. Das Sicherheitsmodul kann Updates entweder direkt absichern (Variante A) oder sammeln (Variante B).</text>
+    </notes>
+</process>

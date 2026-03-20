@@ -1,0 +1,32 @@
+flowchart TD
+    Start([User: getOpenTransactions<br/>call])
+    Start --> CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| GetTransactions[SM: Get list of all<br/>open transactions]
+    
+    GetTransactions --> CheckGet{Retrieval<br/>successful?}
+    
+    CheckGet -->|No| ErrorGet[Exception:<br/>ErrorGetOpenTransactionsFailed]
+    CheckGet -->|Yes| BuildList[Create list with<br/>transaction numbers]
+    
+    BuildList --> CheckEmpty{List<br/>empty?}
+    
+    CheckEmpty -->|Yes| ReturnEmpty[Return:<br/>Empty list]
+    CheckEmpty -->|No| ReturnList[Return:<br/>List of transactionNumbers]
+    
+    ReturnEmpty --> End([End])
+    ReturnList --> End
+    
+    ErrorInit --> End
+    ErrorGet --> End
+    
+    style GetTransactions fill:#87CEEB
+    style BuildList fill:#87CEEB
+    style ReturnList fill:#90EE90
+    
+    Note1[Open Transactions:<br/>- startTransaction called<br/>- finishTransaction not yet called]
+    GetTransactions -.-> Note1
+    
+    Note2[Usage:<br/>- Status monitoring<br/>- Troubleshooting<br/>- Check before update/blocking]
+    ReturnList -.-> Note2

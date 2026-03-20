@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="UnblockResult" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+  <name>UnblockResult</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Enumeration used in system log event data for UnblockResult.</description>
+  <values>
+    <value>
+      <name>success</name>
+      <numericValue>0</numericValue>
+      <description>success (0)</description>
+    </value>
+    <value>
+      <name>unknownUserId</name>
+      <numericValue>1</numericValue>
+      <description>unknownUserId (1)</description>
+    </value>
+    <value>
+      <name>incorrectPuk</name>
+      <numericValue>2</numericValue>
+      <description>incorrectPuk (2)</description>
+    </value>
+    <value>
+      <name>unblockingTemporarilyBlocked</name>
+      <numericValue>3</numericValue>
+      <description>unblockingTemporarilyBlocked (3)</description>
+    </value>
+    <value>
+      <name>resettingError</name>
+      <numericValue>4</numericValue>
+      <description>resettingError (4)</description>
+    </value>
+    <value>
+      <name>errorSettingNewPinFailed</name>
+      <numericValue>5</numericValue>
+      <description>errorSettingNewPinFailed (5)</description>
+    </value>
+    <value>
+      <name>errorResettingRetryCounterFailed</name>
+      <numericValue>6</numericValue>
+      <description>errorResettingRetryCounterFailed (6)</description>
+    </value>
+  </values>
+</enum>

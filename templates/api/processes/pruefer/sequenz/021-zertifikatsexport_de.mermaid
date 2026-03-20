@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant Prüfer as Finanzbehörde/Prüfer
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+
+    Prüfer->>TSE: exportLoggingCertificates()<br/>(keine Authentifizierung erforderlich)
+    activate TSE
+    
+    TSE->>TSE: Hole aktuelle Zertifikatskette
+    
+    TSE->>TSE: Sammle Zertifikate:<br/>- TSE-Zertifikat<br/>- Intermediate CA Zertifikate<br/>- Root CA Zertifikat
+    
+    alt Zertifikate nicht verfügbar
+        TSE-->>Prüfer: Exception:<br/>ErrorExportLoggingCertificateFailed
+    else Zertifikate verfügbar
+        TSE->>TSE: Packe TAR-Archiv:<br/>nur Zertifikate (*.crt)
+        
+        TSE->>TSE: Generiere Dateinamen:<br/>[SERIENNUMMER]_certificates.tar
+        
+        TSE-->>Prüfer: TAR-Archiv + Dateiname
+    end
+    deactivate TSE
+    
+    Note over Prüfer: Kleineres Archiv,<br/>nur Zertifikate<br/>(keine Log-Nachrichten)
+    
+    Prüfer->>Prüfer: Extrahiere Zertifikate
+    Prüfer->>Prüfer: Validiere Zertifikatskette
+    Prüfer->>Prüfer: Prüfe Gültigkeit & Widerruf

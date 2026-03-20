@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorClientIdNotFound" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorClientIdNotFound</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if no data has been found for the provided clientID in the context of the export of stored data. The exportFilteredTransactionLogs function attempts to export transaction log data filtered by a specific clientId, but no matching data exists for that client in the storage.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn für die bereitgestellte clientID im Zusammenhang mit dem Export gespeicherter Daten keine Daten gefunden wurden. Die Funktion exportFilteredTransactionLogs versucht, Transaktionsprotokolldaten gefiltert nach einer bestimmten clientId zu exportieren, aber es existieren keine passenden Daten für diesen Client im Speicher.</text>
+  </description>
+  <category>Data Export</category>
+  <subcategory>Transaction Filtering</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorClientIdNotFound that is thrown if no data has been found for the provided clientID in the context of the export of stored data.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorClientIdNotFound, die ausgelöst wird, wenn für die bereitgestellte clientID im Zusammenhang mit dem Export gespeicherter Daten keine Daten gefunden wurden.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The ErrorClientIdNotFound exception occurs during transaction log export operations when a specified clientId has no associated transaction log data in storage. This exception is raised after verifying that the clientId does not have any matching transaction data, indicating that the specified client either has not performed any transactions, or all its transaction data has been deleted or previously exported. The exception is raised specifically when a clientId filter is applied to the exportFilteredTransactionLogs function and no data matches the filter criteria.</text>
+      <text xml:lang="de">Die Ausnahme ErrorClientIdNotFound tritt während Transaktionsprotokolleport-Vorgängen auf, wenn eine angegebene clientId keine zugeordneten Transaktionsprotokolldaten im Speicher hat. Diese Ausnahme wird ausgelöst, nachdem überprüft wurde, dass die clientId keine passenden Transaktionsdaten hat, was darauf hinweist, dass der angegebene Client entweder keine Transaktionen durchgeführt hat oder alle seine Transaktionsdaten gelöscht oder zuvor exportiert wurden. Die Ausnahme wird speziell ausgelöst, wenn ein clientId-Filter auf die Funktion exportFilteredTransactionLogs angewendet wird und keine Daten den Filterkriterien entsprechen.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.17 Transaction Export - exportFilteredTransactionLogs Function (3.3.17.4)</section>
+    <requirement>
+      <text xml:lang="en">The exception ErrorClientIdNotFound SHALL be raised by the function exportFilteredTransactionLogs if no data is available for the provided clientId. If the parameter clientId is provided and no transaction data is available for this clientId in storage, the function SHALL raise the exception ErrorClientIdNotFound and exit the function without returning any export data. This ensures that the application is informed when a client filter does not match any stored transactions.</text>
+      <text xml:lang="de">Die Ausnahme ErrorClientIdNotFound sollte von der Funktion exportFilteredTransactionLogs ausgelöst werden, wenn für die bereitgestellte clientId keine Daten verfügbar sind. Falls der Parameter clientId bereitgestellt wird und für diese clientId im Speicher keine Transaktionsdaten verfügbar sind, sollte die Funktion die Ausnahme ErrorClientIdNotFound auslösen und die Funktion beenden, ohne Exportdaten zurückzugeben. Dies stellt sicher, dass die Anwendung informiert wird, wenn ein Client-Filter keine gespeicherten Transaktionen entspricht.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Transaction log export operations using the exportFilteredTransactionLogs function when a client-specific filter is applied without any matching data</text>
+      <text xml:lang="de">Transaktionsprotokolleport-Vorgänge mit der Funktion exportFilteredTransactionLogs, wenn ein Client-spezifischer Filter ohne passende Daten angewendet wird</text>
+    </applicability>
+    <reference>exportFilteredTransactionLogs – Function (3.3.17) - Section 3.3.17.4 Exception Specification</reference>
+  </specification>
+  <thrownBy>
+    <function>exportFilteredTransactionLogs</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls exportFilteredTransactionLogs function with filter parameters including clientId</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion exportFilteredTransactionLogs mit Filterparametern einschließlich clientId auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft den Authentifizierungsstatus (falls von der Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung (falls von der Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function checks device initialization status</text>
+      <text xml:lang="de">Funktion prüft den Geräteinitalisierungsstatus</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function validates filter parameters for format and validity</text>
+      <text xml:lang="de">Funktion validiert Filterparameter auf Format und Gültigkeit</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function queries device storage for transactions matching filter criteria</text>
+      <text xml:lang="de">Funktion fragt Gerätespeicher nach Transaktionen ab, die Filterkriterien entsprechen</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If clientId filter is specified and no transactions match → ErrorClientIdNotFound raised and function exits</text>
+      <text xml:lang="de">Falls clientId-Filter angegeben ist und keine Transaktionen entsprechen → ErrorClientIdNotFound wird ausgelöst und Funktion wird beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If transactions match the filter criteria, function retrieves matching transaction log data</text>
+      <text xml:lang="de">Falls Transaktionen den Filterkriterien entsprechen, ruft die Funktion passende Transaktionsprotokolldaten ab</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function packages transaction data into export structure</text>
+      <text xml:lang="de">Funktion packt Transaktionsdaten in Exportstruktur</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function returns export data containing filtered transactions to the user</text>
+      <text xml:lang="de">Funktion gibt Exportdaten mit gefilterten Transaktionen an Benutzer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify the clientId actually exists using getRegisteredClients</text>
+      <text xml:lang="de">Überprüfen Sie mit getRegisteredClients, dass die clientId tatsächlich existiert</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm clientId spelling and format matches registered client</text>
+      <text xml:lang="de">Bestätigen Sie, dass die Schreibweise und das Format der clientId dem registrierten Client entspricht</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check if client was already deregistered and no longer available</text>
+      <text xml:lang="de">Überprüfen Sie, ob der Client bereits abgemeldet wurde und nicht mehr verfügbar ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use valid registered clientId for export operations</text>
+      <text xml:lang="de">Verwenden Sie eine gültige registrierte clientId für Exportvorgänge</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review data selection criteria before export</text>
+      <text xml:lang="de">Überprüfen Sie die Datenauswahlkriterien vor dem Export</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorNoDataAvailable</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state>
+      <text xml:lang="en">Export operation not completed - no data returned to caller</text>
+      <text xml:lang="de">Exportoperation nicht abgeschlossen - keine Daten an Aufrufer zurückgegeben</text>
+    </state>
+    <state>
+      <text xml:lang="en">Transaction storage unchanged - no data was retrieved or removed</text>
+      <text xml:lang="de">Transaktionsspeicher unverändert - keine Daten wurden abgerufen oder entfernt</text>
+    </state>
+    <state>
+      <text xml:lang="en">Device state unchanged - no modifications made during failed export attempt</text>
+      <text xml:lang="de">Gerätezustand unverändert - keine Änderungen während fehlgeschlagenen Exportversuchs vorgenommen</text>
+    </state>
+    <state>
+      <text xml:lang="en">Filter criteria not matched - the specified clientId has no transaction data</text>
+      <text xml:lang="de">Filterkriterien nicht erfüllt - die angegebene clientId hat keine Transaktionsdaten</text>
+    </state>
+    <state>
+      <text xml:lang="en">Function exits without creating export data - export operation failed to retrieve data</text>
+      <text xml:lang="de">Funktion wird beendet, ohne Exportdaten zu erstellen - Exportoperation konnte keine Daten abrufen</text>
+    </state>
+    <state>
+      <text xml:lang="en">No state inconsistency - function exits at filter matching phase</text>
+      <text xml:lang="de">Keine Statusinkonsistenz - Funktion wird in Filtervergleichsphase beendet</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Cannot find data for the specified client ID during export or filtering operations</text>
+      <text xml:lang="de">Anzeichen: Kann keine Daten für die angegebene Client-ID während Export- oder Filtervorgängen finden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Data Export, Client Identification, Transaction Filtering, Data Retrieval</text>
+      <text xml:lang="de">Themen: Dateneport, Client-Identifikation, Transaktionsfilterung, Datenabruf</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by exportFilteredTransactionLogs when specified clientId has no matching data</text>
+      <text xml:lang="de">Wird von exportFilteredTransactionLogs ausgelöst, wenn die angegebene clientId keine passenden Daten hat</text>
+    </note>
+    <note>
+      <text xml:lang="en">Export functions filter transaction logs by clientId parameter</text>
+      <text xml:lang="de">Exportfunktionen filtern Transaktionsprotokolle nach clientId-Parameter</text>
+    </note>
+    <note>
+      <text xml:lang="en">Search operation returns empty result when clientId does not exist</text>
+      <text xml:lang="de">Suchoperation gibt leeres Ergebnis zurück, wenn clientId nicht existiert</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application must use valid registered clientIds for export operations</text>
+      <text xml:lang="de">Anwendung muss gültige registrierte clientIds für Exportvorgänge verwenden</text>
+    </note>
+  </implementationContext>
+</exception>
+

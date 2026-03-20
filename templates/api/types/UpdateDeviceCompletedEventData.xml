@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="UpdateDeviceCompletedEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>UpdateDeviceCompletedEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type UpdateDeviceCompletedEventData.</description>
+  <asn1Definition>UpdateDeviceCompletedEventData ::= SEQUENCE {
+  updateOutcome  UpdateOutcome,
+  reasonForFailure  PrintableString OPTIONAL,
+  deviceInformationAfterUpdate  DeviceInformationSet
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>updateOutcome</name>
+      <type>UpdateOutcome</type>
+      <optional>false</optional>
+      <description>Field updateOutcome of type UpdateOutcome</description>
+    </field>
+    <field>
+      <name>reasonForFailure</name>
+      <type>PrintableString</type>
+      <optional>true</optional>
+      <description>Field reasonForFailure of type PrintableString</description>
+    </field>
+    <field>
+      <name>deviceInformationAfterUpdate</name>
+      <type>DeviceInformationSet</type>
+      <optional>false</optional>
+      <description>Field deviceInformationAfterUpdate of type DeviceInformationSet</description>
+    </field>
+  </fields>
+</type>

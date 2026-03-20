@@ -1,0 +1,56 @@
+flowchart TD
+    Start([User: Initiate Process])
+    Start --> Identify{Type of<br/>Process?}
+    
+    Identify --> |Preparation Timestamp| PrepCase[Scenario: Multi-System<br/>without Order Security]
+    Identify --> |Training| TrainCase[Scenario: Training Mode]
+    Identify --> |System Test| TestCase[Scenario: TSE Test]
+    Identify --> |Other| OtherCase[Scenario: Custom Process]
+    
+    PrepCase --> PrepText[Prepare Text:<br/>'Preparation Table 5 - 14:23']
+    TrainCase --> TrainText[Prepare Text:<br/>'Training Employee 4711']
+    TestCase --> TestText[Prepare Text:<br/>'System Test - TSE Connectivity']
+    OtherCase --> OtherText[Prepare Text:<br/>Descriptive Free Text]
+    
+    PrepText --> StartTx
+    TrainText --> StartTx
+    TestText --> StartTx
+    OtherText --> StartTx
+    
+    StartTx[System: startTransaction<br/>processData: empty<br/>processType: empty]
+    
+    StartTx --> StartTSE[TSE: Start Transaction<br/>Create Transaction Number]
+    
+    StartTSE --> TxNumber[Receive Transaction Number]
+    
+    TxNumber --> Process[Execute Process]
+    
+    Process --> FinishTx[System: finishTransaction<br/>processData: Free Text<br/>processType: 'SonstigerVorgang']
+    
+    FinishTx --> Example[Examples:<br/>'Preparation Table 5 - 14:23'<br/>'Training Employee ID: 4711'<br/>'Cash Withdrawal Bank: 500.00 EUR']
+    
+    Example --> FinishTSE[TSE: Finish Transaction<br/>Create Signature]
+    
+    FinishTSE --> SaveLog[Save Transaction Log]
+    
+    SaveLog --> Decision{Further<br/>Action?}
+    
+    Decision -->|Preparation Timestamp| LinkToKB[Later: Print Timestamp<br/>on Receipt]
+    Decision -->|Training/Test| Document[Optional: Document<br/>in System]
+    Decision -->|Other| Archive[Optional: Archive]
+    
+    LinkToKB --> End([End])
+    Document --> End
+    Archive --> End
+    
+    style StartTx fill:#e1f5ff
+    style FinishTx fill:#e1f5ff
+    style Example fill:#fff4e1
+    style PrepCase fill:#e8f5e9
+    style TrainCase fill:#fff9c4
+    style TestCase fill:#f3e5f5
+    style OtherCase fill:#fce4ec
+    
+    Note1[Note: Free-form Data<br/>No Strict Structure<br/>Readable Text Recommended]
+    
+    style Note1 fill:#fff8e1

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>010</processId>
+    <processName>
+        <text xml:lang="en">Self Test</text>
+        <text xml:lang="de">Selbsttest</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Execution of a self test of the TSE to verify the functionality of all components (security module, storage, cryptography, interfaces, time management)</text>
+        <text xml:lang="de">Durchführung eines Selbsttests der TSE zur Überprüfung der Funktionsfähigkeit aller Komponenten (Sicherheitsmodul, Speicher, Kryptographie, Schnittstellen, Zeitführung)</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Crypto Core</text>
+            <text xml:lang="de">Krypto-Kern</text>
+        </object>
+        <object>
+            <text xml:lang="en">Integration Interface</text>
+            <text xml:lang="de">Einbindungsschnittstelle</text>
+        </object>
+        <object>
+            <text xml:lang="en">Time Management</text>
+            <text xml:lang="de">Zeitführung</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>selfTest</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (selfTest)</dataObject>
+        <dataObject>SelfTestEventData</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorSelfTestFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorFunctionFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.1.2</reference>
+        <reference>BSI TR-03153-1 Chapter 5.1</reference>
+        <reference>BSI-CC-PP-0105 (Security Module Protection Profile)</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">The self test can be called by any user without authentication. The test result is documented in the selfTest system log message. A log message is created even if the test fails.</text>
+        <text xml:lang="de">Der Selbsttest kann von jedem Nutzer ohne Authentifizierung aufgerufen werden. Das Test-Ergebnis wird in der selfTest System-Log-Nachricht dokumentiert. Auch bei fehlgeschlagenem Test wird eine Log-Nachricht erstellt.</text>
+    </notes>
+</process>

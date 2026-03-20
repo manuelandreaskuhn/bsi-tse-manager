@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK10</chainId>
+    <name>
+        <text xml:lang="en">Bestellung Transaction (DSFinV-K)</text>
+        <text xml:lang="de">Bestellung-Transaktion (DSFinV-K)</text>
+    </name>
+    <description>
+        <text xml:lang="en">DSFinV-K specific transaction process for processType 'Bestellung-V1'. This represents order transactions, typically in gastronomy, where items are ordered over time and secured incrementally. Unlike Kassenbeleg-V1, updateTransaction IS used to secure order items during the ordering process.</text>
+        <text xml:lang="de">DSFinV-K-spezifischer Transaktionsprozess für processType 'Bestellung-V1'. Dies repräsentiert Bestellvorgänge, typischerweise in der Gastronomie, bei denen Artikel über die Zeit bestellt und schrittweise abgesichert werden. Anders als bei Kassenbeleg-V1 WIRD updateTransaction verwendet, um Bestellpositionen während des Bestellvorgangs abzusichern.</text>
+    </description>
+    <category>
+        <text xml:lang="en">DSFinV-K Transaction Types</text>
+        <text xml:lang="de">DSFinV-K Transaktionstypen</text>
+    </category>
+    <actors>
+        <actor>
+            <text xml:lang="en">Customer/Guest</text>
+            <text xml:lang="de">Kunde/Gast</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Waiter/Service Staff</text>
+            <text xml:lang="de">Kellner/Servicepersonal</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Order Terminal/POS</text>
+            <text xml:lang="de">Bestellterminal/Kasse</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">Order Data (Bestellung)</text>
+            <text xml:lang="de">Bestelldaten (Bestellung)</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Type: Bestellung-V1</text>
+            <text xml:lang="de">Transaktionstyp: Bestellung-V1</text>
+        </object>
+        <object>
+            <text xml:lang="en">BestellungV1Data Structure (CSV)</text>
+            <text xml:lang="de">BestellungV1Data Struktur (CSV)</text>
+        </object>
+        <object>
+            <text xml:lang="en">ABRECHNUNGSKREIS (billing circle)</text>
+            <text xml:lang="de">ABRECHNUNGSKREIS (Abrechnungskreis)</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>startTransaction</function>
+        <function>updateTransaction</function>
+        <function>finishTransaction</function>
+    </interfaceFunctions>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized</text>
+            <text xml:lang="de">TSE ist initialisiert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Client is registered</text>
+            <text xml:lang="de">Client ist registriert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">Time is set</text>
+            <text xml:lang="de">Zeit ist gesetzt</text>
+        </prerequisite>
+    </prerequisites>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Start Transaction (with or without initial data)</text>
+                <text xml:lang="de">Transaktion starten (mit oder ohne Initialdaten)</text>
+            </name>
+            <function>
+                <name>startTransaction</name>
+                <linkedProcess>
+                    <id>001</id>
+                    <name>
+                        <text xml:lang="en">Transaction Start</text>
+                        <text xml:lang="de">Transaktionsstart</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call startTransaction. For Bestellung-V1, processData and processType can be empty at start, or optionally contain initial order items. Typically started when the first order is taken.</text>
+                <text xml:lang="de">Aufruf von startTransaction. Bei Bestellung-V1 können processData und processType beim Start leer sein oder optional bereits erste Bestellpositionen enthalten. Typischerweise gestartet, wenn die erste Bestellung aufgenommen wird.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Registered client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>Empty or initial order items in CSV format</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>Empty or "Bestellung-V1"</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Update Transaction (multiple times)</text>
+                <text xml:lang="de">Transaktion aktualisieren (mehrmals)</text>
+            </name>
+            <function>
+                <name>updateTransaction</name>
+                <linkedProcess>
+                    <id>002</id>
+                    <name>
+                        <text xml:lang="en">Transaction Update</text>
+                        <text xml:lang="de">Transaktionsaktualisierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call updateTransaction each time new order items are added. The processData contains the NEW items in CSV format. This can be called 0-n times. Each call secures the added items with a TSE signature.</text>
+                <text xml:lang="de">Aufruf von updateTransaction jedes Mal, wenn neue Bestellpositionen hinzukommen. Die processData enthalten die NEUEN Positionen im CSV-Format. Dies kann 0-n mal aufgerufen werden. Jeder Aufruf sichert die hinzugefügten Positionen mit einer TSE-Signatur ab.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Same client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>transactionNumber</name>
+                    <value>From startTransaction response</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>BestellungV1Data: "2;\"Schnitzel\";12.50\r1;\"Bier 0,5l\";4.20"</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>"Bestellung-V1"</value>
+                </dataItem>
+            </inputData>
+            <optional>true</optional>
+            <frequency>0-n times</frequency>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Finish Transaction (with final data)</text>
+                <text xml:lang="de">Transaktion abschließen (mit finalen Daten)</text>
+            </name>
+            <function>
+                <name>finishTransaction</name>
+                <linkedProcess>
+                    <id>003</id>
+                    <name>
+                        <text xml:lang="en">Transaction Completion</text>
+                        <text xml:lang="de">Transaktionsabschluss</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">Call finishTransaction when all orders are complete and the bill is being generated. The processData can contain final items or be empty if all items were already secured via updateTransaction.</text>
+                <text xml:lang="de">Aufruf von finishTransaction wenn alle Bestellungen abgeschlossen sind und die Rechnung erstellt wird. Die processData können finale Positionen enthalten oder leer sein, wenn alle Positionen bereits via updateTransaction abgesichert wurden.</text>
+            </description>
+            <inputData>
+                <dataItem>
+                    <name>clientId</name>
+                    <value>Same client ID</value>
+                </dataItem>
+                <dataItem>
+                    <name>transactionNumber</name>
+                    <value>From startTransaction response</value>
+                </dataItem>
+                <dataItem>
+                    <name>processData</name>
+                    <value>Final items or empty if all secured via updates</value>
+                </dataItem>
+                <dataItem>
+                    <name>processType</name>
+                    <value>"Bestellung-V1"</value>
+                </dataItem>
+            </inputData>
+            <critical>true</critical>
+        </step>
+        <step>
+            <stepNumber>4</stepNumber>
+            <name>
+                <text xml:lang="en">Link to Invoice (Kassenbeleg)</text>
+                <text xml:lang="de">Verknüpfung mit Rechnung (Kassenbeleg)</text>
+            </name>
+            <description>
+                <text xml:lang="en">The Bestellung transaction is typically followed by a separate Kassenbeleg transaction for the actual payment/invoice. Both are linked via ABRECHNUNGSKREIS (e.g., table number) in the DSFinV-K export data.</text>
+                <text xml:lang="de">Die Bestellung-Transaktion wird typischerweise gefolgt von einer separaten Kassenbeleg-Transaktion für die tatsächliche Bezahlung/Rechnung. Beide werden via ABRECHNUNGSKREIS (z.B. Tischnummer) in den DSFinV-K-Exportdaten verknüpft.</text>
+            </description>
+            <note>
+                <text xml:lang="en">First order start timestamp must be printed on the final receipt</text>
+                <text xml:lang="de">Erster Bestellstart-Zeitstempel muss auf dem finalen Beleg gedruckt werden</text>
+            </note>
+        </step>
+    </steps>
+    <outcome>
+        <processData>
+            <format>
+                <text xml:lang="en">CSV format with columns: Quantity, Description, Price</text>
+                <text xml:lang="de">CSV-Format mit Spalten: Menge, Bezeichnung, Preis</text>
+            </format>
+            <separator>
+                <line>\r (Carriage Return, Unicode U+000D)</line>
+                <column>; (Semicolon, Unicode U+003B)</column>
+            </separator>
+            <field>
+                <name>Menge (Quantity)</name>
+                <description>
+                    <text xml:lang="en">Quantity with minimal decimal places (dot as separator). E.g., "1" for one piece, "0.5" for half</text>
+                    <text xml:lang="de">Menge mit minimal möglichen Dezimalstellen (Punkt als Trenner). z.B. "1" für ein Stück, "0.5" für halb</text>
+                </description>
+            </field>
+            <field>
+                <name>Bezeichnung (Description)</name>
+                <description>
+                    <text xml:lang="en">Description in double quotes. Internal quotes must be doubled. E.g.: "Schnitzel ""Wiener Art"""</text>
+                    <text xml:lang="de">Bezeichnung in doppelten Anführungszeichen. Interne Anführungszeichen müssen verdoppelt werden. z.B.: "Schnitzel ""Wiener Art"""</text>
+                </description>
+            </field>
+            <field>
+                <name>Preis (Price)</name>
+                <description>
+                    <text xml:lang="en">Gross unit price with exactly 2 decimal places</text>
+                    <text xml:lang="de">Brutto-Einzelpreis mit exakt 2 Dezimalstellen</text>
+                </description>
+            </field>
+            <example>
+                <text xml:lang="en">2;"Pizza Margherita";8.50\r1;"Cola 0,5l";3.20\r0.5;"Tiramisu";4.00</text>
+                <text xml:lang="de">2;"Pizza Margherita";8.50\r1;"Cola 0,5l";3.20\r0.5;"Tiramisu";4.00</text>
+            </example>
+        </processData>
+        <artifacts>
+            <artifact>
+                <text xml:lang="en">Incremental TSE log entries for each updateTransaction</text>
+                <text xml:lang="de">Inkrementelle TSE-Log-Einträge für jedes updateTransaction</text>
+            </artifact>
+            <artifact>
+                <text xml:lang="en">Final transaction log entry with order completion</text>
+                <text xml:lang="de">Finaler Transaktions-Log-Eintrag mit Bestellabschluss</text>
+            </artifact>
+            <artifact>
+                <text xml:lang="en">Link to subsequent Kassenbeleg via ABRECHNUNGSKREIS</text>
+                <text xml:lang="de">Verknüpfung zu nachfolgendem Kassenbeleg via ABRECHNUNGSKREIS</text>
+            </artifact>
+        </artifacts>
+    </outcome>
+    <useCases>
+        <useCase>
+            <name>
+                <text xml:lang="en">Restaurant Service (Multiple Order Rounds)</text>
+                <text xml:lang="de">Restaurant-Service (Mehrere Bestellrunden)</text>
+            </name>
+            <description>
+                <text xml:lang="en">Guests arrive, order drinks (updateTransaction), later order food (updateTransaction), possibly order dessert (updateTransaction), finally pay and leave (finishTransaction + separate Kassenbeleg). Transaction can span hours.</text>
+                <text xml:lang="de">Gäste kommen, bestellen Getränke (updateTransaction), später Essen (updateTransaction), evtl. Dessert (updateTransaction), zahlen schließlich und gehen (finishTransaction + separate Kassenbeleg). Transaktion kann Stunden dauern.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Order Terminal (Kitchen/Bar)</text>
+                <text xml:lang="de">Bestellterminal (Küche/Bar)</text>
+            </name>
+            <description>
+                <text xml:lang="en">Orders are entered at a terminal, sent to kitchen/bar. Each order submission triggers updateTransaction to secure the items immediately. Final payment happens at a different location/time.</text>
+                <text xml:lang="de">Bestellungen werden an einem Terminal eingegeben, an Küche/Bar gesendet. Jede Bestellabgabe löst updateTransaction aus, um die Positionen sofort abzusichern. Finale Bezahlung erfolgt an anderem Ort/Zeit.</text>
+            </description>
+        </useCase>
+        <useCase>
+            <name>
+                <text xml:lang="en">Multi-System Gastronomy</text>
+                <text xml:lang="de">Mehrsystem-Gastronomie</text>
+            </name>
+            <description>
+                <text xml:lang="en">Multiple order terminals (devices A, B, C) create separate Bestellung transactions. One central POS (device D) creates the final Kassenbeleg. All linked via ABRECHNUNGSKREIS (table number).</text>
+                <text xml:lang="de">Mehrere Bestellterminals (Geräte A, B, C) erstellen separate Bestellung-Transaktionen. Eine zentrale Kasse (Gerät D) erstellt den finalen Kassenbeleg. Alle verknüpft via ABRECHNUNGSKREIS (Tischnummer).</text>
+            </description>
+        </useCase>
+    </useCases>
+    <importantNotes>
+        <note type="advantage">
+            <text xml:lang="en">Incremental security: Order items are secured as they are added</text>
+            <text xml:lang="de">Schrittweise Absicherung: Bestellpositionen werden abgesichert sobald sie hinzugefügt werden</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Supports long-running transactions: Can span hours without keeping transaction open</text>
+            <text xml:lang="de">Unterstützt langläufige Transaktionen: Kann Stunden dauern ohne Transaktion offen zu halten</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Suitable for multi-device scenarios: Different devices can contribute to the order</text>
+            <text xml:lang="de">Geeignet für Mehrgeräteszenarien: Verschiedene Geräte können zur Bestellung beitragen</text>
+        </note>
+        <note type="advantage">
+            <text xml:lang="en">Separation of order and payment: Order security independent of payment process</text>
+            <text xml:lang="de">Trennung von Bestellung und Bezahlung: Bestellabsicherung unabhängig vom Bezahlvorgang</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">More complex than Kassenbeleg-V1: Requires proper update handling</text>
+            <text xml:lang="de">Komplexer als Kassenbeleg-V1: Erfordert korrekte Update-Handhabung</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Higher TSE load: Multiple signature operations per order</text>
+            <text xml:lang="de">Höhere TSE-Belastung: Mehrere Signaturoperationen pro Bestellung</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">Requires linking mechanism: ABRECHNUNGSKREIS must be consistently used to link to invoice</text>
+            <text xml:lang="de">Erfordert Verknüpfungsmechanismus: ABRECHNUNGSKREIS muss konsistent verwendet werden für Verknüpfung zur Rechnung</text>
+        </note>
+        <note type="limitation">
+            <text xml:lang="en">First order timestamp must be printed on final receipt (DSFinV-K requirement)</text>
+            <text xml:lang="de">Erster Bestellzeitpunkt muss auf finalem Beleg gedruckt werden (DSFinV-K-Anforderung)</text>
+        </note>
+    </importantNotes>
+    <keyDifferences>
+        <difference>
+            <text xml:lang="en">vs. Kassenbeleg-V1: Bestellung-V1 USES updateTransaction, Kassenbeleg-V1 does NOT</text>
+            <text xml:lang="de">vs. Kassenbeleg-V1: Bestellung-V1 VERWENDET updateTransaction, Kassenbeleg-V1 NICHT</text>
+        </difference>
+        <difference>
+            <text xml:lang="en">vs. Kassenbeleg-V1: Bestellung-V1 typically separate from payment, Kassenbeleg-V1 includes payment</text>
+            <text xml:lang="de">vs. Kassenbeleg-V1: Bestellung-V1 typischerweise getrennt von Bezahlung, Kassenbeleg-V1 enthält Bezahlung</text>
+        </difference>
+        <difference>
+            <text xml:lang="en">vs. Kassenbeleg-V1: Bestellung-V1 uses CSV format, Kassenbeleg-V1 uses structured format with tax/payment</text>
+            <text xml:lang="de">vs. Kassenbeleg-V1: Bestellung-V1 verwendet CSV-Format, Kassenbeleg-V1 verwendet strukturiertes Format mit Steuer/Zahlung</text>
+        </difference>
+    </keyDifferences>
+    <references>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex I: processType definitions</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang I: processType Definitionen</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Section 2.7.1: Order process security</text>
+            <text xml:lang="de">DSFinV-K 2.4 Abschnitt 2.7.1: Bestellprozessabsicherung</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex H Diagram 3: Gastronomy process with orders</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang H Folie 3: Gastronomie-Prozess mit Bestellungen</text>
+        </reference>
+        <reference>
+            <text xml:lang="en">DSFinV-K 2.4 Annex H Diagram 4: Multi-system WITH order security</text>
+            <text xml:lang="de">DSFinV-K 2.4 Anhang H Folie 4: Mehrsystem MIT Bestellabsicherung</text>
+        </reference>
+        <reference>Type: BestellungV1Data</reference>
+        <reference>Function: startTransaction</reference>
+        <reference>Function: updateTransaction</reference>
+        <reference>Function: finishTransaction</reference>
+    </references>
+    <involvedProcesses>
+        <process>
+            <id>001</id>
+            <name>
+                <text xml:lang="en">Transaction Start</text>
+                <text xml:lang="de">Transaktionsstart</text>
+            </name>
+        </process>
+        <process>
+            <id>002</id>
+            <name>
+                <text xml:lang="en">Transaction Update</text>
+                <text xml:lang="de">Transaktionsaktualisierung</text>
+            </name>
+        </process>
+        <process>
+            <id>003</id>
+            <name>
+                <text xml:lang="en">Transaction Completion</text>
+                <text xml:lang="de">Transaktionsabschluss</text>
+            </name>
+        </process>
+    </involvedProcesses>
+</processChain>

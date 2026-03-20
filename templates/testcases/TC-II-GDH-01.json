@@ -1,0 +1,291 @@
+{
+  "testcase_id": "TC-II-GDH-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "getComponentVersions / getDeviceHealth / getEndOfUsageDate (Einzeltests)",
+  "description": "Siehe TC-II-GCV-01 für den kombinierten Test. Dieser TC dokumentiert die einzelne Prüfung von getDeviceHealth auf ASN.1-Konformität.",
+  "purpose": "Prüfung, ob der Parameter healthInformationSet, den die Funktionalität zur Ausgabe von Zustandsdaten der TSE zurückgibt, der vorgegebenen ASN.1 Definition entspricht.",
+  "module": "Integration Interface",
+  "submodule": "II_GDH",
+  "function": "getDeviceHealth",
+  "test_type": "COMBINED",
+  "priority": "conditional",
+  "profiles": [
+    "II_DEVICEHEALTH"
+  ],
+  "source_tests": [
+    "II_GDH_01",
+    "II_GDH_02",
+    "II_GDH_03",
+    "II_GDH_04",
+    "II_GCV_01",
+    "II_GCV_02",
+    "II_GCV_03",
+    "II_GCV_04",
+    "II_GEU_01",
+    "II_GEU_02"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer admin authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "admin",
+      "parameters": {
+        "userId": "admin",
+        "pin": "<korrekter admin-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "SETUP",
+      "title": "getDeviceHealth aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe von Zustandsdaten der TSE.",
+      "function": "getDeviceHealth",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabeparameter healthInformationSet entspricht der vorgegebenen ASN.1 Strukur HealthInformationSet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    },
+    {
+      "step": 5,
+      "type": "SETUP",
+      "title": "getDeviceHealth aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe von Zustandsdaten der TSE. Es wird ein Fehler provoziert, der bewirkt, dass der aktuelle Gesundheitszustand aller Komponenten nicht festgestellt werden kann.",
+      "function": "getDeviceHealth",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetDeviceHealthFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    },
+    {
+      "step": 6,
+      "type": "SETUP",
+      "title": "getComponentVersions aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe von Versionsinformationen über die TSE.",
+      "function": "getComponentVersions",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert deviceInformationSet entspricht den Daten aus der Datei info.csv.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    },
+    {
+      "step": 7,
+      "type": "SETUP",
+      "title": "getComponentVersions aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe von Versionsinformationen über die TSE. Es wird ein Fehler provoziert, der bewirkt, dass die Informationen über das Gerät, wie sie in der Datei info.csv enthalten sind nicht festgestellt werden können.",
+      "function": "getComponentVersions",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetComponentVersionsFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    },
+    {
+      "step": 8,
+      "type": "SETUP",
+      "title": "getEndOfUsageDate aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+      "function": "getEndOfUsageDate",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert endOfUsageDate entspricht einem plausiblem Datum, ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    },
+    {
+      "step": 9,
+      "type": "VERIFY",
+      "title": "Gesundheitszustand-Abfrage: healthInformationSet prüfen",
+      "result": null,
+      "instruction": "Gesundheitszustand-Abfrage: healthInformationSet prüfen\n\nAufruf der Funktionalität zur Ausgabe von Zustandsdaten der TSE.",
+      "function": "getDeviceHealth",
+      "user": "admin",
+      "expected_return": {
+        "healthInformationSet": {
+          "type": "ASN.1-DER",
+          "constraint": "Gemäß ASN.1-Spezifikation"
+        }
+      },
+      "checks": [
+        {
+          "description": "healthInformationSet entspricht vorgegebener ASN.1-Definition",
+          "expected": "Struktur korrekt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "DER-Kodierung valide",
+          "expected": "Valide",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Aktueller Gesundheitszustand aller Komponenten enthalten",
+          "expected": "Vollständig",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "additionalDescription menschenlesbar",
+          "expected": "Verständlich",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlerfall: ErrorGetDeviceHealthFailed",
+          "expected": "errorCode = ErrorGetDeviceHealthFailed",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_GDH_01"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §6.3.1"
+  ]
+}

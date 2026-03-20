@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://www.bsi.bund.de/tr03151" 
+           xmlns:tr="http://www.bsi.bund.de/tr03151"
+           elementFormDefault="qualified">
+
+  <!-- ============================= -->
+  <!-- Simple Types                  -->
+  <!-- ============================= -->
+
+  <xs:simpleType name="ExceptionName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="Error[A-Za-z0-9]*"/>
+      <xs:minLength value="1"/>
+      <xs:maxLength value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Category">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Common Exception"/>
+      <xs:enumeration value="Authentication"/>
+      <xs:enumeration value="Client Management"/>
+      <xs:enumeration value="Transaction Management"/>
+      <xs:enumeration value="Logging"/>
+      <xs:enumeration value="Device Management"/>
+      <xs:enumeration value="Time Management"/>
+      <xs:enumeration value="Parameter Validation"/>
+      <xs:enumeration value="System"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Severity">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Low"/>
+      <xs:enumeration value="Medium"/>
+      <xs:enumeration value="High"/>
+      <xs:enumeration value="Critical"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================= -->
+  <!-- Javadoc Structure             -->
+  <!-- ============================= -->
+
+  <xs:complexType name="Javadoc">
+    <xs:sequence>
+      <xs:element name="summary" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="throws" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="since" type="xs:string" minOccurs="0"/>
+      <xs:element name="author" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Specification Structure       -->
+  <!-- ============================= -->
+
+  <xs:complexType name="Specification">
+    <xs:sequence>
+      <xs:element name="source" type="xs:string" minOccurs="0"/>
+      <xs:element name="section" type="xs:string" minOccurs="0"/>
+      <xs:element name="requirement" type="xs:string" minOccurs="0"/>
+      <xs:element name="applicability" type="xs:string" minOccurs="0"/>
+      <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Function Reference Structure  -->
+  <!-- ============================= -->
+
+  <xs:complexType name="ThrownBy">
+    <xs:sequence>
+      <xs:element name="function" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Related Exceptions Structure  -->
+  <!-- ============================= -->
+
+  <xs:complexType name="RelatedExceptions">
+    <xs:sequence>
+      <xs:element name="exception" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Condition/Action Pairs        -->
+  <!-- ============================= -->
+
+  <xs:complexType name="Condition">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="1"/>
+      <xs:element name="trigger" type="xs:string" minOccurs="0"/>
+      <xs:element name="action" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TriggerConditions">
+    <xs:sequence>
+      <xs:element name="condition" type="tr:Condition" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Main Exception Type           -->
+  <!-- ============================= -->
+
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <!-- Basic Information -->
+      <xs:element name="name" type="tr:ExceptionName" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="category" type="tr:Category" minOccurs="0"/>
+      <xs:element name="severity" type="tr:Severity" minOccurs="0"/>
+      
+      <!-- Documentation -->
+      <xs:element name="javadoc" type="tr:Javadoc" minOccurs="0"/>
+      
+      <!-- Specification Details -->
+      <xs:element name="specification" type="tr:Specification" minOccurs="0"/>
+      
+      <!-- Functions that throw this exception -->
+      <xs:element name="thrownBy" type="tr:ThrownBy" minOccurs="0"/>
+      
+      <!-- Related Exceptions -->
+      <xs:element name="relatedExceptions" type="tr:RelatedExceptions" minOccurs="0"/>
+      
+      <!-- Trigger Conditions -->
+      <xs:element name="triggerConditions" type="tr:TriggerConditions" minOccurs="0"/>
+      
+      <!-- Recovery Information -->
+      <xs:element name="recovery" type="xs:string" minOccurs="0"/>
+      
+      <!-- Usage Example -->
+      <xs:element name="example" type="xs:string" minOccurs="0"/>
+      
+      <!-- Additional Notes -->
+      <xs:element name="note" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Root Elements                 -->
+  <!-- ============================= -->
+
+  <!-- Root element for exception documents -->
+  <xs:element name="exception" type="tr:Exception"/>
+
+  <!-- Root element for collections of exceptions -->
+  <xs:element name="exceptions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="exception" type="tr:Exception" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ============================= -->
+  <!-- Exception Catalog             -->
+  <!-- ============================= -->
+
+  <xs:element name="exceptionCatalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metadata">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="title" type="xs:string" minOccurs="0"/>
+              <xs:element name="version" type="xs:string" minOccurs="0"/>
+              <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+              <xs:element name="source" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="exception" type="tr:Exception" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

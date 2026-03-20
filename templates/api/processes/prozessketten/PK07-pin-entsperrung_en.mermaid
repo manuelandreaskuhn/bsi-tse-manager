@@ -1,0 +1,48 @@
+sequenceDiagram
+    actor User as User
+    participant TSE as TSE
+    participant SM as Security Module
+
+    Note over User,SM: Initial Situation: PIN is blocked
+
+    User->>TSE: unblockPin(userId, PUK, newPIN)
+    activate TSE
+    TSE->>SM: Check PUK
+    activate SM
+
+    alt PUK correct
+        SM->>SM: Unblock PIN
+        SM->>SM: Set new PIN
+        SM->>SM: Set Error Counter = 0
+        SM->>SM: Signature Counter++
+        SM->>SM: Create unblockPin Log
+        SM-->>TSE: OK + Log Parts
+        deactivate SM
+        TSE-->>User: PIN unblocked + new PIN set
+        deactivate TSE
+        
+        Note over User,SM: PIN is usable again
+        
+        User->>TSE: authenticateUser(userId, newPIN)
+        TSE->>SM: Check new PIN
+        activate SM
+        SM->>SM: Set Status: "authenticated"
+        SM->>SM: Signature Counter++
+        SM-->>TSE: OK + Log Parts
+        deactivate SM
+        TSE-->>User: Authentication successful
+        
+    else PUK incorrect
+        SM->>SM: PUK Error Counter++
+        activate SM
+        alt PUK Errors >= Limit
+            SM->>SM: Block PUK temporarily
+            SM-->>TSE: Error: ErrorPukTemporarilyBlocked
+        else
+            SM-->>TSE: Error: ErrorUnblockingPinFailed
+        end
+        activate TSE
+        deactivate SM
+        TSE-->>User: Unblocking failed
+        deactivate TSE
+    end

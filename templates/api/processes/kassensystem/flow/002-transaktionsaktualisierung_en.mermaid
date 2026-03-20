@@ -1,0 +1,30 @@
+flowchart TD
+    Start([ERS: updateTransaction call])
+    Start --> CheckAuth{User<br/>authenticated?}
+    
+    CheckAuth -->|No| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated]
+    CheckAuth -->|Yes| CheckTrans{Transaction<br/>exists?}
+    
+    CheckTrans -->|No| ErrorTrans[Exception:<br/>ErrorTransactionNumberNotFound]
+    CheckTrans -->|Yes| CheckClient{Client<br/>registered?}
+    
+    CheckClient -->|No| ErrorClient[Exception:<br/>ErrorClientNotRegistered]
+    CheckClient -->|Yes| Decision{SM Decision:<br/>Secure immediately?}
+    
+    Decision -->|Variant A:<br/>Direct Securing| CreateLog[SM: Create Log Message]
+    Decision -->|Variant B:<br/>Collecting| CollectData[SM: Collect Update Data<br/>for later securing step]
+    
+    CreateLog --> IncrSig[SM: Signature Counter++]
+    IncrSig --> CalcSig[SM: Calculate Checksum]
+    CalcSig --> SaveLog[Save Log Message]
+    
+    CollectData --> UpdateInternal[SM: Update internal<br/>checksum input]
+    
+    SaveLog --> Return[Return to ERS:<br/>logTime, signature,<br/>signatureCounter]
+    UpdateInternal --> Return
+    
+    Return --> End([End])
+    
+    ErrorAuth --> End
+    ErrorTrans --> End
+    ErrorClient --> End

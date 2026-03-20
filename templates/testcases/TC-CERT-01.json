@@ -1,0 +1,643 @@
+{
+  "testcase_id": "TC-CERT-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Zertifikat-Einzelprüfungen: X.509 v3, Algorithmen, Gültigkeit, Extensions",
+  "description": "Prüft alle TSE-Zertifikate auf X.509 v3 Konformität, BSI-konforme Algorithmen, Gültigkeitszeiträume und alle erforderlichen Extensions.",
+  "purpose": "Prüfung, ob die verwendeten Zertifikate aus dem Sicherheitsmodul den Vorgaben der BSI TR-03116 entsprechen bzgl.:\n• Signaturverfahren,\n• Verwendung elliptischer Kurven,\n• Schlüssellänge,\n• Hashfunktion,\n• Hashwertlänge,\n• EC-Domainparameter.",
+  "module": "Export",
+  "submodule": "CERT",
+  "function": "exportLoggingCertificates",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_PKI_02",
+    "SM_PKI_03"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "SETUP",
+      "title": "exportLoggingCertificates aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette (exportLoggingCertificates).",
+      "function": "exportLoggingCertificates",
+      "user": "unauthenticated",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Die TSE-Schnittstelle gibt einen TAR-Container mit Zertifikaten zurück.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "SM_PKI_02"
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "CertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
+      "result": null,
+      "instruction": "CertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
+      "function": "exportLoggingCertificates",
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "CertificateExport-TAR"
+        }
+      },
+      "checks": [
+        {
+          "description": "Alle Zertifikate X.509 Version 3",
+          "expected": "CERT_V3",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Signaturalgorithmus BSI-konform (ecdsa-with-SHA256 oder SHA384)",
+          "expected": "CERT_SIG_ALG",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "EC-Kurve BSI-bevorzugt (brainpoolP384r1) oder BSI-akzeptiert",
+          "expected": "CERT_CURVE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "notBefore < notAfter (Zeitreihenfolge korrekt)",
+          "expected": "CERT_DATE_ORDER",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikate aktuell gültig (notBefore ≤ jetzt ≤ notAfter)",
+          "expected": "CERT_VALID_NOW",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "PrivateKeyUsagePeriod korrekt (falls vorhanden)",
+          "expected": "CERT_PKUP",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CA-Zertifikate: BasicConstraints CA:TRUE",
+          "expected": "CERT_BC_CA",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CA-Zertifikate: KeyUsage keyCertSign + cRLSign",
+          "expected": "CERT_KU_CA",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Root-CA selbst-signiert (Issuer = Subject)",
+          "expected": "CERT_SELF_SIGN",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE-Blatt-Zertifikat: BasicConstraints CA:FALSE",
+          "expected": "CERT_BC_LEAF",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE-Blatt-Zertifikat: KeyUsage digitalSignature",
+          "expected": "CERT_KU_LEAF",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE-Blatt-Zertifikat: BSI-TSE-OID (0.4.0.127.0.7.3.10.1.2) im Subject",
+          "expected": "CERT_BSI_OID",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "TSE-Blatt-Zertifikat: CN = SHA-256(SubjectPublicKeyInfo) (Hex)",
+          "expected": "CERT_CN_PUBKEY_HASH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "SKI in allen Zertifikaten vorhanden",
+          "expected": "CERT_SKI",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "AKI in Nicht-Root-Zertifikaten vorhanden",
+          "expected": "CERT_AKI",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CRL Distribution Point vorhanden",
+          "expected": "CERT_CRL",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Certificate Policies vorhanden",
+          "expected": "CERT_POLICY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikatskette vollständig (Root-CA + TSE-Blatt)",
+          "expected": "CHAIN_COMPLETE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "AKI→SKI-Verkettung für alle Nicht-Root-Zertifikate korrekt",
+          "expected": "CHAIN_AKI_SKI",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Gültigkeitsverschachtelung: Kind ≤ Aussteller",
+          "expected": "CHAIN_VALIDITY",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Issuer-DN stimmt mit Subject-DN des Ausstellers überein",
+          "expected": "CHAIN_ISSUER_MATCH",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat nicht widerrufen (CRL-Abfrage)",
+          "expected": "CRL_LIVE_REVOKED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "CA-Zertifikat nicht widerrufen",
+          "expected": "CRL_LIVE_CA_REVOKED",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "EXP_TAR_01",
+          "title": "TAR-Format POSIX.1-2001 (ustar)",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_END",
+          "title": "Abschluss: Zwei Null-Blöcke",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_DIR",
+          "title": "Keine Unterverzeichnisse",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_TAR_CHK",
+          "title": "Header-Checksummen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_NAME_CERT",
+          "title": "CertificateExport-Dateiname",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_FMT",
+          "title": "Zeitformat-Präfix im Dateinamen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_ARCH_TYPE_CERT",
+          "title": "Archiv-Typ (info)",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_NOLOG",
+          "title": "Keine Log-Dateien enthalten",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_FILES",
+          "title": "Nur erlaubte Dateitypen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRTEXP_CHAIN",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_PRESENT",
+          "title": "Zertifikat-Dateien vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_CRT_NAME",
+          "title": "Zertifikat-Dateinamen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_V3",
+          "title": "X.509 Version 3",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SIG_ALG",
+          "title": "Signaturalgorithmus",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CURVE",
+          "title": "Schlüsselkurve",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_DATE_ORDER",
+          "title": "Gültigkeit: notBefore < notAfter",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_VALID_NOW",
+          "title": "Zertifikat aktuell gültig",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_PKUP",
+          "title": "Private Key Usage Period",
+          "outcome_type": "INFO",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SKI",
+          "title": "Subject Key Identifier (SKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_AKI",
+          "title": "Authority Key Identifier (AKI)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CRL",
+          "title": "CRL Distribution Point",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_POLICY",
+          "title": "Certificate Policies",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BC_CA",
+          "title": "Basic Constraints: CA:TRUE",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_KU_CA",
+          "title": "Key Usage: Certificate Sign + CRL Sign",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_SELF_SIGN",
+          "title": "Root-CA selbst-signiert",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BC_LEAF",
+          "title": "Basic Constraints: CA:FALSE",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_KU_LEAF",
+          "title": "Key Usage: Digital Signature",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_BSI_OID",
+          "title": "BSI-TSE-OID im Subject",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_HASH",
+          "title": "Dateiname = Subject CN = TSE-Seriennummer",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CERT_CN_PUBKEY_HASH",
+          "title": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_COMPLETE",
+          "title": "Zertifikatskette vollständig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_AKI_SKI",
+          "title": "AKI→SKI Verkettung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_VALIDITY",
+          "title": "Kindsgültigkeit ≤ Ausstellergültigkeit",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CHAIN_ISSUER_MATCH",
+          "title": "Aussteller-Inhaber-Übereinstimmung",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRL_LIVE_FETCH",
+          "title": "CRL-Endpunkt erreichbar",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRL_LIVE_VALIDITY",
+          "title": "CRL selbst noch gültig",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRL_LIVE_REVOKED",
+          "title": "Zertifikat nicht in CRL eingetragen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "CRL_LIVE_CA_REVOKED",
+          "title": "CA-Zertifikat nicht widerrufen",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.17",
+        "BSI TR-03151-1"
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03116-5",
+    "RFC 5280",
+    "BSI TR-03153-1 §9.3.2"
+  ]
+}

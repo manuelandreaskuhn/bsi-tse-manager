@@ -1,0 +1,8 @@
+flowchart TD
+    Start([Nutzer: getCurrentNumberOfTransactions])
+    Start --> Get[Bestimme Anzahl<br/>offener Transaktionen]
+    Get --> Return[Rückgabe: currentNumberTransactions]
+    Return --> End([Ende])
+    style Get fill:#87CEEB
+    Note1[Offene Transaktionen:<br/>startTransaction aufgerufen,<br/>finishTransaction noch nicht]
+    Get -.-> Note1

@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorFunctionFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorFunctionFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API encounters a critical error which is not covered by the other defined exceptions. ErrorFunctionFailed represents a universal catch-all exception for unexpected failures that do not fall into any other specific exception category. This exception indicates that a critical error prevented the function from executing its defined process and producing expected results. ErrorFunctionFailed is raised when any SE API function encounters a critical failure condition that is not explicitly addressed by the more specific exception types defined in the API specification. The exception serves as a safety mechanism to ensure that critical errors are communicated to the caller even when the specific failure cause does not match any predefined exception category. This exception is universal and can be raised by virtually any SE API function when an unspecified critical failure occurs.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API auf einen kritischen Fehler stößt, der nicht durch die anderen definierten Ausnahmen abgedeckt wird. ErrorFunctionFailed stellt eine universelle Auffangausnahme für unerwartete Fehler dar, die nicht in eine andere spezifische Ausnahmekategorie fallen. Diese Ausnahme zeigt an, dass ein kritischer Fehler die Funktion daran hinderte, ihren definierten Prozess auszuführen und die erwarteten Ergebnisse zu erzielen. ErrorFunctionFailed wird ausgelöst, wenn eine SE API Funktion auf eine kritische Fehlerbedingung stößt, die nicht ausdrücklich durch die spezifischeren in der API-Spezifikation definierten Ausnahmetypen behandelt wird. Die Ausnahme dient als Sicherheitsmechanismus, um sicherzustellen, dass kritische Fehler dem Aufrufer mitgeteilt werden, auch wenn die spezifische Fehlerursache keiner vordefinierten Ausnahmekategorie entspricht. Diese Ausnahme ist universell und kann von praktisch jeder SE API Funktion ausgelöst werden, wenn ein nicht spezifizierter kritischer Fehler auftritt.</text>
+  </description>
+  <category>Common Exception</category>
+  <subcategory>Catch-All</subcategory>
+  <severity>Critical</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorFunctionFailed that is thrown if the SE API encounters a critical error which is not covered by the other defined exceptions.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorFunctionFailed, die ausgelöst wird, wenn die SE API auf einen kritischen Fehler stößt, der nicht durch die anderen definierten Ausnahmen abgedeckt wird.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">ErrorFunctionFailed is a universal exception that is raised when a critical error occurs during function execution and the error does not match any of the specific exception categories defined in the SE API specification. This exception serves as a catch-all mechanism to handle unexpected failure conditions that were not anticipated or specifically addressed by the API design. When this exception is raised, it indicates that the function could not complete its intended operation successfully, but the nature of the failure is not covered by more specific exceptions such as ErrorDeviceNotInitialized, ErrorSecureElementDisabled, ErrorSigningEventDataFailed, or other specialized exception types.</text>
+      <text xml:lang="de">ErrorFunctionFailed ist eine universelle Ausnahme, die ausgelöst wird, wenn während der Funktionsausführung ein kritischer Fehler auftritt und der Fehler keiner der in der SE API Spezifikation definierten spezifischen Ausnahmekategorien entspricht. Diese Ausnahme dient als Auffangmechanismus zur Behandlung unerwarteter Fehlerbedingungen, die nicht vorweggenommen oder speziell durch das API-Design behandelt wurden. Wenn diese Ausnahme ausgelöst wird, zeigt sie an, dass die Funktion ihre beabsichtigte Operation nicht erfolgreich abschließen konnte, aber die Art des Fehlers wird nicht durch spezifischere Ausnahmen wie ErrorDeviceNotInitialized, ErrorSecureElementDisabled, ErrorSigningEventDataFailed oder andere spezialisierte Ausnahmetypen abgedeckt.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2.1 Exception Categories</section>
+    <requirement>
+      <text xml:lang="en">ErrorFunctionFailed SHALL be raised whenever a critical error occurs during the execution of an API function and the error is not covered by any other defined exception in the SE API specification. This exception represents the catch-all category for unexpected or unspecified critical failures that prevent a function from completing its defined process and producing the expected results.</text>
+      <text xml:lang="de">ErrorFunctionFailed soll immer ausgelöst werden, wenn während der Ausführung einer API-Funktion ein kritischer Fehler auftritt und der Fehler nicht durch eine andere definierte Ausnahme in der SE API Spezifikation abgedeckt wird. Diese Ausnahme stellt die Auffangkategorie für unerwartete oder nicht spezifizierte kritische Fehler dar, die eine Funktion daran hindern, ihren definierten Prozess abzuschließen und die erwarteten Ergebnisse zu erzielen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Universal exception - applicable to all API functions as a catch-all for unspecified critical errors</text>
+      <text xml:lang="de">Universelle Ausnahme - anwendbar auf alle API-Funktionen als Auffang für nicht spezifizierte kritische Fehler</text>
+    </applicability>
+    <reference>SE API Common Exceptions (3.1.2.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>authenticateUser</function>
+    <function>logOut</function>
+    <function>unblockPin</function>
+    <function>initialize</function>
+    <function>setDescription</function>
+    <function>getDescription</function>
+    <function>selfTest</function>
+    <function>updateDevice</function>
+    <function>disableSecureElement</function>
+    <function>getTotalMemory</function>
+    <function>getUsedMemory</function>
+    <function>getFreeMemory</function>
+    <function>getDeviceHealth</function>
+    <function>getComponentVersions</function>
+    <function>getEndOfUsageDate</function>
+    <function>updateTime</function>
+    <function>getTimeSyncVariant</function>
+    <function>getCurrentSeTime</function>
+    <function>configureLogging</function>
+    <function>exportLogMessages</function>
+    <function>exportLoggingCertificates</function>
+    <function>deleteLogMessages</function>
+    <function>exportSerialNumbers</function>
+    <function>getCurrentLoggingSignatureCounters</function>
+    <function>restoreLogsFromBackup</function>
+    <function>getLastLogMessage</function>
+    <function>registerClient</function>
+    <function>deregisterClient</function>
+    <function>startTransaction</function>
+    <function>updateTransaction</function>
+    <function>finishTransaction</function>
+    <function>exportFilteredTransactionLogs</function>
+    <function>getSupportedTransactionUpdateVariants</function>
+    <function>getCurrentNumberOfClients</function>
+    <function>getMaxNumberOfClients</function>
+    <function>getRegisteredClients</function>
+    <function>getCurrentNumberOfTransactions</function>
+    <function>getMaxNumberOfTransactions</function>
+    <function>getTransactionState</function>
+    <function>getOpenTransactions</function>
+    <function>getCurrentTransactionCounter</function>
+    <function>getLastTransactionLogMessage</function>
+    <function>lockTransactionLogging</function>
+    <function>unlockTransactionLogging</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1" name="Function Invocation">
+      <text xml:lang="en">User or application calls any SE API function</text>
+      <text xml:lang="de">Benutzer oder Anwendung ruft eine beliebige SE API Funktion auf</text>
+    </step>
+    <step number="2" name="Function Execution Begins">
+      <text xml:lang="en">The function begins execution of its defined process</text>
+      <text xml:lang="de">Die Funktion beginnt die Ausführung ihres definierten Prozesses</text>
+    </step>
+    <step number="3" name="Critical Error Detection">
+      <text xml:lang="en">During execution, a critical error occurs that prevents successful completion or normal operation</text>
+      <text xml:lang="de">Während der Ausführung tritt ein kritischer Fehler auf, der die erfolgreiche Abschluss oder den normalen Betrieb verhindert</text>
+    </step>
+    <step number="4" name="Exception Category Evaluation">
+      <text xml:lang="en">The error is checked against all specific exception conditions (device initialization state, Secure Element state, authentication failures, resource availability, communication status, etc.)</text>
+      <text xml:lang="de">Der Fehler wird gegen alle spezifischen Ausnahmebedingungen geprüft (Geräteinitialisierungszustand, Secure-Element-Zustand, Authentifizierungsfehler, Ressourcenverfügbarkeit, Kommunikationsstatus usw.)</text>
+    </step>
+    <step number="5" name="Specific Exception Evaluation">
+      <text xml:lang="en">If the error matches one of the specific exception types, that specific exception is raised and function execution branches to exception handling</text>
+      <text xml:lang="de">Falls der Fehler einem der spezifischen Ausnahmetypen entspricht, wird diese spezifische Ausnahme ausgelöst und die Funktionsausführung wird zur Ausnahmeverarbeitung verzweigt</text>
+    </step>
+    <step number="6" name="Unspecified Error Determination">
+      <text xml:lang="en">If the error does not match any specific exception category, it is classified as an unspecified critical failure</text>
+      <text xml:lang="de">Falls der Fehler keiner spezifischen Ausnahmekategorie entspricht, wird er als nicht spezifizierter kritischer Fehler klassifiziert</text>
+    </step>
+    <step number="7" name="ErrorFunctionFailed Creation">
+      <text xml:lang="en">ErrorFunctionFailed exception instance is created with error details, cause information, and diagnostic data</text>
+      <text xml:lang="de">ErrorFunctionFailed-Ausnahminstanz wird mit Fehlerdetails, Ursacheninformationen und Diagnosedaten erstellt</text>
+    </step>
+    <step number="8" name="Exception Context Preparation">
+      <text xml:lang="en">Exception context is prepared including error message, stack trace, device state information, and timestamp</text>
+      <text xml:lang="de">Der Ausnahmekontekt wird vorbereitet, einschließlich Fehlermeldung, Stack-Spur, Gerätezustandsinformationen und Zeitstempel</text>
+    </step>
+    <step number="9" name="Exception Propagation">
+      <text xml:lang="en">Exception is raised and propagated up the call stack to the caller</text>
+      <text xml:lang="de">Die Ausnahme wird ausgelöst und über den Call-Stack zum Aufrufer propagiert</text>
+    </step>
+    <step number="10" name="Function Exit">
+      <text xml:lang="en">Function execution is terminated and control returns to caller's exception handler</text>
+      <text xml:lang="de">Die Funktionsausführung wird beendet und die Kontrolle kehrt zum Exception-Handler des Aufrufers zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Examine exception message for specific failure reason</text>
+      <text xml:lang="de">Untersuchen Sie die Ausnahmemeldung auf den spezifischen Fehlergrund</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify device is in valid state (initialized, not blocked)</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät in einem gültigen Zustand ist (initialisiert, nicht blockiert)</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check function parameters for validity</text>
+      <text xml:lang="de">Prüfen Sie Funktionsparameter auf Gültigkeit</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry operation after confirming preconditions</text>
+      <text xml:lang="de">Wiederholen Sie den Vorgang nach Bestätigung der Vorbedingungen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Contact device support with error details if failure persists</text>
+      <text xml:lang="de">Wenden Sie sich an den Gerätesupport mit Fehlerdetails, wenn der Fehler weiterhin besteht</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorRetrieveLogMessageFailed</exception>
+    <exception>ErrorDisableSecureElementFailed</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorExportSerialNumbersFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Function Execution Status">
+      <text xml:lang="en">Function execution is incomplete. The defined process was not completed successfully and no guaranteed results are available.</text>
+      <text xml:lang="de">Die Funktionsausführung ist unvollständig. Der definierte Prozess wurde nicht erfolgreich abgeschlossen und es sind keine garantierten Ergebnisse verfügbar.</text>
+    </state>
+    <state name="Exception Return">
+      <text xml:lang="en">Function returns with ErrorFunctionFailed exception to caller. The exception contains error information and may include cause details.</text>
+      <text xml:lang="de">Funktion gibt mit ErrorFunctionFailed-Ausnahme an den Aufrufer zurück. Die Ausnahme enthält Fehlerinformationen und kann Details zur Ursache enthalten.</text>
+    </state>
+    <state name="Device State">
+      <text xml:lang="en">Device state may be inconsistent or partially modified depending on when the critical error occurred during function execution. No postcondition guarantees exist.</text>
+      <text xml:lang="de">Der Gerätezustand kann inkonsistent oder teilweise geändert sein, je nachdem, wann der kritische Fehler während der Funktionsausführung aufgetreten ist. Es gibt keine Nachbedingungsgarantien.</text>
+    </state>
+    <state name="Data Integrity">
+      <text xml:lang="en">No data guarantees exist. Any data produced before the critical error occurred may be incomplete, partial, or invalid.</text>
+      <text xml:lang="de">Es gibt keine Datengarantien. Alle Daten, die vor dem kritischen Fehler erstellt wurden, können unvollständig, teilweise oder ungültig sein.</text>
+    </state>
+    <state name="Error Specificity">
+      <text xml:lang="en">The exception provides minimal information about the failure cause since it is a catch-all for unspecified failures. Additional diagnostics are required.</text>
+      <text xml:lang="de">Die Ausnahme bietet minimale Informationen über die Fehlerursache, da es sich um einen Auffang für nicht spezifizierte Fehler handelt. Zusätzliche Diagnosen sind erforderlich.</text>
+    </state>
+    <state name="Caller Responsibility">
+      <text xml:lang="en">Caller must handle the exception appropriately and determine recovery strategy based on error message, cause, and context information.</text>
+      <text xml:lang="de">Der Aufrufer muss die Ausnahme angemessen behandeln und eine Wiederherstellungsstrategie basierend auf der Fehlermeldung, Ursache und Kontextinformationen festlegen.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: A function failed to execute - generic error indicating function execution failure</text>
+      <text xml:lang="de">Anzeichen: Eine Funktion konnte nicht ausgeführt werden - allgemeiner Fehler, der Funktionsausführungsfehler anzeigt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Function Execution, Error Handling, General Failures, SE API Operations</text>
+      <text xml:lang="de">Themen: Funktionsausführung, Fehlerbehandlung, Allgemeine Fehler, SE API Vorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Generic function execution failure not covered by specific exception types</text>
+      <text xml:lang="de">Allgemeiner Funktionsausführungsfehler, der nicht durch spezifische Ausnahmtypen abgedeckt ist</text>
+    </note>
+    <note>
+      <text xml:lang="en">Indicates function did not complete successfully</text>
+      <text xml:lang="de">Zeigt an, dass die Funktion nicht erfolgreich abgeschlossen wurde</text>
+    </note>
+    <note>
+      <text xml:lang="en">May result from internal device error or operation failure</text>
+      <text xml:lang="de">Kann durch Gerätefehler auf der internen Ebene oder Operationsfehler entstehen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application must determine root cause from exception message</text>
+      <text xml:lang="de">Die Anwendung muss die Grundursache aus der Ausnahmemeldung bestimmen</text>
+    </note>
+  </implementationContext>
+</exception>
+

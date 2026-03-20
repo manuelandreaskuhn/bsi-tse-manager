@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>007</processId>
+    <processName>
+        <text xml:lang="en">Export Data for Audit</text>
+        <text xml:lang="de">Datenexport für Prüfung</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Export of all log messages and certificates from the TSE in a TAR archive for audit purposes by tax authorities or during cash register audits</text>
+        <text xml:lang="de">Export aller Log-Nachrichten und Zertifikate aus der TSE in einem TAR-Archiv für Prüfungszwecke durch Finanzbehörden oder bei Kassen-Nachschau</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Tax Authority/Auditor</text>
+            <text xml:lang="de">Finanzbehörde/Prüfer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Log Messages</text>
+            <text xml:lang="de">Transaction-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Messages</text>
+            <text xml:lang="de">System-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Audit Log Messages</text>
+            <text xml:lang="de">Audit-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate Chain</text>
+            <text xml:lang="de">Zertifikatskette</text>
+        </object>
+        <object>
+            <text xml:lang="en">TAR Archive</text>
+            <text xml:lang="de">TAR-Archiv</text>
+        </object>
+        <object>
+            <text xml:lang="en">info.csv</text>
+            <text xml:lang="de">info.csv</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>exportLogMessages</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>exportedData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">TAR archive with all log messages, certificates, and TSE information</text>
+                <text xml:lang="de">TAR-Archiv mit allen Log-Nachrichten, Zertifikaten und TSE-Informationen</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>fileName</name>
+            <type>string</type>
+            <description>
+                <text xml:lang="en">Filename of the TAR archive according to schema [SERIENNUMBER]_[TIMESTAMP].tar</text>
+                <text xml:lang="de">Dateiname des TAR-Archivs nach Schema [SERIENNUMMER]_[TIMESTAMP].tar</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log</dataObject>
+        <dataObject>System-Log</dataObject>
+        <dataObject>Audit-Log</dataObject>
+        <dataObject>X.509-Certificates</dataObject>
+        <dataObject>info.csv (TSE Component Information)</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorNoDataAvailable</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorFunctionFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.2</reference>
+        <reference>BSI TR-03151-1 Chapter 2.5 (TAR Format)</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+        <reference>BSI TR-03153-1 Chapter 10.6</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">NO AUTHENTICATION is required for this function - auditors must have access at all times. The TAR archive contains all data from exactly one signature key. Export can continue even if the security module is disabled.</text>
+        <text xml:lang="de">Für diese Funktion ist KEINE Authentifizierung erforderlich - Prüfer müssen jederzeit Zugriff haben. Das TAR-Archiv enthält alle Daten von genau einem Signaturschlüssel. Bei deaktiviertem Sicherheitsmodul kann der Export weiterhin erfolgen.</text>
+    </notes>
+</process>

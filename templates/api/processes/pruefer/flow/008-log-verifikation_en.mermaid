@@ -1,0 +1,53 @@
+flowchart TD
+    Start([Inspector: Start Verification])
+    Start --> LoadTAR[Load TAR Archive]
+    
+    LoadTAR --> ExtractFiles[Extract Files:<br/>- Log Messages<br/>- Certificates<br/>- info.csv]
+    
+    ExtractFiles --> ReadInfo[Read info.csv]
+    ReadInfo --> GetTSEInfo[Get TSE Component Info:<br/>- Manufacturer<br/>- Model<br/>- Certification ID]
+    
+    GetTSEInfo --> LoadCerts[Load Certificate Chain]
+    
+    LoadCerts --> CheckCertChain{Certificate Chain<br/>valid?}
+    CheckCertChain -->|No| ErrorCert[Error: Invalid Certificates]
+    CheckCertChain -->|Yes| CheckRevocation{Certificate<br/>revoked?}
+    
+    CheckRevocation -->|Yes| ErrorRev[Error: Certificate revoked]
+    CheckRevocation -->|No| ExtractPubKey[Extract Public Key<br/>from TSE Certificate]
+    
+    ExtractPubKey --> ProcessLogs[Process Log Messages<br/>sequentially]
+    
+    ProcessLogs --> ForEachLog{For each<br/>Log Message}
+    
+    ForEachLog -->|Next Log| VerifySerialNo{"Serial Number =<br/>Hash(PublicKey)?"}
+    VerifySerialNo -->|No| ErrorSerial[Error: Serial Number invalid]
+    VerifySerialNo -->|Yes| VerifySig{Signature<br/>valid?}
+    
+    VerifySig -->|No| ErrorSig[Error: Signature invalid]
+    VerifySig -->|Yes| CheckCounters{Counters<br/>consecutive?}
+    
+    CheckCounters -->|No| ErrorCounter[Error: Counter inconsistent]
+    CheckCounters -->|Yes| CheckTime{Timestamp<br/>plausible?}
+    
+    CheckTime -->|No| WarnTime[Warning: Timestamp suspicious]
+    CheckTime -->|Yes| LogOK
+    
+    WarnTime --> LogOK[Log Message OK]
+    LogOK --> ForEachLog
+    
+    ForEachLog -->|All processed| Report[Create Verification Report]
+    
+    Report --> End([Verification completed])
+    
+    ErrorCert --> End
+    ErrorRev --> End
+    ErrorSerial --> End
+    ErrorSig --> End
+    ErrorCounter --> End
+    
+    style VerifySerialNo fill:#FFE4B5
+    style VerifySig fill:#FFE4B5
+    style CheckCounters fill:#FFE4B5
+    style CheckTime fill:#FFE4B5
+    style Report fill:#90EE90

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>029</processId>
+    <processName>
+        <text xml:lang="en">Query Current Time</text>
+        <text xml:lang="de">Aktuelle Zeit abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying the current time from the TSE. This returns the actual time used for signature timestamps in transactions.</text>
+        <text xml:lang="de">Abfrage der aktuellen Zeit von der TSE. Dies gibt die tatsächliche Zeit zurück, die für Signaturzeitstempel in Transaktionen verwendet wird.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Clock</text>
+            <text xml:lang="de">Systemuhr</text>
+        </object>
+        <object>
+            <text xml:lang="en">Time Server</text>
+            <text xml:lang="de">Time Server</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getCurrentTime</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>currentSeTime</name>
+            <type>DateTime</type>
+            <description>
+                <text xml:lang="en">Current TSE time that will be used for signature timestamps</text>
+                <text xml:lang="de">Aktuelle TSE-Zeit, die für Signaturzeitstempel verwendet wird</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>DateTime</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingCurrentTimeFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.6</reference>
+        <reference>BSI TR-03153-1 Chapter 4.2 (Time Management)</reference>
+        <reference>BSI TR-03153-1 Chapter 5.6.5</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This is an optional function accessible to all users. The returned time represents the actual time used by the TSE for all signature timestamps in transactions. This is the authoritative time reference for the TSE and should be synchronized according to the sync variant (automatic, manual, or both). Users can verify time synchronization status through this function.</text>
+        <text xml:lang="de">Dies ist eine optionale Funktion, die für alle Nutzer zugänglich ist. Die zurückgegebene Zeit stellt die tatsächliche Zeit dar, die die TSE für alle Signaturzeitstempel in Transaktionen verwendet. Dies ist die autoritative Zeitreferenz für die TSE und sollte gemäß der Synchronisationsvariante (automatisch, manuell oder beides) synchronisiert werden. Nutzer können den Zeitsynchronisationsstatus durch diese Funktion überprüfen.</text>
+    </notes>
+</process>

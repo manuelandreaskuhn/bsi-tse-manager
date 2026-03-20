@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>036</processId>
+    <processName>
+        <text xml:lang="en">Last Transaction Log Query</text>
+        <text xml:lang="de">Letzte Transaktions-Log abrufen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Retrieval of the most recently created transaction log message by the security module, either for a specific transaction number or the last one overall.</text>
+        <text xml:lang="de">Abruf der zuletzt vom Sicherheitsmodul erstellten Transaction-Log-Nachricht, entweder für eine spezifische Transaktionsnummer oder die letzte überhaupt.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (except timeadmin)</text>
+            <text xml:lang="de">Nutzer (außer timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Log</text>
+            <text xml:lang="de">Transaction-Log</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getLastTransactionLogMessage</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>unsigned long</type>
+            <description>
+                <text xml:lang="en">Optional: Transaction number. If specified, returns the last transaction log of this transaction</text>
+                <text xml:lang="de">Optional: Transaktionsnummer. Wenn angegeben, wird die letzte Transaction-Log dieser Transaktion zurückgegeben</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>logMessageFileName</name>
+            <type>string</type>
+            <description>
+                <text xml:lang="en">Filename of the transaction log</text>
+                <text xml:lang="de">Dateiname der Transaction-Log</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>logMessageContent</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Content of the transaction log</text>
+                <text xml:lang="de">Inhalt der Transaction-Log</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorNoLogMessageFound</exception>
+        <exception>ErrorReadingLogMessage</exception>
+        <exception>ErrorFunctionNotSupported</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.7.9.10</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">OPTIONAL. For all except timeadmin. Returns only transaction logs, not system/audit logs.</text>
+        <text xml:lang="de">OPTIONAL. Für alle außer timeadmin. Gibt nur Transaction-Logs zurück, keine System/Audit-Logs.</text>
+    </notes>
+</process>

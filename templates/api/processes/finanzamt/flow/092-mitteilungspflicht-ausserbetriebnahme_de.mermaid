@@ -1,0 +1,46 @@
+graph TD
+    Start([Start: System wird<br/>außer Betrieb genommen])
+    
+    Start --> Grund{Grund der<br/>Außerbetriebnahme}
+    
+    Grund -->|Veräußerung| Veraeussern[System verkauft/<br/>weitergegeben]
+    Grund -->|Defekt| Defekt[System defekt/<br/>nicht mehr nutzbar]
+    Grund -->|Ersatz| Ersatz[System durch neues<br/>ersetzt]
+    Grund -->|Sonstiges| Sonstiges[Andere Gründe]
+    
+    Veraeussern --> Datum[Außerbetriebnahme-<br/>datum festhalten]
+    Defekt --> Datum
+    Ersatz --> Datum
+    Sonstiges --> Datum
+    
+    Datum --> Daten[Daten für Mitteilung<br/>vorbereiten:<br/>- Seriennummer System<br/>- Außerbetriebnahmedatum<br/>- Betriebsstätte]
+    
+    Daten --> Frist{Innerhalb 1 Monat?}
+    
+    Frist -->|Nein| Verspaetet[ACHTUNG:<br/>Frist überschritten!]
+    Frist -->|Ja| Uebermitteln[Abmeldung elektronisch<br/>via ELSTER übermitteln]
+    
+    Verspaetet --> Uebermitteln
+    
+    Uebermitteln --> Bestaetigung{Bestätigung<br/>erhalten?}
+    
+    Bestaetigung -->|Nein| Pruefen[Übermittlung prüfen<br/>ggf. wiederholen]
+    Bestaetigung -->|Ja| Archivieren[Bestätigung<br/>archivieren]
+    
+    Pruefen --> Uebermitteln
+    
+    Archivieren --> TSEExport{Wurden TSE-Daten<br/>bereits exportiert?}
+    
+    TSEExport -->|Nein| Export[TSE-Daten exportieren<br/>und aufbewahren]
+    TSEExport -->|Ja| Ende([Ende: System<br/>abgemeldet])
+    
+    Export --> Ende
+    
+    style Start fill:#90EE90
+    style Ende fill:#FFB6C1
+    style Grund fill:#FFE4B5
+    style Frist fill:#FFE4B5
+    style Bestaetigung fill:#FFE4B5
+    style TSEExport fill:#FFE4B5
+    style Verspaetet fill:#FF6B6B
+    style Uebermitteln fill:#87CEEB

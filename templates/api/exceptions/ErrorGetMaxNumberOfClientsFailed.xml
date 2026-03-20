@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorGetMaxNumberOfClientsFailed" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorGetMaxNumberOfClientsFailed</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function getMaxNumberOfClients fails to retrieve the maximum number of clients that can simultaneously use the Secure Element. The function attempts to determine the device's client capacity limit, but the retrieval process fails before the capacity value can be determined and returned.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion getMaxNumberOfClients fehlschlägt, um die maximale Anzahl von Clients abzurufen, die das Secure Element gleichzeitig verwenden können. Die Funktion versucht, die Client-Kapazitätsgrenze des Geräts zu bestimmen, aber der Abrufprozess schlägt fehl, bevor der Kapazitätswert bestimmt und zurückgegeben werden kann.</text>
+  </description>
+  <category>Client Management</category>
+  <subcategory>Capacity Query</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorGetMaxNumberOfClientsFailed that is thrown if the determination of the maximum number of clients that could use the SE API simultaneously failed.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorGetMaxNumberOfClientsFailed, die ausgelöst wird, wenn die Bestimmung der maximalen Anzahl von Clients, die die SE API gleichzeitig verwenden können, fehlgeschlagen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getMaxNumberOfClients function cannot retrieve the maximum client capacity from the Secure Element. The maximum number of clients represents the upper limit on concurrent client connections that the device can simultaneously serve. ErrorGetMaxNumberOfClientsFailed indicates that the Secure Element cannot provide the client capacity information due to hardware failure, storage corruption, internal client management system errors, communication failures, or Secure Element state restrictions. When this exception occurs, no capacity data is returned and applications cannot determine the device's maximum client limit or assess client connection capacity. Recovery typically involves device verification, client management subsystem diagnostics, and possible hardware diagnosis if the failure persists.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion getMaxNumberOfClients die maximale Client-Kapazität nicht vom Secure Element abrufen kann. Die maximale Anzahl von Clients stellt die Obergrenze der gleichzeitigen Client-Verbindungen dar, die das Gerät gleichzeitig bedienen kann. ErrorGetMaxNumberOfClientsFailed zeigt an, dass das Secure Element die Client-Kapazitätsinformationen aufgrund eines Hardware-Ausfalls, Speicherbeschädigung, interner Client-Management-Systemfehler, Kommunikationsfehler oder Sicherheitselement-Zustandsbeschränkungen nicht bereitstellen kann. Wenn diese Ausnahme auftritt, werden keine Kapazitätsdaten zurückgegeben und Anwendungen können die maximale Client-Grenze des Geräts nicht bestimmen oder die Client-Verbindungskapazität nicht bewerten. Die Wiederherstellung umfasst normalerweise Geräteverifizierung, Client-Management-Subsystem-Diagnose und mögliche Hardware-Diagnose, wenn der Fehler anhält.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.2.1 Client Management - getMaxNumberOfClients</section>
+    <requirement>
+      <text xml:lang="en">The function getMaxNumberOfClients SHALL query the Secure Element to determine the maximum number of clients that can simultaneously use the SE API. If the Secure Element cannot provide or return the required capacity information, the function SHALL raise the exception ErrorGetMaxNumberOfClientsFailed and exit without returning any capacity data. The maximum client capacity retrieval failure indicates the Secure Element's client capacity query functionality could not complete successfully.</text>
+      <text xml:lang="de">Die Funktion getMaxNumberOfClients soll das Secure Element abfragen, um die maximale Anzahl von Clients zu bestimmen, die die SE API gleichzeitig verwenden können. Falls das Secure Element die erforderlichen Kapazitätsinformationen nicht bereitstellen oder zurückgeben kann, soll die Funktion die Ausnahme ErrorGetMaxNumberOfClientsFailed auslösen und beenden, ohne Kapazitätsdaten zurückzugeben. Der Fehler beim Abrufen der maximalen Client-Kapazität zeigt an, dass die Client-Kapazitätsabfrage-Funktionalität des Secure Element nicht erfolgreich abgeschlossen werden konnte.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Client management operations - getMaxNumberOfClients function only</text>
+      <text xml:lang="de">Client-Management-Operationen - nur Funktion getMaxNumberOfClients</text>
+    </applicability>
+    <reference>getMaxNumberOfClients – Function (3.2.1)</reference>
+  </specification>
+  <thrownBy>
+    <function>getMaxNumberOfClients</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getMaxNumberOfClients function on device</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion getMaxNumberOfClients auf dem Gerät auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters and checks authentication status (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter und prüft Authentifizierungsstatus (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks authorization for client management information access (if required by referencing guideline)</text>
+      <text xml:lang="de">Funktion prüft die Autorisierung für den Client-Management-Informationszugriff (falls von Richtlinie erforderlich)</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies device is properly initialized and client management is operational</text>
+      <text xml:lang="de">Funktion verifiziert, dass das Gerät ordnungsgemäß initialisiert und das Client-Management betriebsbereit ist</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares capacity query command</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet Kapazitätsabfrage-Befehl vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits capacity query command to Secure Element requesting maximum client capacity</text>
+      <text xml:lang="de">Funktion übersendet Kapazitätsabfrage-Befehl zu Secure Element und fordert maximale Client-Kapazität an</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If Secure Element responds with failure status (configuration error, capacity retrieval error, management error) → ErrorGetMaxNumberOfClientsFailed raised, function exits without capacity data</text>
+      <text xml:lang="de">Falls Secure Element mit Fehlerstatus antwortet (Konfigurationsfehler, Kapazitätsabruffehler, Management-Fehler) → ErrorGetMaxNumberOfClientsFailed ausgelöst, Funktion beendet ohne Kapazitätsdaten</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If communication failure occurs during query transmission or response reception → ErrorGetMaxNumberOfClientsFailed raised, function exits</text>
+      <text xml:lang="de">Falls Kommunikationsfehler während Abfragetransmission oder Antwortempfang auftritt → ErrorGetMaxNumberOfClientsFailed ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If successful, function receives maximum client capacity from Secure Element</text>
+      <text xml:lang="de">Falls erfolgreich, empfängt Funktion maximale Client-Kapazität von Secure Element</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function validates capacity value for correctness (format, numeric range, logical consistency)</text>
+      <text xml:lang="de">Funktion validiert Kapazitätswert auf Korrektheit (Format, numerischer Bereich, logische Konsistenz)</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns valid maximum client capacity to caller</text>
+      <text xml:lang="de">Funktion gibt gültige maximale Client-Kapazität an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify device is initialized</text>
+      <text xml:lang="de">Stellen Sie sicher, dass das Gerät initialisiert ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm Secure Element is operational</text>
+      <text xml:lang="de">Bestätigen Sie, dass das Secure Element funktionsfähig ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry capacity query operation</text>
+      <text xml:lang="de">Wiederholen Sie die Kapazitätsabfrage-Operation</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check device specification for client limits</text>
+      <text xml:lang="de">Prüfen Sie die Gerätespezifikation auf Client-Grenzen</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorClientLimitReached</exception>
+    <exception>ErrorGetCurrentNumberOfClientsFailed</exception>
+    <exception>ErrorClientNotRegistered</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failure to retrieve maximum client capacity does not affect device initialization state, client management operations, internal memory, stored data, or the ability to perform other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen des Abrufs der maximalen Client-Kapazität wirkt sich nicht auf den Geräteinitialisierungszustand, Client-Management-Operationen, den internen Speicher, die gespeicherten Daten oder die Fähigkeit zur Durchführung anderer Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Capacity Data Return Status">
+      <text xml:lang="en">No capacity value is returned to the caller. The function exits without providing any maximum client capacity information. Applications must not assume default capacity values or cached information; they must handle the exception as indicating capacity information is unavailable.</text>
+      <text xml:lang="de">Es wird kein Kapazitätswert an den Aufrufer zurückgegeben. Die Funktion wird beendet, ohne maximale Client-Kapazitätsinformationen bereitzustellen. Anwendungen dürfen nicht mit Standard-Kapazitätswerten oder zwischengespeicherten Informationen rechnen; sie müssen die Ausnahme als Anzeichen dafür behandeln, dass Kapazitätsinformationen nicht verfügbar sind.</text>
+    </state>
+    <state name="Secure Element Client Management State">
+      <text xml:lang="en">Secure Element client management subsystem remains unchanged by the failed capacity query. No state modifications, client limit changes, or client management configuration changes occur. Client management continues normally regardless of the retrieval failure.</text>
+      <text xml:lang="de">Das Client-Management-Subsystem des Secure Element bleibt durch die fehlgeschlagene Kapazitätsabfrage unverändert. Es werden keine Zustandsänderungen, Client-Grenzeniänderungen oder Client-Management-Konfigurationsiänderungen vorgenommen. Das Client-Management wird normal fortgesetzt, unabhängig vom Abruffehler.</text>
+    </state>
+    <state name="Client Capacity Continuity">
+      <text xml:lang="en">The Secure Element continues to maintain accurate client capacity limits internally. The failure to retrieve maximum capacity does not affect the actual capacity limit or client management operations. Capacity queries can be retried once the underlying issue is resolved.</text>
+      <text xml:lang="de">Das Secure Element setzt fort, genaue Client-Kapazitätsgrenzen intern zu verwalten. Das Fehlschlagen des Abrufs der maximalen Kapazität wirkt sich nicht auf die tatsächliche Kapazitätsgrenze oder Client-Management-Operationen aus. Kapazitätsabfragen können wiederholt werden, sobald das zugrunde liegende Problem behoben ist.</text>
+    </state>
+    <state name="No Cascading State Effects">
+      <text xml:lang="en">No cascading state inconsistencies or secondary failures occur as a result of the capacity query failure. Device internal consistency is maintained. Other SE API functions and client management operations continue normally without state corruption.</text>
+      <text xml:lang="de">Es treten keine kaskadenförmigen Zustandsinkonsistenzen oder sekundäre Ausfälle als Ergebnis des Kapazitätsabfragefehlers auf. Die interne Konsistenz des Geräts wird aufrechterhalten. Andere SE API Funktionen und Client-Management-Operationen funktionieren normal ohne Zustandsbeschädigung.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. The underlying issue (hardware error, communication error, management system error) remains present, but the device is stable enough to accept diagnostic queries or recovery attempts.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Das zugrunde liegende Problem (Hardware-Fehler, Kommunikationsfehler, Management-Systemfehler) bleibt bestehen, aber das Gerät ist stabil genug, um Diagnoseversuche oder Wiederherstellungsversuche zu akzeptieren.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Retrieval of maximum client count failed - capacity limit unknown</text>
+      <text xml:lang="de">Anzeichen: Abruf der maximalen Client-Anzahl fehlgeschlagen - Kapazitätsgrenze unbekannt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Client Management, Device Limits, Resource Management, Capacity Information</text>
+      <text xml:lang="de">Themen: Client-Management, Gerätegrenzen, Ressourcenverwaltung, Kapazitätsinformationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getMaxNumberOfClients when capacity limit retrieval fails</text>
+      <text xml:lang="de">Wird von getMaxNumberOfClients ausgelöst, wenn der Kapazitätsgrenzen-Abruf fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Capacity function queries maximum supported registered clients</text>
+      <text xml:lang="de">Kapazitätfunktion fragt maximale unterstützte registrierte Clients ab</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device specifies configured client registry capacity</text>
+      <text xml:lang="de">Das Gerät gibt konfigurierte Client-Registrierungs-Kapazität an</text>
+    </note>
+    <note>
+      <text xml:lang="en">Retrieval failure prevents capacity information access</text>
+      <text xml:lang="de">Abruffehler verhindert Kapazitätsinformationszugriff</text>
+    </note>
+  </implementationContext>
+</exception>
+

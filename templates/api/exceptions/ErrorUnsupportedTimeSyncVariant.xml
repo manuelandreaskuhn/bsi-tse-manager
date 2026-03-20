@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorUnsupportedTimeSyncVariant" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorUnsupportedTimeSyncVariant</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the updateTime function is called with a time synchronization variant that is not supported by the device. The updateTime function allows time synchronization using different variant methods (e.g., absolute time update, relative time correction, NTP sync). Different devices may support different time synchronization variants based on their capabilities and configuration. ErrorUnsupportedTimeSyncVariant is raised when the caller requests a variant that the device does not support. ErrorUnsupportedTimeSyncVariant is a Medium severity exception because the operation is invalid but not a device failure. Recovery requires using a supported variant or checking device capabilities to determine available time synchronization methods.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion updateTime mit einer Zeitsynchronisierungsvariante aufgerufen wird, die vom Gerät nicht unterstützt wird. Die Funktion updateTime ermöglicht die Zeitsynchronisierung unter Verwendung verschiedener Variantenmethoden (z. B. absolute Zeitaktualisierung, relative Zeitkorrektur, NTP-Synchronisierung). Verschiedene Geräte können verschiedene Zeitsynchronisierungsvarianten unterstützen, je nach ihren Möglichkeiten und Konfiguration. ErrorUnsupportedTimeSyncVariant wird ausgelöst, wenn der Aufrufer eine Variante anfordert, die das Gerät nicht unterstützt. ErrorUnsupportedTimeSyncVariant ist eine Ausnahme mit mittlerem Schweregrad, da die Operation ungültig, aber kein Geräteausfall ist. Die Wiederherstellung erfordert die Verwendung einer unterstützten Variante oder die Überprüfung der Gerätefunktionen, um verfügbare Zeitsynchronisierungsmethoden zu bestimmen.</text>
+  </description>
+  <category>Time Management</category>
+  <subcategory>Synchronization Variants</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorUnsupportedTimeSyncVariant that is thrown if the updateTime function is called with an unsupported time synchronization variant.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorUnsupportedTimeSyncVariant, die ausgelöst wird, wenn die Funktion updateTime mit einer nicht unterstützten Zeitsynchronisierungsvariante aufgerufen wird.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when updateTime is called with a time synchronization variant that the device does not support. The updateTime function supports multiple time synchronization methods (variants) to accommodate different system architectures and requirements. Different devices may support different variants based on their capabilities and configuration. When an unsupported variant is specified, ErrorUnsupportedTimeSyncVariant is raised. This indicates the requested time synchronization method is not available. ErrorUnsupportedTimeSyncVariant is a Medium severity exception because the operation is invalid but not a failure. Recovery requires using a supported variant that the device implements.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn updateTime mit einer Zeitsynchronisierungsvariante aufgerufen wird, die das Gerät nicht unterstützt. Die Funktion updateTime unterstützt mehrere Zeitsynchronisierungsmethoden (Varianten), um verschiedene Systemarchitekturen und Anforderungen zu erfüllen. Verschiedene Geräte können verschiedene Varianten basierend auf ihren Fähigkeiten und Konfiguration unterstützen. Wenn eine nicht unterstützte Variante angegeben wird, wird ErrorUnsupportedTimeSyncVariant ausgelöst. Dies zeigt an, dass die angeforderte Zeitsynchronisierungsmethode nicht verfügbar ist. ErrorUnsupportedTimeSyncVariant ist eine Ausnahme mit mittlerem Schweregrad, da die Operation ungültig, aber kein Fehler ist. Die Wiederherstellung erfordert die Verwendung einer unterstützten Variante, die das Gerät implementiert.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.6.2 Time Management - Time Synchronization Variants</section>
+    <requirement>
+      <text xml:lang="en">The updateTime function supports multiple time synchronization variants to accommodate different system requirements and capabilities. Different devices may support different variants based on their implementation and configuration. Supported variants typically include absolute time update, relative time correction, and external time synchronization methods. If updateTime is called with a variant parameter that the device does not support, the Secure Element SHALL raise ErrorUnsupportedTimeSyncVariant. This indicates the requested synchronization method is not available on this device. ErrorUnsupportedTimeSyncVariant is a Medium severity exception because the operation is invalid but not a device failure. The caller must use a supported variant or query device capabilities to determine available time synchronization methods.</text>
+      <text xml:lang="de">Die Funktion updateTime unterstützt mehrere Zeitsynchronisierungsvarianten, um verschiedene Systemanforderungen und Fähigkeiten zu erfüllen. Verschiedene Geräte können verschiedene Varianten basierend auf ihrer Implementierung und Konfiguration unterstützen. Unterstützte Varianten umfassen typischerweise absolute Zeitaktualisierung, relative Zeitkorrektur und externe Zeitsynchronisierungsmethoden. Wenn updateTime mit einem Variantenparameter aufgerufen wird, den das Gerät nicht unterstützt, MUSS das Secure Element ErrorUnsupportedTimeSyncVariant auslösen. Dies zeigt an, dass die angeforderte Synchronisierungsmethode auf diesem Gerät nicht verfügbar ist. ErrorUnsupportedTimeSyncVariant ist eine Ausnahme mit mittlerem Schweregrad, da die Operation ungültig, aber kein Geräteausfall ist. Der Aufrufer muss eine unterstützte Variante verwenden oder die Gerätefunktionen abfragen, um verfügbare Zeitsynchronisierungsmethoden zu bestimmen.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Time synchronization operations with variant selection: updateTime</text>
+      <text xml:lang="de">Zeitsynchronisierungsvorgänge mit Variantenauswahl: updateTime</text>
+    </applicability>
+    <reference>Time Management (3.6.2), Time Synchronization (3.6.2), Time Sync Variants (3.6.2), updateTime – Function (3.6.2)</reference>
+  </specification>
+  <thrownBy>
+    <function>updateTime</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls updateTime function with variant parameter and time data</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft die Funktion updateTime mit Variantenparameter und Zeitdaten auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including variant parameter</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich Variantenparameter</text>
+    </step>
+    <step number="2a">
+      <text xml:lang="en">If variant parameter format invalid → may raise ErrorParameterSyntax</text>
+      <text xml:lang="de">Wenn Variantenparameterformat ungültig → kann ErrorParameterSyntax auslösen</text>
+    </step>
+    <step number="2b">
+      <text xml:lang="en">If variant parameter format valid → proceed to step 3</text>
+      <text xml:lang="de">Wenn Variantenparameterformat gültig → fahren Sie mit Schritt 3 fort</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks if variant is supported on this device</text>
+      <text xml:lang="de">Funktion prüft, ob die Variante auf diesem Gerät unterstützt wird</text>
+    </step>
+    <step number="3a">
+      <text xml:lang="en">If variant not supported → ErrorUnsupportedTimeSyncVariant raised, operation aborted</text>
+      <text xml:lang="de">Wenn Variante nicht unterstützt → ErrorUnsupportedTimeSyncVariant ausgelöst, Vorgang abgebrochen</text>
+    </step>
+    <step number="3b">
+      <text xml:lang="en">If variant supported → proceed to step 4</text>
+      <text xml:lang="de">Wenn Variante unterstützt → fahren Sie mit Schritt 4 fort</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function validates time data format for specific variant</text>
+      <text xml:lang="de">Funktion validiert Zeitdatenformat für spezifische Variante</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If time data invalid for variant → may raise ErrorParameterMismatch</text>
+      <text xml:lang="de">Wenn Zeitdaten für Variante ungültig → kann ErrorParameterMismatch auslösen</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If time data valid → proceed to step 5</text>
+      <text xml:lang="de">Wenn Zeitdaten gültig → fahren Sie mit Schritt 5 fort</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element receives time sync request with variant</text>
+      <text xml:lang="de">Secure Element empfängt Zeitsynchronisierungsanforderung mit Variante</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element validates variant is supported</text>
+      <text xml:lang="de">Secure Element validiert, dass die Variante unterstützt wird</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If variant not supported → ErrorUnsupportedTimeSyncVariant raised</text>
+      <text xml:lang="de">Wenn Variante nicht unterstützt → ErrorUnsupportedTimeSyncVariant ausgelöst</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If variant supported → proceed to step 8</text>
+      <text xml:lang="de">Wenn Variante unterstützt → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element processes time update using specified variant</text>
+      <text xml:lang="de">Secure Element verarbeitet Zeitaktualisierung unter Verwendung der angegebenen Variante</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Secure Element updates device time</text>
+      <text xml:lang="de">Secure Element aktualisiert die Gerätezeit</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Secure Element returns success to function</text>
+      <text xml:lang="de">Secure Element gibt Erfolg an Funktion zurück</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns to caller indicating time successfully updated</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück und zeigt an, dass die Zeit erfolgreich aktualisiert wurde</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Check supported time sync variants</text>
+      <text xml:lang="de">Prüfen Sie unterstützte Zeitsynchronisierungsvarianten</text>
+    </step>
+    <step>
+      <text xml:lang="en">Use variant supported by device</text>
+      <text xml:lang="de">Verwenden Sie eine vom Gerät unterstützte Variante</text>
+    </step>
+    <step>
+      <text xml:lang="en">Verify variant parameter matches supported options</text>
+      <text xml:lang="de">Stellen Sie sicher, dass der Variantenparameter mit unterstützten Optionen übereinstimmt</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry with supported synchronization variant</text>
+      <text xml:lang="de">Versuchen Sie mit unterstützter Synchronisierungsvariante erneut</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorTimeNotSet</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorParameterMismatch</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="Time Update Not Performed">
+      <text xml:lang="en">Time is not updated using requested variant.</text>
+      <text xml:lang="de">Die Zeit wird nicht unter Verwendung der angeforderten Variante aktualisiert.</text>
+    </state>
+    <state name="Time Not Synchronized">
+      <text xml:lang="en">Device time remains unchanged - not synchronized.</text>
+      <text xml:lang="de">Die Gerätezeit bleibt unverändert - nicht synchronisiert.</text>
+    </state>
+    <state name="Operation Not Executed">
+      <text xml:lang="en">Time sync operation does not proceed with unsupported variant.</text>
+      <text xml:lang="de">Die Zeitsynchronisierungsoperation wird nicht mit nicht unterstützter Variante durchgeführt.</text>
+    </state>
+    <state name="Medium Exception Returned">
+      <text xml:lang="en">Function returns ErrorUnsupportedTimeSyncVariant Medium exception to caller.</text>
+      <text xml:lang="de">Funktion gibt die mittlere Ausnahme ErrorUnsupportedTimeSyncVariant an den Aufrufer zurück.</text>
+    </state>
+    <state name="Caller Must Select Supported Variant">
+      <text xml:lang="en">Caller must use supported time synchronization variant.</text>
+      <text xml:lang="de">Der Aufrufer muss eine unterstützte Zeitsynchronisierungsvariante verwenden.</text>
+    </state>
+    <state name="Alternative Variant Required">
+      <text xml:lang="en">Different time sync approach must be selected.</text>
+      <text xml:lang="de">Ein anderer Zeitsynchronisierungsansatz muss ausgewählt werden.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: The specified time synchronization variant is not supported</text>
+      <text xml:lang="de">Anzeichen: Die angegebene Zeitsynchronisierungsvariante wird nicht unterstützt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Time Management, Time Synchronization, Feature Support, Time Operations</text>
+      <text xml:lang="de">Themen: Zeitverwaltung, Zeitsynchronisierung, Funktionsunterstützung, Zeitvorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by updateTime when time synchronization variant not supported</text>
+      <text xml:lang="de">Wird von updateTime ausgelöst, wenn die Zeitsynchronisierungsvariante nicht unterstützt wird</text>
+    </note>
+    <note>
+      <text xml:lang="en">Time sync validation checks variant support</text>
+      <text xml:lang="de">Zeitsynchronisierungsvalidierung prüft Variantenunterstützung</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device supports specific time synchronization methods</text>
+      <text xml:lang="de">Das Gerät unterstützt spezifische Zeitsynchronisierungsmethoden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unsupported variant prevents time update</text>
+      <text xml:lang="de">Nicht unterstützte Variante verhindert Zeitaktualisierung</text>
+    </note>
+  </implementationContext>
+</exception>
+

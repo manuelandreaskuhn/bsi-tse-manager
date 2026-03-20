@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://www.bsi.bund.de/tr03151" 
+           xmlns:tr="http://www.bsi.bund.de/tr03151"
+           elementFormDefault="qualified">
+
+  <!-- ============================= -->
+  <!-- Imported/Referenced Types     -->
+  <!-- ============================= -->
+  
+  <xs:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
+
+  <!-- ============================= -->
+  <!-- Simple String Types           -->
+  <!-- ============================= -->
+
+  <xs:simpleType name="FunctionName">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Category">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ============================= -->
+  <!-- Detailed Steps Structure      -->
+  <!-- ============================= -->
+
+  <!-- ErrorCase: Error condition and exception -->
+  <xs:complexType name="ErrorCase">
+    <xs:sequence>
+      <xs:element name="exception" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="trigger" type="xs:string" minOccurs="1"/>
+      <xs:element name="action" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- SuccessCase: Success condition and action -->
+  <xs:complexType name="SuccessCase">
+    <xs:sequence>
+      <xs:element name="condition" type="xs:string" minOccurs="1"/>
+      <xs:element name="action" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DetailedStep: Single step in function execution -->
+  <xs:complexType name="DetailedStep">
+    <xs:sequence>
+      <xs:element name="number" type="xs:integer" minOccurs="1"/>
+      <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+      <xs:element name="germanText" type="xs:string" minOccurs="1"/>
+      <xs:element name="pseudocode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorCase" type="tr:ErrorCase" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="successCase" type="tr:SuccessCase" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DetailedSteps: Collection of steps -->
+  <xs:complexType name="DetailedSteps">
+    <xs:sequence>
+      <xs:element name="step" type="tr:DetailedStep" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Parameters Structure          -->
+  <!-- ============================= -->
+
+  <!-- Parameter: Function parameter definition -->
+  <xs:complexType name="Parameter">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1"/>
+      <xs:element name="type" type="xs:string" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="direction" type="xs:string" minOccurs="0"/>
+      <xs:element name="required" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="defaultValue" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Parameters: Collection of parameters -->
+  <xs:complexType name="Parameters">
+    <xs:sequence>
+      <xs:element name="parameter" type="tr:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Return Value Structure        -->
+  <!-- ============================= -->
+
+  <!-- ReturnValue: Function return type -->
+  <xs:complexType name="ReturnValue">
+    <xs:sequence>
+      <xs:element name="type" type="xs:string" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Exceptions Structure          -->
+  <!-- ============================= -->
+
+  <!-- Exceptions: List of possible exceptions -->
+  <xs:complexType name="Exceptions">
+    <xs:sequence>
+      <xs:element name="exception" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Roles Structure               -->
+  <!-- ============================= -->
+
+  <!-- Roles: Authorized roles for function execution -->
+  <xs:complexType name="Roles">
+    <xs:sequence>
+      <xs:element name="role" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Requirement & Note Types      -->
+  <!-- ============================= -->
+
+  <!-- Requirement: Implementation requirement -->
+  <xs:complexType name="Requirement">
+    <xs:sequence>
+      <xs:element name="level" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Requirements: Collection of requirements -->
+  <xs:complexType name="Requirements">
+    <xs:sequence>
+      <xs:element name="requirement" type="tr:Requirement" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Note: Additional note or comment -->
+  <xs:complexType name="Note">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Main Function Type            -->
+  <!-- ============================= -->
+
+  <!-- Function: Main function definition -->
+  <xs:complexType name="Function">
+    <xs:sequence>
+      <xs:element name="name" type="tr:FunctionName" minOccurs="1"/>
+      <xs:element name="category" type="tr:Category" minOccurs="1"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="authorizedRoles" type="tr:Roles" minOccurs="0"/>
+      <xs:element name="detailedSteps" type="tr:DetailedSteps" minOccurs="0"/>
+      <xs:element name="parameters" type="tr:Parameters" minOccurs="0"/>
+      <xs:element name="returnValue" type="tr:ReturnValue" minOccurs="0"/>
+      <xs:element name="exceptions" type="tr:Exceptions" minOccurs="0"/>
+      <xs:element name="requirements" type="tr:Requirements" minOccurs="0"/>
+      <xs:element name="note" type="tr:Note" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="precondition" type="xs:string" minOccurs="0"/>
+      <xs:element name="postcondition" type="xs:string" minOccurs="0"/>
+      <xs:element name="systemLog" type="xs:anyType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ============================= -->
+  <!-- Root Element                  -->
+  <!-- ============================= -->
+
+  <!-- Root element for function documents -->
+  <xs:element name="function" type="tr:Function"/>
+
+  <!-- Root element for collections of functions -->
+  <xs:element name="functions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="function" type="tr:Function" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

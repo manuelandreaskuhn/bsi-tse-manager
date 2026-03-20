@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>012</processId>
+    <processName>
+        <text xml:lang="en">Export Filtered Data</text>
+        <text xml:lang="de">Gefilterter Datenexport</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Export of filtered log messages according to various criteria (transaction number, time range, client ID) for targeted audits</text>
+        <text xml:lang="de">Export von gefilterten Log-Nachrichten nach verschiedenen Kriterien (Transaktionsnummer, Zeitbereich, Client-ID) für gezielte Prüfungen</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Tax Authority/Auditor</text>
+            <text xml:lang="de">Finanzbehörde/Prüfer</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Transaction Log Messages</text>
+            <text xml:lang="de">Transaction-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Messages</text>
+            <text xml:lang="de">System-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Audit Log Messages</text>
+            <text xml:lang="de">Audit-Log-Nachrichten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate Chain</text>
+            <text xml:lang="de">Zertifikatskette</text>
+        </object>
+        <object>
+            <text xml:lang="en">TAR Archive</text>
+            <text xml:lang="de">TAR-Archiv</text>
+        </object>
+        <object>
+            <text xml:lang="en">info.csv</text>
+            <text xml:lang="de">info.csv</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>exportFilteredTransactionLogs</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>INTEGER</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">Specific transaction number</text>
+                <text xml:lang="de">Spezifische Transaktionsnummer</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>firstTransactionNumber</name>
+            <type>INTEGER</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">First transaction number in range</text>
+                <text xml:lang="de">Erste Transaktionsnummer im Bereich</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>lastTransactionNumber</name>
+            <type>INTEGER</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">Last transaction number in range</text>
+                <text xml:lang="de">Letzte Transaktionsnummer im Bereich</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>startDate</name>
+            <type>GeneralizedTime</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">Start date of time range</text>
+                <text xml:lang="de">Startdatum des Zeitbereichs</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>endDate</name>
+            <type>GeneralizedTime</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">End date of time range</text>
+                <text xml:lang="de">Enddatum des Zeitbereichs</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">Filter by client ID</text>
+                <text xml:lang="de">Filter nach Client-ID</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>maximumNumberRecords</name>
+            <type>INTEGER</type>
+            <optional>true</optional>
+            <description>
+                <text xml:lang="en">Maximum number of records to return (0 = unlimited)</text>
+                <text xml:lang="de">Maximale Anzahl zurückzugebender Records (0 = unbegrenzt)</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>exportedData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">TAR archive with filtered log messages and certificates</text>
+                <text xml:lang="de">TAR-Archiv mit gefilterten Log-Nachrichten und Zertifikaten</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>fileName</name>
+            <type>string</type>
+            <description>
+                <text xml:lang="en">Filename of the TAR archive</text>
+                <text xml:lang="de">Dateiname des TAR-Archivs</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log</dataObject>
+        <dataObject>System-Log</dataObject>
+        <dataObject>Audit-Log</dataObject>
+        <dataObject>X.509-Certificates</dataObject>
+        <dataObject>info.csv</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorNoDataAvailable</exception>
+        <exception>ErrorTransactionNumberNotFound</exception>
+        <exception>ErrorClientIdNotFound</exception>
+        <exception>ErrorTooManyRecords</exception>
+        <exception>ErrorParameterMismatch</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorFunctionFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.6.3</reference>
+        <reference>BSI TR-03153-1 Chapter 5.2</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">NO AUTHENTICATION required. Filters can be combined, but some combinations are invalid (e.g., transactionNumber with startDate/endDate). When filtering by time range, System and Audit logs within the interval may also be included. maximumNumberRecords = 0 means no limit.</text>
+        <text xml:lang="de">KEINE Authentifizierung erforderlich. Filter können kombiniert werden, aber einige Kombinationen sind ungültig (z.B. transactionNumber mit startDate/endDate). Bei Zeitbereich-Filtern können auch System- und Audit-Logs im Intervall enthalten sein. maximumNumberRecords = 0 bedeutet keine Begrenzung.</text>
+    </notes>
+</process>

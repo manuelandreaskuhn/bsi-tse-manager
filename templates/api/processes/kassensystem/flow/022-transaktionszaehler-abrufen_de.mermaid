@@ -1,0 +1,25 @@
+flowchart TD
+    Start([Nutzer: getCurrentTransactionCounter<br/>aufrufen])
+    Start --> CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| GetCounter[SM: Hole aktuellen<br/>Transaktionszähler]
+    
+    GetCounter --> CheckGet{Abruf<br/>erfolgreich?}
+    
+    CheckGet -->|Nein| ErrorGet[Exception:<br/>ErrorGetTransactionCounterFailed]
+    CheckGet -->|Ja| Return[Rückgabe:<br/>transactionCounter]
+    
+    Return --> End([Ende])
+    
+    ErrorInit --> End
+    ErrorGet --> End
+    
+    style GetCounter fill:#87CEEB
+    style Return fill:#90EE90
+    
+    Note1[Hinweis: Der Transaktionszähler<br/>wird mit jeder startTransaction<br/>inkrementiert]
+    GetCounter -.-> Note1
+    
+    Note2[Verwendung:<br/>- Überprüfung der Anzahl<br/>- Plausibilitätsprüfung<br/>- Monitoring]
+    Return -.-> Note2

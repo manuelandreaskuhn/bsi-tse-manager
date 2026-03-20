@@ -1,0 +1,30 @@
+flowchart TD
+    Start([Nutzer: getCurrentLoggingSignatureCounters<br/>aufrufen])
+    Start --> CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| GetCounters[SM: Hole für jeden verwendeten<br/>Private Key den aktuellen<br/>Signaturzähler-Stand]
+    
+    GetCounters --> CheckGet{Abruf<br/>erfolgreich?}
+    
+    CheckGet -->|Nein| ErrorGet[Exception:<br/>ErrorGetCurrentSignatureCounterFailed]
+    CheckGet -->|Ja| BuildSet[Erstelle SignatureCounterSet:<br/>Für jeden Key:<br/>- keySerialNumber<br/>- counterValue]
+    
+    BuildSet --> EncodeASN1[Kodiere als ASN.1 DER]
+    
+    EncodeASN1 --> Return[Rückgabe:<br/>signatureCounters<br/>octet array]
+    
+    Return --> End([Ende])
+    
+    ErrorInit --> End
+    ErrorGet --> End
+    
+    style GetCounters fill:#87CEEB
+    style BuildSet fill:#DDA0DD
+    style Return fill:#90EE90
+    
+    Note1[Verwendung:<br/>- Monitoring<br/>- Plausibilitätsprüfung<br/>- Überlauf-Erkennung]
+    Return -.-> Note1
+    
+    Note2[Der Signaturzähler wird<br/>bei jeder Signatur<br/>inkrementiert]
+    GetCounters -.-> Note2

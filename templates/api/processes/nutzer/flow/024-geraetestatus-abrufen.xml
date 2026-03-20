@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>024</processId>
+    <processName>
+        <text xml:lang="en">Query Device Health</text>
+        <text xml:lang="de">Gerätestatus abfragen</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Querying the current health status of the TSE device. Returns comprehensive health data including storage status, certificate validity, connections, and error information.</text>
+        <text xml:lang="de">Abfrage des aktuellen Gesundheitsstatus des TSE-Geräts. Gibt umfassende Statusdaten einschließlich Speicherstatus, Zertifikatgültigkeit, Verbindungen und Fehlerinformationen zurück.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Health Data</text>
+            <text xml:lang="de">Gesundheitsdaten</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Status</text>
+            <text xml:lang="de">Speicherstatus</text>
+        </object>
+        <object>
+            <text xml:lang="en">Certificate</text>
+            <text xml:lang="de">Zertifikat</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>getDeviceHealth</function>
+    </interfaceFunctions>
+    <inputParameters>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>deviceHealth</name>
+            <type>DeviceHealthData</type>
+            <description>
+                <text xml:lang="en">Complete device health information including storage usage, certificate status, connections, and health level (OK, WARNING, ERROR, CRITICAL)</text>
+                <text xml:lang="de">Vollständige Gerätezustandsinformationen einschließlich Speicherauslastung, Zertifikatstatus, Verbindungen und Gesundheitsstufe (OK, WARNING, ERROR, CRITICAL)</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>DeviceHealthData</dataObject>
+        <dataObject>HealthLevel</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorRetrievingDeviceHealthFailed</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.4.1</reference>
+        <reference>BSI TR-03153-1 Chapter 5.6</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">This is an optional function accessible to all users. Returns comprehensive health information: storage used and available, certificate expiration date, connection status, current errors and warnings. High storage usage (>90%) is a warning condition. Health level indicates overall device status (OK, WARNING, ERROR, CRITICAL).</text>
+        <text xml:lang="de">Dies ist eine optionale Funktion, die für alle Nutzer zugänglich ist. Gibt umfassende Zustandsinformationen zurück: genutzter und verfügbarer Speicher, Zertifikatablaufdatum, Verbindungsstatus, aktuelle Fehler und Warnungen. Hohe Speicherauslastung (>90%) ist eine Warnbedingung. Gesundheitsstufe zeigt den Gesamtstatus des Geräts an (OK, WARNING, ERROR, CRITICAL).</text>
+    </notes>
+</process>

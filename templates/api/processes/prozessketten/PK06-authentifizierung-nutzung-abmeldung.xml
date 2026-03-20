@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processChain>
+    <chainId>PK06</chainId>
+    <name>
+        <text xml:lang="en">Authentication-Usage-Logout</text>
+        <text xml:lang="de">Authentifizierung-Nutzung-Abmeldung</text>
+    </name>
+    <description>
+        <text xml:lang="en">Complete user session cycle from login through usage to logout</text>
+        <text xml:lang="de">Vollständiger Nutzer-Session-Zyklus von Anmeldung über Nutzung bis Abmeldung</text>
+    </description>
+    <involvedProcesses>
+        <process>
+            <id>011</id>
+            <name>
+                <text xml:lang="en">User Authentication</text>
+                <text xml:lang="de">Nutzer-Authentifizierung</text>
+            </name>
+        </process>
+        <process>
+            <id>015</id>
+            <name>
+                <text xml:lang="en">User Logout</text>
+                <text xml:lang="de">Nutzer-Abmeldung</text>
+            </name>
+        </process>
+    </involvedProcesses>
+    <prerequisites>
+        <prerequisite>
+            <text xml:lang="en">TSE is initialized</text>
+            <text xml:lang="de">TSE ist initialisiert</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">User credentials (userId, PIN) are known</text>
+            <text xml:lang="de">Nutzer-Credentials (userId, PIN) sind bekannt</text>
+        </prerequisite>
+        <prerequisite>
+            <text xml:lang="en">PIN is not locked</text>
+            <text xml:lang="de">PIN ist nicht gesperrt</text>
+        </prerequisite>
+    </prerequisites>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (Admin/Logger/Timeadmin)</text>
+            <text xml:lang="de">Nutzer (Admin/Logger/Timeadmin)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+    </actors>
+    <steps>
+        <step>
+            <stepNumber>1</stepNumber>
+            <name>
+                <text xml:lang="en">Authentication</text>
+                <text xml:lang="de">Authentifizierung</text>
+            </name>
+            <function>
+                <name>authenticateUser</name>
+                <linkedProcess>
+                    <id>011</id>
+                    <name>
+                        <text xml:lang="en">User Authentication</text>
+                        <text xml:lang="de">Nutzer-Authentifizierung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <description>
+                <text xml:lang="en">User logs in with userId and PIN</text>
+                <text xml:lang="de">Nutzer meldet sich mit userId und PIN an</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>2</stepNumber>
+            <name>
+                <text xml:lang="en">Work Phase</text>
+                <text xml:lang="de">Arbeitsphase</text>
+            </name>
+            <description>
+                <text xml:lang="en">User calls functions they are authorized for</text>
+                <text xml:lang="de">Nutzer ruft Funktionen auf, für die er berechtigt ist</text>
+            </description>
+        </step>
+        <step>
+            <stepNumber>3</stepNumber>
+            <name>
+                <text xml:lang="en">Logout</text>
+                <text xml:lang="de">Abmeldung</text>
+            </name>
+            <function>
+                <name>logOut</name>
+                <linkedProcess>
+                    <id>015</id>
+                    <name>
+                        <text xml:lang="en">User Logout</text>
+                        <text xml:lang="de">Nutzer-Abmeldung</text>
+                    </name>
+                </linkedProcess>
+            </function>
+            <variants>
+                <variant>
+                    <name>
+                        <text xml:lang="en">Manual Logout</text>
+                        <text xml:lang="de">Manuelle Abmeldung</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">User initiated logout</text>
+                        <text xml:lang="de">Durch Nutzer initiierte Abmeldung</text>
+                    </description>
+                </variant>
+                <variant>
+                    <name>
+                        <text xml:lang="en">Automatic Timeout Logout</text>
+                        <text xml:lang="de">Automatische Timeout-Abmeldung</text>
+                    </name>
+                    <description>
+                        <text xml:lang="en">Automatic logout after inactivity</text>
+                        <text xml:lang="de">Automatische Abmeldung nach Inaktivität</text>
+                    </description>
+                </variant>
+            </variants>
+        </step>
+    </steps>
+    <securityMechanisms>
+        <mechanism>
+            <text xml:lang="en">PIN failed attempt counter</text>
+            <text xml:lang="de">PIN-Fehlversuchszähler</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">PIN locked after too many failed attempts</text>
+            <text xml:lang="de">PIN-Sperre bei zu vielen Fehlversuchen</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Automatic logout after inactivity</text>
+            <text xml:lang="de">Automatisches Logout nach Inaktivität</text>
+        </mechanism>
+        <mechanism>
+            <text xml:lang="en">Role-based access control</text>
+            <text xml:lang="de">Rollenbasierte Zugriffskontrolle</text>
+        </mechanism>
+    </securityMechanisms>
+    <errorCases>
+        <errorCase>
+            <error>
+                <text xml:lang="en">Wrong PIN</text>
+                <text xml:lang="de">Falsche PIN</text>
+            </error>
+            <reaction>
+                <text xml:lang="en">ErrorAuthenticationFailed, failed attempt counter++</text>
+                <text xml:lang="de">ErrorAuthenticationFailed, Fehlversuchszähler++</text>
+            </reaction>
+        </errorCase>
+        <errorCase>
+            <error>
+                <text xml:lang="en">PIN locked</text>
+                <text xml:lang="de">PIN gesperrt</text>
+            </error>
+            <reaction>
+                <text xml:lang="en">ErrorPinBlocked, unblockPin required</text>
+                <text xml:lang="de">ErrorPinBlocked, unblockPin erforderlich</text>
+            </reaction>
+        </errorCase>
+    </errorCases>
+    <logMessages>
+        <logMessage>
+            <text xml:lang="en">System-Log (authenticateUser)</text>
+            <text xml:lang="de">System-Log (authenticateUser)</text>
+        </logMessage>
+        <logMessage>
+            <text xml:lang="en">System-Log (logOut - manual or automatic)</text>
+            <text xml:lang="de">System-Log (logOut - manuell oder automatisch)</text>
+        </logMessage>
+    </logMessages>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2</reference>
+    </references>
+</processChain>

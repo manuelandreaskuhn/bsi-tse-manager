@@ -1,0 +1,551 @@
+{
+  "testcase_id": "TC-SM-TRA-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Transaktionsnummern: Fortlaufend, lückenlos, Fehlerfälle bei ungültigen Nummern",
+  "description": "Prüft Monotonie der Transaktionsnummern und korrekte Fehlermeldungen bei ungültigen/bereits beendeten Transaktionsnummern sowie Überlaufschutz.",
+  "purpose": "Prüfung, ob die Transaktionsnummern fortlaufend und lückenlos sind.\nAlle Transaktionen verlaufen nacheinander.",
+  "module": "Security Module",
+  "submodule": "SM_TRA",
+  "function": "startTransaction / updateTransaction / finishTransaction",
+  "test_type": "COMBINED",
+  "priority": "mandatory",
+  "profiles": [
+    "SM_BASIC"
+  ],
+  "source_tests": [
+    "SM_TRA_01",
+    "SM_TRA_02",
+    "SM_TRA_03",
+    "SM_TRA_04",
+    "SM_TRA_05",
+    "SM_TRA_06",
+    "SM_TRA_07"
+  ],
+  "variables": {
+    "$tn1": "Transaktionsnummer (Rückgabe startTransaction, tn1)",
+    "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)",
+    "$tn3": "Transaktionsnummer (Rückgabe startTransaction, tn3)"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "TSE initialisiert",
+      "result": null,
+      "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
+      "function": "initialize",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Zeit gestellt",
+      "result": null,
+      "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
+      "function": "updateTime",
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Nutzer logger authentifiziert",
+      "result": null,
+      "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
+      "function": "authenticateUser",
+      "user": "logger",
+      "parameters": {
+        "userId": "logger",
+        "pin": "<korrekter logger-PIN laut ICS>"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.2"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "PRECONDITION",
+      "title": "Aufzeichnungssystem $client1 registriert",
+      "result": null,
+      "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
+      "function": "registerClient",
+      "user": "admin",
+      "parameters": {
+        "clientId": "$client1"
+      },
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13"
+      ]
+    },
+    {
+      "step": 5,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Die Anzahl der maximal gleichzeitig geöffneten Transaktionen wird aus dem ICS übernommen.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 6,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Im Sicherheitsmodul wird keine offene Transaktion verwaltet.",
+      "result": null,
+      "instruction": "Im Sicherheitsmodul wird keine offene Transaktion verwaltet."
+    },
+    {
+      "step": 7,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens e",
+      "result": null,
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine beendete Transaktion gespeichert. Diese Transaktion hat die als $tn1 festgehaltene Transaktionsnummer."
+    },
+    {
+      "step": 8,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: Der Transaktionszähler steht auf dem vom Hersteller deklarie",
+      "result": null,
+      "instruction": "Der Transaktionszähler steht auf dem vom Hersteller deklarierten Maximalwert minus 1."
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.\n\nRückgabewerte festhalten: $tn1 = transactionNumber.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 13,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 14,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird wiederholt, bis die maximale Anzahl an gleichzeitig geöffneten Transaktionen erreicht ist.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 15,
+      "type": "SETUP",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Die übergebene Transaktionsnummer ist größer als $tn1.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorTransactionNumberNotFound ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 16,
+      "type": "VERIFY",
+      "title": "Sequenzielle Transaktionen: Transaktionsnummern prüfen (SM_TRA_01)",
+      "result": null,
+      "instruction": "Sequenzielle Transaktionen: Transaktionsnummern prüfen (SM_TRA_01)\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Transaktionsnummern sind fortlaufend und lückenlos (1, 2, 3, ...)",
+          "expected": "TXN_NUM_SEQ",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Jede Transaktionsnummer eindeutig",
+          "expected": "TXN_NUM_UNIQUE",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": [
+        {
+          "check_id": "TXN_NUM_SEQ",
+          "title": "transactionNumbers fortlaufend und lückenlos",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_NUM_UNIQUE",
+          "title": "transactionNumbers eindeutig pro Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "TXN_LIFE_START",
+          "title": "Jede transactionNumber hat genau einen Start-Eintrag",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 17,
+      "type": "ACTION",
+      "title": "Maximale parallele Transaktionen (SM_MULTI, SM_TRA_02)",
+      "result": null,
+      "instruction": "Maximale parallele Transaktionen (SM_MULTI, SM_TRA_02)\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Transaktionsnummern bis max. Anzahl fortlaufend vergeben",
+          "expected": "Lückenlos",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Kein Fehler beim Starten bis zur maximalen Anzahl",
+          "expected": "errorCode = None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_TRA_01",
+      "notes": "Nur wenn SM_MULTI aktiv"
+    },
+    {
+      "step": 18,
+      "type": "NEGATIVE",
+      "title": "Fehler: Start über Maximallimit  (SM_TRA_03)",
+      "result": null,
+      "instruction": "Fehler: Start über Maximallimit [NT] (SM_TRA_03)\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Fehlermeldung wird ausgelöst (z.B. ErrorLimitOfSimultaneousOpenTransactionsReached)",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine neue Transaktion gestartet",
+          "expected": "transactionCount unverändert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 19,
+      "type": "NEGATIVE",
+      "title": "Fehler: Update mit nicht-existierender Transaktionsnummer  (SM_TRA_04)",
+      "result": null,
+      "instruction": "Fehler: Update mit nicht-existierender Transaktionsnummer [NT] (SM_TRA_04)\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<nicht vergebene Nummer>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung ErrorTransactionNumberNotFound oder äquivalent",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 20,
+      "type": "NEGATIVE",
+      "title": "Fehler: Update bereits beendeter Transaktion  (SM_TRA_05)",
+      "result": null,
+      "instruction": "Fehler: Update bereits beendeter Transaktion [NT] (SM_TRA_05)\n\nAufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<Nummer einer beendeten Transaktion>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung (Transaktion bereits beendet)",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 21,
+      "type": "NEGATIVE",
+      "title": "Fehler: Finish bereits beendeter Transaktion  (SM_TRA_06)",
+      "result": null,
+      "instruction": "Fehler: Finish bereits beendeter Transaktion [NT] (SM_TRA_06)\n\nAufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "parameters": {
+        "transactionNumber": "<Nummer einer beendeten Transaktion>"
+      },
+      "checks": [
+        {
+          "description": "Fehlermeldung (Transaktion bereits beendet)",
+          "expected": "errorCode ≠ None",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_TRA_01"
+    },
+    {
+      "step": 22,
+      "type": "VERIFY",
+      "title": "Überlaufschutz Transaktionsnummer (SM_TRA_07)",
+      "result": null,
+      "instruction": "Überlaufschutz Transaktionsnummer (SM_TRA_07)",
+      "checks": [
+        {
+          "description": "TSE blockiert weitere Anfragen bei Überlauf des Transaktionszählers",
+          "expected": "Fehler bei Überlauf",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Fehlermeldung bei Überlauf signalisiert",
+          "expected": "Fehlercode vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "notes": "Via Herstellerdokumentation oder kontrollierte Simulation"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §9.1"
+  ]
+}

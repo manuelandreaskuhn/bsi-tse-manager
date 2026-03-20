@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorCertificateExpired" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorCertificateExpired</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if a SE API function is invoked and the certificate corresponding to a private key used to create log messages is expired. Even if a certificate is expired, the log message SHALL be created by the Secure Element and stored by the device. In this case, the exception ErrorCertificateExpired SHALL be raised only after the data of the log message has been stored. This is a warning exception that indicates the operation succeeded but with a certificate validity concern.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn eine SE-API-Funktion aufgerufen wird und das Zertifikat, das dem privaten Schlüssel zum Erstellen von Protokollmeldungen entspricht, abgelaufen ist. Selbst wenn ein Zertifikat abgelaufen ist, MUSS die Protokollmeldung vom Secure Element erstellt und vom Gerät gespeichert werden. In diesem Fall sollte die Ausnahme ErrorCertificateExpired erst nach dem Speichern der Protokollmeldungsdaten ausgelöst werden. Dies ist eine Warnausnahme, die darauf hinweist, dass der Vorgang erfolgreich war, aber mit einem Zertifikatsgültigkeitsproblem behaftet ist.</text>
+  </description>
+  <category>Certificate Management</category>
+  <subcategory>Logging Operations</subcategory>
+  <severity>Medium</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorCertificateExpired that is thrown if a SE API function is invoked and the certificate with the public key for the verification of the appropriate type of log messages is expired.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorCertificateExpired, die ausgelöst wird, wenn eine SE-API-Funktion aufgerufen wird und das Zertifikat mit dem öffentlichen Schlüssel zur Überprüfung der entsprechenden Protokollmeldungstyp abgelaufen ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">The ErrorCertificateExpired exception indicates that a function has successfully completed its primary operation (creating and storing a log message), but the certificate used for signing the log message has expired. Unlike typical exception scenarios where the operation fails, this exception is raised AFTER the log message has already been created and stored by the Secure Element. This design ensures that log messages are persisted even when the signing certificate is no longer valid, maintaining logging continuity. Applications should treat this as a warning condition indicating that certificate renewal or replacement may be necessary, while acknowledging that the log message operation succeeded. The expired certificate does not prevent logging but does indicate a potential security or compliance issue that requires attention.</text>
+      <text xml:lang="de">Die Ausnahme ErrorCertificateExpired zeigt an, dass eine Funktion ihren primären Betrieb erfolgreich abgeschlossen hat (Erstellen und Speichern einer Protokollmeldung), aber das zum Signieren der Protokollmeldung verwendete Zertifikat abgelaufen ist. Im Gegensatz zu typischen Ausnahmeszenarien, bei denen der Vorgang fehlschlägt, wird diese Ausnahme NACH dem Erstellen und Speichern der Protokollmeldung durch das Secure Element ausgelöst. Dieses Design stellt sicher, dass Protokollmeldungen beibehalten werden, selbst wenn das Signaturzertifikat nicht mehr gültig ist, und gewährleistet die Kontinuität der Protokollierung. Anwendungen sollten dies als Warnbedingung behandeln, die darauf hinweist, dass eine Zertifikatreneuerung oder ein Austausch erforderlich sein kann, während sie gleichzeitig anerkennen, dass die Protokollmeldungsoperation erfolgreich war. Das abgelaufene Zertifikat verhindert die Protokollierung nicht, weist aber auf ein mögliches Sicherheits- oder Compliance-Problem hin, das Aufmerksamkeit erfordert.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.1.2.4 Exception Categories - Certificate Validity</section>
+    <requirement>
+      <text xml:lang="en">The exception SHALL be raised if a function is invoked and the certificate corresponding to a private key used to create log messages is expired. Even if a certificate is expired, the log message SHALL be created by the Secure Element and stored by the device. In this case, the exception ErrorCertificateExpired SHALL be raised only after the data of the log message has been stored. This ensures that logging continues despite certificate expiration, but the application is notified of the certificate validity issue.</text>
+      <text xml:lang="de">Die Ausnahme sollte ausgelöst werden, wenn eine Funktion aufgerufen wird und das Zertifikat, das dem privaten Schlüssel zum Erstellen von Protokollmeldungen entspricht, abgelaufen ist. Selbst wenn ein Zertifikat abgelaufen ist, MUSS die Protokollmeldung vom Secure Element erstellt und vom Gerät gespeichert werden. In diesem Fall sollte die Ausnahme ErrorCertificateExpired erst nach dem Speichern der Protokollmeldungsdaten ausgelöst werden. Dies stellt sicher, dass die Protokollierung trotz Zertifikatsablauf fortgesetzt wird, die Anwendung aber über das Zertifikatsgültigkeitsproblem benachrichtigt wird.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Functions that create log messages or perform logging operations when the signing certificate is no longer valid</text>
+      <text xml:lang="de">Funktionen, die Protokollmeldungen erstellen oder Protokollierungsvorgänge durchführen, wenn das Signaturzertifikat nicht mehr gültig ist</text>
+    </applicability>
+    <reference>BSI TR-03151-1 Section 3.1.2.4 - Exception Categories</reference>
+  </specification>
+  <thrownBy>
+    <function>initialize</function>
+    <function>setDescription</function>
+    <function>selfTest</function>
+    <function>updateDevice</function>
+    <function>updateTime</function>
+    <function>configureLogging</function>
+    <function>registerClient</function>
+    <function>deregisterClient</function>
+    <function>startTransaction</function>
+    <function>updateTransaction</function>
+    <function>finishTransaction</function>
+    <function>lockTransactionLogging</function>
+    <function>unlockTransactionLogging</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls a logging function (e.g., initialize, updateTime, finishTransaction, etc.)</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft eine Protokollierungsfunktion auf (z. B. initialize, updateTime, finishTransaction usw.)</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function performs its primary operation</text>
+      <text xml:lang="de">Funktion führt ihren primären Betrieb durch</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function requests log message creation from Secure Element</text>
+      <text xml:lang="de">Funktion fordert die Erstellung von Protokollmeldungen vom Secure Element an</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Secure Element checks certificate validity for log message signing</text>
+      <text xml:lang="de">Secure Element prüft die Zertifikatsgültigkeit zum Signieren von Protokollmeldungen</text>
+    </step>
+    <step number="4a">
+      <text xml:lang="en">If certificate is NOT expired → log message created and stored normally, no exception raised</text>
+      <text xml:lang="de">Falls das Zertifikat NICHT abgelaufen ist → Protokollmeldung wird normal erstellt und gespeichert, keine Ausnahme ausgelöst</text>
+    </step>
+    <step number="4b">
+      <text xml:lang="en">If certificate IS expired → continue anyway to ensure logging continuity</text>
+      <text xml:lang="de">Falls das Zertifikat ABGELAUFEN ist → trotzdem fortfahren, um die Kontinuität der Protokollierung zu gewährleisten</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element creates and signs log message using expired certificate</text>
+      <text xml:lang="de">Secure Element erstellt und signiert die Protokollmeldung mit dem abgelaufenen Zertifikat</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Device stores the log message data successfully</text>
+      <text xml:lang="de">Gerät speichert die Protokollmeldungsdaten erfolgreich</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Function raises ErrorCertificateExpired AFTER storage succeeds</text>
+      <text xml:lang="de">Funktion löst ErrorCertificateExpired AUS, nachdem die Speicherung erfolgreich ist</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function returns to caller with exception and successful operation result</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer mit Ausnahme und erfolgreichem Betriebsergebnis zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify that operation succeeded despite the exception - log message was created and stored</text>
+      <text xml:lang="de">Überprüfen Sie, ob der Vorgang trotz der Ausnahme erfolgreich war - die Protokollmeldung wurde erstellt und gespeichert</text>
+    </step>
+    <step>
+      <text xml:lang="en">Identify the expired certificate from exception message or device logs</text>
+      <text xml:lang="de">Identifizieren Sie das abgelaufene Zertifikat aus der Ausnahmemeldung oder den Geräteprotokollen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check certificate validity period to understand expiration timeline</text>
+      <text xml:lang="de">Überprüfen Sie den Gültigkeitszeitraum des Zertifikats, um den Ablaufzeitplan zu verstehen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Plan certificate renewal or replacement to prevent persistent expiration</text>
+      <text xml:lang="de">Planen Sie die Zertifikatreneuerung oder den Austausch, um hartnäckiges Ablaufen zu verhindern</text>
+    </step>
+    <step>
+      <text xml:lang="en">Implement proactive certificate monitoring before expiration dates</text>
+      <text xml:lang="de">Implementieren Sie proaktive Zertifikatüberwachung vor Ablaufdaten</text>
+    </step>
+    <step>
+      <text xml:lang="en">Review logging procedures to ensure continued operation during certificate transitions</text>
+      <text xml:lang="de">Überprüfen Sie die Protokollierungsvorgänge, um einen reibungslosen Betrieb während des Zertifikatwechsels zu gewährleisten</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorSigningEventDataFailed</exception>
+    <exception>ErrorStoringLogMessageFailed</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state>
+      <text xml:lang="en">Log message successfully created and stored - operation completed despite certificate expiration</text>
+      <text xml:lang="de">Protokollmeldung erfolgreich erstellt und gespeichert - Vorgang trotz Zertifikatsablauf abgeschlossen</text>
+    </state>
+    <state>
+      <text xml:lang="en">Exception raised AFTER storage succeeds - ensures log message persistence</text>
+      <text xml:lang="de">Ausnahme ausgelöst, NACHDEM die Speicherung erfolgreich ist - stellt die Persistierung von Protokollmeldungen sicher</text>
+    </state>
+    <state>
+      <text xml:lang="en">Certificate remains expired - no automatic renewal occurs</text>
+      <text xml:lang="de">Zertifikat bleibt abgelaufen - keine automatische Erneuerung erfolgt</text>
+    </state>
+    <state>
+      <text xml:lang="en">Device state changed - log message now persisted in storage</text>
+      <text xml:lang="de">Gerätezustand geändert - Protokollmeldung ist nun im Speicher persistent</text>
+    </state>
+    <state>
+      <text xml:lang="en">Signing certificate validity concern noted - application should plan for certificate management</text>
+      <text xml:lang="de">Gültigkeitsproblem des Signaturzertifikats notiert - Anwendung sollte Zertifikatverwaltung planen</text>
+    </state>
+    <state>
+      <text xml:lang="en">Function returns successfully to caller despite raising exception - log operation did not fail</text>
+      <text xml:lang="de">Funktion kehrt erfolgreich zum Aufrufer zurück, obwohl eine Ausnahme ausgelöst wird - Protokollierungsvorgang ist nicht fehlgeschlagen</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: A logging operation completed successfully, but the signing certificate has expired - operation succeeded despite certificate validity issue</text>
+      <text xml:lang="de">Anzeichen: Ein Protokollierungsvorgang wurde erfolgreich abgeschlossen, aber das Signaturzertifikat ist abgelaufen - Vorgang trotz Zertifikatsgültigkeitsproblem erfolgreich</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Certificate Management, Logging Operations, Certificate Validation, Secure Element Operations</text>
+      <text xml:lang="de">Themen: Zertifikatverwaltung, Protokollierungsvorgänge, Zertifikatvalidierung, Secure Element-Vorgänge</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by logging functions when certificate validity check detects expiration</text>
+      <text xml:lang="de">Wird von Protokollierungsfunktionen ausgelöst, wenn die Zertifikatsgültigkeitsprüfung ein Ablaufen erkennt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Functions that create log messages (initialize, updateTime, startTransaction, etc.) perform certificate validation</text>
+      <text xml:lang="de">Funktionen, die Protokollmeldungen erstellen (initialize, updateTime, startTransaction usw.), führen eine Zertifikatvalidierung durch</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device continues logging operation despite expired certificate to maintain audit trail integrity</text>
+      <text xml:lang="de">Gerät setzt den Protokollierungsvorgang trotz abgelaufenem Zertifikat fort, um die Integrität des Audit-Trail zu erhalten</text>
+    </note>
+    <note>
+      <text xml:lang="en">Application must implement certificate management to prevent persistent expiration conditions</text>
+      <text xml:lang="de">Anwendung muss Zertifikatverwaltung implementieren, um hartnäckige Ablaufbedingungen zu verhindern</text>
+    </note>
+  </implementationContext>
+</exception>
+

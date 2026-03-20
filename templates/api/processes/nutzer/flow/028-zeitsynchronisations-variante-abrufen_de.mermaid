@@ -1,0 +1,32 @@
+flowchart TD
+    Start([Nutzer: getTimeSyncVariant<br/>aufrufen])
+    Start --> CheckInit{TSE<br/>initialisiert?}
+    
+    CheckInit -->|Nein| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Ja| IdentifyVariant[Identifiziere unterstützte<br/>Zeitsynchronisations-Variante]
+    
+    IdentifyVariant --> CheckVariant{Welche<br/>Variante?}
+    
+    CheckVariant -->|Keine updateTime<br/>Funktion| ReturnAuto[Rückgabe:<br/>automaticSync]
+    CheckVariant -->|Nur updateTime<br/>mit Parameter| ReturnManual[Rückgabe:<br/>manualSync]
+    CheckVariant -->|Beides<br/>möglich| ReturnBoth[Rückgabe:<br/>automaticAndManualSync]
+    
+    ReturnAuto --> End([Ende])
+    ReturnManual --> End
+    ReturnBoth --> End
+    
+    ErrorInit --> End
+    
+    style IdentifyVariant fill:#87CEEB
+    style ReturnAuto fill:#FFD700
+    style ReturnManual fill:#90EE90
+    style ReturnBoth fill:#87CEEB
+    
+    Note1[automaticSync:<br/>Zeit wird zentral/automatisch<br/>gestellt, NICHT über API]
+    ReturnAuto -.-> Note1
+    
+    Note2[manualSync:<br/>Zeit NUR über API<br/>mit updateTime Parameter]
+    ReturnManual -.-> Note2
+    
+    Note3[automaticAndManualSync:<br/>Beides möglich]
+    ReturnBoth -.-> Note3

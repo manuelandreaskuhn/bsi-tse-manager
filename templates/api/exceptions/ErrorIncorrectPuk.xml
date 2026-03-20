@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorIncorrectPuk" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorIncorrectPuk</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API function unblockPin fails because an incorrect PUK (PIN Unblock Key) was provided. The function attempts to unblock a blocked PIN by verifying the supplied PUK, but the provided PUK does not match the registered PIN unblock credential, causing the unblock operation to fail and be rejected.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktion unblockPin fehlschlägt, da ein falscher PUK (PIN Unblock Key) bereitgestellt wurde. Die Funktion versucht, eine blockierte PIN zu entsperren, indem der bereitgestellte PUK verifiziert wird, aber der bereitgestellte PUK stimmt nicht mit der registrierten PIN-Entsperr-Berechtigung überein, was dazu führt, dass die Entsperr-Operation fehlschlägt und abgelehnt wird.</text>
+  </description>
+  <category>Authentication</category>
+  <subcategory>PIN Unblock Security</subcategory>
+  <severity>High</severity>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorIncorrectPuk that is thrown if the SE API function unblockPin has been invoked with an incorrect PUK.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorIncorrectPuk, die ausgelöst wird, wenn die SE API Funktion unblockPin mit einem falschen PUK aufgerufen worden ist.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the unblockPin function receives an incorrect PUK that does not match the registered PIN unblock credential. PUK verification is a critical security operation that controls access to PIN unblock functionality and prevents unauthorized PIN reset attempts. ErrorIncorrectPuk indicates that the supplied PUK does not match the registered PIN Unblock Key stored on the Secure Element. When this exception occurs, the PIN unblock operation fails and the PIN remains blocked. The Secure Element may also track failed PUK verification attempts and implement security countermeasures (PUK retry counter decrement, potential PUK blocking after maximum failures). Recovery requires supplying the correct PUK in a subsequent unblock attempt, or requesting administrative assistance if the PUK is incorrect or unknown.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktion unblockPin einen falschen PUK erhält, der nicht mit der registrierten PIN-Entsperr-Berechtigung übereinstimmt. PUK-Verifizierung ist eine kritische Sicherheitsoperation, die den Zugriff auf PIN-Entsperr-Funktionalität kontrolliert und unautorisierte PIN-Zurücksetzen-Versuche verhindert. ErrorIncorrectPuk zeigt an, dass der bereitgestellte PUK nicht mit dem registrierten PIN Unblock Key auf dem Secure Element übereinstimmt. Wenn diese Ausnahme auftritt, schlägt die PIN-Entsperr-Operation fehl und die PIN bleibt blockiert. Das Secure Element kann auch fehlgeschlagene PUK-Verifizierungsversuche verfolgen und Sicherheitsmaßnahmen implementieren (PUK-Wiederholungszähler-Dekrement, potenzielle PUK-Blockierung nach maximalen Fehlern). Die Wiederherstellung erfordert die Bereitstellung des korrekten PUK bei einem nachfolgenden Entsperr-Versuch oder die Anforderung administrativer Unterstützung, wenn der PUK falsch oder unbekannt ist.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.5.3 User Authentication - unblockPin</section>
+    <requirement>
+      <text xml:lang="en">The function unblockPin SHALL unblock a blocked PIN by verifying the provided PUK (PIN Unblock Key) against the registered PIN unblock credential. If the provided PUK does not match the registered credential, the function SHALL raise the exception ErrorIncorrectPuk and reject the PIN unblock operation without unblocking the PIN. The Secure Element SHALL track failed PUK verification attempts and may implement security countermeasures including PUK retry counter management.</text>
+      <text xml:lang="de">Die Funktion unblockPin soll eine blockierte PIN entsperren, indem der bereitgestellte PUK (PIN Unblock Key) gegen die registrierte PIN-Entsperr-Berechtigung verifiziert wird. Falls der bereitgestellte PUK nicht mit der registrierten Berechtigung übereinstimmt, soll die Funktion die Ausnahme ErrorIncorrectPuk auslösen und die PIN-Entsperr-Operation ablehnen, ohne die PIN zu entsperren. Das Secure Element soll fehlgeschlagene PUK-Verifizierungsversuche verfolgen und kann Sicherheitsmaßnahmen implementieren, einschließlich PUK-Wiederholungszähler-Verwaltung.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">PIN unblock operations - unblockPin function only</text>
+      <text xml:lang="de">PIN-Entsperr-Operationen - nur Funktion unblockPin</text>
+    </applicability>
+    <reference>unblockPin – Function (3.5.3)</reference>
+  </specification>
+  <thrownBy>
+    <function>unblockPin</function>
+  </thrownBy>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls unblockPin function with PUK parameter</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion unblockPin mit PUK-Parameter auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters including PUK format and length</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter einschließlich PUK-Format und Länge</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function checks if PIN is currently blocked and unblock operation is permitted</text>
+      <text xml:lang="de">Funktion prüft, ob PIN derzeit blockiert ist und Entsperr-Operation zulässig ist</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function verifies PIN unblock is applicable and PUK-based unblock is supported</text>
+      <text xml:lang="de">Funktion verifiziert, dass PIN-Entsperrung anwendbar ist und PUK-basierte Entsperrung unterstützt wird</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Function initiates communication channel to Secure Element and prepares PIN unblock command with supplied PUK</text>
+      <text xml:lang="de">Funktion initiiert Kommunikationskanal zu Secure Element und bereitet PIN-Entsperr-Befehl mit bereitgestelltem PUK vor</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Function transmits unblock command to Secure Element with supplied PUK for verification</text>
+      <text xml:lang="de">Funktion übersendet Entsperr-Befehl zu Secure Element mit bereitgestelltem PUK zur Verifizierung</text>
+    </step>
+    <step number="6a">
+      <text xml:lang="en">If supplied PUK does NOT match registered credential → Secure Element responds with failure, ErrorIncorrectPuk raised, function exits</text>
+      <text xml:lang="de">Falls bereitgestellter PUK NICHT mit registrierter Berechtigung übereinstimmt → Secure Element antwortet mit Fehler, ErrorIncorrectPuk ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="6b">
+      <text xml:lang="en">If PUK verification confirms mismatch → Secure Element increments failed PUK verification counter and may apply security countermeasures</text>
+      <text xml:lang="de">Falls PUK-Verifizierung Missvhältnis bestätigt → Secure Element erhöht fehlgeschlagenen PUK-Verifizierungs-Zähler und kann Sicherheitsmaßnahmen anwenden</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">If supplied PUK matches registered credential, function receives unblock success confirmation</text>
+      <text xml:lang="de">Falls bereitgestellter PUK mit registrierter Berechtigung übereinstimmt, empfängt Funktion Entsperr-Erfolgsbestätigung</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Function clears the PIN block flag and resets the PIN retry counter to allow new authentication attempts</text>
+      <text xml:lang="de">Funktion löscht das PIN-Blockierungs-Flag und setzt den PIN-Wiederholungs-Zähler zurück, um neue Authentifizierungsversuche zu ermöglichen</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function closes Secure Element communication channel</text>
+      <text xml:lang="de">Funktion schließt Secure Element Kommunikationskanal</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function returns to caller with PIN unblocked and ready for new authentication attempts</text>
+      <text xml:lang="de">Funktion kehrt zum Aufrufer zurück mit entsperrter PIN und bereit für neue Authentifizierungsversuche</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify PUK entry - check for typos</text>
+      <text xml:lang="de">PUK-Eingabe verifizieren - auf Tippfehler prüfen</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry unblock operation with correct PUK</text>
+      <text xml:lang="de">Entsperr-Operation mit korrektem PUK wiederholen</text>
+    </step>
+    <step>
+      <text xml:lang="en">If PUK forgotten, contact device vendor or support</text>
+      <text xml:lang="de">Falls PUK vergessen, kontaktieren Sie den Gerätehersteller oder Support</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorPukBlocked</exception>
+    <exception>ErrorPinBlocked</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUnblockPinFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="PIN Block Status">
+      <text xml:lang="en">PIN remains blocked. The failed PUK verification does not unblock the PIN or reset the PIN block status. The device continues to prevent user authentication until the correct PUK is supplied in a subsequent unblock attempt.</text>
+      <text xml:lang="de">PIN bleibt blockiert. Die fehlgeschlagene PUK-Verifizierung entsperrt die PIN nicht und setzt den PIN-Blockierungs-Status nicht zurück. Das Gerät setzt die Verhinderung der Benutzer-Authentifizierung fort, bis der richtige PUK in einem nachfolgenden Entsperr-Versuch bereitgestellt wird.</text>
+    </state>
+    <state name="Failed PUK Verification Counter Update">
+      <text xml:lang="en">The Secure Element's failed PUK verification counter is typically incremented to track the PUK verification failure. If implemented, this counter tracks repeated failed attempts and may trigger security countermeasures (PUK blocking) after excessive failures.</text>
+      <text xml:lang="de">Der fehlgeschlagene PUK-Verifizierungs-Zähler des Secure Element wird normalerweise erhöht, um den PUK-Verifizierungsfehler zu verfolgen. Falls implementiert, verfolgt dieser Zähler wiederholte Fehlerversuche und kann Sicherheitsmaßnahmen (PUK-Blockierung) nach übermäßigen Fehlern auslösen.</text>
+    </state>
+    <state name="PUK Blocking Preconditions">
+      <text xml:lang="en">Repeated failed PUK verification attempts may eventually trigger PUK blocking or permanent PIN lock. If the failed attempt counter reaches the maximum threshold configured for PUK blocking, the next unblockPin call may raise ErrorPukBlocked instead of ErrorIncorrectPuk.</text>
+      <text xml:lang="de">Wiederholte fehlgeschlagene PUK-Verifizierungsversuche können letztendlich PUK-Blockierung oder permanente PIN-Sperren auslösen. Falls der fehlgeschlagene Versuchs-Zähler den für PUK-Blockierung konfigurierten maximalen Schwellenwert erreicht, kann der nächste unblockPin-Aufruf ErrorPukBlocked statt ErrorIncorrectPuk auslösen.</text>
+    </state>
+    <state name="No Credential Modification">
+      <text xml:lang="en">The registered PIN unblock credential (PUK) remains unchanged. The incorrect PUK does not modify the registered credential or authentication configuration. Subsequent unblock attempts use the same registered PUK credential.</text>
+      <text xml:lang="de">Die registrierte PIN-Entsperr-Berechtigung (PUK) bleibt unverändert. Der falsche PUK ändert nicht die registrierte Berechtigung oder Authentifizierungs-Konfiguration. Nachfolgende Entsperr-Versuche verwenden dieselbe registrierte PUK-Berechtigung.</text>
+    </state>
+    <state name="Device Operational State">
+      <text xml:lang="en">Device remains fully operational and unmodified. The failed unblock does not affect device state, configuration, or other operations. All device components remain in their pre-call state.</text>
+      <text xml:lang="de">Das Gerät bleibt vollständig betriebsbereit und unmodifiziert. Das Fehlschlagen der Entsperrung wirkt sich nicht auf den Gerätezustand, die Konfiguration oder andere Operationen aus. Alle Gerätekomponenten bleiben in ihrem Pre-Call-Zustand.</text>
+    </state>
+    <state name="Recovery Preconditions Met">
+      <text xml:lang="en">The device state after exception is consistent and allows for recovery operations. User can immediately retry PIN unblock with the correct PUK. No special recovery procedures are required unless PUK blocking is triggered or administrative assistance is needed.</text>
+      <text xml:lang="de">Der Gerätezustand nach der Ausnahme ist konsistent und ermöglicht Wiederherstellungsoperationen. Der Benutzer kann sofort die PIN-Entsperrung mit dem korrekten PUK wiederholen. Keine speziellen Wiederherstellungsverfahren sind erforderlich, außer wenn PUK-Blockierung ausgelöst wird oder administrative Unterstützung erforderlich ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: PUK provided does not match the stored PUK - PUK verification failed</text>
+      <text xml:lang="de">Anzeichen: Bereitgestellter PUK stimmt nicht mit dem gespeicherten PUK überein - PUK-Verifizierung fehlgeschlagen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Authentication, PIN Management, User Verification, Unblocking Operations</text>
+      <text xml:lang="de">Themen: Authentifizierung, PIN-Verwaltung, Benutzerverfizierung, Entsperr-Operationen</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by unblockPin when provided PUK does not match stored PUK</text>
+      <text xml:lang="de">Wird von unblockPin ausgelöst, wenn der bereitgestellte PUK nicht mit dem gespeicherten PUK übereinstimmt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Unblock function verifies PUK before allowing PIN reset</text>
+      <text xml:lang="de">Entsperr-Funktion verifiziert PUK vor dem Zulassen des PIN-Zurüksetzens</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device maintains PUK secret for PIN recovery</text>
+      <text xml:lang="de">Gerät verwaltet PUK-Geheimnis für PIN-Wiederherstellung</text>
+    </note>
+    <note>
+      <text xml:lang="en">PUK mismatch prevents PIN unblocking</text>
+      <text xml:lang="de">PUK-Missvhältnis verhindert PIN-Entsperrung</text>
+    </note>
+  </implementationContext>
+</exception>
+

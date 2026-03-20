@@ -1,0 +1,39 @@
+flowchart TD
+    Start([Admin/Central Operator:<br/>unlockTransactionLogging call])
+    Start --> CheckAuth{Admin<br/>authenticated?}
+    
+    CheckAuth -->|No| ErrorAuth[Exception:<br/>ErrorUserNotAuthenticated/<br/>ErrorUserNotAuthorized]
+    CheckAuth -->|Yes| CheckInit{TSE<br/>initialized?}
+    
+    CheckInit -->|No| ErrorInit[Exception:<br/>ErrorDeviceNotInitialized]
+    CheckInit -->|Yes| CheckLocked{Transactions<br/>locked?}
+    
+    CheckLocked -->|No| ErrorNotLocked[Exception:<br/>ErrorTransactionLoggingNotLocked]
+    CheckLocked -->|Yes| CreateLog[Create System Log Message<br/>unlockTransactionLogging]
+    
+    CreateLog --> SetOrigin{Caller?}
+    SetOrigin -->|Admin| SetOriginAdmin[eventOrigin = Interface<br/>eventTriggeredByUser = admin]
+    SetOrigin -->|Central Operator| SetOriginCO[eventOrigin = centraloperator<br/>eventTriggeredByUser = centraloperator]
+    
+    SetOriginAdmin --> IncrSig
+    SetOriginCO --> IncrSig[SM: Signature Counter++]
+    
+    IncrSig --> CalcSig[SM: Create Signature]
+    CalcSig --> SaveLog[Save Log Message]
+    
+    SaveLog --> UnlockFunctions[Unlock Functions:<br/>- startTransaction<br/>- updateTransaction<br/>- finishTransaction]
+    
+    UnlockFunctions --> CheckUnlock{Unlocking<br/>successful?}
+    
+    CheckUnlock -->|No| ErrorUnlock[Exception:<br/>ErrorUnlockTransactionLoggingFailed]
+    CheckUnlock -->|Yes| Return[Return: Success]
+    
+    Return --> End([End - Transactions unlocked])
+    
+    ErrorAuth --> End
+    ErrorInit --> End
+    ErrorNotLocked --> End
+    ErrorUnlock --> End
+    
+    style UnlockFunctions fill:#90EE90
+    style Return fill:#90EE90

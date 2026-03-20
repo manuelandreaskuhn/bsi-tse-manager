@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<type id="AlgorithmIdentifier" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>AlgorithmIdentifier</name>
+  <category>Cryptographic Types</category>
+  <source>BSI TR-03151</source>
+  <baseType>SEQUENCE</baseType>
+  <description>Identifies a cryptographic algorithm and its associated parameters. This type is used to specify signature algorithms in log messages.</description>
+  <fields>
+    <field>
+      <name>algorithm</name>
+      <type>OBJECT IDENTIFIER</type>
+      <required>true</required>
+      <description>Identifies the signature algorithm used by the Secure Element. The value MUST be configured according to BSI TR-03116.</description>
+    </field>
+    <field>
+      <name>parameters</name>
+      <type>ANY</type>
+      <required>false</required>
+      <description>Contains the associated parameters of the signature algorithm employed. The structure and value depend on the particular algorithm employed.</description>
+    </field>
+  </fields>
+  <asn1Definition>AlgorithmIdentifier ::= SEQUENCE {
+  algorithm   OBJECT IDENTIFIER,
+  parameters  ANY OPTIONAL
+}</asn1Definition>
+  <usage>Used in log messages to identify the signature algorithm and its parameters.</usage>
+  <references>
+    <reference>BSI TR-03116 for approved signature algorithms</reference>
+  </references>
+</type>

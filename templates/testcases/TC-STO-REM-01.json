@@ -1,0 +1,102 @@
+{
+  "testcase_id": "TC-STO-REM-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-19",
+  "result": null,
+  "title": "Fernverbundenes Speichermedium: Abgesicherter Kommunikationskanal",
+  "description": "Formelle Prüfung des Secure Channels zwischen Einbindungsschnittstelle und fernverbundenem Speichermedium.",
+  "purpose": "Prüfung, ob die Kommunikation zwischen der Einbindungsschnittstelle und dem fernverbundenen Speichermedium über einen abgesicherten Kanal (Secure Channel) stattfindet. Die Prüfung erfolgt auf Grundlage einer Herstellerdokumentation.",
+  "module": "Storage",
+  "submodule": "STO_REM",
+  "function": null,
+  "test_type": "FP",
+  "priority": "conditional",
+  "profiles": [
+    "STORAGE_REMOTE"
+  ],
+  "source_tests": [
+    "STO_REM_01"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation und ausgefülltes ICS liegen vollständig vor.",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Vorbedingung: TSE verwendet fernverbundenes Speichermedium",
+      "result": null,
+      "instruction": "TSE verwendet fernverbundenes Speichermedium"
+    },
+    {
+      "step": 3,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Herstellerdokumentation liegt vor",
+      "references": [
+        "BSI TR-03153-1 Anhang A"
+      ]
+    },
+    {
+      "step": 4,
+      "type": "VERIFY",
+      "title": "Secure-Channel-Dokumentation prüfen",
+      "result": null,
+      "instruction": "Secure-Channel-Dokumentation prüfen",
+      "checks": [
+        {
+          "description": "Secure Channel zwischen Einbindungsschnittstelle und Speichermedium dokumentiert",
+          "expected": "Vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Verschlüsselungsverfahren des Kanals spezifiziert",
+          "expected": "Spezifiziert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Authentifizierung des Kanals beschrieben",
+          "expected": "Beschrieben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Integritätsschutz des Kanals beschrieben",
+          "expected": "Beschrieben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ]
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 §5.2"
+  ]
+}

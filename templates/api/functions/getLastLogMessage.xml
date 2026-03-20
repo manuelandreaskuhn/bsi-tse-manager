@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<function xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="getLastLogMessage" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/functions.xsd">
+  <name>getLastLogMessage</name>
+  <category>Logging</category>
+  <description>
+    <text xml:lang="en">Reads a log message that bases on the last log message parts that have been produced and processed by the Secure Element</text>
+    <text xml:lang="de">Liest eine Log-Nachricht, die auf den letzten vom Secure Element erzeugten und verarbeiteten Log-Nachrichtenteilen basiert</text>
+  </description>
+  <authorizedRoles>
+    <role>unauthenticated</role>
+    <role>logger</role>
+    <role>admin</role>
+  </authorizedRoles>
+  <detailedSteps>
+    <step>
+      <number>1</number>
+      <standardStep number="1">
+        <shortCommand xml:lang="de">Authentifizierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authentication</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality solely to authenticated users, the function SHALL check if the user that has invoked the function has the status authenticated. If the status is not authenticated, the function SHALL raise the exception ErrorUserNotAuthenticated and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer authentifiziert. Falls nicht: Exception ErrorUserNotAuthenticated, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authenticated THEN
+  THROW ErrorUserNotAuthenticated
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT authentifiziert DANN
+  WERFE ErrorUserNotAuthenticated
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authenticated</text>
+          <text xml:lang="de">Der Benutzer ist nicht authentifiziert</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>2</number>
+      <standardStep number="2">
+        <shortCommand xml:lang="de">Autorisierung Nutzer</shortCommand>
+        <shortCommand xml:lang="en">User Authorization</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">If the referencing guideline limits the access to the functionality to certain roles, the function SHALL check in the corresponding role if the (unauthenticated) user is authorized to execute the function. If the user is not authorized, the function SHALL raise the exception ErrorUserNotAuthorized and exit the function.</text>
+        <text xml:lang="de">Prüft, ob Nutzer berechtigt. Falls nicht: Exception ErrorUserNotAuthorized, Ende.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">IF user NOT authorized THEN
+  THROW ErrorUserNotAuthorized
+  EXIT function
+END</text>
+        <text xml:lang="de">WENN Benutzer NICHT autorisiert DANN
+  WERFE ErrorUserNotAuthorized
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorUserNotAuthorized</exception>
+        <trigger>
+          <text xml:lang="en">The user is not authorized</text>
+          <text xml:lang="de">Der Benutzer ist nicht berechtigt</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>3</number>
+      <description>
+        <text xml:lang="en">The function SHALL retrieve the parts of the log message determined by the Secure Element most recently. If no log message parts are found in the Secure Element, the exception ErrorNoLogMessageFound SHALL be raised and the function SHALL be exited. If the retrieving of the log message parts fails, the exception ErrorReadingLogMessage SHALL be raised and the function SHALL be exited.</text>
+        <text xml:lang="de">Holt letzte Log-Teile vom Secure Element. Falls keine: Exception ErrorNoLogMessageFound. Bei Fehler: Exception ErrorReadingLogMessage.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">TRY
+  RETRIEVE latest log message parts from SE
+CATCH error
+  IF no log parts found THEN
+    THROW ErrorNoLogMessageFound
+  ELSE
+    THROW ErrorReadingLogMessage
+  END
+  EXIT function
+END</text>
+        <text xml:lang="de">VERSUCHE
+  HOLE letzte Log-Nachricht-Teile vom SE
+BEI_FEHLER
+  WENN keine Log-Teile gefunden DANN
+    WERFE ErrorNoLogMessageFound
+  SONST
+    WERFE ErrorReadingLogMessage
+  ENDE
+  BEENDE_FUNKTION
+ENDE</text>
+      </pseudocode>
+      <errorCase>
+        <exception>ErrorNoLogMessageFound</exception>
+        <trigger>
+          <text xml:lang="en">No log message parts found in the Secure Element</text>
+          <text xml:lang="de">Keine Log-Nachricht-Teile im SE gefunden</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+      <errorCase>
+        <exception>ErrorReadingLogMessage</exception>
+        <trigger>
+          <text xml:lang="en">Retrieving of log message parts fails</text>
+          <text xml:lang="de">Fehler beim Lesen der Log-Nachricht-Teile</text>
+        </trigger>
+        <action>
+          <text xml:lang="en">Exit function</text>
+          <text xml:lang="de">Funktion beenden</text>
+        </action>
+      </errorCase>
+    </step>
+    <step>
+      <number>4</number>
+      <standardStep number="9">
+        <shortCommand xml:lang="de">Erfolgreiche Rückgabe</shortCommand>
+        <shortCommand xml:lang="en">Successful Return</shortCommand>
+      </standardStep>
+      <description>
+        <text xml:lang="en">The retrieved log message parts SHALL be combined into a complete log message. This log message SHALL be returned to the application over the output parameter logMessageContent and logMessageFileName. Additionally, the function SHALL return without raising an exception to indicate that the execution of the function has been successful.</text>
+        <text xml:lang="de">Setzt Log zusammen und gibt es zurück. Bei Erfolg keine Exception.</text>
+      </description>
+      <pseudocode>
+        <text xml:lang="en">COMBINE log message parts into complete log message
+RETURN logMessageContent
+RETURN logMessageFileName
+RETURN without exception</text>
+        <text xml:lang="de">KOMBINIERE Log-Nachricht-Teile zur vollständigen Log-Nachricht
+GEBE Log zurück (logMessageContent Parameter)
+GEBE Dateiname zurück (logMessageFileName Parameter)
+RETURN ohne Exception</text>
+      </pseudocode>
+      <successCase>
+        <condition>
+          <text xml:lang="en">The retrieval and combination of log message parts has been successful</text>
+          <text xml:lang="de">Ausführung war erfolgreich</text>
+        </condition>
+        <action>
+          <text xml:lang="en">Return log message and filename without raising an exception</text>
+          <text xml:lang="de">Funktion kehrt ohne Exception zurück</text>
+        </action>
+      </successCase>
+    </step>
+  </detailedSteps>
+  <parameters />
+  <returnValue>
+    <type>ExportDataResult</type>
+    <description>
+      <text xml:lang="en">an ExportDataResult which contains an InputStream delivering the content of the last log message and the filename of the log message.</text>
+      <text xml:lang="de">ein ExportDataResult, das einen InputStream mit dem Inhalt der letzten Log-Nachricht und den Dateinamen der Log-Nachricht enthält.</text>
+    </description>
+  </returnValue>
+  <exceptions>
+    <exception>ErrorDeviceNotInitialized</exception>
+    <exception>ErrorFunctionFailed</exception>
+    <exception>ErrorFunctionNotSupported</exception>
+    <exception>ErrorNoLogMessageFound</exception>
+    <exception>ErrorParameterSyntax</exception>
+    <exception>ErrorReadingLogMessage</exception>
+    <exception>ErrorSecureElementDisabled</exception>
+    <exception>ErrorStorageMediumDisconnected</exception>
+    <exception>ErrorUserNotAuthenticated</exception>
+    <exception>ErrorUserNotAuthorized</exception>
+  </exceptions>
+</function>

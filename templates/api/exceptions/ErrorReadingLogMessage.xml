@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<exception xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ErrorReadingLogMessage" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/exceptions.xsd">
+  <name>ErrorReadingLogMessage</name>
+  <description>
+    <text xml:lang="en">This exception is thrown if the SE API functions getLastLogMessage or exportLogMessages encounter a failure while reading or retrieving log message data from the Secure Element's logging storage. The functions successfully locate log messages but encounter an error when attempting to read, extract, or retrieve the message data from device storage. ErrorReadingLogMessage indicates that a device-level I/O or storage access error occurred during the log message retrieval operation, preventing successful reading of the located messages.</text>
+    <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die SE API Funktionen getLastLogMessage oder exportLogMessages beim Lesen oder Abrufen von Protokollmeldungsdaten aus dem Protokollspeicher des Secure Element einen Fehler feststellen. Die Funktionen lokalisieren erfolgreich Protokollmeldungen, stoßen jedoch auf einen Fehler, wenn versucht wird, die Meldungsdaten aus dem Gerätespeicher zu lesen, zu extrahieren oder abzurufen. ErrorReadingLogMessage zeigt an, dass während des Abrufvorgangs für Protokollmeldungen ein E/A-Fehler oder Speicherzugriffsfehler auf Geräteebene aufgetreten ist, wodurch erfolgreiches Lesen der lokalisierten Meldungen verhindert wird.</text>
+  </description>
+  <category>Event Logging</category>
+  <subcategory>Storage Access Failure</subcategory>
+  <severity>High</severity>
+  <thrownBy>
+    <function>getLastLogMessage</function>
+    <function>getLastTransactionLogMessage</function>
+  </thrownBy>
+  <javadoc>
+    <summary>
+      <text xml:lang="en">This class defines the exception ErrorReadingLogMessage that is thrown if reading log message data from the Secure Element fails.</text>
+      <text xml:lang="de">Diese Klasse definiert die Ausnahme ErrorReadingLogMessage, die ausgelöst wird, wenn das Lesen von Protokollmeldungsdaten vom Secure Element fehlschlägt.</text>
+    </summary>
+    <description>
+      <text xml:lang="en">This exception is thrown when the getLastLogMessage or exportLogMessages functions successfully locate log messages in the Secure Element's storage but encounter a failure when attempting to read or retrieve the message data. Different from ErrorNoLogMessageFound (which indicates no messages exist), ErrorReadingLogMessage indicates that messages exist but cannot be accessed due to a device-level storage or I/O error. Common causes include: device storage corruption, device communication failure during data retrieval, device internal error during read operation, or insufficient device resources to complete the read operation. ErrorReadingLogMessage is a High severity exception that indicates a device malfunction or serious storage issue. Recovery requires investigating the device error condition and potentially retrying the operation or performing device maintenance.</text>
+      <text xml:lang="de">Diese Ausnahme wird ausgelöst, wenn die Funktionen getLastLogMessage oder exportLogMessages erfolgreich Protokollmeldungen im Speicher des Secure Element lokalisieren, aber beim Versuch, die Meldungsdaten zu lesen oder abzurufen, einen Fehler feststellen. Im Gegensatz zu ErrorNoLogMessageFound (das anzeigt, dass keine Meldungen vorhanden sind), zeigt ErrorReadingLogMessage an, dass Meldungen vorhanden sind, aber aufgrund eines Speicher- oder E/A-Fehlers auf Geräteebene nicht zugreifen können. Häufige Ursachen sind: Gerätespeicherbeschädigung, Gerätekommunikationsfehler während des Datenabrufs, Geräteinterner Fehler während des Lesevorgangs oder unzureichende Geräteressourcen zum Abschluss des Lesevorgangs. ErrorReadingLogMessage ist eine Ausnahme mit hohem Schweregrad, die auf eine Gerätefehlfunction oder ein ernsthaftes Speicherproblem hinweist. Die Wiederherstellung erfordert Untersuchung des Gerätefehlers und mögliche Wiederholung des Vorgangs oder Gerätewartung.</text>
+    </description>
+  </javadoc>
+  <specification>
+    <source>BSI TR-03151-1</source>
+    <section>3.3.1 Event Logging and Log Message Retrieval - getLastLogMessage and exportLogMessages</section>
+    <requirement>
+      <text xml:lang="en">The functions getLastLogMessage and exportLogMessages SHALL retrieve transaction log message entries from the Secure Element's logging storage. If log messages are found but a device-level error occurs during the reading or extraction of message data from storage, these functions SHALL raise the exception ErrorReadingLogMessage. This exception indicates that the requested log messages exist but cannot be accessed due to a device storage error, I/O failure, communication error during retrieval, or device internal error. ErrorReadingLogMessage is distinct from ErrorNoLogMessageFound - it indicates messages exist but cannot be read.</text>
+      <text xml:lang="de">Die Funktionen getLastLogMessage und exportLogMessages sollen Transaktionsprotokollmeldungseinträge aus dem Protokollspeicher des Secure Element abrufen. Falls Protokollmeldungen gefunden werden, aber ein Fehler auf Geräteebene bei der Lese- oder Extrahierungsmeldungsdaten aus dem Speicher auftritt, sollen diese Funktionen die Ausnahme ErrorReadingLogMessage auslösen. Diese Ausnahme zeigt an, dass die angeforderten Protokollmeldungen vorhanden sind, aber aufgrund eines Gerätespeicherfehlers, E/A-Fehler, Kommunikationsfehler während des Abrufs oder Geräteinternen Fehler nicht zugreifen können. ErrorReadingLogMessage unterscheidet sich von ErrorNoLogMessageFound - es zeigt an, dass Meldungen vorhanden sind, aber nicht gelesen werden können.</text>
+    </requirement>
+    <applicability>
+      <text xml:lang="en">Log message retrieval operations - getLastLogMessage and exportLogMessages functions only, when device read error occurs</text>
+      <text xml:lang="de">Protokollmeldungsabrufoperationen - nur Funktionen getLastLogMessage und exportLogMessages, wenn Gerätelesefehler auftritt</text>
+    </applicability>
+    <reference>getLastLogMessage – Function (3.3.1); exportLogMessages – Function (3.3.1)</reference>
+  </specification>
+  <executionSequence>
+    <step number="1">
+      <text xml:lang="en">User/application calls getLastLogMessage or exportLogMessages function</text>
+      <text xml:lang="de">Benutzer/Anwendung ruft Funktion getLastLogMessage oder exportLogMessages auf</text>
+    </step>
+    <step number="2">
+      <text xml:lang="en">Function validates input parameters</text>
+      <text xml:lang="de">Funktion validiert Eingabeparameter</text>
+    </step>
+    <step number="3">
+      <text xml:lang="en">Function initiates communication with Secure Element</text>
+      <text xml:lang="de">Funktion initiiert Kommunikation mit Secure Element</text>
+    </step>
+    <step number="4">
+      <text xml:lang="en">Function transmits log retrieval query to Secure Element</text>
+      <text xml:lang="de">Funktion sendet Protokollabrufabfrage an Secure Element</text>
+    </step>
+    <step number="5">
+      <text xml:lang="en">Secure Element searches logging storage for matching log messages</text>
+      <text xml:lang="de">Secure Element durchsucht Protokollspeicher nach entsprechenden Protokollmeldungen</text>
+    </step>
+    <step number="6">
+      <text xml:lang="en">Secure Element identifies matching log messages or the most recent message</text>
+      <text xml:lang="de">Secure Element identifiziert entsprechende Protokollmeldungen oder die neueste Meldung</text>
+    </step>
+    <step number="7">
+      <text xml:lang="en">Secure Element begins reading log message data from storage</text>
+      <text xml:lang="de">Secure Element beginnt mit dem Lesen von Protokollmeldungsdaten aus dem Speicher</text>
+    </step>
+    <step number="7a">
+      <text xml:lang="en">If storage read succeeds → proceed to step 8</text>
+      <text xml:lang="de">Falls Speicherlesen erfolgreich → fahren Sie mit Schritt 8 fort</text>
+    </step>
+    <step number="7b">
+      <text xml:lang="en">If storage read fails (corruption, I/O error, etc.) → ErrorReadingLogMessage raised, function exits</text>
+      <text xml:lang="de">Falls Speicherlesen fehlschlägt (Beschädigung, E/A-Fehler, usw.) → ErrorReadingLogMessage wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="8">
+      <text xml:lang="en">Secure Element transmits log message data to caller</text>
+      <text xml:lang="de">Secure Element übersendet Protokollmeldungsdaten an Aufrufer</text>
+    </step>
+    <step number="8a">
+      <text xml:lang="en">If transmission completes successfully → proceed to step 9</text>
+      <text xml:lang="de">Falls Übertragung erfolgreich abgeschlossen → fahren Sie mit Schritt 9 fort</text>
+    </step>
+    <step number="8b">
+      <text xml:lang="en">If transmission fails or is interrupted → ErrorReadingLogMessage raised, function exits</text>
+      <text xml:lang="de">Falls Übertragung fehlschlägt oder unterbrochen wird → ErrorReadingLogMessage wird ausgelöst, Funktion beendet</text>
+    </step>
+    <step number="9">
+      <text xml:lang="en">Function receives and processes log message data</text>
+      <text xml:lang="de">Funktion empfängt und verarbeitet Protokollmeldungsdaten</text>
+    </step>
+    <step number="10">
+      <text xml:lang="en">Function closes communication channel with Secure Element</text>
+      <text xml:lang="de">Funktion schließt Kommunikationskanal mit Secure Element</text>
+    </step>
+    <step number="11">
+      <text xml:lang="en">Function returns log messages to caller</text>
+      <text xml:lang="de">Funktion gibt Protokollmeldungen an Aufrufer zurück</text>
+    </step>
+  </executionSequence>
+  <recovery>
+    <step>
+      <text xml:lang="en">Verify log message exists and is accessible</text>
+      <text xml:lang="de">Stellen Sie sicher, dass Protokollmeldung existiert und zugänglich ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Confirm storage medium is connected and readable</text>
+      <text xml:lang="de">Bestätigen Sie, dass Speichermedium verbunden und lesbar ist</text>
+    </step>
+    <step>
+      <text xml:lang="en">Retry log message read operation</text>
+      <text xml:lang="de">Versuchen Sie Leseoperation für Protokollmeldung erneut</text>
+    </step>
+    <step>
+      <text xml:lang="en">Check storage integrity and availability</text>
+      <text xml:lang="de">Prüfen Sie Speicherintegrität und Verfügbarkeit</text>
+    </step>
+  </recovery>
+  <relatedExceptions>
+    <exception>ErrorNoLogMessageFound</exception>
+    <exception>ErrorExportLoggingCertificateFailed</exception>
+    <exception>ErrorDeleteLogMessagesFailed</exception>
+    <exception>ErrorConfigureLoggingFailed</exception>
+    <exception>ErrorFunctionFailed</exception>
+  </relatedExceptions>
+  <postconditionality>
+    <state name="No Log Data Retrieved">
+      <text xml:lang="en">No log message data is returned to the caller. The retrieval operation fails before message data can be provided.</text>
+      <text xml:lang="de">Keine Protokollmeldungsdaten werden an den Aufrufer zurückgegeben. Der Abrufvorgang fehlschlägt, bevor Meldungsdaten bereitgestellt werden können.</text>
+    </state>
+    <state name="Partial Data May Be Recovered">
+      <text xml:lang="en">In some cases, partial message data may have been read before the error occurred, but it is likely incomplete or invalid.</text>
+      <text xml:lang="de">In einigen Fällen können teilweise Meldungsdaten vor Auftreten des Fehlers gelesen worden sein, sind aber wahrscheinlich unvollständig oder ungültig.</text>
+    </state>
+    <state name="Storage Data Unchanged">
+      <text xml:lang="en">The device's logging storage remains unchanged. The read operation is read-only and does not modify any stored log messages.</text>
+      <text xml:lang="de">Der Protokollspeicher des Geräts bleibt unverändert. Der Lesevorgang ist schreibgeschützt und ändert keine gespeicherten Protokollmeldungen.</text>
+    </state>
+    <state name="Device State Potentially Degraded">
+      <text xml:lang="en">The read failure may indicate underlying device issues - the device state may be degraded or unstable.</text>
+      <text xml:lang="de">Der Lesefehler kann auf zugrunde liegende Geräteprobleme hinweisen - der Gerätzustand kann beeinträchtigt oder instabil sein.</text>
+    </state>
+    <state name="Error Information Available">
+      <text xml:lang="en">Device error codes or diagnostic information about the read failure may be available for investigation.</text>
+      <text xml:lang="de">Gerätefehlercodes oder Diagnoseinformationen über den Lesefehler können zur Untersuchung verfügbar sein.</text>
+    </state>
+    <state name="Retry Potentially Possible">
+      <text xml:lang="en">The operation may be retryable depending on whether the error is transient or persistent.</text>
+      <text xml:lang="de">Der Vorgang kann je nachdem wiederholt werden, ob der Fehler vorübergehend oder persistent ist.</text>
+    </state>
+  </postconditionality>
+  <notes>
+    <note>
+      <text xml:lang="en">Indication: Reading of a log message failed - message data could not be retrieved</text>
+      <text xml:lang="de">Anzeichen: Lesen einer Protokollmeldung fehlgeschlagen - Meldungsdaten konnten nicht abgerufen werden</text>
+    </note>
+    <note>
+      <text xml:lang="en">Topics: Logging Operations, Message Retrieval, Storage Operations, Data Access</text>
+      <text xml:lang="de">Themen: Protokollierungsvorgänge, Meldungsabruf, Speichervorgänge, Datenzugriff</text>
+    </note>
+  </notes>
+  <implementationContext>
+    <note>
+      <text xml:lang="en">Raised by getLastLogMessage and getLastTransactionLogMessage when message read fails</text>
+      <text xml:lang="de">Wird von getLastLogMessage und getLastTransactionLogMessage ausgelöst, wenn Meldungslesen fehlschlägt</text>
+    </note>
+    <note>
+      <text xml:lang="en">Log retrieval functions read log message data from storage</text>
+      <text xml:lang="de">Protokollabruffunktionen lesen Protokollmeldungsdaten aus dem Speicher</text>
+    </note>
+    <note>
+      <text xml:lang="en">Device attempts to access stored log message</text>
+      <text xml:lang="de">Gerät versucht, auf gespeicherte Protokollmeldung zuzugreifen</text>
+    </note>
+    <note>
+      <text xml:lang="en">Read failure prevents message data access</text>
+      <text xml:lang="de">Lesefehler verhindert Zugriff auf Meldungsdaten</text>
+    </note>
+  </implementationContext>
+</exception>
+

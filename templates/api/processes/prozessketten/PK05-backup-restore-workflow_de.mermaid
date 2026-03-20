@@ -1,0 +1,57 @@
+sequenceDiagram
+    actor Admin as Admin
+    participant TSE as TSE
+    participant Speicher as Speichermedium
+    participant Backup as Backup-System
+
+    rect rgb(255, 240, 200)
+    Note over Admin,Backup: PHASE 1: BACKUP ERSTELLEN
+    
+    Admin->>TSE: exportLogMessages()
+    TSE->>Speicher: Sammle alle Logs + Zertifikate
+    Speicher-->>TSE: Daten
+    TSE->>TSE: Erstelle TAR-Archiv
+    TSE-->>Admin: TAR-Archiv
+    Admin->>Backup: Speichere TAR-Archiv
+    Backup-->>Admin: Gesichert
+    
+    Note over Admin,Backup: Backup erstellt und extern gesichert
+    end
+
+    Note over Admin,Backup: ... Zeit vergeht ...<br/>Datenverlust oder Migration
+
+    rect rgb(255, 200, 200)
+    Note over Admin,Backup: PHASE 2: WIEDERHERSTELLUNG
+    
+    Admin->>Backup: Lade gesichertes TAR-Archiv
+    Backup-->>Admin: TAR-Archiv
+    
+    Admin->>TSE: authenticateUser(admin, PIN)
+    TSE-->>Admin: Authentifiziert
+    
+    Admin->>TSE: restoreLogsFromBackup(tarArchive)
+    activate TSE
+    TSE->>TSE: Validiere TAR-Archiv
+    TSE->>TSE: Prüfe: Logs von DIESER TSE?
+    alt Logs von dieser TSE
+        TSE->>Speicher: Entpacke TAR-Archiv
+        activate Speicher
+        loop Für jede Log-Datei
+            TSE->>Speicher: Speichere Log-Datei
+            alt Dateiname existiert bereits
+                Speicher->>Speicher: Hänge Zähler an (file_1.log)
+            end
+        end
+        loop Für jedes Zertifikat
+            TSE->>Speicher: Speichere Zertifikat (wenn nicht vorhanden)
+        end
+        Speicher-->>TSE: Wiederherstellung abgeschlossen
+        deactivate Speicher
+        TSE-->>Admin: Erfolg
+    else Logs von anderer TSE
+        TSE-->>Admin: Error: ErrorRestoreFailed<br/>(Logs nicht von dieser TSE)
+    end
+    deactivate TSE
+    end
+
+    Note over Admin,Backup: ERGEBNIS: Logs wiederhergestellt,<br/>Datenverlust behoben oder Daten migriert

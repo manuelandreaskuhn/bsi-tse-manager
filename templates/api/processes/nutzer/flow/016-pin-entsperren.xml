@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>016</processId>
+    <processName>
+        <text xml:lang="en">Unblock PIN</text>
+        <text xml:lang="de">PIN entsperren</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Unlocking a blocked PIN of a user using PUK (Personal Unblocking Key) and setting a new PIN. The PIN is blocked after too many failed attempts.</text>
+        <text xml:lang="de">Entsperrung einer gesperrten PIN eines Nutzers mittels PUK (Personal Unblocking Key) und Setzen einer neuen PIN. Die PIN wird nach zu vielen Fehlversuchen gesperrt.</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">User (any role)</text>
+            <text xml:lang="de">Nutzer (beliebige Rolle)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">User Account</text>
+            <text xml:lang="de">Nutzer-Konto</text>
+        </object>
+        <object>
+            <text xml:lang="en">PIN</text>
+            <text xml:lang="de">PIN</text>
+        </object>
+        <object>
+            <text xml:lang="en">PUK</text>
+            <text xml:lang="de">PUK</text>
+        </object>
+        <object>
+            <text xml:lang="en">PIN Misuse Counter</text>
+            <text xml:lang="de">PIN-Fehlbedienungszähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">PUK Misuse Counter</text>
+            <text xml:lang="de">PUK-Fehlbedienungszähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">System Log Message</text>
+            <text xml:lang="de">System-Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>unblockPin</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>userId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">User ID of the user (logger, admin, timeadmin)</text>
+                <text xml:lang="de">User-ID des Nutzers (logger, admin, timeadmin)</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>puk</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">PUK (Personal Unblocking Key) of the user</text>
+                <text xml:lang="de">PUK (Personal Unblocking Key) des Nutzers</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>newPin</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">New PIN for the user</text>
+                <text xml:lang="de">Neue PIN für den Nutzer</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>System-Log (unblockPin)</dataObject>
+        <dataObject>UnblockPinEventData</dataObject>
+        <dataObject>UnblockResult</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorInvalidUserId</exception>
+        <exception>ErrorWrongPuk</exception>
+        <exception>ErrorPukIsTemporarilyBlocked</exception>
+        <exception>ErrorInvalidPin</exception>
+        <exception>ErrorSettingNewPinFailed</exception>
+        <exception>ErrorResettingRetryCounterFailed</exception>
+        <exception>ErrorUnblockingPinFailed</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorParameterSyntax</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.2.5</reference>
+        <reference>BSI TR-03153-1 Chapter 5.3.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">For admin and timeadmin, the new PIN MUST NOT be empty. A log message is created even if attempts fail. After repeated PUK failures, the PUK can be temporarily blocked. After successful unblocking, the PIN misuse counter is reset.</text>
+        <text xml:lang="de">Für admin und timeadmin darf die neue PIN NICHT leer sein. Auch bei fehlgeschlagenen Versuchen wird eine Log-Nachricht erstellt. Bei wiederholter PUK-Fehleingabe kann die PUK temporär gesperrt werden. Nach erfolgreichem Entsperren wird der PIN-Fehlbedienungszähler zurückgesetzt.</text>
+    </notes>
+</process>

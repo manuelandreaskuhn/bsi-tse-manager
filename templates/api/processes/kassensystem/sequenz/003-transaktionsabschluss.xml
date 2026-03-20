@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process>
+    <processId>003</processId>
+    <processName>
+        <text xml:lang="en">Transaction Completion</text>
+        <text xml:lang="de">Transaktionsabschluss</text>
+    </processName>
+    <description>
+        <text xml:lang="en">Termination of an ongoing transaction with final protection of all data by the security module</text>
+        <text xml:lang="de">Beendigung einer laufenden Transaktion mit finaler Absicherung aller Daten durch das Sicherheitsmodul</text>
+    </description>
+    <actors>
+        <actor>
+            <text xml:lang="en">Recording System (ERS)</text>
+            <text xml:lang="de">Aufzeichnungssystem (ERS)</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </actor>
+        <actor>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </actor>
+    </actors>
+    <usedObjects>
+        <object>
+            <text xml:lang="en">TSE</text>
+            <text xml:lang="de">TSE</text>
+        </object>
+        <object>
+            <text xml:lang="en">Security Module</text>
+            <text xml:lang="de">Sicherheitsmodul</text>
+        </object>
+        <object>
+            <text xml:lang="en">Storage Medium</text>
+            <text xml:lang="de">Speichermedium</text>
+        </object>
+        <object>
+            <text xml:lang="en">Signature Counter</text>
+            <text xml:lang="de">Signaturzähler</text>
+        </object>
+        <object>
+            <text xml:lang="en">Log Message</text>
+            <text xml:lang="de">Log-Nachricht</text>
+        </object>
+    </usedObjects>
+    <interfaceFunctions>
+        <function>finishTransaction</function>
+    </interfaceFunctions>
+    <inputParameters>
+        <parameter>
+            <name>clientId</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Serial number of the recording system</text>
+                <text xml:lang="de">Seriennummer des Aufzeichnungssystems</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>transactionNumber</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Transaction number of the transaction to be completed</text>
+                <text xml:lang="de">Transaktionsnummer der zu beendenden Transaktion</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processData</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Final data of the process</text>
+                <text xml:lang="de">Abschließende Daten des Vorgangs</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>processType</name>
+            <type>PrintableString</type>
+            <description>
+                <text xml:lang="en">Type of the process</text>
+                <text xml:lang="de">Art des Vorgangs</text>
+            </description>
+        </parameter>
+    </inputParameters>
+    <outputParameters>
+        <parameter>
+            <name>logTime</name>
+            <type>GeneralizedTime</type>
+            <description>
+                <text xml:lang="en">Time of logging</text>
+                <text xml:lang="de">Zeitpunkt der Protokollierung</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signatureCounter</name>
+            <type>INTEGER</type>
+            <description>
+                <text xml:lang="en">Signature counter</text>
+                <text xml:lang="de">Signaturzähler</text>
+            </description>
+        </parameter>
+        <parameter>
+            <name>signature</name>
+            <type>octet[]</type>
+            <description>
+                <text xml:lang="en">Digital signature</text>
+                <text xml:lang="de">Digitale Signatur</text>
+            </description>
+        </parameter>
+    </outputParameters>
+    <usedDataObjects>
+        <dataObject>Transaction-Log (finishTransaction)</dataObject>
+        <dataObject>SignatureValueType</dataObject>
+        <dataObject>LogTimeType</dataObject>
+    </usedDataObjects>
+    <possibleExceptions>
+        <exception>ErrorDeviceNotInitialized</exception>
+        <exception>ErrorStorageMediumDisconnected</exception>
+        <exception>ErrorStorageMemoryFull</exception>
+        <exception>ErrorClientNotRegistered</exception>
+        <exception>ErrorTransactionNumberNotFound</exception>
+        <exception>ErrorFinishTransactionFailed</exception>
+        <exception>ErrorUserNotAuthenticated</exception>
+        <exception>ErrorUserNotAuthorized</exception>
+        <exception>ErrorTimeNotSet</exception>
+    </possibleExceptions>
+    <references>
+        <reference>BSI TR-03151-1 Chapter 3.3.3</reference>
+        <reference>BSI TR-03153-1 Chapter 3.5.3</reference>
+    </references>
+    <notes>
+        <text xml:lang="en">The third and final phase of transaction logging. After completion, the transaction can no longer be updated.</text>
+        <text xml:lang="de">Die dritte und finale Phase der Transaktionsprotokollierung. Nach Beendigung kann die Transaktion nicht mehr aktualisiert werden.</text>
+    </notes>
+</process>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<type id="ConfigureLoggingEventData" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/types.xsd">
+  <name>ConfigureLoggingEventData</name>
+  <category>SystemLog</category>
+  <source>BSI TR-03151</source>
+  <description>Event-specific data logged for system log entries of type ConfigureLoggingEventData.</description>
+  <asn1Definition>ConfigureLoggingEventData ::= SEQUENCE {
+  configuredComponents  ConfiguredComponents
+}}</asn1Definition>
+  <fields>
+    <field>
+      <name>configuredComponents</name>
+      <type>ConfiguredComponents</type>
+      <optional>false</optional>
+      <description>Field configuredComponents of type ConfiguredComponents</description>
+    </field>
+  </fields>
+</type>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enum id="SyncVariants" xmlns="http://bsi.bund.de/TR03151" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://bsi.bund.de/TR03151 ../../schema/enums.xsd">
+    <name>SyncVariants</name>
+    <category>SecureElement</category>
+    <source>BSI TR-03151</source>
+    <description>Represents the variants that are supported by the Secure Element to update the current date/time.</description>
+    <values>
+        <value>
+            <name>automaticSync</name>
+            <description>The time of the Secure Element is centrally managed or automatically adjusted and can not be adjusted via the API. This value shall be returned if the API function updateTime is not supported by the device.</description>
+        </value>
+        <value>
+            <name>manualSync</name>
+            <description>The time of the Secure Element can be set via the API.</description>
+        </value>
+        <value>
+            <name>automaticAndManualSync</name>
+            <description>The time of the Secure Element is centrally managed or automatically adjusted and can also be adjusted via the API.</description>
+        </value>
+    </values>
+</enum>
