@@ -1,20 +1,29 @@
 {
   "schema_version": "3.0.0",
-  "created": "2026-03-19",
-  "total_testcases": 83,
-  "xml_sources_used": "1135 BSI XML-Quelltestfälle (TR-03153-1-TS)",
+  "created": "2026-03-20",
+  "total_testcases": 85,
+  "xml_sources_used": "1135 BSI XML-Quelltestfälle (TR-03153-1-TS v1.1.x)",
   "rules_database": "242 TAR-Analyzer-Regeln",
+  "additional_sources": [
+    "BSI TR-03153-1 Anhang A-TS v1.1.0 (2023-12-19)"
+  ],
   "references": [
     "BSI TR-03153-1 v1.1.1",
     "BSI TR-03151-1",
     "BSI TR-03151-2",
-    "DSFinV-K 2.4"
+    "DSFinV-K 2.4",
+    "BSI TR-03153-1 Anhang A",
+    "BSI TR-03153-1 Anhang A-TS v1.1.0"
   ],
+  "coverage": {
+    "source_test_ids": "456/456 originale Test-IDs (100%)",
+    "anhang_a_ts": "FOR_UPD_01–06 und DOC_CC_01–06 vollständig abgedeckt (TC-ZERT-FOR-01, TC-ZERT-CC-01)"
+  },
   "step_type_distribution": {
-    "PRECONDITION": 392,
+    "PRECONDITION": 395,
     "SETUP": 434,
     "VERIFY": 152,
-    "FP": 5,
+    "FP": 17,
     "ACTION": 78,
     "NEGATIVE": 57
   },
@@ -23,8 +32,12 @@
       "id": "TC-ADD-01",
       "title": "Herstellerspezifische Funktionalitäten: Dokumentation, Unterscheidbarkeit, Abwandlungen und BSI-Abstimmung",
       "module": "Integration Interface",
+      "submodule": "ADD",
       "type": "FP",
       "priority": "conditional",
+      "profiles": [
+        "ADDITIONAL_FUNCTIONALITIES"
+      ],
       "steps_total": 6,
       "steps_by_type": {
         "PRECONDITION": 1,
@@ -36,8 +49,12 @@
       "id": "TC-ADD-02",
       "title": "Herstellerspezifische Funktionalitäten: Methoden-Konformität und BSI-Freigabe",
       "module": "Integration Interface",
+      "submodule": "ADD",
       "type": "FP",
       "priority": "conditional",
+      "profiles": [
+        "ADDITIONAL_FUNCTIONALITIES"
+      ],
       "steps_total": 4,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -48,8 +65,12 @@
       "id": "TC-CERT-01",
       "title": "Zertifikat-Einzelprüfungen: X.509 v3, Algorithmen, Gültigkeit, Extensions",
       "module": "Export",
+      "submodule": "CERT",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 4,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -61,8 +82,12 @@
       "id": "TC-CROSS-01",
       "title": "Konsistenzprüfung: Seriennummer über alle Schnittstellen und Log-Nachrichten",
       "module": "Cross-Validation",
+      "submodule": "CROSS",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -74,8 +99,12 @@
       "id": "TC-CROSS-02",
       "title": "Konsistenzprüfung: Signaturzähler über alle Log-Nachrichten fortlaufend",
       "module": "Cross-Validation",
+      "submodule": "CROSS",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 14,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -87,8 +116,12 @@
       "id": "TC-DOC-01",
       "title": "Herstellerdokumentation: Vollständigkeit und Plausibilität",
       "module": "Documentation",
+      "submodule": "DOC",
       "type": "FP",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 5,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -99,8 +132,12 @@
       "id": "TC-DOC-02",
       "title": "Herstellerdokumentation: Betrieb, Nutzer, Zeitführung, Zertifikat-Sperrung und CC-Zertifizierung",
       "module": "Documentation",
+      "submodule": "DOC",
       "type": "FP",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -112,8 +149,12 @@
       "id": "TC-DOC-03",
       "title": "Herstellerdokumentation: TAR-Export ohne Aufzeichnungssystem, Parallelnutzung und Verzögerungen",
       "module": "Documentation",
+      "submodule": "DOC",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -126,36 +167,48 @@
       "id": "TC-DSFINVK-01",
       "title": "DSFinV-K: Kassenseriennummer als clientId und processType-Befüllung",
       "module": "DSFinV-K",
+      "submodule": "Kassendaten",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 2,
-        "SETUP": 3,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 3
       }
     },
     {
       "id": "TC-DSFINVK-02",
       "title": "DSFinV-K: Kassenbeleg-Typen (processType) und alle Belegarten",
       "module": "DSFinV-K",
+      "submodule": "Belegarten",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 2,
-        "SETUP": 2,
-        "ACTION": 3
+        "ACTION": 3,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-DSFINVK-03",
       "title": "DSFinV-K: Aufbewahrung und Exportierbarkeit aller Kassendaten",
       "module": "DSFinV-K",
+      "submodule": "Datenhaltung",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -167,36 +220,48 @@
       "id": "TC-DSFINVK-04",
       "title": "DSFinV-K: Bon-Datenstruktur und Pflichtfelder auf Kassenbelegen",
       "module": "DSFinV-K",
+      "submodule": "Belegstruktur",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 2,
-        "ACTION": 2
+        "ACTION": 2,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-DSFINVK-05",
       "title": "DSFinV-K: TSE-Signatur auf Kassenbelegen und externe Verifikation",
       "module": "DSFinV-K",
+      "submodule": "Signatur",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "PRECONDITION": 5,
         "VERIFY": 2,
-        "SETUP": 3,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 3
       }
     },
     {
       "id": "TC-EXP-INF-01",
       "title": "info.csv: Vorhandensein, Inhalt und Pflichtfelder",
       "module": "Export",
+      "submodule": "EXP_INF",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -208,8 +273,12 @@
       "id": "TC-EXP-INF-02",
       "title": "info.csv: Format mit verschiedenen Beschreibungszuständen (Hersteller/Nutzer gesetzt)",
       "module": "Export",
+      "submodule": "EXP_INF",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -221,22 +290,30 @@
       "id": "TC-EXP-LOG-01",
       "title": "Log-Nachrichten im Export: Dateinamen, ASN.1-Struktur, Pflichtfelder",
       "module": "Export",
+      "submodule": "EXP_LOG",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 40,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 10,
         "VERIFY": 8,
-        "SETUP": 21
+        "SETUP": 21,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-EXP-LOG-02",
       "title": "Transaktions-Log-Nachrichten: Anwendungsdaten und Protokolldaten vollständig und korrekt",
       "module": "Export",
+      "submodule": "EXP_LOG",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -248,8 +325,14 @@
       "id": "TC-EXP-LOG-03",
       "title": "Log-Nachrichten: Indefinite Length Encoding und Rezertifizierung",
       "module": "Export",
+      "submodule": "EXP_LOG",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "SM_NO_INDEF",
+        "SM_INDEF",
+        "RECERT"
+      ],
       "steps_total": 45,
       "steps_by_type": {
         "PRECONDITION": 10,
@@ -261,8 +344,12 @@
       "id": "TC-EXP-TAR-01",
       "title": "TAR-Format: Struktur, Dateinamen, erlaubte Dateitypen",
       "module": "Export",
+      "submodule": "EXP_TAR",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 6,
@@ -274,8 +361,12 @@
       "id": "TC-II-ADD-01",
       "title": "Prüfung: Keine herstellerspezifischen Zusatzfunktionen (NO_ADDITIONAL_FUNCTIONALITIES)",
       "module": "Integration Interface",
+      "submodule": "II_ADD",
       "type": "FP",
       "priority": "conditional",
+      "profiles": [
+        "NO_ADDITIONAL_FUNCTIONALITIES"
+      ],
       "steps_total": 3,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -286,195 +377,251 @@
       "id": "TC-II-AUT-01",
       "title": "Authentifizierung: Erfolgreiche An-/Abmeldung aller Nutzerrollen, Auto-Logout und Log-Nachrichten",
       "module": "Integration Interface",
+      "submodule": "II_AUT/II_LGO",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "PRECONDITION": 2,
         "VERIFY": 3,
-        "SETUP": 1,
-        "ACTION": 5
+        "ACTION": 5,
+        "SETUP": 1
       }
     },
     {
       "id": "TC-II-AUT-02",
       "title": "Authentifizierung: Fehlversuche, Sperrung, PIN-Entsperrung und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_AUT/II_UBP",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 27,
       "steps_by_type": {
         "PRECONDITION": 8,
-        "NEGATIVE": 4,
+        "ACTION": 2,
         "SETUP": 13,
-        "ACTION": 2
+        "NEGATIVE": 4
       }
     },
     {
       "id": "TC-II-AUT-03",
       "title": "Authentifizierung: PIN-Reset nach Erfolg, Nutzerbeschränkungen und centralTimeAdmin",
       "module": "Integration Interface",
+      "submodule": "II_AUT",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 16,
       "steps_by_type": {
         "SETUP": 4,
-        "ACTION": 1,
         "PRECONDITION": 6,
-        "NEGATIVE": 2,
-        "VERIFY": 3
+        "ACTION": 1,
+        "VERIFY": 3,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-CLG-01",
       "title": "Konfiguration der Protokollierung von Ereignissen (configureLogging)",
       "module": "Integration Interface",
+      "submodule": "II_CLG",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "II_CONFIGLOGGING"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "SETUP": 2,
-        "ACTION": 1,
         "PRECONDITION": 1,
-        "NEGATIVE": 1,
-        "VERIFY": 2
+        "ACTION": 1,
+        "VERIFY": 2,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-CSC-01",
       "title": "getCurrentSignatureCounter: Aktueller Stand, Format, Konsistenz mit TAR und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_CSC",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 8,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 3,
         "VERIFY": 1,
-        "SETUP": 3
+        "SETUP": 3,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-DESC-01",
       "title": "TSE-Beschreibung: Setzen, Auslesen und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_SDE/II_GDE",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 18,
       "steps_by_type": {
         "SETUP": 6,
-        "ACTION": 4,
         "PRECONDITION": 6,
-        "NEGATIVE": 1,
-        "VERIFY": 1
+        "ACTION": 4,
+        "VERIFY": 1,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-DLM-01",
       "title": "deleteLogMessages: Nur nach vollständigem Export, Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_DLM",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_DELETELOGS"
+      ],
       "steps_total": 12,
       "steps_by_type": {
-        "NEGATIVE": 2,
         "PRECONDITION": 6,
         "VERIFY": 1,
-        "SETUP": 3
+        "SETUP": 3,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-DSE-01",
       "title": "disableSecureElement: Deaktivierung, Audit-Stopp, Log-Nachricht und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_DSE",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 11,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 3,
         "VERIFY": 1,
-        "SETUP": 6
+        "SETUP": 6,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-ERR-01",
       "title": "Allgemeine Fehlermeldungen: Vollständigkeit und Korrektheit",
       "module": "Integration Interface",
+      "submodule": "II_ERR",
       "type": "NT",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 2,
-        "NEGATIVE": 2,
+        "VERIFY": 2,
         "SETUP": 1,
-        "VERIFY": 2
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-ESN-01",
       "title": "exportSerialNumbers: Format, SHA-256-Korrektheit und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_ESN",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 10,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 3,
         "VERIFY": 1,
-        "SETUP": 5
+        "SETUP": 5,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-EXC-01",
       "title": "Zertifikatsexport (exportLoggingCertificates): Ohne Auth, CertificateExport-TAR und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_EXC",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 7,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 3,
         "VERIFY": 1,
-        "SETUP": 2
+        "SETUP": 2,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-EXF-01",
       "title": "exportFilteredTransactionLogs: Alle Filterkombinationen und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_EXF",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_EXPORTFILTERED"
+      ],
       "steps_total": 46,
       "steps_by_type": {
         "SETUP": 24,
-        "ACTION": 1,
         "PRECONDITION": 15,
-        "NEGATIVE": 1,
-        "VERIFY": 5
+        "ACTION": 1,
+        "VERIFY": 5,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-EXP-01",
       "title": "Vollständiger Export (exportLogMessages): TAR-Inhalt, Dateiname, Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_EXP",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "SETUP": 2,
-        "ACTION": 3,
         "PRECONDITION": 4,
-        "NEGATIVE": 1,
-        "VERIFY": 1
+        "ACTION": 3,
+        "VERIFY": 1,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-EXP-02",
       "title": "Export bei getrennter Verbindung zu SM-Komponenten (SM_REMOTE_COMPONENTS)",
       "module": "Integration Interface",
+      "submodule": "II_EXP",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "SM_REMOTE_COMPONENTS"
+      ],
       "steps_total": 6,
       "steps_by_type": {
         "PRECONDITION": 3,
@@ -486,38 +633,50 @@
       "id": "TC-II-FIN-01",
       "title": "finishTransaction: Vollständiger Test mit ausstehenden Aggregierungen und Fehlerfällen",
       "module": "Integration Interface",
+      "submodule": "II_FIN",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 19,
       "steps_by_type": {
         "SETUP": 7,
-        "ACTION": 1,
         "PRECONDITION": 6,
-        "NEGATIVE": 3,
-        "VERIFY": 2
+        "ACTION": 1,
+        "VERIFY": 2,
+        "NEGATIVE": 3
       }
     },
     {
       "id": "TC-II-GCV-01",
       "title": "TSE-Versionsinformationen: Abfrage, Format und Konsistenz mit info.csv",
       "module": "Integration Interface",
+      "submodule": "II_GCV",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_GETVERSIONS"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "SETUP": 2,
-        "ACTION": 2,
         "PRECONDITION": 3,
-        "NEGATIVE": 1,
-        "VERIFY": 2
+        "ACTION": 2,
+        "VERIFY": 2,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-GDH-01",
       "title": "getComponentVersions / getDeviceHealth / getEndOfUsageDate (Einzeltests)",
       "module": "Integration Interface",
+      "submodule": "II_GDH",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_DEVICEHEALTH"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 3,
@@ -529,92 +688,122 @@
       "id": "TC-II-GEU-01",
       "title": "Datum des voraussichtlichen Nutzungsendes: Abfrage und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_GEU",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_ENDOFUSAGEDATE"
+      ],
       "steps_total": 5,
       "steps_by_type": {
         "PRECONDITION": 2,
-        "NEGATIVE": 1,
+        "ACTION": 1,
         "SETUP": 1,
-        "ACTION": 1
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-GLL-01",
       "title": "Letzte Log-Nachricht: Korrekte Ausgabe und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_GLL",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 14,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 4,
         "VERIFY": 2,
-        "SETUP": 7
+        "SETUP": 7,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-GLT-02",
       "title": "getLastTransactionLogMessage: Mit Transaktionsnummer und vollständige Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_GLT",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_LASTTRANSLOG"
+      ],
       "steps_total": 18,
       "steps_by_type": {
-        "NEGATIVE": 3,
         "PRECONDITION": 6,
         "VERIFY": 1,
-        "SETUP": 8
+        "SETUP": 8,
+        "NEGATIVE": 3
       }
     },
     {
       "id": "TC-II-INI-01",
       "title": "Initialisierung: Korrekte Durchführung und Wiederholungsverbot",
       "module": "Integration Interface",
+      "submodule": "II_INI",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 6,
       "steps_by_type": {
         "SETUP": 1,
-        "ACTION": 1,
         "PRECONDITION": 2,
-        "NEGATIVE": 1,
-        "VERIFY": 1
+        "ACTION": 1,
+        "VERIFY": 1,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-LOCK-01",
       "title": "Sperren und Entsperren von Transaktionsaufzeichnungen",
       "module": "Integration Interface",
+      "submodule": "II_LTL/II_UTL",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_LOCKTRANSLOGGING",
+        "II_UNLOCKTRANSLOGGING"
+      ],
       "steps_total": 14,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 4,
         "VERIFY": 2,
-        "SETUP": 7
+        "SETUP": 7,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-LOCK-02",
       "title": "Sperren/Entsperren der Transaktionsaufzeichnung: Vollständige Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_LTL/II_UTL",
       "type": "NT",
       "priority": "conditional",
+      "profiles": [
+        "II_LOCKTRANSLOGGING",
+        "II_UNLOCKTRANSLOGGING"
+      ],
       "steps_total": 18,
       "steps_by_type": {
         "PRECONDITION": 6,
-        "NEGATIVE": 4,
-        "SETUP": 8
+        "SETUP": 8,
+        "NEGATIVE": 4
       }
     },
     {
       "id": "TC-II-MCU-01",
       "title": "Mehrere Aufzeichnungssysteme gleichzeitig (MULTI_CLIENT)",
       "module": "Integration Interface",
+      "submodule": "II_MCU",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "MULTI_CLIENT"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -626,207 +815,273 @@
       "id": "TC-II-MCU-02",
       "title": "Multi-Client: Erweiterter Paralleltest und Verzögerungsdokumentation",
       "module": "Integration Interface",
+      "submodule": "II_MCU",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "MULTI_CLIENT",
+        "SM_MULTI"
+      ],
       "steps_total": 14,
       "steps_by_type": {
         "PRECONDITION": 6,
         "VERIFY": 2,
-        "SETUP": 4,
-        "ACTION": 2
+        "ACTION": 2,
+        "SETUP": 4
       }
     },
     {
       "id": "TC-II-MEM-01",
       "title": "Speicherabfragen: getTotalMemory / getUsedMemory / getFreeMemory",
       "module": "Integration Interface",
+      "submodule": "II_GTM/II_GUM/II_GFM",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_TOTALMEMORY",
+        "II_USEDMEMORY",
+        "II_FREEMEMORY"
+      ],
       "steps_total": 14,
       "steps_by_type": {
         "PRECONDITION": 2,
-        "NEGATIVE": 1,
+        "ACTION": 3,
         "SETUP": 8,
-        "ACTION": 3
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-REC-DRC-01",
       "title": "registerClient / deregisterClient: Vollständiger Test mit Fehlerfällen",
       "module": "Integration Interface",
+      "submodule": "II_REC/II_DRC",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 24,
       "steps_by_type": {
-        "NEGATIVE": 2,
         "PRECONDITION": 7,
         "VERIFY": 2,
-        "SETUP": 13
+        "SETUP": 13,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-RFB-01",
       "title": "restoreLogsFromBackup: Korrekte Wiederherstellung und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_RFB",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_RESTOREBACKUP"
+      ],
       "steps_total": 18,
       "steps_by_type": {
         "SETUP": 3,
-        "ACTION": 1,
         "PRECONDITION": 11,
-        "NEGATIVE": 2,
-        "VERIFY": 1
+        "ACTION": 1,
+        "VERIFY": 1,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-SM-AUD-01",
       "title": "Deaktivierung des Sicherheitsmoduls: Audit-Einstellungsänderung",
       "module": "Security Module",
+      "submodule": "SM_AUD",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "AUDIT_MODIFY"
+      ],
       "steps_total": 5,
       "steps_by_type": {
         "PRECONDITION": 2,
-        "SETUP": 2,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-II-STA-01",
       "title": "startTransaction: Vollständiger Test mit Rückgabewerten, Log-Nachricht und Fehlerfällen",
       "module": "Integration Interface",
+      "submodule": "II_STA",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 14,
       "steps_by_type": {
         "SETUP": 4,
-        "ACTION": 2,
         "PRECONDITION": 5,
-        "NEGATIVE": 2,
-        "VERIFY": 1
+        "ACTION": 2,
+        "VERIFY": 1,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-STATUS-01",
       "title": "Status-Abfragen: Alle Zähler, Transaktionsstadium, offene Transaktionen",
       "module": "Integration Interface",
+      "submodule": "II_CNC/II_MNC/II_GRC/II_CNT/II_MNT/II_GTS/II_GOT/II_CTC",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 49,
       "steps_by_type": {
         "PRECONDITION": 23,
-        "NEGATIVE": 1,
+        "ACTION": 8,
         "SETUP": 17,
-        "ACTION": 8
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-STE-01",
       "title": "Selbsttest: Auslösung, Rückgabe, Log-Nachricht und Fehlerfall",
       "module": "Integration Interface",
+      "submodule": "II_STE",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 12,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 6
+        "SETUP": 6,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-TIME-01",
       "title": "Zeitaktualisierung und Zeitabfragen: updateTime, getTimeSyncVariant, getCurrentSeTime",
       "module": "Integration Interface",
+      "submodule": "II_UDT/II_TSV/II_GCT",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_UPDATETIME"
+      ],
       "steps_total": 34,
       "steps_by_type": {
         "SETUP": 20,
-        "ACTION": 3,
         "PRECONDITION": 7,
-        "NEGATIVE": 2,
-        "VERIFY": 2
+        "ACTION": 3,
+        "VERIFY": 2,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-UBP-03",
       "title": "unblockPin: Gegenmaßnahmen gegen PUK-Raten (PUK_BLOCKABLE)",
       "module": "Integration Interface",
+      "submodule": "II_UBP",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "II",
+        "PUK_BLOCKABLE"
+      ],
       "steps_total": 25,
       "steps_by_type": {
-        "NEGATIVE": 3,
         "PRECONDITION": 8,
         "VERIFY": 1,
-        "SETUP": 13
+        "SETUP": 13,
+        "NEGATIVE": 3
       }
     },
     {
       "id": "TC-II-UDD-01",
       "title": "Geräte-Update: Erfolgreicher Update, Log-Nachrichten und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_UDD",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "II_UPDATEDEVICE"
+      ],
       "steps_total": 15,
       "steps_by_type": {
-        "NEGATIVE": 1,
         "PRECONDITION": 5,
         "VERIFY": 5,
-        "SETUP": 4
+        "SETUP": 4,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-II-UDD-02",
       "title": "updateDevice: Externe Updates und Remote-Komponenten-Updates im Offline-Betrieb",
       "module": "Integration Interface",
+      "submodule": "II_UDD",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "SM_REMOTE_COMPONENTS",
+        "STORAGE_REMOTE",
+        "UPDATE_EXTERNAL"
+      ],
       "steps_total": 12,
       "steps_by_type": {
         "PRECONDITION": 6,
         "VERIFY": 3,
-        "SETUP": 2,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-II-UPD-01",
       "title": "updateTransaction: SM_NOAGG/SM_AGG, forceSignature, Aggregierungsauslöser und Fehlerfälle",
       "module": "Integration Interface",
+      "submodule": "II_UPD",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 21,
       "steps_by_type": {
         "SETUP": 9,
-        "ACTION": 5,
         "PRECONDITION": 4,
-        "NEGATIVE": 2,
-        "VERIFY": 1
+        "ACTION": 5,
+        "VERIFY": 1,
+        "NEGATIVE": 2
       }
     },
     {
       "id": "TC-II-UTV-01",
       "title": "getUpdateVariants: Unterstützte Update-Varianten",
       "module": "Integration Interface",
+      "submodule": "II_UTV",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "II"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 4,
-        "NEGATIVE": 1,
+        "ACTION": 1,
         "SETUP": 4,
-        "ACTION": 1
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-SDI-01",
       "title": "Standardschnittstelle (SDI): Implementierung, Funktionen, Fehlermeldungen und Parameter",
       "module": "Integration Interface",
+      "submodule": "SDI",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SDI"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -838,8 +1093,12 @@
       "id": "TC-SDI-02",
       "title": "Standardschnittstelle SDI: Konkrete Prüfungen der Funktionsnamen, Fehlermeldungen und Parameter",
       "module": "Integration Interface",
+      "submodule": "SDI",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SDI"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 3,
@@ -851,13 +1110,17 @@
       "id": "TC-SM-ARCH-01",
       "title": "Sicherheitsmodul-Architektur: Eindeutiger Schlüssel, SMAERS-CSP-Zuordnung und Zeitnähe",
       "module": "Security Module",
+      "submodule": "SM_ARCH",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 17,
       "steps_by_type": {
         "SETUP": 7,
-        "ACTION": 1,
         "PRECONDITION": 7,
+        "ACTION": 1,
         "VERIFY": 1,
         "FP": 1
       }
@@ -866,8 +1129,14 @@
       "id": "TC-SM-ARCH-02",
       "title": "Sicherheitsmodul-Architektur: CSP-Entity, CSP-Light und CSP-Cluster",
       "module": "Security Module",
+      "submodule": "SM_ARCH",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "CSP_ENTITY",
+        "CSP_LIGHT",
+        "CSP_CLUSTER"
+      ],
       "steps_total": 15,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -880,64 +1149,85 @@
       "id": "TC-SM-AUD-01",
       "title": "Deaktivierung des Sicherheitsmoduls: Audit-Einstellungsänderung und Stopp der Audit-Funktionalität",
       "module": "Security Module",
+      "submodule": "SM_AUD",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "SM_BASIC",
+        "AUDIT_MODIFY"
+      ],
       "steps_total": 8,
       "steps_by_type": {
         "PRECONDITION": 3,
         "VERIFY": 1,
-        "SETUP": 2,
-        "ACTION": 2
+        "ACTION": 2,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-SM-CON-01",
       "title": "Konkatenation und Signaturerstellung: Sequenzielle Transaktionen (SM_NOAGG)",
       "module": "Security Module",
+      "submodule": "SM_CON",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "SM_NOAGG"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 3,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 3
       }
     },
     {
       "id": "TC-SM-CON-02",
       "title": "Konkatenation und Signaturerstellung: Transaktionen mit Aggregierung (SM_AGG)",
       "module": "Security Module",
+      "submodule": "SM_CON",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "SM_AGG"
+      ],
       "steps_total": 11,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 4,
-        "ACTION": 2
+        "ACTION": 2,
+        "SETUP": 4
       }
     },
     {
       "id": "TC-SM-CON-03",
       "title": "Konkatenation und Signaturerstellung: Parallele Transaktionen",
       "module": "Security Module",
+      "submodule": "SM_CON",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "SM_MULTI"
+      ],
       "steps_total": 14,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 8,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 8
       }
     },
     {
       "id": "TC-SM-KRY-01",
       "title": "Kryptographie: Algorithmenkonformität, externe Signaturverifikation und Seriennummernberechnung",
       "module": "Security Module",
+      "submodule": "SM_KRY",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 5,
@@ -949,8 +1239,12 @@
       "id": "TC-SM-LOG-01",
       "title": "Sicherheitsmodulanwendung: Audit-Logs, Safe-State-Logs und SMAERS-Admin-Authentifizierung",
       "module": "Security Module",
+      "submodule": "SM_LOG",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 9,
       "steps_by_type": {
         "PRECONDITION": 4,
@@ -962,22 +1256,31 @@
       "id": "TC-SM-LOG-02",
       "title": "Sicherheitsmodulanwendung: Safe-State verlassen und Deaktivierung",
       "module": "Security Module",
+      "submodule": "SM_LOG/SM_AUD",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC",
+        "AUDIT_MODIFY"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 5,
         "VERIFY": 2,
-        "SETUP": 2,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 2
       }
     },
     {
       "id": "TC-SM-PKI-01",
       "title": "PKI: Zertifikatsprüfung, Zertifikatskette und TR-03145-Zertifizierung",
       "module": "Security Module",
+      "submodule": "SM_PKI",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 6,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -989,22 +1292,31 @@
       "id": "TC-SM-PKI-02",
       "title": "PKI: Verzeichnisdienst-Anleitung und PKI-Übergangsregelung",
       "module": "Security Module",
+      "submodule": "SM_PKI",
       "type": "COMBINED",
       "priority": "conditional",
+      "profiles": [
+        "DIRECTORY_SERVICES",
+        "INTERIM_PKI_RULING"
+      ],
       "steps_total": 7,
       "steps_by_type": {
         "PRECONDITION": 2,
         "VERIFY": 3,
-        "SETUP": 1,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 1
       }
     },
     {
       "id": "TC-SM-REM-01",
       "title": "Fernverbundenes Sicherheitsmodul: Abgesicherter Kommunikationskanal",
       "module": "Security Module",
+      "submodule": "SM_REM",
       "type": "FP",
       "priority": "conditional",
+      "profiles": [
+        "SM_REMOTE"
+      ],
       "steps_total": 3,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -1015,80 +1327,104 @@
       "id": "TC-SM-SIG-01",
       "title": "Signaturzähler: Fortlaufend, lückenlos, Überlaufschutz",
       "module": "Security Module",
+      "submodule": "SM_SIG",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 29,
       "steps_by_type": {
         "PRECONDITION": 7,
         "VERIFY": 3,
-        "SETUP": 18,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 18
       }
     },
     {
       "id": "TC-SM-TME-01",
       "title": "Zeitführung: Aktualisierung, Monotonie, Fehlerverhalten, Zeitformat-Konsistenz",
       "module": "Security Module",
+      "submodule": "SM_TME",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 25,
       "steps_by_type": {
         "SETUP": 15,
-        "ACTION": 1,
         "PRECONDITION": 5,
-        "NEGATIVE": 1,
-        "VERIFY": 3
+        "ACTION": 1,
+        "VERIFY": 3,
+        "NEGATIVE": 1
       }
     },
     {
       "id": "TC-SM-TME-02",
       "title": "Zeitführung: Neustart nach Stromlosigkeit und zentrale Zeitstellung",
       "module": "Security Module",
+      "submodule": "SM_TME",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 10,
       "steps_by_type": {
         "PRECONDITION": 3,
         "VERIFY": 2,
-        "SETUP": 4,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 4
       }
     },
     {
       "id": "TC-SM-TME-03",
       "title": "Zeitführung: Parallele Transaktionen, Nutzer-Auth-Signaturzähler und zentrale Zeitstellung",
       "module": "Security Module",
+      "submodule": "SM_TME/SM_SIG",
       "type": "PT",
       "priority": "conditional",
+      "profiles": [
+        "SM_MULTI"
+      ],
       "steps_total": 20,
       "steps_by_type": {
         "PRECONDITION": 6,
         "VERIFY": 2,
-        "SETUP": 11,
-        "ACTION": 1
+        "ACTION": 1,
+        "SETUP": 11
       }
     },
     {
       "id": "TC-SM-TRA-01",
       "title": "Transaktionsnummern: Fortlaufend, lückenlos, Fehlerfälle bei ungültigen Nummern",
       "module": "Security Module",
+      "submodule": "SM_TRA",
       "type": "COMBINED",
       "priority": "mandatory",
+      "profiles": [
+        "SM_BASIC"
+      ],
       "steps_total": 22,
       "steps_by_type": {
         "SETUP": 7,
-        "ACTION": 1,
         "PRECONDITION": 8,
-        "NEGATIVE": 4,
-        "VERIFY": 2
+        "ACTION": 1,
+        "VERIFY": 2,
+        "NEGATIVE": 4
       }
     },
     {
       "id": "TC-STO-CAP-01",
       "title": "Speichermedium: Kapazitätsprüfung (Herstellerdokumentation)",
       "module": "Storage",
+      "submodule": "STO_CAP",
       "type": "FP",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 5,
       "steps_by_type": {
         "PRECONDITION": 3,
@@ -1099,50 +1435,67 @@
       "id": "TC-STO-FUN-01",
       "title": "Speichermedium: Log-Nachrichten bei sequenzieller Transaktion korrekt gespeichert",
       "module": "Storage",
+      "submodule": "STO_FUN",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 12,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 2,
-        "SETUP": 3,
-        "ACTION": 3
+        "ACTION": 3,
+        "SETUP": 3
       }
     },
     {
       "id": "TC-STO-FUN-02",
       "title": "Speichermedium: Log-Nachrichten bei parallelen Transaktionen korrekt gespeichert",
       "module": "Storage",
+      "submodule": "STO_FUN",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC",
+        "SM_MULTI"
+      ],
       "steps_total": 13,
       "steps_by_type": {
         "PRECONDITION": 4,
         "VERIFY": 1,
-        "SETUP": 5,
-        "ACTION": 3
+        "ACTION": 3,
+        "SETUP": 5
       }
     },
     {
       "id": "TC-STO-FUN-03",
       "title": "Speichermedium: System- und Audit-Log-Nachrichten für Systemereignisse",
       "module": "Storage",
+      "submodule": "STO_FUN",
       "type": "PT",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 22,
       "steps_by_type": {
         "PRECONDITION": 8,
         "VERIFY": 1,
-        "SETUP": 11,
-        "ACTION": 2
+        "ACTION": 2,
+        "SETUP": 11
       }
     },
     {
       "id": "TC-STO-REL-01",
       "title": "Speichermedium: Zuverlässigkeitsprüfung (Herstellerdokumentation)",
       "module": "Storage",
+      "submodule": "STO_REL",
       "type": "FP",
       "priority": "mandatory",
+      "profiles": [
+        "STORAGE_BASIC"
+      ],
       "steps_total": 3,
       "steps_by_type": {
         "PRECONDITION": 2,
@@ -1153,12 +1506,53 @@
       "id": "TC-STO-REM-01",
       "title": "Fernverbundenes Speichermedium: Abgesicherter Kommunikationskanal",
       "module": "Storage",
+      "submodule": "STO_REM",
       "type": "FP",
       "priority": "conditional",
+      "profiles": [
+        "STORAGE_REMOTE"
+      ],
       "steps_total": 4,
       "steps_by_type": {
         "PRECONDITION": 3,
         "VERIFY": 1
+      }
+    },
+    {
+      "id": "TC-ZERT-CC-01",
+      "title": "Common Criteria Sicherheitszertifizierungen: SMAERS, CSP und CSP Light",
+      "module": "Zertifizierung",
+      "submodule": "ZERT_CC",
+      "type": "FP",
+      "priority": "mandatory",
+      "profiles": [
+        "CC_BASIC",
+        "CC_0104",
+        "CC_0111"
+      ],
+      "steps_total": 7,
+      "steps_by_type": {
+        "PRECONDITION": 1,
+        "FP": 6
+      }
+    },
+    {
+      "id": "TC-ZERT-FOR-01",
+      "title": "Formelle Zertifizierungsanforderungen: Fristen, Gültigkeit und Aktualisierung",
+      "module": "Zertifizierung",
+      "submodule": "ZERT_FOR",
+      "type": "FP",
+      "priority": "conditional",
+      "profiles": [
+        "V1.0.1_ZERT",
+        "V1.0.1_UPDATEZERT",
+        "V1.0.1_NOT_TIMELY",
+        "V1.0.1_FUN_CHANGES"
+      ],
+      "steps_total": 8,
+      "steps_by_type": {
+        "PRECONDITION": 2,
+        "FP": 6
       }
     }
   ]

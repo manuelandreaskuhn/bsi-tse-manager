@@ -1,0 +1,277 @@
+{
+  "testcase_id": "TC-ZERT-FOR-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-20",
+  "result": null,
+  "title": "Formelle Zertifizierungsanforderungen: Fristen, Gültigkeit und Aktualisierung",
+  "description": "Prüft die formellen Anforderungen und Rahmenbedingungen der TSE-Zertifizierung gemäß BSI TR-03153-1 Anhang A-TS §3. Dazu gehören: Einreichungsfristen für Erstzertifizierungen (FOR_UPD_01/02), Nachweis einer bestehenden v1.0.1-Zertifizierung für Aktualisierungsverfahren (FOR_UPD_03), Abschlussfristen für Update-/Rezertifizierungsverfahren (FOR_UPD_04), Beschränkung auf nicht-funktionale Änderungen bei vereinfachten Verfahren (FOR_UPD_05) und Gültigkeitszeitraum des aktualisierten Zertifikats (FOR_UPD_06). Diese Prüfungen werden durch die Zertifizierungsstelle durchgeführt.",
+  "purpose": "Prüfung, ob die für den Zertifizierungsprozess geltenden formellen Anforderungen gemäß BSI TR-03153-1 Anhang A §3 in Abhängigkeit des gewählten Zertifizierungsprofils erfüllt sind.",
+  "module": "Zertifizierung",
+  "submodule": "ZERT_FOR",
+  "function": null,
+  "test_type": "FP",
+  "priority": "conditional",
+  "profiles": [
+    "V1.0.1_ZERT",
+    "V1.0.1_UPDATEZERT",
+    "V1.0.1_NOT_TIMELY",
+    "V1.0.1_FUN_CHANGES"
+  ],
+  "source_tests": [
+    "FOR_UPD_01",
+    "FOR_UPD_02",
+    "FOR_UPD_03",
+    "FOR_UPD_04",
+    "FOR_UPD_05",
+    "FOR_UPD_06"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "Herstellerdokumentation und ICS vorhanden",
+      "result": null,
+      "instruction": "Die vollständige Herstellerdokumentation sowie das ausgefüllte Implementation Conformance Statement (ICS) gemäß BSI TR-03153-1 Anhang A-TS §2 liegen vor. Das ICS enthält Angaben zur SMAERS (Hersteller, Modell, Version, Zertifizierungs-ID) sowie ggf. zum CSP bei Betrieb im RZ.",
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §2"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "PRECONDITION",
+      "title": "Profil des Zertifizierungsverfahrens festlegen",
+      "result": null,
+      "instruction": "Das zutreffende Profil des Zertifizierungsverfahrens ist festgelegt:\n• V1.0.1_ZERT: Erstzertifizierung nach BSI TR-03153-1 v1.0.1\n• V1.0.1_UPDATEZERT: Aktualisierung einer bestehenden v1.0.1-Zertifizierung\n• V1.0.1_NOT_TIMELY: Abschluss des Verfahrens nach 30.04.2025\n• V1.0.1_FUN_CHANGES: Funktionale Änderungen gegenüber Vorstand\nDie Profilauswahl bestimmt, welche der nachfolgenden Testfälle FOR_UPD_01–06 anzuwenden sind.",
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.1"
+      ]
+    },
+    {
+      "step": 3,
+      "type": "FP",
+      "title": "FOR_UPD_01 [V1.0.1_ZERT]: Antrag fristgerecht bis 30.04.2024 eingereicht",
+      "result": null,
+      "instruction": "Prüfung, ob der Antrag auf Zertifizierung vor dem Ablauf des 30.04.2024 erfolgreich durch das BSI angenommen wurde.\n\nProfil: V1.0.1_ZERT (Erstzertifizierung). Nicht zutreffend bei V1.0.1_UPDATEZERT.\n\nHinweis: Diese Frist ist zum aktuellen Zeitpunkt (2026) abgelaufen. Der Testfall ist nur für Verfahren relevant, bei denen der Antragseingang vor diesem Datum nachzuweisen ist.",
+      "checks": [
+        {
+          "description": "Eingangsdatum des BSI-angenommenen Zertifizierungsantrags liegt vor dem 30.04.2024",
+          "expected": "Nachweis: BSI-Eingangsbestätigung mit Datum ≤ 30.04.2024",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Antragstellung bezieht sich auf BSI TR-03153-1 Version 1.0.1",
+          "expected": "Nachweis: Antragsdokument",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_01"
+      ],
+      "source_test": "FOR_UPD_01"
+    },
+    {
+      "step": 4,
+      "type": "FP",
+      "title": "FOR_UPD_02 [V1.0.1_ZERT]: Abschluss der Erstzertifizierung vor 30.04.2025",
+      "result": null,
+      "instruction": "Prüfung, ob der Zeitpunkt des Abschlusses der Zertifizierung nicht nach dem Ablauf des 30.04.2025 liegt.\n\nProfil: V1.0.1_ZERT. Bei Abschluss nach diesem Datum greift zusätzlich V1.0.1_NOT_TIMELY.\n\nHinweis: Abschluss = Ausstellungsdatum des BSI-Zertifikats.",
+      "checks": [
+        {
+          "description": "Ausstellungsdatum des Zertifikats liegt vor oder am 30.04.2025",
+          "expected": "Nachweis: Zertifikats-Ausstellungsdatum ≤ 30.04.2025",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_02"
+      ],
+      "source_test": "FOR_UPD_02"
+    },
+    {
+      "step": 5,
+      "type": "FP",
+      "title": "FOR_UPD_03 [V1.0.1_UPDATEZERT]: Bestehendes v1.0.1-Zertifikat liegt vor",
+      "result": null,
+      "instruction": "Prüfung, ob die TSE nach BSI TR-03153-1 v1.0.1 zertifiziert ist und ob als Nachweis ein entsprechendes Zertifikat nach BSI TR-03153-1 v1.0.1 vorliegt.\n\nProfil: V1.0.1_UPDATEZERT (Aktualisierung einer bestehenden Zertifizierung). Dieser Testfall ist die Grundvoraussetzung für jedes Aktualisierungsverfahren.",
+      "checks": [
+        {
+          "description": "Gültiges BSI-Zertifikat nach BSI TR-03153-1 Version 1.0.1 liegt vor",
+          "expected": "Nachweis: Zertifikatsdokument mit Bezug auf BSI TR-03153-1 v1.0.1",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat bezieht sich auf dasselbe Produkt (Hersteller, Modell, Version) wie der aktuelle Antrag",
+          "expected": "Übereinstimmung: Produktbezeichnung identisch",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ICS-Angaben zu Hersteller, Modell, Version und Zertifizierungs-ID stimmen mit dem vorliegenden Zertifikat überein",
+          "expected": "Konsistenz: ICS §2.1 ↔ Zertifikat",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_03",
+        "BSI TR-03153-1 v1.0.1"
+      ],
+      "source_test": "FOR_UPD_03"
+    },
+    {
+      "step": 6,
+      "type": "FP",
+      "title": "FOR_UPD_04 [V1.0.1_UPDATEZERT / V1.0.1_FUN_CHANGES]: Abschluss des Update-/Rezertifizierungsverfahrens vor 30.04.2025",
+      "result": null,
+      "instruction": "Prüfung, ob der Zeitpunkt des Abschlusses des Aktualisierungs-, Rezertifizierungs- oder Maintenanceverfahrens nicht nach dem Ablauf des 30.04.2025 liegt.\n\nProfil: V1.0.1_UPDATEZERT und V1.0.1_FUN_CHANGES. Bei Abschluss nach diesem Datum sind zusätzliche Anforderungen (V1.0.1_NOT_TIMELY) zu erfüllen.\n\nHinweis: Abschluss = Ausstellungsdatum des aktualisierten BSI-Zertifikats.",
+      "checks": [
+        {
+          "description": "Ausstellungsdatum des aktualisierten Zertifikats liegt vor oder am 30.04.2025",
+          "expected": "Nachweis: Zertifikats-Ausstellungsdatum ≤ 30.04.2025",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Sofern Abschluss nach 30.04.2025: Profil V1.0.1_NOT_TIMELY ist aktiviert und FOR_UPD_05/06 werden zusätzlich geprüft",
+          "expected": "Bedingt: V1.0.1_NOT_TIMELY aktiv",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_04"
+      ],
+      "source_test": "FOR_UPD_04"
+    },
+    {
+      "step": 7,
+      "type": "FP",
+      "title": "FOR_UPD_05 [V1.0.1_UPDATEZERT / V1.0.1_NOT_TIMELY]: Nur nicht-funktionale Änderungen durchgeführt",
+      "result": null,
+      "instruction": "Prüfung, ob im Vergleich zum vorherigen Zertifizierungsstand ausschließlich Veränderungen durchgeführt worden sind, die reine sicherheitsrelevante Verbesserungen oder rein formelle Änderungen darstellen.\n\nProfil: V1.0.1_UPDATEZERT und V1.0.1_NOT_TIMELY (Abschluss nach 30.04.2025).\n\nHintergrund: Bei Abschluss nach 30.04.2025 ist ein vereinfachtes Verfahren nur zulässig, wenn keine funktionalen Änderungen vorgenommen wurden. Funktionale Änderungen erfordern stattdessen Profil V1.0.1_FUN_CHANGES und FOR_UPD_04.\n\nNachweis: ICS-Tabelle 5 (§2.1) – Angaben zu funktionalen Änderungen ausgefüllt.",
+      "checks": [
+        {
+          "description": "ICS Tabelle 5: Feld 'Technische Sicherheitseinrichtung implementiert funktionale Änderungen' = Nein",
+          "expected": "ICS §2.1 Tabelle 5: Checkbox 'Nein' angekreuzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ICS Tabelle 5: Feld 'Änderungen sind reine sicherheitsrelevante Verbesserungen oder rein formelle Änderungen' = Ja",
+          "expected": "ICS §2.1 Tabelle 5: Checkbox 'Ja' angekreuzt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Änderungsprotokoll/Changelog bestätigt ausschließlich nicht-funktionale Änderungen",
+          "expected": "Dokument: Änderungsprotokoll liegt vor und bestätigt keine funktionalen Änderungen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Antragsteller-Versicherung gemäß ICS §2.2 liegt unterschrieben vor",
+          "expected": "Nachweis: Unterschriebene ICS-Seite §2.2",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_05",
+        "BSI TR-03153-1 Anhang A-TS §2.1 (Tabelle 5)"
+      ],
+      "source_test": "FOR_UPD_05"
+    },
+    {
+      "step": 8,
+      "type": "FP",
+      "title": "FOR_UPD_06 [V1.0.1_UPDATEZERT / V1.0.1_NOT_TIMELY]: Gültigkeitsende des aktualisierten Zertifikats",
+      "result": null,
+      "instruction": "Prüfung, ob das Gültigkeitsende des aktualisierten Zertifikats kleiner oder gleich dem Gültigkeitsende des vorhergehenden Zertifikats ist.\n\nProfil: V1.0.1_UPDATEZERT und V1.0.1_NOT_TIMELY.\n\nHintergrund: Das Aktualisierungsverfahren darf die Gesamtlaufzeit der Zertifizierung nicht verlängern. Das neue Zertifikat muss innerhalb des Gültigkeitszeitraums des Vorgängers enden.",
+      "checks": [
+        {
+          "description": "Ablaufdatum (notAfter/Gültigkeitsende) des neuen Zertifikats ≤ Ablaufdatum des Vorzertifikats",
+          "expected": "Nachweis: Vergleich beider Zertifikatsdokumente: new.notAfter ≤ old.notAfter",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Vorhergehendes Zertifikat liegt als Dokument vor (für Vergleich)",
+          "expected": "Nachweis: Vorzertifikat vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §3.2, FOR_UPD_06"
+      ],
+      "source_test": "FOR_UPD_06"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 Anhang A-TS §3",
+    "BSI TR-03153-1 Anhang A",
+    "BSI TR-03153-1"
+  ],
+  "notes": "Hinweis (Stand März 2026): Die Fristen 30.04.2024 (FOR_UPD_01) und 30.04.2025 (FOR_UPD_02/04) sind abgelaufen. FOR_UPD_01/02 sind daher nur für historische Erstzertifizierungen relevant. FOR_UPD_03–06 gelten weiterhin für alle Aktualisierungs- und Rezertifizierungsverfahren."
+}

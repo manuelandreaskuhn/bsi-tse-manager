@@ -30,7 +30,9 @@
     "DOC_TME_01",
     "DOC_TME_02",
     "DOC_USR_01",
-    "DOC_USR_02"
+    "DOC_USR_02",
+    "DOC_CC_01",
+    "DOC_CC_02"
   ],
   "variables": {},
   "steps": [
@@ -226,8 +228,18 @@
       "type": "VERIFY",
       "title": "Common-Criteria-Zertifizierung und Kryptographie prüfen",
       "result": null,
-      "instruction": "Common-Criteria-Zertifizierung und Kryptographie prüfen",
+      "instruction": "Prüfung der Common-Criteria-Zertifizierungsnachweise und Konzeptdokumente gemäß BSI TR-03153-1 Anhang A-TS §4 (Testfälle DOC_CC_01/02) sowie der Kryptographie- und Audit-Dokumentation.\n\nHinweis: Die vollständigen CC-Zertifizierungsprüfungen für SMAERS (DOC_CC_02), CSP (DOC_CC_03) und CSP Light (DOC_CC_04–06) sind in TC-ZERT-CC-01 abgedeckt. Dieser Schritt prüft die Vollständigkeit der im ICS §2.1 Tabelle 3 deklarierten Angaben.",
       "checks": [
+        {
+          "description": "ICS §2.1 Tabelle 3 vollständig ausgefüllt: Hersteller, Modell, Version, Zertifizierungs-ID der SMAERS sowie alle vier Konzeptdokumente mit Titel, Version, Datum",
+          "expected": "Vollständigkeit: ICS Tabelle 3 alle Felder ausgefüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
         {
           "description": "DOC_SM_01: CC-Zertifizierung der Sicherheitsmodul-Bestandteile nach Schutzprofilen nachgewiesen",
           "expected": "Vorhanden",
@@ -278,12 +290,21 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_01/02",
+        "BSI-CC-PP-0105-V2 (Protection Profile SMAERS V2)",
+        "BSI-CC-SUP-SMA",
+        "BSI TR-03153-1 §DOC_SM_01/DOC_SM_02"
+      ],
+      "notes": "Vollständige CC-Prüfung: TC-ZERT-CC-01 (DOC_CC_01–06). Formelle Zertifizierungsfristen: TC-ZERT-FOR-01 (FOR_UPD_01–06)."
     }
   ],
   "references": [
     "BSI TR-03153-1 §Anhang",
     "BSI TR-03116-5",
-    "BSI TR-02102"
+    "BSI TR-02102",
+    "BSI TR-03153-1 Anhang A-TS §4",
+    "BSI TR-03153-1 Anhang A"
   ]
 }

@@ -1,0 +1,489 @@
+{
+  "testcase_id": "TC-ZERT-CC-01",
+  "schema_version": "3.0.0",
+  "created": "2026-03-20",
+  "result": null,
+  "title": "Common Criteria Sicherheitszertifizierungen: SMAERS, CSP und CSP Light",
+  "description": "Prüft die geforderten Common Criteria (CC) Sicherheitszertifizierungen der TSE-Komponenten gemäß BSI TR-03153-1 Anhang A-TS §4. Geprüft werden: Eignung der Konzeptdokumentation (DOC_CC_01), SMAERS-Zertifizierung nach BSI-CC-PP-0105-V2 (DOC_CC_02), CSP-Zertifizierung nach BSI-CC-PP-0104 (DOC_CC_03, Profil CC_0104), CSP-Light-Zertifizierung nach BSI-CC-PP-0111 (DOC_CC_04–06, Profil CC_0111). Diese Prüfungen werden von der Prüfstelle durchgeführt.",
+  "purpose": "Prüfung, ob die erforderlichen CC-Sicherheitszertifizierungen und die notwendigen Unterlagen für alle TSE-Komponenten (SMAERS, CSP, CSP Light) vorliegen.",
+  "module": "Zertifizierung",
+  "submodule": "ZERT_CC",
+  "function": null,
+  "test_type": "FP",
+  "priority": "mandatory",
+  "profiles": [
+    "CC_BASIC",
+    "CC_0104",
+    "CC_0111"
+  ],
+  "source_tests": [
+    "DOC_CC_01",
+    "DOC_CC_02",
+    "DOC_CC_03",
+    "DOC_CC_04",
+    "DOC_CC_05",
+    "DOC_CC_06"
+  ],
+  "variables": {},
+  "steps": [
+    {
+      "step": 1,
+      "type": "PRECONDITION",
+      "title": "CC-Zertifizierungsnachweise und Konzeptdokumente zusammenstellen",
+      "result": null,
+      "instruction": "Folgende Unterlagen müssen vor Prüfbeginn vollständig vorliegen:\n• ICS §2.1 Tabelle 3 (Angaben zur SMAERS: Hersteller, Modell, Version, Zertifizierungs-ID)\n• ICS §2.1 Tabelle 4 (Angaben zum CSP, nur bei Betrieb im RZ)\n• Konzeptdokumente: Provisionierungs-, Umgebungsschutz-, Update- und CSP-Konfigurationskonzept   mit Titel, Version und Datum laut ICS §2.1 Tabelle 3\n• CC-Zertifikat der SMAERS (nach BSI-CC-PP-0105-V2)\n• CC-Zertifikat des CSP (nach BSI-CC-PP-0104, nur CC_0104) oder\n  CC-Zertifikat des CSP Light (nach BSI-CC-PP-0111, nur CC_0111)\n• ISO/IEC 27001-Zertifikat des Rechenzentrums (nur CC_0111)\n• Plattform-Zertifikat (nur CC_0111)",
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4",
+        "BSI TR-03153-1 Anhang A-TS §2.1"
+      ]
+    },
+    {
+      "step": 2,
+      "type": "FP",
+      "title": "DOC_CC_01 [CC_BASIC]: Konzepteignung durch CC-Prüfstelle bestätigt",
+      "result": null,
+      "instruction": "Prüfung, ob ein Nachweis über die Eignung der folgenden vier Konzepte gemäß dem Supporting Document BSI-CC-SUP-SMA durch die jeweilige CC-Prüfstelle, oder übergangsweise/ersatzweise durch das BSI, vorliegt:\n• Provisionierungskonzept\n• Umgebungsschutzkonzept\n• Updatekonzept\n• CSP-Konfigurationskonzept\n\nProfil: CC_BASIC (gilt für alle Produkte).\n\nNachweis: Stellungnahme/Bescheinigung der CC-Prüfstelle oder des BSI zu jedem der vier Konzepte. Die Konzeptdokumente selbst sind im ICS §2.1 Tabelle 3 mit Titel, Version und Datum zu referenzieren.",
+      "checks": [
+        {
+          "description": "Nachweis der Eignungsbestätigung des Provisionierungskonzepts durch CC-Prüfstelle oder BSI liegt vor",
+          "expected": "Dokument: Prüfstellenbestätigung Provisionierungskonzept",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nachweis der Eignungsbestätigung des Umgebungsschutzkonzepts durch CC-Prüfstelle oder BSI liegt vor",
+          "expected": "Dokument: Prüfstellenbestätigung Umgebungsschutzkonzept",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nachweis der Eignungsbestätigung des Updatekonzepts durch CC-Prüfstelle oder BSI liegt vor",
+          "expected": "Dokument: Prüfstellenbestätigung Updatekonzept",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nachweis der Eignungsbestätigung des CSP-Konfigurationskonzepts durch CC-Prüfstelle oder BSI liegt vor",
+          "expected": "Dokument: Prüfstellenbestätigung CSP-Konfigurationskonzept",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ICS §2.1 Tabelle 3 enthält Titel, Version und Datum aller vier Konzepte",
+          "expected": "Vollständigkeit: Alle vier Einträge ausgefüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_01",
+        "BSI-CC-SUP-SMA (Supporting Document for CC PP SMAERS)"
+      ],
+      "source_test": "DOC_CC_01"
+    },
+    {
+      "step": 3,
+      "type": "FP",
+      "title": "DOC_CC_02 [CC_BASIC]: SMAERS-Zertifizierung nach BSI-CC-PP-0105-V2",
+      "result": null,
+      "instruction": "Prüfung, ob die Sicherheitsmodulanwendung (SMAERS) der TSE nach dem Schutzprofil BSI-CC-PP-0105-V2 (Protection Profile Security Module Application for Electronic Record-keeping Systems V2) durch eine anerkannte CC-Zertifizierungsstelle gemäß SOGIS-MRA / CCRA zertifiziert ist.\n\nProfil: CC_BASIC (gilt für alle Produkte).\n\nPrüfschritte:\n1. CC-Zertifikat der SMAERS vorgelegt.\n2. Zertifikat referenziert Schutzprofil BSI-CC-PP-0105-V2.\n3. Ausstellende Stelle ist gemäß SOGIS-MRA oder CCRA anerkannt.\n4. Zertifikat ist zum Zeitpunkt der Prüfung gültig.\n5. Zertifikat bezieht sich auf das im ICS §2.1 Tabelle 3 genannte Produkt (Hersteller, Modell, Version).",
+      "checks": [
+        {
+          "description": "CC-Zertifikat der SMAERS liegt vor",
+          "expected": "Nachweis: Zertifikatsdokument vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat referenziert Schutzprofil BSI-CC-PP-0105-V2",
+          "expected": "Nachweis: Zertifikat enthält Verweis auf BSI-CC-PP-0105-V2",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Ausstellende CC-Zertifizierungsstelle ist gemäß SOGIS-MRA / CCRA anerkannt",
+          "expected": "Nachweis: Zertifizierungsstelle auf SOGIS-MRA- oder CCRA-Liste",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist zum Prüfzeitpunkt gültig (nicht abgelaufen, nicht zurückgezogen)",
+          "expected": "Nachweis: Gültigkeitszeitraum und Rückrufstatus geprüft",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifiziertes Produkt stimmt mit ICS §2.1 Tabelle 3 überein (Hersteller, Modell, Version, Zertifizierungs-ID)",
+          "expected": "Übereinstimmung: ICS-Angaben ↔ Zertifikat",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_02",
+        "BSI-CC-PP-0105-V2 (Protection Profile SMAERS V2)",
+        "SOGIS-MRA",
+        "CCRA"
+      ],
+      "source_test": "DOC_CC_02"
+    },
+    {
+      "step": 4,
+      "type": "FP",
+      "title": "DOC_CC_03 [CC_0104]: CSP-Zertifizierung nach BSI-CC-PP-0104 in Konfiguration PP-0107 oder PP-0108",
+      "result": null,
+      "instruction": "Prüfung, ob der Krypto-Kern (CSP) der TSE nach dem Schutzprofil BSI-CC-PP-0104 (Protection Profile Cryptographic Service Provider) in einer der folgenden Konfigurationen durch eine gemäß SOGIS-MRA anerkannte CC-Zertifizierungsstelle zertifiziert ist:\n• BSI-CC-PP-0107 (PP Configuration CSP – Time Stamp Service and Audit), oder\n• BSI-CC-PP-0108 (PP Configuration CSP – Time Stamp Service, Audit and Clustering)\n\nProfil: CC_0104. Nur zutreffend wenn der CSP nach BSI-CC-PP-0104 betrieben wird.\n\nAbgrenzung: Wenn der CSP Light (BSI-CC-PP-0111) verwendet wird, gilt stattdessen Profil CC_0111 mit DOC_CC_04–06.",
+      "checks": [
+        {
+          "description": "CC-Zertifikat des CSP liegt vor",
+          "expected": "Nachweis: Zertifikatsdokument des CSP vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat referenziert Schutzprofil BSI-CC-PP-0104",
+          "expected": "Nachweis: Zertifikat enthält Verweis auf BSI-CC-PP-0104",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist in Konfiguration BSI-CC-PP-0107 (Time Stamp Service and Audit) erstellt, ODER",
+          "expected": "Nachweis: Konfigurationsprofil PP-0107 im Zertifikat referenziert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist in Konfiguration BSI-CC-PP-0108 (Time Stamp Service, Audit and Clustering) erstellt",
+          "expected": "Nachweis: Konfigurationsprofil PP-0108 im Zertifikat referenziert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Ausstellende CC-Zertifizierungsstelle ist gemäß SOGIS-MRA anerkannt",
+          "expected": "Nachweis: Zertifizierungsstelle auf SOGIS-MRA-Liste",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist zum Prüfzeitpunkt gültig",
+          "expected": "Nachweis: Gültigkeitszeitraum und Rückrufstatus geprüft",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ICS §2.1 Tabelle 4: Angaben zum CSP (Hersteller, Modell, Version, Zertifizierungs-ID) vollständig",
+          "expected": "Vollständigkeit: ICS Tabelle 4 ausgefüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_03",
+        "BSI-CC-PP-0104 (Protection Profile CSP)",
+        "BSI-CC-PP-0107 (PP Config CSP – Time Stamp Service and Audit)",
+        "BSI-CC-PP-0108 (PP Config CSP – Time Stamp Service, Audit and Clustering)",
+        "SOGIS-MRA"
+      ],
+      "source_test": "DOC_CC_03"
+    },
+    {
+      "step": 5,
+      "type": "FP",
+      "title": "DOC_CC_04 [CC_0111]: CSP-Light-Zertifizierung nach BSI-CC-PP-0111 in Konfiguration PP-0113",
+      "result": null,
+      "instruction": "Prüfung, ob der Krypto-Kern (CSP Light) der TSE nach dem Schutzprofil BSI-CC-PP-0111 (Protection Profile Cryptographic Service Provider Light / CSPL) in der Konfiguration BSI-CC-PP-0113 (PP Configuration Time Stamp Service, Audit and Clustering) durch eine gemäß SOGIS-MRA anerkannte CC-Zertifizierungsstelle zertifiziert ist.\n\nProfil: CC_0111. Nur zutreffend wenn der CSP Light betrieben wird.",
+      "checks": [
+        {
+          "description": "CC-Zertifikat des CSP Light (CSPL) liegt vor",
+          "expected": "Nachweis: Zertifikatsdokument des CSPL vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat referenziert Schutzprofil BSI-CC-PP-0111",
+          "expected": "Nachweis: Zertifikat enthält Verweis auf BSI-CC-PP-0111",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist in Konfiguration BSI-CC-PP-0113 (Time Stamp Service, Audit and Clustering) erstellt",
+          "expected": "Nachweis: Konfigurationsprofil PP-0113 im Zertifikat referenziert",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Ausstellende CC-Zertifizierungsstelle ist gemäß SOGIS-MRA anerkannt",
+          "expected": "Nachweis: Zertifizierungsstelle auf SOGIS-MRA-Liste",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifikat ist zum Prüfzeitpunkt gültig",
+          "expected": "Nachweis: Gültigkeitszeitraum und Rückrufstatus geprüft",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ICS §2.1 Tabelle 4: Angaben zum CSPL vollständig (Hersteller, Modell, Version, Zertifizierungs-ID, RZ-Betreiber)",
+          "expected": "Vollständigkeit: ICS Tabelle 4 ausgefüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_04",
+        "BSI-CC-PP-0111 (Protection Profile CSP Light / CSPL)",
+        "BSI-CC-PP-0113 (PP Config CSP Light – Time Stamp Service, Audit and Clustering)",
+        "SOGIS-MRA"
+      ],
+      "source_test": "DOC_CC_04"
+    },
+    {
+      "step": 6,
+      "type": "FP",
+      "title": "DOC_CC_05 [CC_0111]: CSP-Betrieb im zertifizierten Rechenzentrum (ISO/IEC 27001)",
+      "result": null,
+      "instruction": "Prüfung, ob bei Betrieb des CSP Light im zentralen Rechenzentrum folgende drei Voraussetzungen alle erfüllt sind:\n1. Der Krypto-Kern (CSP-Einheit) wird in einem zentralen Rechenzentrum betrieben.\n2. Dieses Rechenzentrum ist nach ISO/IEC 27001 zertifiziert (physikalisches und organisatorisches Sicherheitsniveau).\n3. Ein entsprechendes ISO/IEC 27001-Zertifikat des Rechenzentrums liegt als Nachweis vor.\n\nProfil: CC_0111.\n\nNachweis aus ICS §2.1 Tabelle 4: Betreiber des Rechenzentrums und Zertifizierungs-ID der ISO/IEC 27001-Zertifizierung.",
+      "checks": [
+        {
+          "description": "CSP-Einheit wird in einem zentralen Rechenzentrum betrieben (kein lokaler Betrieb)",
+          "expected": "Nachweis: ICS §2.1 Tabelle 4 – RZ-Betreiber angegeben",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ISO/IEC 27001-Zertifikat des Rechenzentrums liegt vor",
+          "expected": "Nachweis: ISO/IEC 27001-Zertifikat des RZ vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "ISO/IEC 27001-Zertifikat ist zum Prüfzeitpunkt gültig",
+          "expected": "Nachweis: Gültigkeitszeitraum des ISO/IEC 27001-Zertifikats",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifiziertes RZ stimmt mit dem in ICS §2.1 Tabelle 4 genannten Betreiber überein",
+          "expected": "Übereinstimmung: ICS-Angabe ↔ ISO/IEC 27001-Zertifikat",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifizierungs-ID der ISO/IEC 27001-Zertifizierung ist in ICS §2.1 Tabelle 4 angegeben",
+          "expected": "Vollständigkeit: Zertifizierungs-ID eingetragen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_05",
+        "BSI TR-03153-1 Anhang A-TS §2.1 (Tabelle 4)",
+        "ISO/IEC 27001"
+      ],
+      "source_test": "DOC_CC_05"
+    },
+    {
+      "step": 7,
+      "type": "FP",
+      "title": "DOC_CC_06 [CC_0111]: Plattformzertifizierung für CSP-Light-Betrieb",
+      "result": null,
+      "instruction": "Prüfung, ob die Plattform, auf der der CSP Light (CSPL) betrieben wird, über eines der folgenden Zertifikate verfügt (alternative Nachweise, mindestens eines erforderlich):\n\nOption A: Zertifikat nach ISO/IEC 19790 Level 3\n\nOption B: Für den Fall, dass sich der CSP-L gemäß der Definition nach dem Schutzprofil CEN EN 419221-5 als lokale Client-Applikation innerhalb der Hardware-Appliance des CEN EN 419221-5-TOE befindet: Zertifikat nach dem Schutzprofil CEN EN 419221-5 (Protection Profiles for TSP Cryptographic Modules – Part 5: Cryptographic Module for Trust Services)\n\nOption C: Vergleichbares Zertifikat in Abstimmung mit dem BSI.\n\nProfil: CC_0111.\n\nNachweis aus ICS §2.1 Tabelle 4: Zertifizierungs-ID der Plattform.",
+      "checks": [
+        {
+          "description": "Option A: Plattformzertifikat nach ISO/IEC 19790 Level 3 liegt vor",
+          "expected": "Nachweis: ISO/IEC 19790 Level-3-Zertifikat der Plattform (oder: nicht zutreffend → Option B/C)",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Option B: CSP-L ist lokale Client-Applikation in CEN EN 419221-5 Hardware-Appliance UND Zertifikat nach CEN EN 419221-5 liegt vor",
+          "expected": "Nachweis: CEN EN 419221-5-Zertifikat und Architekturnachweis (oder: nicht zutreffend → Option A/C)",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Option C: BSI-abgestimmtes vergleichbares Zertifikat liegt vor",
+          "expected": "Nachweis: BSI-Abstimmungsnachweis und entsprechendes Zertifikat (oder: nicht zutreffend → Option A/B)",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Mindestens eine der drei Optionen A, B oder C ist erfüllt und nachgewiesen",
+          "expected": "Mindestens eine Option: pass",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Zertifizierungs-ID der Plattform ist in ICS §2.1 Tabelle 4 angegeben",
+          "expected": "Vollständigkeit: Zertifizierungs-ID eingetragen",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Plattformzertifikat ist zum Prüfzeitpunkt gültig",
+          "expected": "Nachweis: Gültigkeitszeitraum geprüft",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 Anhang A-TS §4.2, DOC_CC_06",
+        "BSI TR-03153-1 Anhang A-TS §2.1 (Tabelle 4)",
+        "ISO/IEC 19790 Level 3",
+        "CEN EN 419221-5 (Protection Profiles for TSP Cryptographic Modules Part 5)"
+      ],
+      "source_test": "DOC_CC_06"
+    }
+  ],
+  "references": [
+    "BSI TR-03153-1 Anhang A-TS §4",
+    "BSI TR-03153-1 Anhang A",
+    "BSI-CC-PP-0104 (Protection Profile CSP)",
+    "BSI-CC-PP-0105-V2 (Protection Profile SMAERS V2)",
+    "BSI-CC-PP-0107 (PP Config CSP – Time Stamp Service and Audit)",
+    "BSI-CC-PP-0108 (PP Config CSP – Time Stamp Service, Audit and Clustering)",
+    "BSI-CC-PP-0111 (Protection Profile CSP Light)",
+    "BSI-CC-PP-0113 (PP Config CSP Light – Time Stamp Service, Audit and Clustering)",
+    "BSI-CC-SUP-SMA (Supporting Document for PP SMAERS)",
+    "CEN EN 419221-5",
+    "ISO/IEC 27001",
+    "ISO/IEC 19790 Level 3"
+  ]
+}
