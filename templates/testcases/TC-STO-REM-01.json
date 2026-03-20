@@ -39,7 +39,7 @@
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden",
+      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
       "result": null,
       "instruction": "Herstellerdokumentation liegt vor",
       "references": [

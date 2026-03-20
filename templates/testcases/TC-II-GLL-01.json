@@ -62,7 +62,7 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert",
+      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",

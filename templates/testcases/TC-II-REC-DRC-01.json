@@ -86,7 +86,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 erneut registriert (nach Deregistrierung – Szenario DRC)",
       "result": null,
       "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -117,7 +117,7 @@
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 registriert (registerClient, $client1)",
       "result": null,
       "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",

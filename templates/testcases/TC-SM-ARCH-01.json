@@ -67,7 +67,7 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert",
+      "title": "TSE initialisiert (initialize, Variante 2)",
       "result": null,
       "instruction": "Die Technischen Sicherheitseinrichtungen wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
       "function": "initialize",
@@ -78,7 +78,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Zeit gestellt",
+      "title": "Zeit gestellt (updateTime, Variante 2)",
       "result": null,
       "instruction": "Die Zeit innerhalb der Sicherheitsmodule wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
       "function": "updateTime",

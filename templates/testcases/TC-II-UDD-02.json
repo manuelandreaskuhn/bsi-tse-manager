@@ -22,7 +22,10 @@
     "II_UDD_07",
     "II_UDD_08"
   ],
-  "variables": {},
+  "variables": {
+    "$version_csp": "Aktuell installierte Versionsnummer des Krypto-Kerns (CSP) – Ausgangszustand vor updateDevice.",
+    "$version_storage": "Aktuell installierte Versionsnummer des Speichermediums – Ausgangszustand vor updateDevice."
+  },
   "steps": [
     {
       "step": 1,
@@ -45,9 +48,9 @@
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die aktuell installierte Versionsnummer des Krypto-Kerns ist",
+      "title": "Versionsnummer des Krypto-Kerns (CSP) bekannt ($version_csp)",
       "result": null,
-      "instruction": "Die aktuell installierte Versionsnummer des Krypto-Kerns ist bekannt."
+      "instruction": "Die aktuell installierte Versionsnummer des Krypto-Kerns ist bekannt. Diese wird als $version_csp festgehalten und in den Prüfschritten für updateDevice-CSP verwendet."
     },
     {
       "step": 4,
@@ -68,9 +71,9 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die aktuell installierte Versionsnummer des Speichermediums ",
+      "title": "Versionsnummer des Speichermediums bekannt ($version_storage)",
       "result": null,
-      "instruction": "Die aktuell installierte Versionsnummer des Speichermediums ist bekannt."
+      "instruction": "Die aktuell installierte Versionsnummer des Speichermediums ist bekannt. Diese wird als $version_storage festgehalten und in den Prüfschritten für updateDevice-Storage verwendet."
     },
     {
       "step": 6,

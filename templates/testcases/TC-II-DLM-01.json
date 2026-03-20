@@ -20,7 +20,10 @@
     "II_DLM_03",
     "II_DLM_04"
   ],
-  "variables": {},
+  "variables": {
+    "$state_export_pending": "Zustand des Speichermediums vor dem Löschen: enthält jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten. Diese wurden noch NICHT exportiert (Szenario: Löschen ohne vorherigen Export ablehnen).",
+    "$state_exported": "Zustand des Speichermediums nach vollständigem Export: enthält jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten, die bereits vollständig exportiert wurden (Szenario: Löschen nach Export zulassen)."
+  },
   "steps": [
     {
       "step": 1,
@@ -63,9 +66,9 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind jeweils mehrere Transaktions-, S",
+      "title": "Speichermedium $state_export_pending: Logs noch nicht exportiert",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert. Alle gespeicherten Log-Nachrichten wurden bereits exportiert."
+      "instruction": "$state_export_pending herstellen: Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert, die noch nicht exportiert wurden. Dieser Zustand wird in Szenario 2 (Schritt 11) verwendet: deleteLogMessages bei nicht-exportierten Daten muss abgelehnt werden."
     },
     {
       "step": 5,
@@ -86,9 +89,9 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind jeweils mehrere Transaktions-, S",
+      "title": "Speichermedium $state_exported: Logs vollständig exportiert",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert."
+      "instruction": "$state_exported herstellen: Auf dem Speichermedium sind jeweils mehrere Transaktions-, System- und Audit-Log-Nachrichten gespeichert, die bereits vollständig exportiert wurden (alle Logs im TAR-Container). Dieser Zustand wird in Szenario 1 (Schritt 7) verwendet: deleteLogMessages nach vollständigem Export soll erfolgreich durchgeführt werden."
     },
     {
       "step": 7,
@@ -431,9 +434,9 @@
     {
       "step": 11,
       "type": "NEGATIVE",
-      "title": "Löschen bei nicht-exportierten Daten ablehnen",
+      "title": "Szenario 2 [NT]: deleteLogMessages bei nicht-exportierten Daten ablehnen ($state_export_pending)",
       "result": null,
-      "instruction": "Löschen bei nicht-exportierten Daten ablehnen [NT]\n\nAufruf der Funktionalität zum Löschen der Log-Nachrichten.",
+      "instruction": "Ausgehend von $state_export_pending (Logs noch nicht exportiert): Löschen bei nicht-exportierten Daten ablehnen [NT]\n\nAufruf der Funktionalität zum Löschen der Log-Nachrichten.",
       "function": "deleteLogMessages",
       "user": "logger",
       "checks": [
@@ -464,9 +467,9 @@
     {
       "step": 12,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: deleteLogMessages – ErrorDeleteLogMessagesFailed, Verbindungsunterbrechung",
       "result": null,
-      "instruction": "Fehlerfälle [NT].",
+      "instruction": "Verbindungsunterbrechung zum Speichermedium → ErrorDeleteLogMessagesFailed; technischer Löschfehler → ErrorDeleteLogMessagesFailed zurückgegeben.",
       "checks": [
         {
           "description": "Verbindungsunterbrechung zum Speichermedium: ErrorDeleteLogMessagesFailed",

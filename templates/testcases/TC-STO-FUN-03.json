@@ -95,7 +95,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert",
+      "title": "TSE initialisiert (initialize, Variante 2)",
       "result": null,
       "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
       "function": "initialize",
@@ -106,7 +106,7 @@
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert",
+      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",

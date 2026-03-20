@@ -67,7 +67,12 @@
     "$tn2": "Transaktionsnummer (Rückgabe startTransaction, tn2)",
     "$tn3": "Transaktionsnummer (Rückgabe startTransaction, tn3)",
     "$tn4": "Transaktionsnummer (Rückgabe startTransaction, tn4)",
-    "$tn5": "Transaktionsnummer (Rückgabe startTransaction, tn5)"
+    "$tn5": "Transaktionsnummer (Rückgabe startTransaction, tn5)",
+    "$exf_state_1txn": "Speichermedium-Zustand: Log-Nachrichten für genau 1 beendete Transaktion (Basis-Filter-Test).",
+    "$exf_state_2txn": "Speichermedium-Zustand: Log-Nachrichten für ≥2 beendete Transaktionen (Bereichs-Filter-Test).",
+    "$exf_state_multi": "Speichermedium-Zustand: Log-Nachrichten für mehrere beendete Transaktionen (Mischfilter-Test).",
+    "$exf_state_txn_no": "Speichermedium-Zustand: Log-Nachrichten für 1 Transaktion mit bekannter Transaktionsnummer $tn_filter (Filter auf transactionNumber).",
+    "$exf_state_client": "Speichermedium-Zustand: Log-Nachrichten für 1 Transaktion mit bekannter clientId $client_filter (Filter auf clientId)."
   },
   "steps": [
     {
@@ -133,14 +138,14 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens e",
+      "title": "Speichermedium $exf_state_1txn: ≥1 beendete Transaktion",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine beendete Transaktion gespeichert."
+      "instruction": "$exf_state_1txn herstellen: Auf dem Speichermedium sind Log-Nachrichten für mindestens eine beendete Transaktion gespeichert. Wird in Filter-Grundtest verwendet."
     },
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 registriert (registerClient, $client1/$client1)",
       "result": null,
       "instruction": "Es ist ein Aufzeichnungssystem mit der Seriennummer $client1 registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -155,9 +160,9 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens z",
+      "title": "Speichermedium $exf_state_2txn: ≥2 beendete Transaktionen",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens zwei beendete Transaktion gespeichert."
+      "instruction": "$exf_state_2txn herstellen: Auf dem Speichermedium sind Log-Nachrichten für mindestens zwei beendete Transaktion gespeichert. Wird im Bereichs-Filter-Test verwendet."
     },
     {
       "step": 9,
@@ -185,14 +190,14 @@
     {
       "step": 11,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mehrere been",
+      "title": "Speichermedium $exf_state_multi: mehrere beendete Transaktionen",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mehrere beendete Transaktionen gespeichert."
+      "instruction": "$exf_state_multi herstellen: Auf dem Speichermedium sind Log-Nachrichten für mehrere beendete Transaktionen gespeichert. Wird im Mischfilter-Test verwendet."
     },
     {
       "step": 12,
       "type": "PRECONDITION",
-      "title": "Zeit gestellt",
+      "title": "Zeit gestellt (updateTime, Variante 2)",
       "result": null,
       "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde nicht aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
       "function": "updateTime",
@@ -203,16 +208,16 @@
     {
       "step": 13,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für eine beendet",
+      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachricht ($tn1)",
       "result": null,
       "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer $tn1 gespeichert."
     },
     {
       "step": 14,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für eine beendet",
+      "title": "Speichermedium $exf_state_txn_no: Log für bekannte Transaktionsnummer",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer TN1 gespeichert."
+      "instruction": "$exf_state_txn_no herstellen: Auf dem Speichermedium sind Log-Nachrichten für eine beendete Transaktion mit der Transaktionsnummer TN1 gespeichert. Transaktionsnummer als $tn_filter festhalten. Wird im transactionNumber-Filter-Test verwendet."
     },
     {
       "step": 15,

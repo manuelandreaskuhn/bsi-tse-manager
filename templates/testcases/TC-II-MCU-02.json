@@ -86,7 +86,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 registriert (registerClient, $client1)",
       "result": null,
       "instruction": "Es ist die maximale Anzahl von Aufzeichnungssysteme registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",

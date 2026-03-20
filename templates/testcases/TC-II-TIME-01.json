@@ -27,7 +27,10 @@
     "II_GCT_01",
     "II_GCT_02"
   ],
-  "variables": {},
+  "variables": {
+    "$api_no_time_sync": "API-Implementierung: updateTime mit explizitem Zeitparameter (Profil NO_TIME_SYNC). Der Prüfer übergibt newDateTime direkt.",
+    "$api_time_sync": "API-Implementierung: updateTime ohne Parameter (Profil TIME_SYNC). Die TSE bestimmt den Zeitwert automatisch."
+  },
   "steps": [
     {
       "step": 1,
@@ -70,7 +73,7 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert",
+      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",
@@ -86,21 +89,21 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die API-Implementierung der Funktionalität zur Aktualisierun",
+      "title": "API-Implementierung $api_time_sync verfügbar (TIME_SYNC)",
       "result": null,
-      "instruction": "Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls ermöglicht einen Aufruf ohne Parameter."
+      "instruction": "$api_time_sync: Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit unterstützt Profil TIME_SYNC – updateTime wird ohne expliziten Zeitparameter aufgerufen, die TSE ermittelt den Zeitwert automatisch. Relevant für Schritte mit updateTime ohne newDateTime-Parameter."
     },
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die API-Implementierung der Funktionalität zur Aktualisierun",
+      "title": "API-Implementierung $api_no_time_sync verfügbar (NO_TIME_SYNC)",
       "result": null,
-      "instruction": "Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls ermöglicht einen Aufruf mit mindestens einem Parameter."
+      "instruction": "$api_no_time_sync: Die API-Implementierung der Funktionalität zur Aktualisierung der Zeit unterstützt Profil NO_TIME_SYNC – updateTime wird mit explizitem newDateTime-Parameter aufgerufen. Relevant für alle updateTime-Schritte mit Zeitparameter."
     },
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Zeit gestellt",
+      "title": "Zeit gestellt (updateTime, Variante 2)",
       "result": null,
       "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde auf die zum Zeitpunkt der Aktualisierung aktuelle offizielle Zeit aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
       "function": "updateTime",
@@ -174,7 +177,7 @@
     {
       "step": 10,
       "type": "SETUP",
-      "title": "Zeit aktualisieren",
+      "title": "Log-Nachricht für updateTime im TAR identifizieren (Dateiname)",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "updateTime",
@@ -201,7 +204,7 @@
     {
       "step": 11,
       "type": "SETUP",
-      "title": "Zeit aktualisieren",
+      "title": "Datenfelder der updateTime-Log-Nachricht im TAR prüfen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container.",
       "function": "updateTime",
@@ -396,7 +399,7 @@
     {
       "step": 16,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "Authentifizierungs-Log für timeadmin im TAR identifizieren",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "authenticateUser",
@@ -423,7 +426,7 @@
     {
       "step": 17,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "Datenfelder des timeadmin-Authentifizierungs-Logs prüfen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers timeadmin in dem TAR-Container.",
       "function": "authenticateUser",
@@ -531,7 +534,7 @@
     {
       "step": 21,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "Authentifizierungs-Log für admin im TAR identifizieren",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "authenticateUser",
@@ -558,7 +561,7 @@
     {
       "step": 22,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "Datenfelder des admin-Authentifizierungs-Logs prüfen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Nutzers admin in dem TAR-Container.",
       "function": "authenticateUser",
@@ -645,7 +648,7 @@
     {
       "step": 25,
       "type": "SETUP",
-      "title": "Zeit aktualisieren",
+      "title": "updateTime: Fehlerfall provozieren",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen. Es wird ein Fehler provoziert, der bewirkt, dass die unterstützte Variante zur Aktualisierung der Zeit nicht festgestellt werden kann.",
       "function": "updateTime",

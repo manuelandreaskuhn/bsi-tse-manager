@@ -89,7 +89,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 registriert (registerClient, $client1)",
       "result": null,
       "instruction": "Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",

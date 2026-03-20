@@ -77,7 +77,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert",
+      "title": "TSE initialisiert (initialize, Variante 2)",
       "result": null,
       "instruction": "Die Technische Sicherheitseinrichtung wurde initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
       "function": "initialize",
@@ -88,7 +88,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Zeit gestellt",
+      "title": "Zeit gestellt (updateTime, Variante 2)",
       "result": null,
       "instruction": "Die Zeit innerhalb des Sicherheitsmoduls wurde aktualisiert. (updateTime ohne Fehlermeldung aufgerufen).",
       "function": "updateTime",
@@ -99,7 +99,7 @@
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert",
+      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",

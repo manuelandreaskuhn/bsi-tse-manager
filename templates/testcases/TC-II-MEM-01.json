@@ -371,9 +371,9 @@
     {
       "step": 14,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: getTotalMemory, getUsedMemory, getFreeMemory",
       "result": null,
-      "instruction": "Fehlerfälle [NT].",
+      "instruction": "getTotalMemory → ErrorGetTotalMemoryFailed; getUsedMemory → ErrorGetUsedMemoryFailed; getFreeMemory → ErrorGetFreeMemoryFailed zurückgegeben.",
       "checks": [
         {
           "description": "getTotalMemory Fehler: ErrorGetTotalMemoryFailed",

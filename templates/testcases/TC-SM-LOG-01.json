@@ -44,21 +44,21 @@
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Der Hersteller gibt eine Erklärung ab, wie verhindert werden",
+      "title": "Herstellererklärung: enterSecureState-Timing – verhindert Zeitproblem (SM_LOG_04)",
       "result": null,
-      "instruction": "Der Hersteller gibt eine Erklärung ab, wie verhindert werden kann, dass die Nachricht zum Zeitpunkt des Auftretens des Events erstellt wird."
+      "instruction": "Der Hersteller gibt eine Erklärung ab, wie verhindert werden kann, dass die enterSecureState-Nachricht einen Zeitstempel trägt, der vor dem vorherigen Log-Eintrag liegt. Relevant für SM_LOG_04 (Schritt 8)."
     },
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Der Hersteller gibt eine Erklärung ab, wie verhindert werden",
+      "title": "Herstellererklärung: exitSecureState-Timing – verhindert Zeitüberschneidung (SM_LOG_05)",
       "result": null,
-      "instruction": "Der Hersteller gibt eine Erklärung ab, wie verhindert werden kann, dass die Nachricht zum Zeitpunkt des Auftretens des Events nicht erstellt wird."
+      "instruction": "Der Hersteller gibt eine Erklärung ab, wie verhindert werden kann, dass die enterSecureState-Nachricht einen Zeitstempel trägt, der vor dem vorherigen Log-Eintrag liegt. Relevant für SM_LOG_04 (Schritt 8)."
     },
     {
       "step": 5,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "authenticateSmaAdmin-Log im TAR identifizieren (SM_LOG_01)",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für die Authentifizierung des Administrators der Sicherheitsmodulanwendung in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "authenticateUser",
@@ -85,7 +85,7 @@
     {
       "step": 6,
       "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
+      "title": "Datenfelder des authenticateSmaAdmin-Logs prüfen (SM_LOG_02)",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Administrators der Sicherheitsmodulanwendung in dem TAR-Container.",
       "function": "authenticateUser",

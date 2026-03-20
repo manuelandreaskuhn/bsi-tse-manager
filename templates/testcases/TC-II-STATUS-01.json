@@ -116,7 +116,7 @@
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden",
+      "title": "Herstellerdokumentation und ICS vorhanden (Szenario: maximale Clients)",
       "result": null,
       "instruction": "Die TSE wird von der maximalen Anzahl von Aufzeichnungssystemen, die im ICS angegeben wird, für die Protokollierungvon Transaktionen verwendet (es liegen also für jedes Aufzeichnungssystem offene Transaktionen vor). Diese Anzahl wird als $count festgehalten.",
       "references": [
@@ -126,7 +126,7 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Nutzer admin authentifiziert",
+      "title": "Nutzer admin authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer admin wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=admin und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",
@@ -157,7 +157,7 @@
     {
       "step": 10,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Maximale Anzahl Aufzeichnungssysteme registriert (ICS-Maximum)",
       "result": null,
       "instruction": "Die maximale Anzahl an möglichen Aufzeichnungssystemen ist registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -172,7 +172,7 @@
     {
       "step": 11,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Kein Aufzeichnungssystem registriert",
       "result": null,
       "instruction": "Kein Aufzeichnungssystem ist registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -187,7 +187,7 @@
     {
       "step": 12,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Maximale Anzahl Aufzeichnungssysteme registriert (Szenario: getClientIds gefüllt)",
       "result": null,
       "instruction": "Es sind weniger als die maximale Anzahl an Aufzeichnungssystemen registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -216,7 +216,7 @@
     {
       "step": 15,
       "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden",
+      "title": "Herstellerdokumentation und ICS vorhanden ($count)",
       "result": null,
       "instruction": "Im Sicherheitsmodul werden mehrere offene Transaktionen verwaltet. Die Anzahl der offenen Transaktionen ist kleiner als die maximale Anzahl von Transaktionen, die im ICS angegeben wird und wird als $count festgehalten.",
       "references": [
@@ -249,16 +249,16 @@
     {
       "step": 18,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für mindestens e",
+      "title": "Speichermedium: Log für mindestens eine offene Transaktion",
       "result": null,
       "instruction": "Auf dem Speichermedium sind Log-Nachrichten für mindestens eine nicht beendete Transaktion gespeichert."
     },
     {
       "step": 19,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind Log-Nachrichten für eine nicht b",
+      "title": "Speichermedium: Log für offene Transaktion mit bekannter $tn_open",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine nicht beendete Transaktion mit der Transaktionsnummer TN1 gespeichert."
+      "instruction": "Auf dem Speichermedium sind Log-Nachrichten für eine nicht beendete Transaktion mit der Transaktionsnummer TN1 gespeichert. Transaktionsnummer als $tn_open festhalten."
     },
     {
       "step": 20,
@@ -270,9 +270,9 @@
     {
       "step": 21,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Auf dem Speichermedium sind keine Log-Nachrichten für nicht ",
+      "title": "Speichermedium: Keine Logs für offene Transaktionen vorhanden",
       "result": null,
-      "instruction": "Auf dem Speichermedium sind keine Log-Nachrichten für nicht beendete Transaktionen gespeichert."
+      "instruction": "Auf dem Speichermedium sind keine Log-Nachrichten für nicht beendete Transaktionen gespeichert. Wird im Negativtest für getOpenTransactions bei leerem Transaktionssatz verwendet."
     },
     {
       "step": 22,
@@ -284,7 +284,7 @@
     {
       "step": 23,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Aufzeichnungssystem $client1 registriert (Szenario 5)",
       "result": null,
       "instruction": "Es ist ein Aufzeichnungssystem registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",

@@ -1445,9 +1445,9 @@
     {
       "step": 15,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: updateDevice – ErrorOpenTransactionFound, fehlgeschlagenes Update",
       "result": null,
-      "instruction": "Fehlerfälle [NT].",
+      "instruction": "Offene nicht-verwaiste Transaktionen → ErrorOpenTransactionFound; Update vollständig fehlgeschlagen → updateDeviceCompleted-Log mit Fehlerindikation; teilweise fehlgeschlagen → Teilfehler-Indikation.",
       "checks": [
         {
           "description": "Offene nicht-verwaiste Transaktionen: ErrorOpenTransactionFound",

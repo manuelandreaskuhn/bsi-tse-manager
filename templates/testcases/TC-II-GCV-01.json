@@ -949,9 +949,9 @@
     {
       "step": 9,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: getComponentVersions, getDeviceHealth, getEndOfUsageDate",
       "result": null,
-      "instruction": "Fehlerfälle [NT].",
+      "instruction": "getComponentVersions → ErrorGetComponentVersionsFailed; getDeviceHealth → ErrorGetDeviceHealthFailed; getEndOfUsageDate → ErrorGetEndOfUsageDateFailed zurückgegeben.",
       "checks": [
         {
           "description": "getComponentVersions Fehler: ErrorGetComponentVersionsFailed",

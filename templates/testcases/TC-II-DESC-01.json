@@ -798,7 +798,7 @@
     {
       "step": 18,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: setDescription/getDescription – ErrorStoringDataFailed, ErrorGetDescriptionFailed",
       "result": null,
       "instruction": "Fehlerfälle [NT]\n\nAufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Der für description übergebene Wert wird als $description1 festgehalten. Die Zeichenlänge der Beschreibung ist 1.",
       "function": "setDescription",

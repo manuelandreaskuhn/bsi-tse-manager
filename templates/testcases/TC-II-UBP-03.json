@@ -48,7 +48,7 @@
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung eines Nutzers ist ",
+      "title": "PIN-Eingabe für logger blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung eines Nutzers ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
@@ -71,7 +71,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert",
+      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",
@@ -87,7 +87,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des admin ist bloc",
+      "title": "PIN-Eingabe für admin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des admin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
@@ -110,7 +110,7 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des timeadmin ist ",
+      "title": "PIN-Eingabe für timeadmin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des timeadmin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },

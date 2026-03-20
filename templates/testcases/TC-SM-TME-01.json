@@ -75,7 +75,7 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "TSE initialisiert",
+      "title": "TSE initialisiert (initialize, Variante 2)",
       "result": null,
       "instruction": "Die Technische Sicherheitseinrichtung wurde nicht initialisiert. (initialize ohne Fehlermeldung aufgerufen).",
       "function": "initialize",

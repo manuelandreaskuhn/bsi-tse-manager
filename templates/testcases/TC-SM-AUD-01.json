@@ -35,16 +35,16 @@
     {
       "step": 2,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Der Hersteller stellt eine Anleitung und eventuell notwendig",
+      "title": "Herstelleranleitung: Stopp der Audit-Funktionalität (SM_AUD_02)",
       "result": null,
-      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Einstellungen der Audit-Funktionalität der Sicherheitsmodulanwendung nach der initialen Einstellung verändert werden können."
+      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Audit-Funktionalität gestoppt werden kann (SM_AUD_02: permanente Deaktivierung). Diese Anleitung wird in Schritt 7 (SM_AUD_02) angewendet."
     },
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Der Hersteller stellt eine Anleitung und eventuell notwendig",
+      "title": "Herstelleranleitung: Audit-Funktionalität dauerhaft deaktivieren (SM_AUD_02, Variante 2)",
       "result": null,
-      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Audit-Funktionalität der Sicherheitsmodulanwendung gestoppt werden kann."
+      "instruction": "Der Hersteller stellt eine Anleitung und eventuell notwendige Tools bereit, wie die Audit-Funktionalität gestoppt werden kann (SM_AUD_02: permanente Deaktivierung). Diese Anleitung wird in Schritt 7 (SM_AUD_02) angewendet."
     },
     {
       "step": 4,

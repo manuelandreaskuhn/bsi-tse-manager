@@ -72,7 +72,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Herstellerdokumentation und ICS vorhanden",
+      "title": "Herstellerdokumentation und ICS vorhanden (Variante 2)",
       "result": null,
       "instruction": "Signaturverfahren ist aus dem ICS bekannt.",
       "references": [

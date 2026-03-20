@@ -103,7 +103,7 @@
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Ein Aufzeichnungssystem ($client1) registriert",
       "result": null,
       "instruction": "Ein Aufzeichnungssystem ist in der Technischen Sicherheitseinrichtung registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -134,7 +134,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Ein Aufzeichnungssystem ($client1) registriert (Szenario 2 – nach Reset)",
       "result": null,
       "instruction": "Es ist ein Aufzeichnungssystem für die Aufzeichnung von Transaktionen registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -149,7 +149,7 @@
     {
       "step": 7,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Vier Aufzeichnungssysteme ($client1–$client4) registriert",
       "result": null,
       "instruction": "Es sind vier Aufzeichnungssysteme (hier $client1, $client2, $client3 und $client4 genannt) für die Aufzeichnung von Transaktionen registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",
@@ -164,7 +164,7 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Aufzeichnungssystem $client1 registriert",
+      "title": "Drei Aufzeichnungssysteme ($client1, $client2, $client4) registriert",
       "result": null,
       "instruction": "Es sind drei Aufzeichnungssysteme (hier $client1, $client2 und $client4 genannt) für die Aufzeichnung von Transaktionen registriert. (registerClient mit clientId=$client1 aufgerufen).",
       "function": "registerClient",

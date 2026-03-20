@@ -51,14 +51,14 @@
     {
       "step": 3,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung eines Nutzers ist ",
+      "title": "PIN-Eingabe für logger blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung eines Nutzers ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
     {
       "step": 4,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert",
+      "title": "Kein Nutzer authentifiziert (admin/logger/timeadmin alle abgemeldet)",
       "result": null,
       "instruction": "Es ist keiner der Nutzer admin, logger oder timeadmin von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",
@@ -74,7 +74,7 @@
     {
       "step": 5,
       "type": "PRECONDITION",
-      "title": "Nutzer logger authentifiziert",
+      "title": "Nutzer logger authentifiziert (authenticateUser, Variante 2)",
       "result": null,
       "instruction": "Der Nutzer logger wurde von der Technischen Sicherheitseinrichtung authentifiziert. (authenticateUser mit userId=logger und korrektem PIN, authenticationResult=ok).",
       "function": "authenticateUser",
@@ -90,7 +90,7 @@
     {
       "step": 6,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des admin ist bloc",
+      "title": "PIN-Eingabe für admin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des admin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
@@ -113,7 +113,7 @@
     {
       "step": 8,
       "type": "PRECONDITION",
-      "title": "Vorbedingung: Die PIN-Eingabe für die Authentifizierung des timeadmin ist ",
+      "title": "PIN-Eingabe für timeadmin blockiert (Fehlbedienungszähler = Maximum)",
       "result": null,
       "instruction": "Die PIN-Eingabe für die Authentifizierung des timeadmin ist blockiert (Wert für den Wiederholungszähler ist 0)."
     },
@@ -441,7 +441,7 @@
     {
       "step": 17,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von admin entsperren",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Entsperren der PIN des Nutzers admin. Der Funktion wird ein korrekter Wert für die User-ID und der leere String als neue PIN übergeben. Die übergebene PUK ist korrekt.",
       "function": "unblockPin",
@@ -464,7 +464,7 @@
     {
       "step": 18,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von admin entsperren",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "unblockPin",
@@ -487,7 +487,7 @@
     {
       "step": 19,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von admin entsperren",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container.",
       "function": "unblockPin",
@@ -550,7 +550,7 @@
     {
       "step": 20,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Entsperren der PIN des Nutzers timeadmin. Der Funktion wird ein korrekter Wert für die User-ID und der leere String als neue PIN übergeben. Die übergebene PUK ist korrekt.",
       "function": "unblockPin",
@@ -573,7 +573,7 @@
     {
       "step": 21,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
       "instruction": "Identifikation der Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin in dem TAR-Container. Die Identifikation erfolgt anhand des Dateinamens.",
       "function": "unblockPin",
@@ -596,7 +596,7 @@
     {
       "step": 22,
       "type": "SETUP",
-      "title": "unblockPin aufrufen",
+      "title": "unblockPin: PIN von timeadmin entsperren",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin in dem TAR-Container.",
       "function": "unblockPin",

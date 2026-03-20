@@ -865,9 +865,9 @@
     {
       "step": 14,
       "type": "NEGATIVE",
-      "title": "Fehlerfälle",
+      "title": "Fehlerfälle: lockTransactionLogging, unlockTransactionLogging",
       "result": null,
-      "instruction": "Fehlerfälle [NT].",
+      "instruction": "Lock bei nicht-verwaisten offenen Transaktionen → Fehler; technischer Lock-Fehler → ErrorLockTransactionLoggingFailed; Unlock ohne vorherigen Lock → Fehler; ErrorUnlockTransactionLoggingFailed zurückgegeben.",
       "checks": [
         {
           "description": "Lock bei offenen nicht-verwaisten Transaktionen: Fehler",
