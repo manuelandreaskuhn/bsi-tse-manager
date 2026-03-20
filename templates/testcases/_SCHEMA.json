@@ -33,5 +33,14 @@
     "PASS_WARN_FAIL": "pass, Warnung oder fail",
     "INFO": "Nur informativ",
     "WARN_OR_OK": "Warnung oder OK"
+  },
+  "rules_database": {
+    "total_rules": 261,
+    "core_rules": 242,
+    "exp_log_01_rules": 19,
+    "sources": [
+      "TSE-TAR-Analyzer-Regeln-Dokumentation.md (242 Regeln)",
+      "r36-exp-log-01.js (19 neue EXP_LOG_01 Funktions-Log-Nachweis-Regeln)"
+    ]
   }
 }

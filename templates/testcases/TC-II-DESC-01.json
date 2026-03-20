@@ -267,7 +267,7 @@
       "type": "VERIFY",
       "title": "Beschreibungs-Log prüfen",
       "result": null,
-      "instruction": "Beschreibungs-Log prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── setDescription → eventType \"setDescription\" ──\n  • System-Log-Datei mit eventType=\"setDescription\" im TAR-Container vorhanden\n  • eventOrigin = integration-interface\n  • eventTriggeredByUser enthält userId des admin-Nutzers\n  • Signaturzähler inkrementiert\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "exportLogMessages",
       "user": "logger",
       "checks": [
@@ -294,6 +294,36 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"setDescription\" vorhanden sein (BSI TR-03151-1 §4.6).",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"setDescription\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser enthält userId des admin-Nutzers",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -447,7 +477,8 @@
       "references": [
         "BSI TR-03153-1 §6.4",
         "BSI TR-03151-1 §5.2",
-        "BSI TR-03151-1 §4.6"
+        "BSI TR-03151-1 §4.6",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ],
       "source_test": "II_SDE_01"
     },

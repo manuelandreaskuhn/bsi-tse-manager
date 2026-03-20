@@ -117,7 +117,7 @@
       "type": "VERIFY",
       "title": "exitSecureState-Log prüfen (SM_LOG_06)",
       "result": null,
-      "instruction": "exitSecureState-Log prüfen (SM_LOG_06)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── exitSecureState → eventType \"exitSecureState\" ──\n  • System-Log-Datei mit eventType=\"exitSecureState\" im TAR-Container vorhanden\n  • eventData ist eine leere ASN.1-Sequenz (EVDATA_EXITSECURE)\n  • enterSecureState und exitSecureState paarweise vorhanden (SYS_EVT_SECURE_PAIRS)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "<Fehler beseitigen → TSE verlässt sicheren Zustand> → exportLogMessages",
       "user": "logger",
       "checks": [
@@ -160,6 +160,36 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"exitSecureState\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData ist eine leere ASN.1-Sequenz (EVDATA_EXITSECURE)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "enterSecureState und exitSecureState paarweise vorhanden (SYS_EVT_SECURE_PAIRS)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -187,7 +217,8 @@
       ],
       "source_test": "SM_LOG_06",
       "references": [
-        "BSI TR-03153-1 §9.8.4"
+        "BSI TR-03153-1 §9.8.4",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

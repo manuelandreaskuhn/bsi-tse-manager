@@ -99,7 +99,7 @@
       "type": "VERIFY",
       "title": "Initialisierungs-Log prüfen",
       "result": null,
-      "instruction": "Initialisierungs-Log prüfen\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── initialize → eventType \"initialize\" ──\n  • System-Log-Datei mit eventType=\"initialize\" im TAR-Container vorhanden\n  • Genau ein initialize-Log im gesamten Archiv (STOR_EVT_INIT_UNIQUE)\n  • initialize-Log ist eines der ersten Ereignisse im Archiv (INIT_SEQ_COMPLETE_ORDER)\n  • Alle TransactionLog-Einträge liegen zeitlich nach initialize (INIT_SEQ_TXN_AFTER_INIT)\n\n── startAudit → eventType \"startAudit\" ──\n  • System-Log-Datei mit eventType=\"startAudit\" im TAR-Container vorhanden\n  • startAudit ist das erste Ereignis im Archiv (SYS_EVT_STARTAUDIT_FIRST)\n  • eventData bei startAudit ist eine leere ASN.1-Sequenz (EVDATA_STARTAUDIT)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "exportLogMessages",
       "user": "logger",
       "checks": [
@@ -186,6 +186,66 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"startAudit\" vorhanden sein. startAudit MUSS das erste Ereignis im Archiv sein (BSI TR-03153-1 §9.8.2).",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"initialize\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Genau ein initialize-Log im gesamten Archiv (STOR_EVT_INIT_UNIQUE)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "initialize-Log ist eines der ersten Ereignisse im Archiv (INIT_SEQ_COMPLETE_ORDER)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"startAudit\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "startAudit ist das erste Ereignis im Archiv (SYS_EVT_STARTAUDIT_FIRST)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData bei startAudit ist eine leere ASN.1-Sequenz (EVDATA_STARTAUDIT)",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -463,7 +523,7 @@
         },
         {
           "check_id": "EXP_LOG_01_START_AUDIT",
-          "title": "startAudit – System-Log-Nachweis (erstes Ereignis)",
+          "title": "startAudit – System-Log-Nachweis (erstes Ereignis im Archiv)",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
@@ -473,7 +533,9 @@
         "BSI TR-03153-1 §6.4",
         "BSI TR-03151-1 §5.2",
         "BSI TR-03151-1 §4.6",
-        "BSI TR-03153-1 §9.8.2"
+        "BSI TR-03153-1 §9.8.2",
+        "BSI TR-03151-1 §4.6 / BSI TR-03153-1 §9.8.3",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ],
       "source_test": "II_INI_01"
     },

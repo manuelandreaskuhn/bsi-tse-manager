@@ -710,7 +710,7 @@
       "type": "VERIFY",
       "title": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)",
       "result": null,
-      "instruction": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)\n\nAufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateTime → eventType \"updateTime\" ──\n  • System-Log-Datei mit eventType=\"updateTime\" im TAR-Container vorhanden\n  • seTimeAfterUpdate-Feld in eventData vorhanden (EVDATA_UPDATETIME)\n  • Maximaler Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)\n  • updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)\n  • Alle TransactionLog-Einträge nach erstem updateTime (TIMESET_TXN_AFTER_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "updateTime",
       "user": "timeadmin",
       "parameters": {
@@ -750,6 +750,56 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"updateTime\" vorhanden sein (BSI TR-03151-1 §4.7).",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"updateTime\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "seTimeAfterUpdate-Feld in eventData vorhanden (EVDATA_UPDATETIME)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Maximaler Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Alle TransactionLog-Einträge nach erstem updateTime (TIMESET_TXN_AFTER_UPDATETIME)",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -916,7 +966,8 @@
       ],
       "source_test": "II_UDT_01",
       "references": [
-        "BSI TR-03151-1 §4.7"
+        "BSI TR-03151-1 §4.7",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

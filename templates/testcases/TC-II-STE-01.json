@@ -271,7 +271,7 @@
       "type": "VERIFY",
       "title": "Selbsttest auslösen",
       "result": null,
-      "instruction": "Selbsttest auslösen\n\nAufruf der Funktionalität zur Auslösung eines Selbsttests.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── runSelfTest (intern fehlgeschlagen) → eventType \"selfTest (intern fehlgeschlagen)\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" UND eventOrigin ∈ {\"SMA\", \"CSP\"} im TAR-Container vorhanden\n  • eventTriggeredByUser DARF NICHT vorhanden sein (Tabelle 16: intern ausgelöster Selbsttest)\n  • Abzugrenzen von extern ausgelöstem selfTest: eventOrigin ≠ integration-interface\n\n── runSelfTest → eventType \"selfTest\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" im TAR-Container vorhanden\n  • Extern ausgelöst: eventOrigin = integration-interface\n  • Extern ausgelöst: eventTriggeredByUser MUSS gesetzt sein (EVDATA_SELFTEST_TRIGGER)\n  • selfTest-Ereignis ist zeitunabhängig – darf vor updateTime auftreten (TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "runSelfTest",
       "user": "logger",
       "expected_return": {
@@ -374,6 +374,66 @@
         {
           "description": "Im TAR-Archiv MUSS eine System-Log-Nachricht mit eventType \"selfTest\" und eventOrigin \"SMA\" oder \"CSP\" vorhanden sein, wenn ein interner Selbsttest fehlschlägt. eventTriggeredByUser DARF NICHT vorhanden sein (BSI TR-03153-1 §9.8.5, Tabelle 16). (nur wenn Profil aktiv)",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"selfTest\" UND eventOrigin ∈ {\"SMA\", \"CSP\"} im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser DARF NICHT vorhanden sein (Tabelle 16: intern ausgelöster Selbsttest)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Abzugrenzen von extern ausgelöstem selfTest: eventOrigin ≠ integration-interface",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"selfTest\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Extern ausgelöst: eventOrigin = integration-interface",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Extern ausgelöst: eventTriggeredByUser MUSS gesetzt sein (EVDATA_SELFTEST_TRIGGER)",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -546,7 +606,7 @@
         },
         {
           "check_id": "EXP_LOG_01_SELFTEST",
-          "title": "selfTest (extern, eventOrigin=integration-interface) – System-Log-Nachweis",
+          "title": "selfTest (extern, integration-interface) – System-Log-Nachweis",
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
@@ -562,7 +622,8 @@
       "source_test": "II_STE_01",
       "references": [
         "BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5",
-        "BSI TR-03153-1 §9.8.5 / Tabelle 16"
+        "BSI TR-03153-1 §9.8.5 / Tabelle 16",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

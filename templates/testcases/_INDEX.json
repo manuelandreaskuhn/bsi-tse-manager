@@ -3,7 +3,7 @@
   "created": "2026-03-20",
   "total_testcases": 85,
   "xml_sources_used": "1135 BSI XML-Quelltestfälle (TR-03153-1-TS v1.1.x)",
-  "rules_database": "242 TAR-Analyzer-Regeln",
+  "rules_database": "261 Prüfregeln (242 aus MD-Datei + 19 EXP_LOG_01 aus r36-exp-log-01.js)",
   "additional_sources": [
     "BSI TR-03153-1 Anhang A-TS v1.1.0 (2023-12-19)"
   ],

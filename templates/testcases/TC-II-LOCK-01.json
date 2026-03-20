@@ -253,7 +253,7 @@
       "type": "VERIFY",
       "title": "Transaktionsaufzeichnung sperren",
       "result": null,
-      "instruction": "Transaktionsaufzeichnung sperren\n\nAufruf der Funktionalität zur Unterbindung der Aufzeichnung von Transaktionen.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── lockTransactionLogging → eventType \"lockTransactionLogging\" (alt: lockDevice) ──\n  • System-Log-Datei mit eventType=\"lockTransactionLogging\" (alternativ \"lockDevice\") im TAR-Container vorhanden (LOCK_EVT_PRESENT)\n  • eventOrigin = integration-interface\n  • Keine neuen TransactionLog-Einträge nach dem Lock-Ereignis (LOCK_EVT_NO_NEW_TXN)\n\n── unlockTransactionLogging → eventType \"unlockTransactionLogging\" (alt: unlockDevice) ──\n  • System-Log-Datei mit eventType=\"unlockTransactionLogging\" (alternativ \"unlockDevice\") im TAR-Container vorhanden (UNLOCK_EVT_PRESENT)\n  • eventOrigin = integration-interface\n  • Lock-Ereignis geht dem Unlock-Ereignis im Archiv voraus (UNLOCK_EVT_LOCK_PRECEDES)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "lockTransactionLogging",
       "user": "admin",
       "checks": [
@@ -300,6 +300,56 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unlockTransactionLogging\" (alternativ \"unlockDevice\") vorhanden sein (BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11). (nur wenn Profil aktiv)",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"lockTransactionLogging\" (alternativ \"lockDevice\") im TAR-Container vorhanden (LOCK_EVT_PRESENT)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Keine neuen TransactionLog-Einträge nach dem Lock-Ereignis (LOCK_EVT_NO_NEW_TXN)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"unlockTransactionLogging\" (alternativ \"unlockDevice\") im TAR-Container vorhanden (UNLOCK_EVT_PRESENT)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Lock-Ereignis geht dem Unlock-Ereignis im Archiv voraus (UNLOCK_EVT_LOCK_PRECEDES)",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -473,7 +523,8 @@
       ],
       "source_test": "II_LTL_01",
       "references": [
-        "BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11"
+        "BSI TR-03151-1 §4.10 / BSI TR-03153-1 §9.11",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

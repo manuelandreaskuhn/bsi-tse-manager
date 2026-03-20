@@ -269,6 +269,16 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unblockPin\" (alternativ \"unblockUser\") vorhanden sein (BSI TR-03151-1 §4.4.3).",
+          "expected": "Mindestens ein System-Log-Eintrag mit eventType unblockPin oder unblockUser im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "source_test": "II_AUT_03_Template",
@@ -279,7 +289,17 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        },
+        {
+          "check_id": "EXP_LOG_01_UNBLOCK_PIN",
+          "title": "unblockPin / unblockUser – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
         }
+      ],
+      "references": [
+        "BSI TR-03151-1 §4.4.3"
       ]
     },
     {

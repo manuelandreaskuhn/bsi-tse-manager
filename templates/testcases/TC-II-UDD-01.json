@@ -192,7 +192,7 @@
       "type": "VERIFY",
       "title": "Geräte-Update durchführen via updateDevice",
       "result": null,
-      "instruction": "Geräte-Update durchführen via updateDevice\n\nAufruf der Funktionalität zur Installation von Updates für die TSE.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateDevice → eventType \"updateDevice / updateDeviceCompleted\" (alt: updateDeviceCompleted) ──\n  • System-Log-Datei mit eventType=\"updateDeviceCompleted\" im TAR-Container vorhanden (MUSS)\n  • System-Log-Datei mit eventType=\"updateDevice\" im TAR-Container vorhanden (SOLLTE, wenn direkt via updateDevice aufgerufen)\n  • updateDevice-Log enthält: componentName, manufacturer, model, version für alle aktualisierten Komponenten\n  • updateDeviceCompleted-Log enthält neuen Versionsstand aller Komponenten (ggf. certificationID)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "updateDevice",
       "user": "admin",
       "checks": [
@@ -229,6 +229,46 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"updateDevice\" oder \"updateDeviceCompleted\" vorhanden sein. updateDeviceCompleted MUSS, updateDevice SOLLTE protokolliert werden (BSI TR-03151-1 §4.8 / BSI TR-03153-1 §9.10). (nur wenn Profil aktiv)",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"updateDeviceCompleted\" im TAR-Container vorhanden (MUSS)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"updateDevice\" im TAR-Container vorhanden (SOLLTE, wenn direkt via updateDevice aufgerufen)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateDevice-Log enthält: componentName, manufacturer, model, version für alle aktualisierten Komponenten",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "updateDeviceCompleted-Log enthält neuen Versionsstand aller Komponenten (ggf. certificationID)",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -381,7 +421,8 @@
       ],
       "source_test": "II_UDD_01",
       "references": [
-        "BSI TR-03151-1 §4.8 / BSI TR-03153-1 §9.10"
+        "BSI TR-03151-1 §4.8 / BSI TR-03153-1 §9.10",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

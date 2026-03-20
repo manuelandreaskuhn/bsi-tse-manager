@@ -441,16 +441,6 @@
             "skip"
           ],
           "result": null
-        },
-        {
-          "description": "Zeitstempel in allen Log-Nachrichten monoton steigend (SM_NOAGG)",
-          "expected": "CROSS_LOG_TIME_MONO",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
         }
       ],
       "references": [

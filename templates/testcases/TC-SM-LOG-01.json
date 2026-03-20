@@ -152,7 +152,7 @@
       "type": "VERIFY",
       "title": "startAudit-Log prüfen (SM_LOG_03)",
       "result": null,
-      "instruction": "startAudit-Log prüfen (SM_LOG_03)\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── authenticateSmaAdmin → eventType \"authenticateSmaAdmin\" ──\n  • System-Log-Datei mit eventType=\"authenticateSmaAdmin\" im TAR-Container vorhanden\n  • eventOrigin = SMA (SMAERS-interne Authentifizierung)\n  • authenticationResult-Feld vorhanden (ok / failed)\n  • Nur relevant wenn Profil SMAADMIN_AVAILABLE aktiv\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "exportLogMessages → SystemLog-Dateien analysieren",
       "user": "logger",
       "checks": [
@@ -179,6 +179,46 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"authenticateSmaAdmin\" vorhanden sein (BSI TR-03153-1 §9.8.1). Nur relevant wenn Profil SMAADMIN_AVAILABLE aktiv. (nur wenn Profil aktiv)",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"authenticateSmaAdmin\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = SMA (SMAERS-interne Authentifizierung)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticationResult-Feld vorhanden (ok / failed)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Nur relevant wenn Profil SMAADMIN_AVAILABLE aktiv",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -373,7 +413,8 @@
       ],
       "source_test": "SM_LOG_01",
       "references": [
-        "BSI TR-03153-1 §9.8.1"
+        "BSI TR-03153-1 §9.8.1",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

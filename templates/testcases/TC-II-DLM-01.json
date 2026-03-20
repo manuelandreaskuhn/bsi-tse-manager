@@ -165,7 +165,7 @@
       "type": "VERIFY",
       "title": "Alle Daten exportieren, dann löschen",
       "result": null,
-      "instruction": "Alle Daten exportieren, dann löschen\n\nAufruf der Funktionalität zum Löschen der Log-Nachrichten.",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── deleteLogMessages → eventType \"deleteLogMessages\" ──\n  • System-Log-Datei mit eventType=\"deleteLogMessages\" im TAR-Container vorhanden (DLM_LOG_PRESENT)\n  • eventOrigin = integration-interface (DLM_LOG_EVORIGIN)\n  • eventData ist eine leere ASN.1-Sequenz (DLM_LOG_EVDATA_EMPTY)\n  • Minimaler TAR-Inhalt nach Löschen vorhanden (DLM_LOG_MINIMAL)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "exportLogMessages → deleteLogMessages",
       "user": "logger",
       "checks": [
@@ -258,6 +258,46 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"deleteLogMessages\" im TAR-Container vorhanden (DLM_LOG_PRESENT)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface (DLM_LOG_EVORIGIN)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventData ist eine leere ASN.1-Sequenz (DLM_LOG_EVDATA_EMPTY)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Minimaler TAR-Inhalt nach Löschen vorhanden (DLM_LOG_MINIMAL)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
         }
       ],
       "tar_validation": [
@@ -334,7 +374,8 @@
       ],
       "source_test": "II_DLM_01",
       "references": [
-        "BSI TR-03151-1 §4.12"
+        "BSI TR-03151-1 §4.12",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {

@@ -157,7 +157,7 @@
       "type": "VERIFY",
       "title": "SystemLog für authenticateUser prüfen",
       "result": null,
-      "instruction": "SystemLog für authenticateUser prüfen",
+      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── authenticateUser → eventType \"authenticateUser\" ──\n  • System-Log-Datei mit eventType=\"authenticateUser\" im TAR-Container vorhanden (Dateiname enthält _Log-Sys_authenticateUser)\n  • eventOrigin = integration-interface\n  • eventTriggeredByUser enthält die userId des authentifizierten Nutzers (logger/admin/timeadmin)\n  • role-Feld entspricht der userId\n  • authenticationResult-Feld vorhanden (ok / failed)\n  • remainingRetries-Feld vorhanden (bei failed: dekrementiert; bei ok: = ICS-Maximum)\n\n── logOut → eventType \"logOut\" ──\n  • System-Log-Datei mit eventType=\"logOut\" im TAR-Container vorhanden\n  • loggedOutUserId-Feld vorhanden und korrekt\n  • logOutCase-Feld vorhanden (explicit / implicit)\n  • explizit: eventTriggeredByUser MUSS gesetzt sein\n  • implizit (Nutzerwechsel): eventTriggeredByUser DARF NICHT gesetzt sein, eventOrigin gemäß Spezifikation\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "exportLogMessages",
       "checks": [
         {
@@ -241,36 +241,6 @@
           "result": null
         },
         {
-          "description": "logOut-Ereignis im Archiv vorhanden nach authentifizierter Operation (SYS_EVT_LOGOUT_PRESENT)",
-          "expected": "SYS_EVT_LOGOUT_PRESENT bestanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Implizites logOut-Log bei Nutzerwechsel vorhanden (IMPLICIT_LOGOUT_PRESENT)",
-          "expected": "IMPLICIT_LOGOUT_PRESENT bestanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Kein implizites logOut bei Neu-Auth desselben Nutzers (IMPLICIT_LOGOUT_ABSENT_SAME_USER)",
-          "expected": "IMPLICIT_LOGOUT_ABSENT_SAME_USER bestanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"authenticateUser\" vorhanden sein (BSI TR-03151-1 §4.4.1).",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
           "result_options": [
@@ -283,6 +253,116 @@
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"logOut\" vorhanden sein (BSI TR-03151-1 §4.4.2).",
           "expected": "Mindestens ein System-Log-Eintrag mit passendem eventType im TAR vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"authenticateUser\" im TAR-Container vorhanden (Dateiname enthält _Log-Sys_authenticateUser)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser enthält die userId des authentifizierten Nutzers (logger/admin/timeadmin)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "role-Feld entspricht der userId",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "authenticationResult-Feld vorhanden (ok / failed)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "remainingRetries-Feld vorhanden (bei failed: dekrementiert; bei ok: = ICS-Maximum)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "System-Log-Datei mit eventType=\"logOut\" im TAR-Container vorhanden",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "loggedOutUserId-Feld vorhanden und korrekt",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "logOutCase-Feld vorhanden (explicit / implicit)",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "explizit: eventTriggeredByUser MUSS gesetzt sein",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "implizit (Nutzerwechsel): eventTriggeredByUser DARF NICHT gesetzt sein, eventOrigin gemäß Spezifikation",
+          "expected": "Erfüllt",
           "result_options": [
             "pass",
             "fail",
@@ -486,7 +566,10 @@
         "BSI TR-03153-1 §6.4",
         "BSI TR-03151-1 §5.2",
         "BSI TR-03151-1 §4.4.1",
-        "BSI TR-03151-1 §4.4.2"
+        "BSI TR-03151-1 §4.4.2",
+        "BSI TR-03151-1 §4.4.1 / BSI TR-03153-1 §9.8.1",
+        "BSI TR-03151-1 §4.4.2 / BSI TR-03153-1 §9.8.2",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {
