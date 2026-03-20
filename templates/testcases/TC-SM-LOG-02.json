@@ -135,23 +135,25 @@
         },
         {
           "description": "eventData bei exitSecureState ist leere ASN.1-Sequenz",
-          "expected": "EVDATA_EXITSECURE",
+          "expected": "`eventData` ist eine leere ASN.1-SEQUENCE.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_EXITSECURE"
         },
         {
           "description": "enterSecureState und exitSecureState paarweise",
-          "expected": "SYS_EVT_SECURE_PAIRS",
+          "expected": "Alle `enterSecureState`/`exitSecureState`-Paare korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_SECURE_PAIRS"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"exitSecureState\" vorhanden sein. eventData ist eine leere ASN.1-Sequenz (BSI TR-03153-1 §9.8.4). (nur wenn Profil aktiv)",
@@ -181,7 +183,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_EXITSECURE"
         },
         {
           "description": "enterSecureState und exitSecureState paarweise vorhanden (SYS_EVT_SECURE_PAIRS)",
@@ -191,7 +194,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_SECURE_PAIRS"
         },
         {
           "description": "exitSecureState – System-Log-Nachweis [EXP_LOG_01_EXIT_SECURE_STATE]",
@@ -201,7 +205,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_EXIT_SECURE_STATE"
         }
       ],
       "tar_validation": [
@@ -276,33 +281,36 @@
         },
         {
           "description": "SystemLog vom Typ disableSecureElement vorhanden",
-          "expected": "DSE_LOG_PRESENT",
+          "expected": "Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_PRESENT"
         },
         {
           "description": "disableSecureElement ist der letzte signierte Log-Eintrag",
-          "expected": "DSE_FINAL_LOG + STOR_EVT_DISABLE_IS_LAST",
+          "expected": "`disableSecureElement`-Log hat den maximalen Signaturzähler im TAR.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_FINAL_LOG"
         },
         {
           "description": "eventData des disableSecureElement-Logs ist leere ASN.1-Sequenz",
-          "expected": "DSE_LOG_EVDATA_EMPTY",
+          "expected": "`eventData` leer.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVDATA_EMPTY"
         },
         {
           "description": "eventType = disableSecureElement [DSE_LOG_EVTYPE]",
@@ -312,7 +320,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVTYPE"
         },
         {
           "description": "eventOrigin = integration-interface [DSE_LOG_EVORIGIN]",
@@ -322,7 +331,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVORIGIN"
         }
       ],
       "tar_validation": [

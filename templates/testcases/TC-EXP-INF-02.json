@@ -99,13 +99,14 @@
       "checks": [
         {
           "description": "info.csv korrekt; description leer oder fehlend",
-          "expected": "EXP_INF_05",
+          "expected": "Alle Zeilen erkannt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         },
         {
           "description": "Datei info.csv vorhanden [EXP_INF_01]",
@@ -115,7 +116,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -125,7 +127,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -135,7 +138,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -145,7 +149,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -155,7 +160,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         }
       ],
       "tar_validation": [
@@ -235,7 +241,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -245,7 +252,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -255,7 +263,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -265,7 +274,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -275,7 +285,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -285,7 +296,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         }
       ],
       "tar_validation": [
@@ -373,7 +385,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -383,7 +396,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -393,7 +407,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -403,7 +418,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -413,7 +429,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -423,7 +440,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         }
       ],
       "tar_validation": [

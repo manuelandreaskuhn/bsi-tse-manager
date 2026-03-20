@@ -184,73 +184,80 @@
         },
         {
           "description": "SystemLog für deleteLogMessages erstellt",
-          "expected": "DLM_LOG_PRESENT",
+          "expected": "Mindestens eine passende Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_PRESENT"
         },
         {
           "description": "eventType = deleteLogMessages im Log",
-          "expected": "DLM_LOG_EVTYPE",
+          "expected": "`eventType` = `deleteLogMessages`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_EVTYPE"
         },
         {
           "description": "eventData ist leere ASN.1-Sequenz",
-          "expected": "DLM_LOG_EVDATA_EMPTY",
+          "expected": "`eventData` ist leer (Länge 0) oder entspricht dem DER-Encoding einer leeren Sequence.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_EVDATA_EMPTY"
         },
         {
           "description": "TAR nach Löschen enthält keine Transaktions-Logs mehr",
-          "expected": "DEL_TAR_NO_LOGS",
+          "expected": "Das Archiv enthält keine Dateien mit der Endung `.log`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DEL_TAR_NO_LOGS"
         },
         {
           "description": "Signaturzähler-Kontinuität nach Löschen und Neustart korrekt (DEL_TAR_CTR_RESET)",
-          "expected": "DEL_TAR_CTR_RESET bestanden",
+          "expected": "Der kleinste `signatureCounter` im Post-Delete-Post-Activity-TAR ist größer als der größte `signatureCounter` des letzten Exports vor dem Löschen (soweit dem Analyzer als Referenzwert übergeben).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DEL_TAR_CTR_RESET"
         },
         {
           "description": "Zweiter Export-TAR enthält alle Logs des ersten TAR (DLM_TAR_SUPERSET)",
-          "expected": "DLM_TAR_SUPERSET bestanden",
+          "expected": "TAR₂ ⊇ TAR₁ (bzgl. Log-Dateien).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_TAR_SUPERSET"
         },
         {
           "description": "Zweiter TAR-Export enthält alle Logs des ersten TAR (DLM_TAR_SUPERSET)",
-          "expected": "DLM_TAR_SUPERSET bestanden",
+          "expected": "TAR₂ ⊇ TAR₁ (bzgl. Log-Dateien).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_TAR_SUPERSET"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"deleteLogMessages\" vorhanden sein (BSI TR-03151-1 §4.12). (nur wenn Profil aktiv)",
@@ -270,7 +277,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_PRESENT"
         },
         {
           "description": "eventOrigin = integration-interface (DLM_LOG_EVORIGIN)",
@@ -280,7 +288,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_EVORIGIN"
         },
         {
           "description": "eventData ist eine leere ASN.1-Sequenz (DLM_LOG_EVDATA_EMPTY)",
@@ -290,7 +299,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_EVDATA_EMPTY"
         },
         {
           "description": "Minimaler TAR-Inhalt nach Löschen vorhanden (DLM_LOG_MINIMAL)",
@@ -300,17 +310,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DLM_LOG_MINIMAL"
         },
         {
           "description": "Minimale TAR-Struktur nach dem Löschen [DEL_TAR_STRUCT]",
-          "expected": "Archiv enthält `info.csv` und mindestens eine Zertifikatsdatei",
+          "expected": "Archiv enthält `info.csv` und mindestens eine Zertifikatsdatei (`.cer` oder `.pem`), jedoch keine `.log`-Dateien.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DEL_TAR_STRUCT"
         },
         {
           "description": "deleteLogMessages – System-Log-Nachweis [EXP_LOG_01_DELETE_LOG_MESSAGES]",
@@ -320,7 +332,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_DELETE_LOG_MESSAGES"
         }
       ],
       "tar_validation": [

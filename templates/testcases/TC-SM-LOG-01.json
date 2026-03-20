@@ -160,23 +160,25 @@
       "checks": [
         {
           "description": "eventData bei startAudit ist leere ASN.1-Sequenz",
-          "expected": "EVDATA_STARTAUDIT",
+          "expected": "`eventData` ist eine leere ASN.1-SEQUENCE.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_STARTAUDIT"
         },
         {
           "description": "startAudit ist das erste Ereignis im Archiv",
-          "expected": "SYS_EVT_STARTAUDIT_FIRST",
+          "expected": "Erste Log-Nachricht (geringster Counter) ist ein `startAudit`-Event.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_STARTAUDIT_FIRST"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"authenticateSmaAdmin\" vorhanden sein (BSI TR-03153-1 §9.8.1). Nur relevant wenn Profil SMAADMIN_AVAILABLE aktiv. (nur wenn Profil aktiv)",
@@ -230,13 +232,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -246,7 +249,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -256,7 +260,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -266,7 +271,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -276,7 +282,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -286,7 +293,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -296,7 +304,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -306,7 +315,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -316,7 +326,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -326,7 +337,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -336,7 +348,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -346,27 +359,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -376,7 +392,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -386,7 +403,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -396,7 +414,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -406,17 +425,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "seAuditData vorhanden [LOG_AUDIT_DATA]",
@@ -426,7 +447,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_DATA"
         },
         {
           "description": "seAuditData nicht leer [LOG_AUDIT_NOTEMPTY]",
@@ -436,7 +458,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_NOTEMPTY"
         },
         {
           "description": "Kein certifiedData-Platzhalter [LOG_AUDIT_NOEVT]",
@@ -446,7 +469,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_NOEVT"
         },
         {
           "description": "Dateiname-Schema AuditLog [LOG_AUDIT_FNAME]",
@@ -456,7 +480,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_FNAME"
         },
         {
           "description": "authenticateSmaAdmin – System-Log-Nachweis [EXP_LOG_01_AUTH_SMA_ADMIN]",
@@ -466,7 +491,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_AUTH_SMA_ADMIN"
         }
       ],
       "tar_validation": [
@@ -680,23 +706,25 @@
         },
         {
           "description": "enterSecureState und exitSecureState paarweise vorhanden",
-          "expected": "SYS_EVT_SECURE_PAIRS",
+          "expected": "Alle `enterSecureState`/`exitSecureState`-Paare korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_SECURE_PAIRS"
         },
         {
           "description": "timeOfEvent bei enterSecureState (Format) [EVDATA_ENTERSTATE_TIMEOFEVENT]",
-          "expected": "`timeOfEvent` verwendet dasselbe Format und dieselbe Zeitzone",
+          "expected": "`timeOfEvent` verwendet dasselbe Format und dieselbe Zeitzone wie `signatureCreationTime`, oder `timeOfEvent` ist nicht vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_ENTERSTATE_TIMEOFEVENT"
         }
       ],
       "tar_validation": [
@@ -753,7 +781,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RESULT"
         },
         {
           "description": "remainingRetries bei fehlgeschlagener Authentifizierung [EVDATA_AUTH_RETRIES]",
@@ -763,17 +792,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RETRIES"
         },
         {
           "description": "Zulässige Werte für authenticationResult [EVDATA_AUTH_RESULT_VALUES]",
-          "expected": "`authenticationResult` enthält einen der vier zulässigen",
+          "expected": "`authenticationResult` enthält einen der vier zulässigen Werte.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RESULT_VALUES"
         }
       ],
       "tar_validation": [

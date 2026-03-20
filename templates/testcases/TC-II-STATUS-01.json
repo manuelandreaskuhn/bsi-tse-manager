@@ -877,13 +877,14 @@
         },
         {
           "description": "Inventar aller clientId-Werte im Export korrekt (CROSS_LOG_CLIENTIDS): alle registrierten Clients erscheinen in den Logs",
-          "expected": "CROSS_LOG_CLIENTIDS bestanden",
+          "expected": "Inventar der `clientId`-Werte (Anzahl und Liste) wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CLIENTIDS"
         }
       ],
       "source_test": "II_GRC_01",

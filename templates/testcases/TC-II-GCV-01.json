@@ -153,13 +153,14 @@
         },
         {
           "description": "Informationen stimmen mit info.csv im exportierten TAR überein",
-          "expected": "GCV_INFO_MATCH",
+          "expected": "Alle Felder stimmen überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "GCV_INFO_MATCH"
         },
         {
           "description": "Kein Fehler",
@@ -209,7 +210,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_01"
         },
         {
           "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
@@ -219,7 +221,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_END"
         },
         {
           "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
@@ -229,7 +232,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_DIR"
         },
         {
           "description": "Header-Checksummen [EXP_TAR_CHK]",
@@ -239,7 +243,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_CHK"
         },
         {
           "description": "CertificateExport-Dateiname [EXP_ARCH_NAME_CERT]",
@@ -249,7 +254,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_NAME_CERT"
         },
         {
           "description": "Zeitformat-Präfix im Dateinamen [EXP_ARCH_FMT]",
@@ -259,17 +265,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_FMT"
         },
         {
           "description": "Archiv-Typ (info) [EXP_ARCH_TYPE_CERT]",
-          "expected": "EXP_ARCH_TYPE_CERT: informativ",
+          "expected": "EXP_ARCH_TYPE_CERT: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_TYPE_CERT"
         },
         {
           "description": "Datei info.csv vorhanden [EXP_INF_01]",
@@ -279,7 +287,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -289,7 +298,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -299,7 +309,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -309,7 +320,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -319,7 +331,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -329,7 +342,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         },
         {
           "description": "Keine Log-Dateien enthalten [CRTEXP_NOLOG]",
@@ -339,7 +353,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CRTEXP_NOLOG"
         },
         {
           "description": "Nur erlaubte Dateitypen [CRTEXP_FILES]",
@@ -349,7 +364,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CRTEXP_FILES"
         },
         {
           "description": "Zertifikatskette vollständig [CRTEXP_CHAIN]",
@@ -359,7 +375,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CRTEXP_CHAIN"
         },
         {
           "description": "Zertifikat-Dateien vorhanden [EXP_CRT_PRESENT]",
@@ -369,7 +386,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_CRT_PRESENT"
         },
         {
           "description": "Zertifikat-Dateinamen [EXP_CRT_NAME]",
@@ -379,7 +397,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_CRT_NAME"
         },
         {
           "description": "X.509 Version 3 [CERT_V3]",
@@ -389,7 +408,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_V3"
         },
         {
           "description": "Signaturalgorithmus [CERT_SIG_ALG]",
@@ -399,17 +419,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_SIG_ALG"
         },
         {
           "description": "Schlüsselkurve [CERT_CURVE]",
-          "expected": "CERT_CURVE: informativ",
+          "expected": "CERT_CURVE: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CURVE"
         },
         {
           "description": "Gültigkeit: notBefore < notAfter [CERT_DATE_ORDER]",
@@ -419,7 +441,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_DATE_ORDER"
         },
         {
           "description": "Zertifikat aktuell gültig [CERT_VALID_NOW]",
@@ -429,17 +452,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_VALID_NOW"
         },
         {
           "description": "Private Key Usage Period [CERT_PKUP]",
-          "expected": "CERT_PKUP: informativ",
+          "expected": "CERT_PKUP: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_PKUP"
         },
         {
           "description": "Subject Key Identifier (SKI) [CERT_SKI]",
@@ -449,7 +474,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_SKI"
         },
         {
           "description": "Authority Key Identifier (AKI) [CERT_AKI]",
@@ -459,7 +485,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_AKI"
         },
         {
           "description": "CRL Distribution Point [CERT_CRL]",
@@ -469,7 +496,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CRL"
         },
         {
           "description": "Certificate Policies [CERT_POLICY]",
@@ -479,7 +507,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_POLICY"
         },
         {
           "description": "Basic Constraints: CA:FALSE [CERT_BC_LEAF]",
@@ -489,7 +518,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_BC_LEAF"
         },
         {
           "description": "Key Usage: Digital Signature [CERT_KU_LEAF]",
@@ -499,7 +529,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_KU_LEAF"
         },
         {
           "description": "BSI-TSE-OID im Subject [CERT_BSI_OID]",
@@ -509,7 +540,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_BSI_OID"
         },
         {
           "description": "Dateiname = Subject CN = TSE-Seriennummer [CERT_CN_HASH]",
@@ -519,7 +551,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CN_HASH"
         },
         {
           "description": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels [CERT_CN_PUBKEY_HASH]",
@@ -529,7 +562,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CN_PUBKEY_HASH"
         },
         {
           "description": "Zertifikatskette vollständig [CHAIN_COMPLETE]",
@@ -539,7 +573,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_COMPLETE"
         },
         {
           "description": "AKI→SKI Verkettung [CHAIN_AKI_SKI]",
@@ -549,7 +584,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_AKI_SKI"
         },
         {
           "description": "Kindsgültigkeit ≤ Ausstellergültigkeit [CHAIN_VALIDITY]",
@@ -559,7 +595,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_VALIDITY"
         },
         {
           "description": "Aussteller-Inhaber-Übereinstimmung [CHAIN_ISSUER_MATCH]",
@@ -569,7 +606,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_ISSUER_MATCH"
         }
       ],
       "tar_validation": [

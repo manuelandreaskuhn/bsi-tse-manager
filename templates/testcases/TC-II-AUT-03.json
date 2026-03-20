@@ -223,13 +223,14 @@
       "checks": [
         {
           "description": "remainingRetries = ICS-Maximalwert nach erfolgreicher Authentifizierung",
-          "expected": "EVDATA_AUTH_RETRIES_MAX",
+          "expected": "`remainingRetries` entspricht `MAX_PIN_RETRIES`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RETRIES_MAX"
         }
       ],
       "tar_validation": [

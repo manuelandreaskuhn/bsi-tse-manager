@@ -172,13 +172,14 @@
         },
         {
           "description": "Kassen-Seriennummer (clientId) in allen relevanten Logs",
-          "expected": "REG_LOG_CLIENTID_PRESENT",
+          "expected": "Mindestens eine Transaktions-Log-Nachricht mit der erwarteten `clientId` gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "REG_LOG_CLIENTID_PRESENT"
         },
         {
           "description": "Zeitstempel (signatureCreationTime) für alle Vorgänge vorhanden",
@@ -192,33 +193,36 @@
         },
         {
           "description": "Transaktionsnummern lückenlos",
-          "expected": "TXN_NUM_SEQ bestanden",
+          "expected": "Die `transactionNumber`-Werte aller `startTransaction`-Logs bilden eine lückenlose Sequenz. Bereich `[min, max]` und Anzahl werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_NUM_SEQ"
         },
         {
           "description": "Signaturen aller Logs extern verifizierbar",
-          "expected": "SIG_VERIFY_LOGMSG",
+          "expected": "Signatur für alle Log-Nachrichten gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_LOGMSG"
         },
         {
           "description": "Daten mit exportierten Zertifikaten verifizierbar",
-          "expected": "CHAIN_COMPLETE bestanden",
+          "expected": "Root-CA + TSE-Blatt vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_COMPLETE"
         },
         {
           "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
@@ -228,7 +232,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_01"
         },
         {
           "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
@@ -238,7 +243,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_END"
         },
         {
           "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
@@ -248,7 +254,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_DIR"
         },
         {
           "description": "Header-Checksummen [EXP_TAR_CHK]",
@@ -258,7 +265,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_CHK"
         },
         {
           "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
@@ -268,7 +276,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_03"
         },
         {
           "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
@@ -278,7 +287,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_NOEXTRA"
         },
         {
           "description": "Archivdateiname (Export_*.tar) [EXP_ARCH_NAME]",
@@ -288,27 +298,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_NAME"
         },
         {
           "description": "Archiv-Typ (info) [EXP_ARCH_TYPE]",
-          "expected": "EXP_ARCH_TYPE: informativ",
+          "expected": "EXP_ARCH_TYPE: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_TYPE"
         },
         {
           "description": "Aufgeteiltes Archiv [EXP_ARCH_SPLIT]",
-          "expected": "EXP_ARCH_SPLIT: informativ",
+          "expected": "EXP_ARCH_SPLIT: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_SPLIT"
         },
         {
           "description": "Datei info.csv vorhanden [EXP_INF_01]",
@@ -318,7 +331,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -328,7 +342,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -338,7 +353,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -348,7 +364,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -358,7 +375,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -368,7 +386,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         },
         {
           "description": "Log-Dateien vorhanden [EXP_LOG_PRESENT]",
@@ -378,7 +397,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_PRESENT"
         },
         {
           "description": "Log-Datei Namenskonventionen [EXP_LOG_03]",
@@ -388,7 +408,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_03"
         },
         {
           "description": "Ausschließlich spezifikationskonforme Log-Nachrichten-Typen [LOG_TYPE_VALID]",
@@ -398,7 +419,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TYPE_VALID"
         },
         {
           "description": "Zertifikat-Dateien vorhanden [EXP_CRT_PRESENT]",
@@ -408,7 +430,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_CRT_PRESENT"
         },
         {
           "description": "Zertifikat-Dateinamen [EXP_CRT_NAME]",
@@ -418,7 +441,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_CRT_NAME"
         },
         {
           "description": "X.509 Version 3 [CERT_V3]",
@@ -428,7 +452,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_V3"
         },
         {
           "description": "Signaturalgorithmus [CERT_SIG_ALG]",
@@ -438,17 +463,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_SIG_ALG"
         },
         {
           "description": "Schlüsselkurve [CERT_CURVE]",
-          "expected": "CERT_CURVE: informativ",
+          "expected": "CERT_CURVE: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CURVE"
         },
         {
           "description": "Gültigkeit: notBefore < notAfter [CERT_DATE_ORDER]",
@@ -458,7 +485,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_DATE_ORDER"
         },
         {
           "description": "Zertifikat aktuell gültig [CERT_VALID_NOW]",
@@ -468,17 +496,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_VALID_NOW"
         },
         {
           "description": "Private Key Usage Period [CERT_PKUP]",
-          "expected": "CERT_PKUP: informativ",
+          "expected": "CERT_PKUP: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_PKUP"
         },
         {
           "description": "Subject Key Identifier (SKI) [CERT_SKI]",
@@ -488,7 +518,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_SKI"
         },
         {
           "description": "Authority Key Identifier (AKI) [CERT_AKI]",
@@ -498,7 +529,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_AKI"
         },
         {
           "description": "CRL Distribution Point [CERT_CRL]",
@@ -508,7 +540,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CRL"
         },
         {
           "description": "Certificate Policies [CERT_POLICY]",
@@ -518,7 +551,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_POLICY"
         },
         {
           "description": "Basic Constraints: CA:FALSE [CERT_BC_LEAF]",
@@ -528,7 +562,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_BC_LEAF"
         },
         {
           "description": "Key Usage: Digital Signature [CERT_KU_LEAF]",
@@ -538,7 +573,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_KU_LEAF"
         },
         {
           "description": "BSI-TSE-OID im Subject [CERT_BSI_OID]",
@@ -548,7 +584,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_BSI_OID"
         },
         {
           "description": "Dateiname = Subject CN = TSE-Seriennummer [CERT_CN_HASH]",
@@ -558,7 +595,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CN_HASH"
         },
         {
           "description": "CN entspricht SHA-256-Hash des öffentlichen Schlüssels [CERT_CN_PUBKEY_HASH]",
@@ -568,7 +606,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CN_PUBKEY_HASH"
         },
         {
           "description": "AKI→SKI Verkettung [CHAIN_AKI_SKI]",
@@ -578,7 +617,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_AKI_SKI"
         },
         {
           "description": "Kindsgültigkeit ≤ Ausstellergültigkeit [CHAIN_VALIDITY]",
@@ -588,7 +628,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_VALIDITY"
         },
         {
           "description": "Aussteller-Inhaber-Übereinstimmung [CHAIN_ISSUER_MATCH]",
@@ -598,17 +639,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CHAIN_ISSUER_MATCH"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -618,7 +661,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -628,7 +672,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -638,7 +683,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -648,7 +694,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -658,7 +705,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -668,7 +716,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -678,7 +727,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -688,7 +738,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -698,7 +749,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -708,7 +760,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -718,27 +771,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -748,7 +804,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -758,7 +815,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -768,7 +826,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -778,17 +837,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "operationType vorhanden und gültig [LOG_TXN_OPTYPE]",
@@ -798,7 +859,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_OPTYPE"
         },
         {
           "description": "clientId vorhanden [LOG_TXN_CLIENT]",
@@ -808,7 +870,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_CLIENT"
         },
         {
           "description": "processData vorhanden [LOG_TXN_PDATA]",
@@ -818,7 +881,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PDATA"
         },
         {
           "description": "processType vorhanden, max. 100 Zeichen [LOG_TXN_PTYPE]",
@@ -828,7 +892,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PTYPE"
         },
         {
           "description": "transactionNumber vorhanden [LOG_TXN_TXNNUM]",
@@ -838,7 +903,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_TXNNUM"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_TXN_ADD_INT]",
@@ -848,7 +914,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_ADD_INT"
         },
         {
           "description": "Dateiname-Schema vollständig korrekt [LOG_TXN_FNAME]",
@@ -858,7 +925,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME"
         },
         {
           "description": "Zeitformat-Präfix [LOG_TXN_FNAME_FMT]",
@@ -868,7 +936,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_FMT"
         },
         {
           "description": "No-{transactionNumber} stimmt [LOG_TXN_FNAME_NUM]",
@@ -878,7 +947,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_NUM"
         },
         {
           "description": "TYPE stimmt (Start|Update|Finish) [LOG_TXN_FNAME_TYPE]",
@@ -888,7 +958,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_TYPE"
         },
         {
           "description": "Client-{clientId} stimmt [LOG_TXN_FNAME_CLIENT]",
@@ -898,27 +969,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_CLIENT"
         },
         {
           "description": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein [LOG_FIELD_NO_ADD_INT]",
-          "expected": "Kein `additionalInternalData`-Eintrag in einer der",
+          "expected": "Kein `additionalInternalData`-Eintrag in einer der Transaktions-Log-Nachrichten vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_NO_ADD_INT"
         },
         {
           "description": "additionalExternalData nur vorhanden wenn Daten übergeben wurden [LOG_FIELD_ADD_EXT_ABSENT]",
-          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert",
+          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert übergeben wurde. Bei Nachrichten mit übergebenem Wert ist das Feld vorhanden und enthält den korrekten Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_ADD_EXT_ABSENT"
         },
         {
           "description": "seAuditData vorhanden [LOG_AUDIT_DATA]",
@@ -928,7 +1002,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_DATA"
         },
         {
           "description": "seAuditData nicht leer [LOG_AUDIT_NOTEMPTY]",
@@ -938,7 +1013,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_NOTEMPTY"
         },
         {
           "description": "Kein certifiedData-Platzhalter [LOG_AUDIT_NOEVT]",
@@ -948,7 +1024,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_NOEVT"
         },
         {
           "description": "Dateiname-Schema AuditLog [LOG_AUDIT_FNAME]",
@@ -958,7 +1035,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_AUDIT_FNAME"
         },
         {
           "description": "Jede transactionNumber hat genau einen Start-Eintrag [TXN_LIFE_START]",
@@ -968,7 +1046,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_LIFE_START"
         },
         {
           "description": "Jede transactionNumber hat genau einen Finish-Eintrag [TXN_LIFE_FINISH]",
@@ -978,57 +1057,63 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_LIFE_FINISH"
         },
         {
           "description": "Korrekte Reihenfolge Start → Update* → Finish [TXN_LIFE_ORDER]",
-          "expected": "Alle vollständigen Transaktionen haben eine korrekte",
+          "expected": "Alle vollständigen Transaktionen haben eine korrekte `signatureCounter`-Reihenfolge.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_LIFE_ORDER"
         },
         {
           "description": "transactionNumbers eindeutig pro Start-Eintrag [TXN_NUM_UNIQUE]",
-          "expected": "Alle `transactionNumber`-Werte in `startTransaction`-Logs",
+          "expected": "Alle `transactionNumber`-Werte in `startTransaction`-Logs sind eindeutig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_NUM_UNIQUE"
         },
         {
           "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
-          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert (Hex) wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_SERIAL"
         },
         {
           "description": "Keine doppelten signatureCounter-Werte [CROSS_LOG_CTR_UNIQUE]",
-          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der Log-Nachrichten wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_UNIQUE"
         },
         {
           "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
-          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der Nachrichten werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_GAPS"
         },
         {
           "description": "Monoton steigende signatureCreationTime [CROSS_LOG_TIME_MONO]",
@@ -1038,17 +1123,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIME_MONO"
         },
         {
           "description": "Einheitliches Zeitformat im gesamten Archiv [CROSS_LOG_TIMEFMT]",
-          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIMEFMT"
         },
         {
           "description": "Korrektheit der Feldkonkatenation [SIG_VERIFY_CONCAT]",
@@ -1058,17 +1145,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_CONCAT"
         },
         {
           "description": "Kein signatureCounter am oder über dem Maximalwert [SIG_CTR_OVERFLOW_CHECK]",
-          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet",
+          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet `MAX_SIG_COUNTER`. Höchster vorhandener Counter-Wert wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_CTR_OVERFLOW_CHECK"
         }
       ],
       "tar_validation": [

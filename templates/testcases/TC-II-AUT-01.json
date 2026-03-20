@@ -184,63 +184,69 @@
         },
         {
           "description": "authenticationResult = ok im Log",
-          "expected": "EVDATA_AUTH_RESULT",
+          "expected": "`authenticationResult` vorhanden und ist ein gültiger BOOLEAN-Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RESULT"
         },
         {
           "description": "remainingRetries = Maximalwert im Log",
-          "expected": "EVDATA_AUTH_RETRIES_MAX",
+          "expected": "`remainingRetries` entspricht `MAX_PIN_RETRIES`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RETRIES_MAX"
         },
         {
           "description": "eventTriggeredByUser korrekt gesetzt",
-          "expected": "EVDATA_AUTH_TRIGGER",
+          "expected": "`eventTriggeredByUser` ist vorhanden und enthält einen der erlaubten Werte.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_TRIGGER"
         },
         {
           "description": "logOut-Ereignis nach authentifizierter Operation im Archiv vorhanden (SYS_EVT_LOGOUT_PRESENT)",
-          "expected": "SYS_EVT_LOGOUT_PRESENT bestanden",
+          "expected": "Mindestens ein `logOut`-Ereignis vorhanden, wenn authentifizierungsgebundene Ereignisse existieren. Anzahl der `logOut`-Ereignisse wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_LOGOUT_PRESENT"
         },
         {
           "description": "Bei Nutzerwechsel: Implizites logOut-Log für vorherigen Nutzer vorhanden (IMPLICIT_LOGOUT_PRESENT)",
-          "expected": "IMPLICIT_LOGOUT_PRESENT bestanden",
+          "expected": "Für jeden erkannten Nutzerwechsel ist das zugehörige implizite `logOut`-Log vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "IMPLICIT_LOGOUT_PRESENT"
         },
         {
           "description": "Bei Neu-Authentifizierung desselben Nutzers: Kein implizites logOut-Log (IMPLICIT_LOGOUT_ABSENT_SAME_USER)",
-          "expected": "IMPLICIT_LOGOUT_ABSENT_SAME_USER bestanden",
+          "expected": "Kein implizites `logOut` für denselben Nutzer gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "IMPLICIT_LOGOUT_ABSENT_SAME_USER"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"authenticateUser\" vorhanden sein (BSI TR-03151-1 §4.4.1).",
@@ -374,13 +380,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -390,7 +397,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -400,7 +408,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -410,7 +419,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -420,7 +430,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -430,7 +441,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -440,7 +452,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -450,7 +463,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -460,7 +474,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -470,7 +485,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -480,7 +496,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -490,27 +507,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -520,7 +540,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -530,7 +551,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -540,7 +562,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -550,17 +573,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "authenticateUser – System-Log-Nachweis [EXP_LOG_01_AUTHENTICATE_USER]",
@@ -570,7 +595,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_AUTHENTICATE_USER"
         },
         {
           "description": "logOut – System-Log-Nachweis [EXP_LOG_01_LOGOUT]",
@@ -580,7 +606,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_LOGOUT"
         }
       ],
       "tar_validation": [
@@ -834,33 +861,36 @@
         },
         {
           "description": "loggedOutUserId korrekt im Log",
-          "expected": "EVDATA_LOGOUT_USERID",
+          "expected": "`loggedOutUserId` vorhanden und nicht leer.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_USERID"
         },
         {
           "description": "logOutCase = explicit im Log",
-          "expected": "EVDATA_LOGOUT_CASE",
+          "expected": "`logOutCase` vorhanden und enthält einen zulässigen Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_CASE"
         },
         {
           "description": "eventTriggeredByUser korrekt (explizit)",
-          "expected": "EVDATA_LOGOUT_TRIGGER_EXPLICIT",
+          "expected": "`eventTriggeredByUser` vorhanden und enthält einen bekannten Nutzer-Identifier.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_TRIGGER_EXPLICIT"
         }
       ],
       "tar_validation": [
@@ -931,33 +961,36 @@
       "checks": [
         {
           "description": "logOutCase = implicit im Log",
-          "expected": "EVDATA_LOGOUT_CASE",
+          "expected": "`logOutCase` vorhanden und enthält einen zulässigen Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_CASE"
         },
         {
           "description": "Kein eventTriggeredByUser bei impliziter Abmeldung",
-          "expected": "EVDATA_LOGOUT_NO_TRIGGER_IMPLICIT",
+          "expected": "`eventTriggeredByUser` ist nicht vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_NO_TRIGGER_IMPLICIT"
         },
         {
           "description": "eventOrigin bei impliziter Abmeldung korrekt",
-          "expected": "EVDATA_LOGOUT_ORIGIN_IMPLICIT",
+          "expected": "`eventOrigin` = `device` oder `SMA`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_LOGOUT_ORIGIN_IMPLICIT"
         }
       ],
       "tar_validation": [

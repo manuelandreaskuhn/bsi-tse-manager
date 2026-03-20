@@ -341,43 +341,47 @@
       "checks": [
         {
           "description": "Signaturzähler 1, 2, 3, ..., N lückenlos über alle Log-Typen",
-          "expected": "LOG_CTR_COMPLETE",
+          "expected": "Die Menge der Zähler-Werte bildet eine lückenlose Sequenz von `min_counter` bis `max_counter`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_CTR_COMPLETE"
         },
         {
           "description": "Keine Duplikate im Signaturzähler",
-          "expected": "CROSS_LOG_CTR_UNIQUE",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der Log-Nachrichten wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_UNIQUE"
         },
         {
           "description": "Keine Lücken",
-          "expected": "CROSS_LOG_CTR_GAPS",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der Nachrichten werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_GAPS"
         },
         {
           "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
-          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert (Hex) wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_SERIAL"
         },
         {
           "description": "Monoton steigende signatureCreationTime [CROSS_LOG_TIME_MONO]",
@@ -387,17 +391,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIME_MONO"
         },
         {
           "description": "Einheitliches Zeitformat im gesamten Archiv [CROSS_LOG_TIMEFMT]",
-          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIMEFMT"
         }
       ],
       "tar_validation": [
@@ -462,13 +468,14 @@
       "checks": [
         {
           "description": "Sig-{N} im Dateinamen jeder Log-Datei stimmt mit signatureCounter im ASN.1-Inhalt überein",
-          "expected": "LOG_FNAME_CTR",
+          "expected": "Dateiname-Zähler = signatureCounter.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         }
       ],
       "tar_validation": [

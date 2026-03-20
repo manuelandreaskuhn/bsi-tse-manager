@@ -173,63 +173,69 @@
       "checks": [
         {
           "description": "SystemLog disableSecureElement vorhanden",
-          "expected": "DSE_LOG_PRESENT",
+          "expected": "Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_PRESENT"
         },
         {
           "description": "eventType = disableSecureElement",
-          "expected": "DSE_LOG_EVTYPE",
+          "expected": "Korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVTYPE"
         },
         {
           "description": "eventOrigin = integration-interface",
-          "expected": "DSE_LOG_EVORIGIN",
+          "expected": "Korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVORIGIN"
         },
         {
           "description": "eventData ist leere ASN.1-Sequenz",
-          "expected": "DSE_LOG_EVDATA_EMPTY",
+          "expected": "`eventData` leer.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_LOG_EVDATA_EMPTY"
         },
         {
           "description": "disableSecureElement ist der letzte signierte Log-Eintrag (höchster signatureCounter)",
-          "expected": "STOR_EVT_DISABLE_IS_LAST",
+          "expected": "`disableSecureElement`-Nachricht vorhanden und `signatureCounter(disableSecureElement) = max(alle signatureCounter im Archiv)`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_EVT_DISABLE_IS_LAST"
         },
         {
           "description": "disableSecureElement ist der letzte signierte Log-Eintrag [DSE_FINAL_LOG]",
-          "expected": "`disableSecureElement`-Log hat den maximalen",
+          "expected": "`disableSecureElement`-Log hat den maximalen Signaturzähler im TAR.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DSE_FINAL_LOG"
         }
       ],
       "tar_validation": [

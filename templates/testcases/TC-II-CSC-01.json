@@ -181,23 +181,25 @@
       "checks": [
         {
           "description": "Rückgabewert = signatureCounter der letzten Log-Nachricht",
-          "expected": "CSC_CROSS_LOG",
+          "expected": "Zurückgegebener Zählerstand = maximaler `signatureCounter`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CSC_CROSS_LOG"
         },
         {
           "description": "Format des Rückgabewerts korrekt (gemäß BSI TR-03151-1)",
-          "expected": "CSC_CROSS_FORMAT",
+          "expected": "Rückgabewert ist eine nicht-negative Ganzzahl im korrekten Format.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CSC_CROSS_FORMAT"
         },
         {
           "description": "Kein Fehler",

@@ -227,53 +227,58 @@
       "checks": [
         {
           "description": "Neue Zeitsetzung korrekt nach Stromlosigkeit dokumentiert",
-          "expected": "POWERLOSS_UPDATETIME_AFTER_REENTER",
+          "expected": "Für jeden erkannten Stromlosigkeits-Zyklus existiert ein `updateTime`-Eintrag zwischen `enterSecureState` und dem ersten neuen TransactionLog.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "POWERLOSS_UPDATETIME_AFTER_REENTER"
         },
         {
           "description": "Keine Wiederaufnahme von Transaktionen nach Stromlosigkeit",
-          "expected": "POWERLOSS_NO_ABANDONED_TXN_RESUME",
+          "expected": "Keine solchen Einträge gefunden. Anzahl der aufgegebenen Transaktionen wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "POWERLOSS_NO_ABANDONED_TXN_RESUME"
         },
         {
           "description": "Sperrzustand nach Stromlosigkeit zurückgesetzt",
-          "expected": "POWERLOSS_LOCK_STATE_RESET",
+          "expected": "Warnung/Info: Aktiver Sperrzustand vor Stromausfall erkannt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "POWERLOSS_LOCK_STATE_RESET"
         },
         {
           "description": "Nicht-Stellung der Uhrzeit erkennbar im Export (TIME_SM_UNSET): TSE signalisiert ungültige Zeit nach Stromlosigkeit",
-          "expected": "TIME_SM_UNSET bestanden",
+          "expected": "TIME_SM_UNSET: OK oder Warnung.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TIME_SM_UNSET"
         },
         {
           "description": "Mehrere Stromlosigkeits-Zyklen erkannt und statistisch ausgewertet (POWERLOSS_MULTIPLE_CYCLES, info)",
-          "expected": "POWERLOSS_MULTIPLE_CYCLES: info",
+          "expected": "POWERLOSS_MULTIPLE_CYCLES: OK oder Warnung.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "POWERLOSS_MULTIPLE_CYCLES"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -283,27 +288,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -313,7 +321,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -323,7 +332,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -333,7 +343,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -343,17 +354,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         }
       ],
       "tar_validation": [

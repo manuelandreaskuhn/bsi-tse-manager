@@ -101,63 +101,69 @@
       "checks": [
         {
           "description": "Genau eine Datei 'info.csv' im TAR vorhanden",
-          "expected": "EXP_INF_01 bestanden",
+          "expected": "`info.csv` gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname exakt 'info.csv' (Kleinschreibung)",
-          "expected": "EXP_INF_01b bestanden",
+          "expected": "Korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Alle component:-Bezeichner gültig (device/storage/integration-interface/CSP/SMA)",
-          "expected": "EXP_INF_02a bestanden",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in jeder component:-Zeile: manufacturer, model, version, certification-id",
-          "expected": "EXP_INF_02b bestanden",
+          "expected": "Alle Pflichtfelder vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "description:-Zeile vorhanden",
-          "expected": "EXP_INF_02c bestanden",
+          "expected": "`description:`-Zeile vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen vorhanden",
-          "expected": "EXP_INF_05 bestanden",
+          "expected": "Alle Zeilen erkannt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         }
       ],
       "tar_validation": [

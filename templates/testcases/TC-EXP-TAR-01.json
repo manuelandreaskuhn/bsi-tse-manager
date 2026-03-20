@@ -150,113 +150,124 @@
       "checks": [
         {
           "description": "Magic-String 'ustar' in allen Header-Einträgen vorhanden",
-          "expected": "EXP_TAR_01 bestanden",
+          "expected": "Alle Header enthalten `ustar` oder `ustar ` (mit Leerzeichen).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_01"
         },
         {
           "description": "Abschluss mit mindestens zwei Null-Blöcken (512 Byte)",
-          "expected": "EXP_TAR_END bestanden",
+          "expected": "Zwei Null-Blöcke erkannt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_END"
         },
         {
           "description": "Keine Verzeichniseinträge, keine Unterverzeichnisse",
-          "expected": "EXP_TAR_DIR bestanden",
+          "expected": "Keine Verzeichniseinträge und keine Dateien in Unterverzeichnissen vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_DIR"
         },
         {
           "description": "Alle Header-Checksummen korrekt",
-          "expected": "EXP_TAR_CHK bestanden",
+          "expected": "Alle Header-Checksummen gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_CHK"
         },
         {
           "description": "Nur erlaubte Dateitypen: info.csv, .log, .cer/.crt/.der/.pem",
-          "expected": "EXP_TAR_03 bestanden",
+          "expected": "Alle Dateien entsprechen den erlaubten Typen.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_03"
         },
         {
           "description": "Keine unzulässigen Dateien im Archiv",
-          "expected": "EXP_TAR_NOEXTRA bestanden",
+          "expected": "Alle Dateien im TAR entsprechen einem der zulässigen Muster.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_NOEXTRA"
         },
         {
           "description": "Dateiname: Export_{Zeitstempel}.tar",
-          "expected": "EXP_ARCH_NAME bestanden",
+          "expected": "Dateiname entspricht dem Schema `Export_{DATUM}.tar`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_NAME"
         },
         {
           "description": "Fc-{n} Kollisionszähler im TransactionLog-Dateinamen korrekt (LOG_TXN_FNAME_FC, info): nur vorhanden bei Namenskollision",
-          "expected": "LOG_TXN_FNAME_FC: info",
+          "expected": "LOG_TXN_FNAME_FC: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_FC"
         },
         {
           "description": "Fc-{n} Kollisionszähler im TransactionLog-Dateinamen (LOG_TXN_FNAME_FC, info): optional, nur bei Namenskollision",
-          "expected": "LOG_TXN_FNAME_FC: info",
+          "expected": "LOG_TXN_FNAME_FC: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_FC"
         },
         {
           "description": "Archiv-Typ (info) [EXP_ARCH_TYPE]",
-          "expected": "EXP_ARCH_TYPE: informativ",
+          "expected": "EXP_ARCH_TYPE: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_TYPE"
         },
         {
           "description": "Aufgeteiltes Archiv [EXP_ARCH_SPLIT]",
-          "expected": "EXP_ARCH_SPLIT: informativ",
+          "expected": "EXP_ARCH_SPLIT: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_ARCH_SPLIT"
         }
       ],
       "tar_validation": [

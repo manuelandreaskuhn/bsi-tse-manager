@@ -282,13 +282,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -298,7 +299,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -308,7 +310,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -318,7 +321,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -328,7 +332,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -338,7 +343,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -348,7 +354,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -358,7 +365,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -368,7 +376,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -378,7 +387,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -388,7 +398,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -398,27 +409,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -428,7 +442,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -438,7 +453,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -448,7 +464,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -458,17 +475,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "updateDevice / updateDeviceCompleted – System-Log-Nachweis [EXP_LOG_01_UPDATE_DEVICE]",
@@ -478,7 +497,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_UPDATE_DEVICE"
         }
       ],
       "tar_validation": [
@@ -650,13 +670,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -666,7 +687,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -676,7 +698,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -686,7 +709,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -696,7 +720,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -706,7 +731,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -716,7 +742,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -726,7 +753,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -736,7 +764,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -746,7 +775,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -756,7 +786,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -766,27 +797,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -796,7 +830,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -806,7 +841,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -816,7 +852,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -826,17 +863,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         }
       ],
       "tar_validation": [
@@ -996,13 +1035,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -1012,7 +1052,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -1022,7 +1063,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -1032,7 +1074,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -1042,7 +1085,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -1052,7 +1096,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -1062,7 +1107,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -1072,7 +1118,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -1082,7 +1129,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -1092,7 +1140,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -1102,7 +1151,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -1112,27 +1162,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -1142,7 +1195,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -1152,7 +1206,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -1162,7 +1217,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -1172,17 +1228,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         }
       ],
       "tar_validation": [

@@ -207,13 +207,14 @@
       "checks": [
         {
           "description": "ASN.1-Struktur entspricht BSI TR-03151-1",
-          "expected": "ESN_ASN1",
+          "expected": "ASN.1-Dekodierung erfolgreich; genau eine Seriennummer vom korrekten Typ und Länge (32 Byte) vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_ASN1"
         },
         {
           "description": "Genau eine Seriennummer zurückgegeben",
@@ -227,33 +228,36 @@
         },
         {
           "description": "Seriennummer = SHA-256(SubjectPublicKeyInfo)",
-          "expected": "ESN_CERT_HASH_MATCH",
+          "expected": "Hashwert stimmt für alle `serialNumberRecord`-Einträge überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CERT_HASH_MATCH"
         },
         {
           "description": "Seriennummer stimmt mit Zertifikat-CN überein",
-          "expected": "ESN_CROSS_CERT",
+          "expected": "Hashwerte stimmen überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CROSS_CERT"
         },
         {
           "description": "Seriennummer stimmt mit serialNumber in Log-Nachrichten überein",
-          "expected": "ESN_CROSS_LOG",
+          "expected": "Alle `serialNumber`-Felder in den Log-Nachrichten stimmen mit dem `exportSerialNumbers`-Rückgabewert überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CROSS_LOG"
         },
         {
           "description": "Kein Fehler",

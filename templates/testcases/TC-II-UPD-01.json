@@ -556,33 +556,36 @@
         },
         {
           "description": "processData des aggregierten Logs ist Konkatenation aller nicht-gesicherten Updates",
-          "expected": "AGG_PDATA_CONCAT",
+          "expected": "Der `processData`-Wert der aggregierten Nachricht entspricht der Konkatenation der Einzelwerte (soweit Testablauf-Metadaten vorliegen).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "AGG_PDATA_CONCAT"
         },
         {
           "description": "Keine Log-Nachricht für nicht-signierte Zwischenupdates [AGG_UPDATE_ABSENT]",
-          "expected": "Die Anzahl der Aktualisierungs-Log-Nachrichten im TAR stimmt mit",
+          "expected": "Die Anzahl der Aktualisierungs-Log-Nachrichten im TAR stimmt mit der Anzahl der tatsächlich signierten (d. h. mit Signaturzähler versehenen) Updates überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "AGG_UPDATE_ABSENT"
         },
         {
           "description": "Genau ein aggregiertes Update-Log pro Transaktion (SM_AGG) [STOR_AGG_COUNT_PER_TXN]",
-          "expected": "Für alle vollständig exportierten SM_AGG-Transaktionen mit",
+          "expected": "Für alle vollständig exportierten SM_AGG-Transaktionen mit N ≥ 1 Updates gilt: genau eine Update-Log-Datei im TAR.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_AGG_COUNT_PER_TXN"
         }
       ],
       "tar_validation": [
@@ -664,13 +667,14 @@
         },
         {
           "description": "Kein Log für fehlgeschlagenen Aufruf",
-          "expected": "LOG_NEG_TXN bestanden",
+          "expected": "Kein passender Log-Eintrag im TAR gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_TXN"
         }
       ],
       "references": [

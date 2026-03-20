@@ -445,13 +445,14 @@
       "checks": [
         {
           "description": "Zeitstempel in allen Log-Nachrichten monoton steigend (SM_AGG)",
-          "expected": "CROSS_LOG_TIME_MONO",
+          "expected": "Alle Zeitstempel sind in der Reihenfolge des `signatureCounter`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIME_MONO"
         }
       ],
       "references": [
@@ -510,23 +511,25 @@
         },
         {
           "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
-          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der Nachrichten werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_GAPS"
         },
         {
           "description": "Keine doppelten signatureCounter-Werte [CROSS_LOG_CTR_UNIQUE]",
-          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der Log-Nachrichten wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_UNIQUE"
         }
       ],
       "tar_validation": [
@@ -557,33 +560,36 @@
       "checks": [
         {
           "description": "Unmittelbar nach jeder zentralen Zeitstellung: SystemLog updateTime erstellt",
-          "expected": "STOR_EVT_UPDATETIME_PRESENT",
+          "expected": "Mindestens eine SystemLog-Datei mit `eventType = updateTime`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_EVT_UPDATETIME_PRESENT"
         },
         {
           "description": "updateTime-Log mit privatem Schlüssel der TSE signiert",
-          "expected": "SIG_VERIFY_LOGMSG",
+          "expected": "Signatur für alle Log-Nachrichten gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_LOGMSG"
         },
         {
           "description": "seTimeAfterUpdate in eventData vorhanden",
-          "expected": "EVDATA_UPDATETIME",
+          "expected": "`seTimeAfterUpdate` ist im `eventData`-Feld vorhanden und enthält einen gültigen Zeitwert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UPDATETIME"
         }
       ],
       "tar_validation": [

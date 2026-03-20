@@ -305,23 +305,25 @@
         },
         {
           "description": "logMessageFileName stimmt mit Dateiname im TAR überein",
-          "expected": "GLL_FNAME_MATCH",
+          "expected": "Dateiname im TAR gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "GLL_FNAME_MATCH"
         },
         {
           "description": "logMessageContent stimmt mit Dateiinhalt im TAR überein",
-          "expected": "GLL_CONTENT_MATCH",
+          "expected": "Byte-Inhalt stimmt exakt überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "GLL_CONTENT_MATCH"
         },
         {
           "description": "Kein Fehler",
@@ -335,43 +337,47 @@
         },
         {
           "description": "Inline-Log (logMessageContent) ist als ASN.1 parsebar (INLINE_PARSE)",
-          "expected": "INLINE_PARSE bestanden",
+          "expected": "Parsen erfolgreich; Typ der Log-Nachricht wird ausgegeben",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "INLINE_PARSE"
         },
         {
           "description": "Pflichtfelder der Inline-Log-Nachricht vorhanden (INLINE_FIELDS)",
-          "expected": "INLINE_FIELDS bestanden",
+          "expected": "Alle Pflichtfelder vorhanden und korrekt formatiert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "INLINE_FIELDS"
         },
         {
           "description": "Inline-Log ist tatsächlich die zuletzt erstellte Log-Nachricht (INLINE_LAST)",
-          "expected": "INLINE_LAST bestanden",
+          "expected": "`signatureCounter` der Inline-Nachricht ≥ `signatureCounter`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "INLINE_LAST"
         },
         {
           "description": "Inline-Log stimmt mit TAR-Export überein (INLINE_MATCH_EXPORT)",
-          "expected": "INLINE_MATCH_EXPORT bestanden",
+          "expected": "Inline-Nachricht und entsprechende TAR-Log-Datei sind byte-identisch.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "INLINE_MATCH_EXPORT"
         }
       ],
       "tar_validation": [
@@ -445,7 +451,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "GLL_FNAME_MATCH"
         },
         {
           "description": "logMessageContent entspricht TAR-Dateiinhalt [GLL_CONTENT_MATCH]",
@@ -455,7 +462,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "GLL_CONTENT_MATCH"
         }
       ],
       "tar_validation": [

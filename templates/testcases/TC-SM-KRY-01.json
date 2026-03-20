@@ -201,17 +201,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_SIG_ALG"
         },
         {
           "description": "Schlüsselkurve [CERT_CURVE]",
-          "expected": "CERT_CURVE: informativ",
+          "expected": "CERT_CURVE: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CERT_CURVE"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -221,7 +223,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         }
       ],
       "tar_validation": [
@@ -269,13 +272,14 @@
         },
         {
           "description": "Konkatenation der zu signierenden Felder korrekt",
-          "expected": "SIG_VERIFY_CONCAT",
+          "expected": "Konkatenation reproduzierbar und Signatur gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_CONCAT"
         },
         {
           "description": "Kryptographische Signaturverifikation der Log-Nachrichten [SIG_VERIFY_LOGMSG]",
@@ -285,7 +289,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_LOGMSG"
         }
       ],
       "tar_validation": [
@@ -316,23 +321,25 @@
       "checks": [
         {
           "description": "SHA-256(DER(SubjectPublicKeyInfo)) == Seriennummer der TSE",
-          "expected": "ESN_CERT_HASH_MATCH",
+          "expected": "Hashwert stimmt für alle `serialNumberRecord`-Einträge überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CERT_HASH_MATCH"
         },
         {
           "description": "Seriennummer identisch in Logs, Zertifikat-CN und exportSerialNumbers",
-          "expected": "ESN_CROSS_CERT und ESN_CROSS_LOG",
+          "expected": "Hashwerte stimmen überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CROSS_CERT"
         }
       ],
       "tar_validation": [

@@ -685,23 +685,25 @@
       "checks": [
         {
           "description": "Rückgabewert entspricht signatureCounter der zuletzt erstellten Log-Nachricht",
-          "expected": "CSC_CROSS_LOG",
+          "expected": "Zurückgegebener Zählerstand = maximaler `signatureCounter`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CSC_CROSS_LOG"
         },
         {
           "description": "Format des Rückgabewerts korrekt",
-          "expected": "CSC_CROSS_FORMAT",
+          "expected": "Rückgabewert ist eine nicht-negative Ganzzahl im korrekten Format.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CSC_CROSS_FORMAT"
         },
         {
           "description": "Keine Fehlermeldung",
@@ -746,33 +748,36 @@
       "checks": [
         {
           "description": "Signaturzähler im gesamten Export lückenlos (1..N)",
-          "expected": "LOG_CTR_COMPLETE",
+          "expected": "Die Menge der Zähler-Werte bildet eine lückenlose Sequenz von `min_counter` bis `max_counter`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_CTR_COMPLETE"
         },
         {
           "description": "Keine doppelten Signaturzähler-Werte",
-          "expected": "CROSS_LOG_CTR_UNIQUE",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der Log-Nachrichten wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_UNIQUE"
         },
         {
           "description": "disableSecureElement hat den höchsten Signaturzähler",
-          "expected": "STOR_EVT_DISABLE_IS_LAST",
+          "expected": "`disableSecureElement`-Nachricht vorhanden und `signatureCounter(disableSecureElement) = max(alle signatureCounter im Archiv)`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_EVT_DISABLE_IS_LAST"
         },
         {
           "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
@@ -782,7 +787,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_01"
         },
         {
           "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
@@ -792,7 +798,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_END"
         },
         {
           "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
@@ -802,7 +809,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_DIR"
         },
         {
           "description": "Header-Checksummen [EXP_TAR_CHK]",
@@ -812,7 +820,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_CHK"
         },
         {
           "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
@@ -822,7 +831,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_03"
         },
         {
           "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
@@ -832,7 +842,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_NOEXTRA"
         },
         {
           "description": "Datei info.csv vorhanden [EXP_INF_01]",
@@ -842,7 +853,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -852,7 +864,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -862,7 +875,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -872,7 +886,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -882,7 +897,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -892,17 +908,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -912,7 +930,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -922,7 +941,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -932,7 +952,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -942,7 +963,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -952,7 +974,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -962,7 +985,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -972,7 +996,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -982,7 +1007,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -992,7 +1018,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -1002,27 +1029,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
-          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert (Hex) wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_SERIAL"
         },
         {
           "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
-          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der Nachrichten werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_GAPS"
         },
         {
           "description": "Monoton steigende signatureCreationTime [CROSS_LOG_TIME_MONO]",
@@ -1032,17 +1062,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIME_MONO"
         },
         {
           "description": "Einheitliches Zeitformat im gesamten Archiv [CROSS_LOG_TIMEFMT]",
-          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIMEFMT"
         },
         {
           "description": "Kryptographische Signaturverifikation der Log-Nachrichten [SIG_VERIFY_LOGMSG]",
@@ -1052,7 +1084,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_LOGMSG"
         },
         {
           "description": "Korrektheit der Feldkonkatenation [SIG_VERIFY_CONCAT]",
@@ -1062,17 +1095,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_CONCAT"
         },
         {
           "description": "Kein signatureCounter am oder über dem Maximalwert [SIG_CTR_OVERFLOW_CHECK]",
-          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet",
+          "expected": "Kein `signatureCounter`-Wert erreicht oder überschreitet `MAX_SIG_COUNTER`. Höchster vorhandener Counter-Wert wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_CTR_OVERFLOW_CHECK"
         }
       ],
       "tar_validation": [

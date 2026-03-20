@@ -1002,23 +1002,25 @@
       "checks": [
         {
           "description": "Kein 0x80-Längenbyte (indefinite) in keiner Log-Nachricht",
-          "expected": "LOG_ASN1_NO_INDEFINITE",
+          "expected": "- Keine Log-Nachricht außer `updateTransaction` enthält indefinite length encoding. - In `updateTransaction`-Nachrichten wird indefinite length encoding ausschließlich für `processData` (und nicht für andere Felder) verwendet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ASN1_NO_INDEFINITE"
         },
         {
           "description": "Korrektes Tag für processData (definite length encoding)",
-          "expected": "LOG_ASN1_PDATA_TAG_DEF",
+          "expected": "Alle betreffenden `processData`-Elemente entsprechen der obigen Struktur.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ASN1_PDATA_TAG_DEF"
         }
       ],
       "tar_validation": [
@@ -1049,33 +1051,36 @@
       "checks": [
         {
           "description": "Indefinite encoding ausschließlich im processData-Element von updateTransaction-Nachrichten",
-          "expected": "LOG_ASN1_NO_INDEFINITE (Außerhalb)",
+          "expected": "- Keine Log-Nachricht außer `updateTransaction` enthält indefinite length encoding. - In `updateTransaction`-Nachrichten wird indefinite length encoding ausschließlich für `processData` (und nicht für andere Felder) verwendet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ASN1_NO_INDEFINITE"
         },
         {
           "description": "Korrektes Tag für processData und Unterelemente bei indefinite encoding",
-          "expected": "LOG_ASN1_PDATA_TAG_INDEF",
+          "expected": "Alle Aggregations-`processData`-Elemente entsprechen der obigen Struktur vollständig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ASN1_PDATA_TAG_INDEF"
         },
         {
           "description": "Korrektes Tag für processData ohne indefinite encoding",
-          "expected": "LOG_ASN1_PDATA_TAG_DEF",
+          "expected": "Alle betreffenden `processData`-Elemente entsprechen der obigen Struktur.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ASN1_PDATA_TAG_DEF"
         }
       ],
       "tar_validation": [
@@ -1112,23 +1117,25 @@
       "checks": [
         {
           "description": "Dateinamen-Schema nach TSE-Update unverändert (Beibehaltung Signaturschlüssel)",
-          "expected": "LOG_RECERT_FNAME_CONSISTENT",
+          "expected": "Die Dateinamen-Schemata der Log-Nachrichten aus allen Firmware-Versionen sind identisch (d. h. alle bestehen die bestehenden `LOG_*_FNAME`-Regeln gleichermaßen).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_RECERT_FNAME_CONSISTENT"
         },
         {
           "description": "ASN.1-Struktur der Log-Nachrichten nach Update unverändert",
-          "expected": "LOG_RECERT_STRUCT_CONSISTENT",
+          "expected": "Die ASN.1-Strukturen sind in allen verglichenen Versionen identisch (gleiche Feldmenge, gleiche Tag-Nummern, gleiche Kodierungsform).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_RECERT_STRUCT_CONSISTENT"
         }
       ],
       "tar_validation": [

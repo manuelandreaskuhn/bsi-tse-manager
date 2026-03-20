@@ -266,13 +266,14 @@
         },
         {
           "description": "eventTriggeredByUser in unblockPin-Logs [EVDATA_UNBLOCK_TRIGGER]",
-          "expected": "`eventTriggeredByUser` vorhanden und enthält einen",
+          "expected": "`eventTriggeredByUser` vorhanden und enthält einen bekannten authentifizierten Nutzer-Identifier.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UNBLOCK_TRIGGER"
         }
       ],
       "source_test": "II_AUT_03_Template",
@@ -315,23 +316,25 @@
       "checks": [
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unblockPin\" (alternativ \"unblockUser\") vorhanden sein.",
-          "expected": "EXP_LOG_01_UNBLOCK_PIN bestanden",
+          "expected": "Mindestens ein Log-Eintrag mit eventType=\"unblockPin\" oder \"unblockUser\" gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_UNBLOCK_PIN"
         },
         {
           "description": "eventTriggeredByUser in unblockPin-Log-Nachrichten korrekt gesetzt (EVDATA_UNBLOCK_TRIGGER)",
-          "expected": "EVDATA_UNBLOCK_TRIGGER bestanden",
+          "expected": "`eventTriggeredByUser` vorhanden und enthält einen bekannten authentifizierten Nutzer-Identifier.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UNBLOCK_TRIGGER"
         },
         {
           "description": "eventOrigin = integration-interface im unblockPin-Log",
@@ -676,33 +679,36 @@
       "checks": [
         {
           "description": "authenticationResult = failed",
-          "expected": "EVDATA_AUTH_RESULT_VALUES",
+          "expected": "`authenticationResult` enthält einen der vier zulässigen Werte.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RESULT_VALUES"
         },
         {
           "description": "remainingRetries um 1 dekrementiert",
-          "expected": "EVDATA_AUTH_RETRIES_DECREMENT",
+          "expected": "Dekrementierung um genau 1 verifiziert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RETRIES_DECREMENT"
         },
         {
           "description": "Log-Nachricht korrekt erstellt",
-          "expected": "EVDATA_AUTH_RESULT + EVDATA_AUTH_RETRIES",
+          "expected": "`authenticationResult` vorhanden und ist ein gültiger BOOLEAN-Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RESULT"
         }
       ],
       "tar_validation": [
@@ -762,13 +768,14 @@
         },
         {
           "description": "remainingRetries = 0 bei Sperrung im Log",
-          "expected": "EVDATA_AUTH_RETRIES_ZERO_BLOCKED",
+          "expected": "`remainingRetries = 0`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_AUTH_RETRIES_ZERO_BLOCKED"
         },
         {
           "description": "Fehlermeldung (pinBlocked oder äquivalent) zurückgegeben",

@@ -93,7 +93,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         }
       ],
       "references": [
@@ -153,7 +154,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "Der Wert des Datenfelds eventOrigin entspricht integration-interface.",
@@ -183,7 +185,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         }
       ],
       "references": [
@@ -227,7 +230,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         }
       ],
       "references": [
@@ -329,27 +333,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "SystemLog für selfTest erstellt",
-          "expected": "SYS_EVT_SELFTEST_PRESENT",
+          "expected": "SYS_EVT_SELFTEST_PRESENT: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_SELFTEST_PRESENT"
         },
         {
           "description": "eventTriggeredByUser im selfTest-Log korrekt",
-          "expected": "EVDATA_SELFTEST_TRIGGER",
+          "expected": "`eventTriggeredByUser` vorhanden und enthält einen bekannten Nutzer-Identifier.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_SELFTEST_TRIGGER"
         },
         {
           "description": "Warnungen (falls vorhanden) sind menschenlesbar formuliert",
@@ -369,7 +376,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME"
         },
         {
           "description": "selfTest Sonderregel: Ereignis korrekt nach Sonderregeln protokolliert (selfTest, info)",
@@ -379,17 +387,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "selfTest-Sonderregel: Ereignis nach spezifischen selfTest-Regeln korrekt protokolliert (selfTest, info)",
-          "expected": "selfTest: info",
+          "expected": "selfTest: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"selfTest\" vorhanden sein. Bei externem Aufruf: eventOrigin=integration-interface, eventTriggeredByUser MUSS gesetzt sein (BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5).",
@@ -399,7 +409,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "Im TAR-Archiv MUSS eine System-Log-Nachricht mit eventType \"selfTest\" und eventOrigin \"SMA\" oder \"CSP\" vorhanden sein, wenn ein interner Selbsttest fehlschlägt. eventTriggeredByUser DARF NICHT vorhanden sein (BSI TR-03153-1 §9.8.5, Tabelle 16). (nur wenn Profil aktiv)",
@@ -409,7 +420,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "System-Log-Datei mit eventType=\"selfTest\" UND eventOrigin ∈ {\"SMA\", \"CSP\"} im TAR-Container vorhanden",
@@ -419,7 +431,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "eventTriggeredByUser DARF NICHT vorhanden sein (Tabelle 16: intern ausgelöster Selbsttest)",
@@ -439,7 +452,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "System-Log-Datei mit eventType=\"selfTest\" im TAR-Container vorhanden",
@@ -449,7 +463,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "selfTest"
         },
         {
           "description": "Extern ausgelöst: eventOrigin = integration-interface",
@@ -469,17 +484,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_SELFTEST_TRIGGER"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -489,7 +506,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -499,7 +517,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -509,7 +528,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -519,7 +539,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -529,7 +550,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -539,7 +561,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -549,7 +572,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -559,7 +583,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -569,7 +594,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -579,7 +605,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -589,27 +616,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -619,7 +649,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -629,7 +660,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -639,7 +671,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -649,17 +682,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "selfTest (extern, integration-interface) – System-Log-Nachweis [EXP_LOG_01_SELFTEST]",
@@ -669,7 +704,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_SELFTEST"
         },
         {
           "description": "selfTest-Fehlschlag (intern, eventOrigin=SMA/CSP) – System-Log-Nachweis [EXP_LOG_01_SELFTEST_FAILED]",
@@ -679,7 +715,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_SELFTEST_FAILED"
         }
       ],
       "tar_validation": [

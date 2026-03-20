@@ -209,33 +209,36 @@
       "checks": [
         {
           "description": "Kein Transaktions-Log bei fehlgeschlagenen Transaktions-API-Aufrufen",
-          "expected": "LOG_NEG_TXN",
+          "expected": "Kein passender Log-Eintrag im TAR gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_TXN"
         },
         {
           "description": "SM_NOAGG: Kein updateTransaction-Log ohne direkten Aufruf",
-          "expected": "LOG_NEG_UPD_SM",
+          "expected": "Kein ungesichertes updateTransaction-Log im TAR.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_UPD_SM"
         },
         {
           "description": "Kein System-Log bei fehlgeschlagenen Systemaufrufen",
-          "expected": "LOG_NEG_SYS",
+          "expected": "Kein passender System-Log-Eintrag im TAR.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_SYS"
         }
       ],
       "tar_validation": [

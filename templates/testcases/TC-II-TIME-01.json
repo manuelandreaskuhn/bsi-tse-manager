@@ -749,23 +749,25 @@
         },
         {
           "description": "SystemLog updateTime erstellt",
-          "expected": "STOR_EVT_UPDATETIME_PRESENT",
+          "expected": "Mindestens eine SystemLog-Datei mit `eventType = updateTime`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_EVT_UPDATETIME_PRESENT"
         },
         {
           "description": "seTimeAfterUpdate in eventData vorhanden",
-          "expected": "EVDATA_UPDATETIME",
+          "expected": "`seTimeAfterUpdate` ist im `eventData`-Feld vorhanden und enthält einen gültigen Zeitwert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UPDATETIME"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"updateTime\" vorhanden sein (BSI TR-03151-1 §4.7).",
@@ -795,7 +797,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UPDATETIME"
         },
         {
           "description": "Maximaler Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)",
@@ -805,7 +808,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYS_EVT_UPDATETIME_GAP"
         },
         {
           "description": "updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)",
@@ -815,7 +819,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "INIT_SEQ_UPDATETIME_AFTER_INIT"
         },
         {
           "description": "Alle TransactionLog-Einträge nach erstem updateTime (TIMESET_TXN_AFTER_UPDATETIME)",
@@ -825,17 +830,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TIMESET_TXN_AFTER_UPDATETIME"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -845,7 +852,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -855,7 +863,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -865,7 +874,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -875,7 +885,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -885,7 +896,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -895,7 +907,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -905,7 +918,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -915,7 +929,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -925,7 +940,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -935,7 +951,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -945,27 +962,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -975,7 +995,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -985,7 +1006,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -995,7 +1017,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -1005,17 +1028,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "updateTime – System-Log-Nachweis [EXP_LOG_01_UPDATE_TIME]",
@@ -1025,7 +1050,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_UPDATE_TIME"
         }
       ],
       "tar_validation": [
@@ -1295,83 +1321,91 @@
       "checks": [
         {
           "description": "Zeitstempel in allen Log-Nachrichten monoton steigend",
-          "expected": "CROSS_LOG_TIME_MONO",
+          "expected": "Alle Zeitstempel sind in der Reihenfolge des `signatureCounter`",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIME_MONO"
         },
         {
           "description": "Nur ein Zeitformat im gesamten Archiv",
-          "expected": "CROSS_LOG_TIMEFMT",
+          "expected": "Alle Log-Dateien verwenden denselben Präfix. Verwendetes Format wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_TIMEFMT"
         },
         {
           "description": "seTimeAfterUpdate in allen updateTime-Logs vorhanden",
-          "expected": "EVDATA_UPDATETIME",
+          "expected": "`seTimeAfterUpdate` ist im `eventData`-Feld vorhanden und enthält einen gültigen Zeitwert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EVDATA_UPDATETIME"
         },
         {
           "description": "Alle Transaktions-Logs zeitlich nach erstem updateTime",
-          "expected": "TIMESET_TXN_AFTER_UPDATETIME",
+          "expected": "Alle TransactionLog-Einträge haben `signatureCounter > MinUTC`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TIMESET_TXN_AFTER_UPDATETIME"
         },
         {
           "description": "Einheitliche TSE-Seriennummer im gesamten Archiv [CROSS_LOG_SERIAL]",
-          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert",
+          "expected": "Alle `serialNumber`-Felder sind identisch. Der gemeinsame Wert (Hex) wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_SERIAL"
         },
         {
           "description": "Keine doppelten signatureCounter-Werte [CROSS_LOG_CTR_UNIQUE]",
-          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der",
+          "expected": "Alle `signatureCounter`-Werte sind eindeutig. Gesamtanzahl der Log-Nachrichten wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_UNIQUE"
         },
         {
           "description": "Keine Lücken in der signatureCounter-Sequenz [CROSS_LOG_CTR_GAPS]",
-          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der",
+          "expected": "Keine Lücken. Gesamtbereich `[min, max]` und Anzahl der Nachrichten werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "CROSS_LOG_CTR_GAPS"
         },
         {
           "description": "Zeitabhängige SystemLog-Ereignisse nach updateTime [TIMESET_SYSLOG_WRITES_AFTER_UPDATETIME]",
-          "expected": "Alle SystemLog-Einträge der genannten Typen haben",
+          "expected": "Alle SystemLog-Einträge der genannten Typen haben `signatureCounter > MinUTC`.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TIMESET_SYSLOG_WRITES_AFTER_UPDATETIME"
         }
       ],
       "tar_validation": [

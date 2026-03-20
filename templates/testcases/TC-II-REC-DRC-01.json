@@ -526,13 +526,14 @@
         },
         {
           "description": "Nach Re-Registrierung: Transaktions-Log für Client wieder vorhanden (DRC_TXN_PRESENT)",
-          "expected": "DRC_TXN_PRESENT bestanden",
+          "expected": "Passende Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_TXN_PRESENT"
         },
         {
           "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"registerClient\" vorhanden sein (BSI TR-03151-1 §4.11).",
@@ -582,7 +583,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "REG_LOG_CLIENTID_PRESENT"
         },
         {
           "description": "System-Log-Datei mit eventType=\"deregisterClient\" im TAR-Container vorhanden (DRC_LOG_PRESENT)",
@@ -592,7 +594,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_PRESENT"
         },
         {
           "description": "clientId des deregistrierten Systems in eventData vorhanden und korrekt (DRC_LOG_CLIENTID)",
@@ -602,17 +605,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_CLIENTID"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -622,7 +627,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -632,7 +638,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -642,7 +649,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -652,7 +660,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -662,7 +671,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -672,7 +682,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -682,7 +693,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -692,7 +704,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -702,7 +715,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -712,7 +726,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "eventType vorhanden [LOG_EVTYPE]",
@@ -722,27 +737,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVTYPE"
         },
         {
           "description": "eventOrigin gültiger TSE-Komponentenbezeichner [LOG_ORIGIN]",
-          "expected": "LOG_ORIGIN: informativ",
+          "expected": "LOG_ORIGIN: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ORIGIN"
         },
         {
           "description": "eventTriggeredByUser [LOG_TRIGGER]",
-          "expected": "LOG_TRIGGER: informativ",
+          "expected": "LOG_TRIGGER: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TRIGGER"
         },
         {
           "description": "eventData vorhanden [LOG_EVDATA]",
@@ -752,7 +770,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_EVDATA"
         },
         {
           "description": "Dateiname-Schema SystemLog [LOG_SYS_FNAME]",
@@ -762,7 +781,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SYS_FNAME"
         },
         {
           "description": "Dateiname: Log-Sys_{eventType}.log [LOG_FNAME_EVT]",
@@ -772,7 +792,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_EVT"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_ADD_INT]",
@@ -782,17 +803,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_ADD_INT"
         },
         {
           "description": "Erlaubte Origins und Trigger-Anforderungen je eventType [SYSLOG_RULES]",
-          "expected": "SYSLOG_RULES: informativ",
+          "expected": "SYSLOG_RULES: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SYSLOG_RULES"
         },
         {
           "description": "Keine Transaktionen von nicht registrierten Clients [REG_LOG_NO_UNKNOWN_CLIENTS]",
@@ -802,7 +825,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "REG_LOG_NO_UNKNOWN_CLIENTS"
         },
         {
           "description": "registerClient – System-Log-Nachweis [EXP_LOG_01_REGISTER_CLIENT]",
@@ -812,7 +836,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_REGISTER_CLIENT"
         },
         {
           "description": "deregisterClient – System-Log-Nachweis [EXP_LOG_01_DEREGISTER_CLIENT]",
@@ -822,7 +847,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_LOG_01_DEREGISTER_CLIENT"
         }
       ],
       "tar_validation": [
@@ -1092,43 +1118,47 @@
         },
         {
           "description": "SystemLog für deregisterClient erstellt",
-          "expected": "DRC_LOG_PRESENT",
+          "expected": "Passende Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_PRESENT"
         },
         {
           "description": "clientId im Log entspricht deregistriertem Client",
-          "expected": "DRC_LOG_CLIENTID",
+          "expected": "`clientId` stimmt mit erwartetem Wert überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_CLIENTID"
         },
         {
           "description": "Transaktionen mit deregistrierter Seriennummer nicht mehr möglich",
-          "expected": "DEREG_LOG_NO_NEW_TXN",
+          "expected": "Keine Transaktions-Logs der deregistrierten `clientId` nach dem Deregistrierungszeitpunkt (bestimmt über `signatureCounter` und `signatureCreationTime`).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DEREG_LOG_NO_NEW_TXN"
         },
         {
           "description": "Nach Re-Registrierung eines Clients: Transaktions-Log für diesen Client wieder vorhanden (DRC_TXN_PRESENT)",
-          "expected": "DRC_TXN_PRESENT bestanden",
+          "expected": "Passende Datei gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_TXN_PRESENT"
         },
         {
           "description": "eventType = deregisterClient [DRC_LOG_EVTYPE]",
@@ -1138,7 +1168,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_EVTYPE"
         },
         {
           "description": "eventOrigin = integration-interface [DRC_LOG_EVORIGIN]",
@@ -1148,7 +1179,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_LOG_EVORIGIN"
         },
         {
           "description": "Kein Transaktions-Log für deregistrierten Client [DRC_TXN_ABSENT]",
@@ -1158,7 +1190,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "DRC_TXN_ABSENT"
         }
       ],
       "tar_validation": [

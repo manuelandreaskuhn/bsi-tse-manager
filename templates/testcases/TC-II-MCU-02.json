@@ -247,13 +247,14 @@
         },
         {
           "description": "processData isoliert",
-          "expected": "STOR_PARA_PDATA_ISOLATED",
+          "expected": "- Ohne Metadaten: processData-Kodierung für alle parallelen Transaktionen konsistent; keine strukturellen Anomalien. - Mit Metadaten: Alle processData-Unterelemente stimmen mit den erwarteten Einzelwerten überein. — Warnung möglich: Strukturelle Inkonsistenz festgestellt (z.B. Anzahl der Unterelemente stimmt nicht mit erwartetem Aggregationsumfang überein).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_PARA_PDATA_ISOLATED"
         },
         {
           "description": "Alle parallel gestarteten Transaktionen im Export vorhanden [STOR_PARA_ALL_STARTS]",
@@ -263,7 +264,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "STOR_PARA_ALL_STARTS"
         }
       ],
       "tar_validation": [

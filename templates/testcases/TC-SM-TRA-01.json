@@ -313,23 +313,25 @@
       "checks": [
         {
           "description": "Transaktionsnummern sind fortlaufend und lückenlos (1, 2, 3, ...)",
-          "expected": "TXN_NUM_SEQ",
+          "expected": "Die `transactionNumber`-Werte aller `startTransaction`-Logs bilden eine lückenlose Sequenz. Bereich `[min, max]` und Anzahl werden ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_NUM_SEQ"
         },
         {
           "description": "Jede Transaktionsnummer eindeutig",
-          "expected": "TXN_NUM_UNIQUE",
+          "expected": "Alle `transactionNumber`-Werte in `startTransaction`-Logs sind eindeutig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_NUM_UNIQUE"
         },
         {
           "description": "Jede transactionNumber hat genau einen Start-Eintrag [TXN_LIFE_START]",
@@ -339,7 +341,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_LIFE_START"
         }
       ],
       "tar_validation": [

@@ -326,13 +326,14 @@
         },
         {
           "description": "Seriennummer ist 32 Byte SHA-256-Hash des öffentlichen Schlüssels",
-          "expected": "ESN_CERT_HASH_MATCH bestanden",
+          "expected": "Hashwert stimmt für alle `serialNumberRecord`-Einträge überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CERT_HASH_MATCH"
         },
         {
           "description": "Kein Fehlermeldung",
@@ -346,13 +347,14 @@
         },
         {
           "description": "ASN.1-Struktur der Seriennummer korrekt [ESN_ASN1]",
-          "expected": "ASN.1-Dekodierung erfolgreich; genau eine Seriennummer vom",
+          "expected": "ASN.1-Dekodierung erfolgreich; genau eine Seriennummer vom korrekten Typ und Länge (32 Byte) vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_ASN1"
         },
         {
           "description": "Seriennummer entspricht Leaf-Zertifikat-Schlüssel [ESN_CROSS_CERT]",
@@ -362,17 +364,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CROSS_CERT"
         },
         {
           "description": "Seriennummer entspricht serialNumber in Log-Nachrichten [ESN_CROSS_LOG]",
-          "expected": "Alle `serialNumber`-Felder in den Log-Nachrichten stimmen mit",
+          "expected": "Alle `serialNumber`-Felder in den Log-Nachrichten stimmen mit dem `exportSerialNumbers`-Rückgabewert überein.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "ESN_CROSS_LOG"
         }
       ],
       "tar_validation": [

@@ -327,93 +327,102 @@
       "checks": [
         {
           "description": "startTransaction-Log im TAR vorhanden (Log-Typ=Start)",
-          "expected": "LOG_TXN_FNAME_TYPE",
+          "expected": "TYPE entspricht dem Mapping.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_TYPE"
         },
         {
           "description": "clientId im Log entspricht übergebenem Wert",
-          "expected": "LOG_TXN_CLIENT",
+          "expected": "clientId vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_CLIENT"
         },
         {
           "description": "processData im Log entspricht übergebenem Wert",
-          "expected": "LOG_TXN_PDATA",
+          "expected": "Feld vorhanden (Länge und Textinhalt werden ausgegeben).",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PDATA"
         },
         {
           "description": "processType im Log entspricht übergebenem Wert",
-          "expected": "LOG_TXN_PTYPE",
+          "expected": "Vorhanden und ≤ 100 Zeichen.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PTYPE"
         },
         {
           "description": "transactionNumber im Log = Rückgabe aus Schritt 1",
-          "expected": "LOG_TXN_TXNNUM",
+          "expected": "Nummer vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_TXNNUM"
         },
         {
           "description": "signatureCounter im Log = Rückgabe aus Schritt 1",
-          "expected": "LOG_SIGCTR",
+          "expected": "Zählerwert wird ausgegeben.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "Signatur extern verifizierbar",
-          "expected": "SIG_VERIFY_LOGMSG",
+          "expected": "Signatur für alle Log-Nachrichten gültig.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_LOGMSG"
         },
         {
           "description": "additionalExternalData im Log (LOG_TXN_EXTDATA): optional; nur vorhanden wenn übergeben – Feld korrekt kodiert (info)",
-          "expected": "LOG_TXN_EXTDATA: info",
+          "expected": "LOG_TXN_EXTDATA: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_EXTDATA"
         },
         {
           "description": "additionalExternalData (LOG_TXN_EXTDATA, info): optional; nur vorhanden wenn übergeben",
-          "expected": "LOG_TXN_EXTDATA: info",
+          "expected": "LOG_TXN_EXTDATA: Informativ – wird ausgegeben, kein Fehler erwartet.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_EXTDATA"
         },
         {
           "description": "TAR-Format POSIX.1-2001 (ustar) [EXP_TAR_01]",
@@ -423,7 +432,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_01"
         },
         {
           "description": "Abschluss: Zwei Null-Blöcke [EXP_TAR_END]",
@@ -433,7 +443,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_END"
         },
         {
           "description": "Keine Unterverzeichnisse [EXP_TAR_DIR]",
@@ -443,7 +454,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_DIR"
         },
         {
           "description": "Header-Checksummen [EXP_TAR_CHK]",
@@ -453,7 +465,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_CHK"
         },
         {
           "description": "Keine unspezifizierten Dateien [EXP_TAR_03]",
@@ -463,7 +476,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_03"
         },
         {
           "description": "Keine unzulässigen Dateien im TAR-Container [EXP_TAR_NOEXTRA]",
@@ -473,7 +487,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_TAR_NOEXTRA"
         },
         {
           "description": "Datei info.csv vorhanden [EXP_INF_01]",
@@ -483,7 +498,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01"
         },
         {
           "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
@@ -493,7 +509,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_01b"
         },
         {
           "description": "Komponenten-Bezeichner [EXP_INF_02a]",
@@ -503,7 +520,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02a"
         },
         {
           "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
@@ -513,7 +531,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02b"
         },
         {
           "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
@@ -523,7 +542,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_02c"
         },
         {
           "description": "Keine unbekannten Zeilen [EXP_INF_05]",
@@ -533,17 +553,19 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "EXP_INF_05"
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -553,7 +575,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -563,7 +586,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -573,7 +597,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -583,7 +608,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -593,7 +619,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -603,7 +630,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -613,7 +641,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -623,7 +652,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -633,7 +663,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "operationType vorhanden und gültig [LOG_TXN_OPTYPE]",
@@ -643,7 +674,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_OPTYPE"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_TXN_ADD_INT]",
@@ -653,7 +685,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_ADD_INT"
         },
         {
           "description": "Zeitformat-Präfix [LOG_TXN_FNAME_FMT]",
@@ -663,7 +696,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_FMT"
         },
         {
           "description": "No-{transactionNumber} stimmt [LOG_TXN_FNAME_NUM]",
@@ -673,7 +707,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_NUM"
         },
         {
           "description": "Client-{clientId} stimmt [LOG_TXN_FNAME_CLIENT]",
@@ -683,27 +718,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_CLIENT"
         },
         {
           "description": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein [LOG_FIELD_NO_ADD_INT]",
-          "expected": "Kein `additionalInternalData`-Eintrag in einer der",
+          "expected": "Kein `additionalInternalData`-Eintrag in einer der Transaktions-Log-Nachrichten vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_NO_ADD_INT"
         },
         {
           "description": "additionalExternalData nur vorhanden wenn Daten übergeben wurden [LOG_FIELD_ADD_EXT_ABSENT]",
-          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert",
+          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert übergeben wurde. Bei Nachrichten mit übergebenem Wert ist das Feld vorhanden und enthält den korrekten Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_ADD_EXT_ABSENT"
         },
         {
           "description": "Jede transactionNumber hat genau einen Start-Eintrag [TXN_LIFE_START]",
@@ -713,7 +751,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "TXN_LIFE_START"
         },
         {
           "description": "Kein Transaktions-Log bei fehlgeschlagenem API-Aufruf [LOG_NEG_TXN]",
@@ -723,7 +762,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_TXN"
         },
         {
           "description": "Korrektheit der Feldkonkatenation [SIG_VERIFY_CONCAT]",
@@ -733,7 +773,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "SIG_VERIFY_CONCAT"
         }
       ],
       "tar_validation": [
@@ -1082,13 +1123,14 @@
         },
         {
           "description": "Kein Log für fehlgeschlagenen Aufruf erstellt",
-          "expected": "LOG_NEG_TXN bestanden",
+          "expected": "Kein passender Log-Eintrag im TAR gefunden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_NEG_TXN"
         }
       ],
       "references": [

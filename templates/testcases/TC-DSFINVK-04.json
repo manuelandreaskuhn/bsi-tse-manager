@@ -302,13 +302,14 @@
         },
         {
           "description": "ASN.1 Parsing [LOG_PARSE]",
-          "expected": "LOG_PARSE bestanden",
+          "expected": "Kein Fehler: ASN.1 Parsing korrekt.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_PARSE"
         },
         {
           "description": "Version = 3 [LOG_VERSION]",
@@ -318,7 +319,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_VERSION"
         },
         {
           "description": "certifiedDataType OID [LOG_OID]",
@@ -328,7 +330,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_OID"
         },
         {
           "description": "Signaturalgorithmus [LOG_SIGALG]",
@@ -338,7 +341,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGALG"
         },
         {
           "description": "serialNumber vorhanden (32 Byte) [LOG_SERIAL]",
@@ -348,7 +352,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL"
         },
         {
           "description": "serialNumber = TSE-Zertifikat CN [LOG_SERIAL_CERT]",
@@ -358,7 +363,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SERIAL_CERT"
         },
         {
           "description": "signatureCounter vorhanden [LOG_SIGCTR]",
@@ -368,7 +374,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGCTR"
         },
         {
           "description": "signatureCreationTime vorhanden [LOG_SIGTIME]",
@@ -378,7 +385,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGTIME"
         },
         {
           "description": "Signaturwert (96 Byte / P-384 plain) [LOG_SIGLEN]",
@@ -388,7 +396,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_SIGLEN"
         },
         {
           "description": "Dateiname: Sig-{counter} stimmt [LOG_FNAME_CTR]",
@@ -398,7 +407,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_CTR"
         },
         {
           "description": "Dateiname: Zeitstempel stimmt [LOG_FNAME_TIME]",
@@ -408,7 +418,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FNAME_TIME"
         },
         {
           "description": "operationType vorhanden und gültig [LOG_TXN_OPTYPE]",
@@ -418,7 +429,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_OPTYPE"
         },
         {
           "description": "clientId vorhanden [LOG_TXN_CLIENT]",
@@ -428,7 +440,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_CLIENT"
         },
         {
           "description": "processData vorhanden [LOG_TXN_PDATA]",
@@ -438,7 +451,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PDATA"
         },
         {
           "description": "processType vorhanden, max. 100 Zeichen [LOG_TXN_PTYPE]",
@@ -448,7 +462,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_PTYPE"
         },
         {
           "description": "transactionNumber vorhanden [LOG_TXN_TXNNUM]",
@@ -458,7 +473,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_TXNNUM"
         },
         {
           "description": "additionalInternalData DARF NICHT vorhanden sein [LOG_TXN_ADD_INT]",
@@ -468,7 +484,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_ADD_INT"
         },
         {
           "description": "Dateiname-Schema vollständig korrekt [LOG_TXN_FNAME]",
@@ -478,7 +495,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME"
         },
         {
           "description": "Zeitformat-Präfix [LOG_TXN_FNAME_FMT]",
@@ -488,7 +506,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_FMT"
         },
         {
           "description": "No-{transactionNumber} stimmt [LOG_TXN_FNAME_NUM]",
@@ -498,7 +517,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_NUM"
         },
         {
           "description": "TYPE stimmt (Start|Update|Finish) [LOG_TXN_FNAME_TYPE]",
@@ -508,7 +528,8 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_TYPE"
         },
         {
           "description": "Client-{clientId} stimmt [LOG_TXN_FNAME_CLIENT]",
@@ -518,27 +539,30 @@
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_TXN_FNAME_CLIENT"
         },
         {
           "description": "additionalInternalData darf in Transaktions-Log-Nachrichten nicht belegt sein [LOG_FIELD_NO_ADD_INT]",
-          "expected": "Kein `additionalInternalData`-Eintrag in einer der",
+          "expected": "Kein `additionalInternalData`-Eintrag in einer der Transaktions-Log-Nachrichten vorhanden.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_NO_ADD_INT"
         },
         {
           "description": "additionalExternalData nur vorhanden wenn Daten übergeben wurden [LOG_FIELD_ADD_EXT_ABSENT]",
-          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert",
+          "expected": "Das Feld fehlt in allen Log-Nachrichten, bei denen kein Wert übergeben wurde. Bei Nachrichten mit übergebenem Wert ist das Feld vorhanden und enthält den korrekten Wert.",
           "result_options": [
             "pass",
             "fail",
             "skip"
           ],
-          "result": null
+          "result": null,
+          "rule_id": "LOG_FIELD_ADD_EXT_ABSENT"
         }
       ],
       "tar_validation": [
