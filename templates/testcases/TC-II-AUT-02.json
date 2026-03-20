@@ -259,26 +259,6 @@
             "skip"
           ],
           "result": null
-        },
-        {
-          "description": "eventTriggeredByUser in unblockPin-Log-Nachrichten gesetzt (EVDATA_UNBLOCK_TRIGGER)",
-          "expected": "EVDATA_UNBLOCK_TRIGGER bestanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unblockPin\" (alternativ \"unblockUser\") vorhanden sein (BSI TR-03151-1 §4.4.3).",
-          "expected": "Mindestens ein System-Log-Eintrag mit eventType unblockPin oder unblockUser im TAR vorhanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
         }
       ],
       "source_test": "II_AUT_03_Template",
@@ -289,13 +269,6 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
-        },
-        {
-          "check_id": "EXP_LOG_01_UNBLOCK_PIN",
-          "title": "unblockPin / unblockUser – System-Log-Nachweis",
-          "outcome_type": "PASS_FAIL",
-          "condition": "mandatory",
-          "result": null
         }
       ],
       "references": [
@@ -304,6 +277,66 @@
     },
     {
       "step": 14,
+      "type": "VERIFY",
+      "title": "unblockPin-Log im TAR prüfen",
+      "result": null,
+      "instruction": "TAR-Container exportieren und System-Log-Nachricht für unblockPin validieren:\n\n1. exportLogMessages aufrufen.\n2. System-Log-Datei mit eventType=\"unblockPin\" (alternativ \"unblockUser\")    anhand des Dateinamens (_Log-Sys_unblockPin.log) identifizieren.\n3. Prüfen:\n   • eventOrigin = integration-interface\n   • eventTriggeredByUser MUSS gesetzt sein (EVDATA_UNBLOCK_TRIGGER)\n   • userId-Feld enthält den entsperrten Nutzer",
+      "function": "exportLogMessages",
+      "tar_validation": [
+        {
+          "check_id": "EXP_LOG_01_UNBLOCK_PIN",
+          "title": "unblockPin / unblockUser – System-Log-Nachweis",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EVDATA_UNBLOCK_TRIGGER",
+          "title": "eventTriggeredByUser in unblockPin-Logs",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        }
+      ],
+      "checks": [
+        {
+          "description": "Im TAR-Archiv MUSS mindestens eine System-Log-Nachricht mit eventType \"unblockPin\" (alternativ \"unblockUser\") vorhanden sein.",
+          "expected": "EXP_LOG_01_UNBLOCK_PIN bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventTriggeredByUser in unblockPin-Log-Nachrichten korrekt gesetzt (EVDATA_UNBLOCK_TRIGGER)",
+          "expected": "EVDATA_UNBLOCK_TRIGGER bestanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "eventOrigin = integration-interface im unblockPin-Log",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03151-1 §4.4.3",
+        "TAR-Analyzer: r36-exp-log-01.js"
+      ]
+    },
+    {
+      "step": 15,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -365,7 +398,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 15,
+      "step": 16,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -387,7 +420,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 16,
+      "step": 17,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -409,7 +442,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 17,
+      "step": 18,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -431,7 +464,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 18,
+      "step": 19,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -493,7 +526,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 19,
+      "step": 20,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -515,7 +548,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 20,
+      "step": 21,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -537,7 +570,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 21,
+      "step": 22,
       "type": "SETUP",
       "title": "unblockPin aufrufen",
       "result": null,
@@ -599,7 +632,7 @@
       "source_test": "II_AUT_03_Template"
     },
     {
-      "step": 22,
+      "step": 23,
       "type": "NEGATIVE",
       "title": "Authentifizierung mit falscher PIN",
       "result": null,
@@ -687,7 +720,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 23,
+      "step": 24,
       "type": "NEGATIVE",
       "title": "Wiederholte Fehlversuche bis zur Sperrung",
       "result": null,
@@ -742,7 +775,7 @@
       "source_test": "II_UBP_03"
     },
     {
-      "step": 24,
+      "step": 25,
       "type": "ACTION",
       "title": "PIN-Entsperrung mit korrekter PUK [PT]",
       "result": null,
@@ -779,7 +812,7 @@
       "source_test": "II_UBP_04"
     },
     {
-      "step": 25,
+      "step": 26,
       "type": "NEGATIVE",
       "title": "Entsperrung mit falschem PUK",
       "result": null,
@@ -806,7 +839,7 @@
       "source_test": "II_UBP_04"
     },
     {
-      "step": 26,
+      "step": 27,
       "type": "NEGATIVE",
       "title": "Leerer String als neuer PIN abgelehnt",
       "result": null,
@@ -833,7 +866,7 @@
       "source_test": "II_UBP_04"
     },
     {
-      "step": 27,
+      "step": 28,
       "type": "ACTION",
       "title": "Gegenmaßnahmen gegen PUK-Raten (PUK_BLOCKABLE)",
       "result": null,
