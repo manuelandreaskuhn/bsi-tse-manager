@@ -78,7 +78,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "SM_LOG_06",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,
@@ -105,7 +114,16 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "SM_LOG_06",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -229,6 +247,18 @@
       "references": [
         "BSI TR-03153-1 §9.8.4",
         "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 5"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 6"
+        }
       ]
     },
     {
@@ -386,7 +416,19 @@
           "result": null
         }
       ],
-      "source_test": "SM_LOG_06"
+      "source_test": "SM_LOG_06",
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 5"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 6"
+        }
+      ]
     }
   ],
   "references": [

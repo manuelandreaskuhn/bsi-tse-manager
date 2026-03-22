@@ -47,7 +47,16 @@
         }
       ],
       "source_test": "II_CLG_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach configureLogging (Schritt 2)"
+        }
+      }
     },
     {
       "step": 3,
@@ -70,7 +79,16 @@
         }
       ],
       "source_test": "II_CLG_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach configureLogging (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,
@@ -96,7 +114,16 @@
         }
       ],
       "source_test": "II_CLG_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach configureLogging (Schritt 4)"
+        }
+      }
     },
     {
       "step": 5,
@@ -542,6 +569,23 @@
       "references": [
         "BSI TR-03153-1 §9.8.6",
         "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 2,
+          "description": "Log-Datei erzeugt durch configureLogging in Schritt 2"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 3,
+          "description": "Log-Datei erzeugt durch configureLogging in Schritt 3"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 4,
+          "description": "Log-Datei erzeugt durch configureLogging in Schritt 4"
+        }
       ]
     },
     {
@@ -585,7 +629,16 @@
         }
       ],
       "source_test": "II_CLG_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach configureLogging (Schritt 7)"
+        }
+      }
     }
   ],
   "references": [

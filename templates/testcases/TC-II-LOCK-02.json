@@ -123,7 +123,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 7)"
+        }
+      }
     },
     {
       "step": 8,
@@ -149,7 +158,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -171,7 +189,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach lockTransactionLogging (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -193,7 +220,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach lockTransactionLogging (Schritt 10)"
+        }
+      }
     },
     {
       "step": 11,
@@ -219,7 +255,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 11)"
+        }
+      }
     },
     {
       "step": 12,
@@ -245,7 +290,16 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTransaction (Schritt 12)"
+        }
+      }
     },
     {
       "step": 13,
@@ -271,7 +325,16 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 13)"
+        }
+      }
     },
     {
       "step": 14,
@@ -293,7 +356,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig8",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unlockTransactionLogging (Schritt 14)"
+        }
+      }
     },
     {
       "step": 15,
@@ -325,7 +397,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig9",
+          "field": "counterValue",
+          "description": "Signaturzähler nach lockTransactionLogging (Schritt 15)"
+        }
+      }
     },
     {
       "step": 16,
@@ -347,7 +428,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig10",
+          "field": "counterValue",
+          "description": "Signaturzähler nach lockTransactionLogging (Schritt 16)"
+        }
+      }
     },
     {
       "step": 17,
@@ -369,7 +459,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig11",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unlockTransactionLogging (Schritt 17)"
+        }
+      }
     },
     {
       "step": 18,
@@ -391,7 +490,16 @@
           "result": null
         }
       ],
-      "source_test": "II_LTL_02"
+      "source_test": "II_LTL_02",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig12",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unlockTransactionLogging (Schritt 18)"
+        }
+      }
     }
   ],
   "references": [

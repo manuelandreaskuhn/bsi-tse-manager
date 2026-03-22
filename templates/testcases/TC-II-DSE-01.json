@@ -83,7 +83,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 4)"
+        }
+      }
     },
     {
       "step": 5,
@@ -109,7 +118,16 @@
         "BSI TR-03153-1 §6.3.1.13"
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach registerClient (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,
@@ -135,7 +153,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -191,7 +218,33 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 7)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 4,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 4"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch registerClient in Schritt 5"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 6"
+        }
+      ]
     },
     {
       "step": 8,
@@ -218,7 +271,16 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -745,6 +807,22 @@
           "condition": "mandatory",
           "result": null
         }
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 9)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig5",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 8"
+        }
       ]
     },
     {
@@ -768,7 +846,16 @@
         }
       ],
       "source_test": "II_DSE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 10)"
+        }
+      }
     }
   ],
   "references": [

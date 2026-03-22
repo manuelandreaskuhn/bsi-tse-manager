@@ -114,7 +114,16 @@
         }
       ],
       "source_test": "II_DLM_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach deleteLogMessages (Schritt 7)"
+        }
+      }
     },
     {
       "step": 8,
@@ -141,7 +150,16 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "II_DLM_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -164,7 +182,16 @@
         }
       ],
       "source_test": "II_DLM_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach deleteLogMessages (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -429,6 +456,23 @@
       "references": [
         "BSI TR-03151-1 §4.12",
         "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 7,
+          "description": "Log-Datei erzeugt durch deleteLogMessages in Schritt 7"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 8"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 9,
+          "description": "Log-Datei erzeugt durch deleteLogMessages in Schritt 9"
+        }
       ]
     },
     {
@@ -462,7 +506,16 @@
         }
       ],
       "source_test": "II_DLM_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach deleteLogMessages (Schritt 11)"
+        }
+      }
     },
     {
       "step": 12,

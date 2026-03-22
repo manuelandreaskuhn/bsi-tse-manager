@@ -104,7 +104,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_ARCH_08"
+      "source_test": "SM_ARCH_08",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -130,7 +139,16 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_ARCH_08"
+      "source_test": "SM_ARCH_08",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 7)"
+        }
+      }
     },
     {
       "step": 8,
@@ -156,7 +174,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SM_ARCH_08"
+      "source_test": "SM_ARCH_08",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -182,7 +209,16 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "SM_ARCH_08"
+      "source_test": "SM_ARCH_08",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -267,7 +303,16 @@
         }
       ],
       "source_test": "SM_ARCH_08",
-      "notes": "Nur wenn Profil CSP_ENTITY aktiv"
+      "notes": "Nur wenn Profil CSP_ENTITY aktiv",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach registerClient (Schritt 13)"
+        }
+      }
     },
     {
       "step": 14,

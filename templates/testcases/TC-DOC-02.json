@@ -77,7 +77,16 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "DOC_ARCH_01"
+      "source_test": "DOC_ARCH_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,
@@ -103,7 +112,16 @@
         "BSI TR-03153-1 §6.3.1.7",
         "BSI TR-03151-1 §4.2"
       ],
-      "source_test": "DOC_ARCH_01"
+      "source_test": "DOC_ARCH_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 4)"
+        }
+      }
     },
     {
       "step": 5,

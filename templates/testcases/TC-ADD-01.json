@@ -50,7 +50,16 @@
           "result": null
         }
       ],
-      "source_test": "ADD_DOC_01"
+      "source_test": "ADD_DOC_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach setDescription (Schritt 2)"
+        }
+      }
     },
     {
       "step": 3,

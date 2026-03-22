@@ -98,7 +98,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_ERR_01"
+      "source_test": "II_ERR_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,
@@ -262,6 +271,13 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
+        }
+      ],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 3,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 3"
         }
       ]
     }

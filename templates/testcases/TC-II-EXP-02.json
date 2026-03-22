@@ -71,7 +71,16 @@
         "BSI TR-03151-1 §5.3.1"
       ],
       "source_test": "II_EXP_04",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 4)"
+        }
+      }
     },
     {
       "step": 5,
@@ -98,7 +107,16 @@
         "BSI TR-03151-1 §5.3.3"
       ],
       "source_test": "II_EXP_04",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,
@@ -1720,7 +1738,28 @@
         "BSI TR-03153-1 §6.4",
         "BSI TR-03151-1 §5.2"
       ],
-      "source_test": "II_EXP_04"
+      "source_test": "II_EXP_04",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLogMessages (Schritt 6)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 4,
+          "description": "Log-Datei erzeugt durch startTransaction in Schritt 4"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch finishTransaction in Schritt 5"
+        }
+      ]
     }
   ],
   "references": [

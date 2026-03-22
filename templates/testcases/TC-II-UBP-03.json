@@ -132,7 +132,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -168,7 +177,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -194,7 +212,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 10)"
+        }
+      }
     },
     {
       "step": 11,
@@ -220,7 +247,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 11)"
+        }
+      }
     },
     {
       "step": 12,
@@ -242,7 +278,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 12)"
+        }
+      }
     },
     {
       "step": 13,
@@ -304,7 +349,43 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 13)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 8"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 9,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 9"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 10,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 10"
+        },
+        {
+          "variable": "$sig4",
+          "from_step": 11,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 11"
+        },
+        {
+          "variable": "$sig5",
+          "from_step": 12,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 12"
+        }
+      ]
     },
     {
       "step": 14,
@@ -326,7 +407,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 14)"
+        }
+      }
     },
     {
       "step": 15,
@@ -348,7 +438,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig8",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 15)"
+        }
+      }
     },
     {
       "step": 16,
@@ -370,7 +469,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig9",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 16)"
+        }
+      }
     },
     {
       "step": 17,
@@ -432,7 +540,33 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig10",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 17)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig7",
+          "from_step": 14,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 14"
+        },
+        {
+          "variable": "$sig8",
+          "from_step": 15,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 15"
+        },
+        {
+          "variable": "$sig9",
+          "from_step": 16,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 16"
+        }
+      ]
     },
     {
       "step": 18,
@@ -454,7 +588,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig11",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 18)"
+        }
+      }
     },
     {
       "step": 19,
@@ -476,7 +619,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig12",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 19)"
+        }
+      }
     },
     {
       "step": 20,
@@ -538,7 +690,28 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_03"
+      "source_test": "II_UBP_03",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig13",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 20)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig11",
+          "from_step": 18,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 18"
+        },
+        {
+          "variable": "$sig12",
+          "from_step": 19,
+          "description": "Log-Datei erzeugt durch unblockPin in Schritt 19"
+        }
+      ]
     },
     {
       "step": 21,
@@ -589,7 +762,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_04"
+      "source_test": "II_UBP_04",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig14",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 22)"
+        }
+      }
     },
     {
       "step": 23,
@@ -615,7 +797,16 @@
           "result": null
         }
       ],
-      "source_test": "II_UBP_04"
+      "source_test": "II_UBP_04",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig15",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 23)"
+        }
+      }
     },
     {
       "step": 24,
@@ -642,7 +833,16 @@
         }
       ],
       "source_test": "II_UBP_04",
-      "notes": "Nur wenn Profil II_UPDATETIME aktiv"
+      "notes": "Nur wenn Profil II_UPDATETIME aktiv",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig16",
+          "field": "counterValue",
+          "description": "Signaturzähler nach unblockPin (Schritt 24)"
+        }
+      }
     }
   ],
   "references": [

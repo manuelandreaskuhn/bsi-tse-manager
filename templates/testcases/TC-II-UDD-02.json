@@ -107,7 +107,16 @@
         }
       ],
       "source_test": "II_UDD_02",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateDevice (Schritt 7)"
+        }
+      }
     },
     {
       "step": 8,
@@ -130,7 +139,16 @@
         }
       ],
       "source_test": "II_UDD_02",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateDevice (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -505,7 +523,19 @@
           "result": null
         }
       ],
-      "notes": "Nur wenn SM_REMOTE_COMPONENTS + UPDATE_EXTERNAL aktiv"
+      "notes": "Nur wenn SM_REMOTE_COMPONENTS + UPDATE_EXTERNAL aktiv",
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 7,
+          "description": "Log-Datei erzeugt durch updateDevice in Schritt 7"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch updateDevice in Schritt 8"
+        }
+      ]
     },
     {
       "step": 10,
@@ -589,7 +619,19 @@
         }
       ],
       "notes": "Nur wenn UPDATE_EXTERNAL_NOT_LOGGED aktiv",
-      "tar_validation": []
+      "tar_validation": [],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 7,
+          "description": "Log-Datei erzeugt durch updateDevice in Schritt 7"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch updateDevice in Schritt 8"
+        }
+      ]
     }
   ],
   "references": [

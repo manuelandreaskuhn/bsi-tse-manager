@@ -60,7 +60,16 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.15"
       ],
-      "source_test": "SM_AUD_01"
+      "source_test": "SM_AUD_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,
@@ -86,7 +95,16 @@
         "BSI TR-03153-1 §6.2",
         "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_AUD_01"
+      "source_test": "SM_AUD_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 4)"
+        }
+      }
     },
     {
       "step": 5,

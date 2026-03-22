@@ -109,7 +109,16 @@
           "condition": "mandatory",
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,
@@ -135,7 +144,16 @@
         "BSI TR-03153-1 §6.3.1.2"
       ],
       "source_test": "II_STE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -201,6 +219,27 @@
           "condition": "mandatory",
           "result": null
         }
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 7)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch runSelfTest in Schritt 5"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch runSelfTest in Schritt 6"
+        }
       ]
     },
     {
@@ -246,6 +285,27 @@
           "condition": "mandatory",
           "result": null
         }
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 8)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig2",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch runSelfTest in Schritt 6"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 7,
+          "description": "Log-Datei erzeugt durch runSelfTest in Schritt 7"
+        }
       ]
     },
     {
@@ -272,7 +332,16 @@
         "BSI TR-03153-1 §6.3.1.2"
       ],
       "source_test": "II_STE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -880,6 +949,22 @@
           "condition": "conditional",
           "result": null
         }
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 10)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig5",
+          "from_step": 9,
+          "description": "Log-Datei erzeugt durch runSelfTest in Schritt 9"
+        }
       ]
     },
     {
@@ -903,7 +988,16 @@
         }
       ],
       "source_test": "II_STE_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach runSelfTest (Schritt 11)"
+        }
+      }
     }
   ],
   "references": [

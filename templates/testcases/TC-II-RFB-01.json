@@ -117,7 +117,16 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLogMessages (Schritt 8)"
+        }
+      }
     },
     {
       "step": 9,
@@ -151,7 +160,16 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach restoreLogsFromBackup (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -239,6 +257,27 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.14",
         "BSI TR-03151-1"
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLogMessages (Schritt 10)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 8,
+          "description": "Log-Datei erzeugt durch exportLogMessages in Schritt 8"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 9,
+          "description": "Log-Datei erzeugt durch restoreLogsFromBackup in Schritt 9"
+        }
       ]
     },
     {
@@ -283,7 +322,16 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach restoreLogsFromBackup (Schritt 11)"
+        }
+      }
     },
     {
       "step": 12,
@@ -343,6 +391,22 @@
       ],
       "references": [
         "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLogMessages (Schritt 12)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig4",
+          "from_step": 11,
+          "description": "Log-Datei erzeugt durch restoreLogsFromBackup in Schritt 11"
+        }
       ]
     },
     {
@@ -377,7 +441,16 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach restoreLogsFromBackup (Schritt 13)"
+        }
+      }
     },
     {
       "step": 14,
@@ -409,7 +482,16 @@
           ],
           "result": null
         }
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach restoreLogsFromBackup (Schritt 14)"
+        }
+      }
     }
   ],
   "references": [

@@ -104,7 +104,16 @@
         "BSI TR-03151-1 §4.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,
@@ -131,7 +140,16 @@
         "BSI TR-03151-1 §4.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -158,7 +176,16 @@
         "BSI TR-03151-1 §4.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 7)"
+        }
+      }
     },
     {
       "step": 8,
@@ -195,7 +222,16 @@
         "BSI TR-03151-1 §4.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 9)"
+        }
+      }
     },
     {
       "step": 10,
@@ -222,7 +258,16 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig5",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 10)"
+        }
+      }
     },
     {
       "step": 11,
@@ -249,7 +294,16 @@
         "BSI TR-03151-1 §5.3.1"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig6",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 11)"
+        }
+      }
     },
     {
       "step": 12,
@@ -275,7 +329,16 @@
         "BSI TR-03153-1 §6.3.1.1"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig7",
+          "field": "counterValue",
+          "description": "Signaturzähler nach initialize (Schritt 12)"
+        }
+      }
     },
     {
       "step": 13,
@@ -301,7 +364,16 @@
         "BSI TR-03153-1 §6.3.1.13"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig8",
+          "field": "counterValue",
+          "description": "Signaturzähler nach registerClient (Schritt 13)"
+        }
+      }
     },
     {
       "step": 14,
@@ -328,7 +400,16 @@
         "BSI TR-03151-1 §5.3.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig9",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTransaction (Schritt 14)"
+        }
+      }
     },
     {
       "step": 15,
@@ -355,7 +436,16 @@
         "BSI TR-03151-1 §5.3.3"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig10",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 15)"
+        }
+      }
     },
     {
       "step": 16,
@@ -382,7 +472,16 @@
         "BSI TR-03151-1 §6.2"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig11",
+          "field": "counterValue",
+          "description": "Signaturzähler nach authenticateUser (Schritt 16)"
+        }
+      }
     },
     {
       "step": 17,
@@ -408,7 +507,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig12",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 17)"
+        }
+      }
     },
     {
       "step": 18,
@@ -434,7 +542,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig13",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 18)"
+        }
+      }
     },
     {
       "step": 19,
@@ -460,7 +577,16 @@
         "BSI TR-03153-1 §6.3.1.15"
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig14",
+          "field": "counterValue",
+          "description": "Signaturzähler nach disableSecureElement (Schritt 19)"
+        }
+      }
     },
     {
       "step": 20,
@@ -496,7 +622,16 @@
         }
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig15",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 20)"
+        }
+      }
     },
     {
       "step": 21,
@@ -519,7 +654,16 @@
         }
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig16",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 21)"
+        }
+      }
     },
     {
       "step": 22,
@@ -565,7 +709,16 @@
         }
       ],
       "source_test": "SM_TME_01",
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig17",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTime (Schritt 22)"
+        }
+      }
     },
     {
       "step": 23,
@@ -1375,7 +1528,103 @@
         "BSI TR-03153-1 §6.4",
         "BSI TR-03151-1 §5.2"
       ],
-      "source_test": "SM_TME_01"
+      "source_test": "SM_TME_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig18",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLogMessages (Schritt 23)"
+        }
+      },
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 5,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 5"
+        },
+        {
+          "variable": "$sig2",
+          "from_step": 6,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 6"
+        },
+        {
+          "variable": "$sig3",
+          "from_step": 7,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 7"
+        },
+        {
+          "variable": "$sig4",
+          "from_step": 9,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 9"
+        },
+        {
+          "variable": "$sig5",
+          "from_step": 10,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 10"
+        },
+        {
+          "variable": "$sig6",
+          "from_step": 11,
+          "description": "Log-Datei erzeugt durch startTransaction in Schritt 11"
+        },
+        {
+          "variable": "$sig7",
+          "from_step": 12,
+          "description": "Log-Datei erzeugt durch initialize in Schritt 12"
+        },
+        {
+          "variable": "$sig8",
+          "from_step": 13,
+          "description": "Log-Datei erzeugt durch registerClient in Schritt 13"
+        },
+        {
+          "variable": "$sig9",
+          "from_step": 14,
+          "description": "Log-Datei erzeugt durch updateTransaction in Schritt 14"
+        },
+        {
+          "variable": "$sig10",
+          "from_step": 15,
+          "description": "Log-Datei erzeugt durch finishTransaction in Schritt 15"
+        },
+        {
+          "variable": "$sig11",
+          "from_step": 16,
+          "description": "Log-Datei erzeugt durch authenticateUser in Schritt 16"
+        },
+        {
+          "variable": "$sig12",
+          "from_step": 17,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 17"
+        },
+        {
+          "variable": "$sig13",
+          "from_step": 18,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 18"
+        },
+        {
+          "variable": "$sig14",
+          "from_step": 19,
+          "description": "Log-Datei erzeugt durch disableSecureElement in Schritt 19"
+        },
+        {
+          "variable": "$sig15",
+          "from_step": 20,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 20"
+        },
+        {
+          "variable": "$sig16",
+          "from_step": 21,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 21"
+        },
+        {
+          "variable": "$sig17",
+          "from_step": 22,
+          "description": "Log-Datei erzeugt durch updateTime in Schritt 22"
+        }
+      ]
     },
     {
       "step": 24,

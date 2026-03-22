@@ -396,7 +396,16 @@
           "result": null
         }
       ],
-      "source_test": "II_CNC_01"
+      "source_test": "II_CNC_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "admin",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportSerialNumbers (Schritt 26)"
+        }
+      }
     },
     {
       "step": 27,
@@ -508,7 +517,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "II_CNC_01"
+      "source_test": "II_CNC_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 30)"
+        }
+      }
     },
     {
       "step": 31,
@@ -566,7 +584,16 @@
         "BSI TR-03153-1 §6.3.1.5",
         "BSI TR-03151-1 §5.3.2"
       ],
-      "source_test": "II_CNC_01"
+      "source_test": "II_CNC_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig3",
+          "field": "counterValue",
+          "description": "Signaturzähler nach updateTransaction (Schritt 32)"
+        }
+      }
     },
     {
       "step": 33,
@@ -592,7 +619,16 @@
         "BSI TR-03153-1 §6.3.1.6",
         "BSI TR-03151-1 §5.3.3"
       ],
-      "source_test": "II_CNC_01"
+      "source_test": "II_CNC_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig4",
+          "field": "counterValue",
+          "description": "Signaturzähler nach finishTransaction (Schritt 33)"
+        }
+      }
     },
     {
       "step": 34,

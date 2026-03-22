@@ -67,7 +67,16 @@
           "result": null
         }
       ],
-      "source_test": "SM_PKI_04"
+      "source_test": "SM_PKI_04",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportSerialNumbers (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,

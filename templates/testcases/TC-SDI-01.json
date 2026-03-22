@@ -112,7 +112,16 @@
         "BSI TR-03153-1 §6.3.1.4",
         "BSI TR-03151-1 §5.3.1"
       ],
-      "source_test": "SDI_IMP_01"
+      "source_test": "SDI_IMP_01",
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach startTransaction (Schritt 5)"
+        }
+      }
     },
     {
       "step": 6,

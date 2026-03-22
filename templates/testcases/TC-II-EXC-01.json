@@ -1111,7 +1111,16 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.17",
         "BSI TR-03151-1"
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLoggingCertificates (Schritt 6)"
+        }
+      }
     },
     {
       "step": 7,
@@ -1136,7 +1145,16 @@
         "BSI TR-03153-1 §6.3.1.17",
         "BSI TR-03151-1"
       ],
-      "tar_validation": []
+      "tar_validation": [],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "logger",
+        "capture": {
+          "variable": "$sig2",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLoggingCertificates (Schritt 7)"
+        }
+      }
     }
   ],
   "references": [

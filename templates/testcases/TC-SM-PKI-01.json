@@ -771,7 +771,16 @@
       "references": [
         "BSI TR-03153-1 §6.3.1.17",
         "BSI TR-03151-1"
-      ]
+      ],
+      "post_execution": {
+        "function": "getCurrentLoggingSignatureCounters",
+        "user": "unauthenticated",
+        "capture": {
+          "variable": "$sig1",
+          "field": "counterValue",
+          "description": "Signaturzähler nach exportLoggingCertificates (Schritt 3)"
+        }
+      }
     },
     {
       "step": 4,
@@ -970,6 +979,13 @@
           "outcome_type": "PASS_WARN_FAIL",
           "condition": "mandatory",
           "result": null
+        }
+      ],
+      "log_file_scope": [
+        {
+          "variable": "$sig1",
+          "from_step": 3,
+          "description": "Log-Datei erzeugt durch exportLoggingCertificates in Schritt 3"
         }
       ]
     }
