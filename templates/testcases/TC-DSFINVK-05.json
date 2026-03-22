@@ -124,7 +124,7 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "finishTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
@@ -191,7 +191,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "startTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",

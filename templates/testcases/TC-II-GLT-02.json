@@ -130,7 +130,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getLastTransactionLogMessage aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der zuletzt erzeugten Transaktions-Log-Nachricht. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",

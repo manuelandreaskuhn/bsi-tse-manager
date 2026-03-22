@@ -206,7 +206,7 @@
     },
     {
       "step": 12,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCurrentSignatureCounter aufrufen",
       "result": null,
       "instruction": "Prüfung der Herstellerdokumentation, ob zu jeder Zeit genau eine CSP-Einheit im Cluster als Master den Signaturschlüssel aktiv verwendet und ob die anderen CSP-Einheiten den Signaturzähler des jeweiligen Masters für den Signaturschlüssel synchronisieren.",

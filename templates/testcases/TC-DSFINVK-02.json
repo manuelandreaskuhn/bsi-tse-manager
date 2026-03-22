@@ -88,107 +88,23 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
-      "title": "startTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $starttime1 = signatureCreationTime, $serial = serialNumber, $sig1 = signatureCounter, $signature1 = signatureValue.",
-      "function": "startTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_STA_01",
-      "tar_validation": []
-    },
-    {
-      "step": 6,
-      "type": "SETUP",
-      "title": "finishTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
-      "function": "finishTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6",
-        "BSI TR-03151-1 §5.3.3"
-      ],
-      "source_test": "II_STA_01",
-      "tar_validation": []
-    },
-    {
-      "step": 7,
       "type": "VERIFY",
-      "title": "Kassenbeleg-V1 (Standardverkauf) protokollieren",
+      "title": "startTransaction aufrufen / Kassenbeleg-V1 (Standardverkauf) protokollieren",
       "result": null,
-      "instruction": "Kassenbeleg-V1 (Standardverkauf) protokollieren\n\nAufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.",
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $starttime1 = signatureCreationTime, $serial = serialNumber, $sig1 = signatureCounter, $signature1 = signatureValue.\n\nKassenbeleg-V1 (Standardverkauf) protokollieren",
       "function": "startTransaction",
       "user": "logger",
       "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
         {
           "description": "Transaktion erfolgreich",
           "expected": "Kein Fehler",
@@ -353,6 +269,11 @@
           "rule_id": "LOG_FIELD_ADD_EXT_ABSENT"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_STA_01",
       "tar_validation": [
         {
           "check_id": "LOG_TXN_OPTYPE",
@@ -446,14 +367,93 @@
           "result": null
         }
       ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_STA_01"
+      "expected_return": {
+        "transactionNumber": {
+          "variable": "$tn1"
+        },
+        "signatureCreationTime": {
+          "variable": "$starttime1"
+        },
+        "serialNumber": {
+          "variable": "$serial"
+        },
+        "signatureCounter": {
+          "variable": "$sig1"
+        },
+        "signatureValue": {
+          "variable": "$signature1"
+        }
+      }
     },
     {
-      "step": 8,
+      "step": 6,
+      "type": "VERIFY",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_STA_01",
+      "tar_validation": []
+    },
+    {
+      "step": 7,
       "type": "ACTION",
       "title": "Storno-Kassenbeleg protokollieren",
       "result": null,
@@ -480,7 +480,7 @@
       "tar_validation": []
     },
     {
-      "step": 9,
+      "step": 8,
       "type": "ACTION",
       "title": "Einlage (SonstigerVorgang) protokollieren",
       "result": null,
@@ -507,7 +507,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "ACTION",
       "title": "Entnahme (SonstigerVorgang) protokollieren",
       "result": null,
@@ -534,7 +534,7 @@
       "tar_validation": []
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "VERIFY",
       "title": "Alle processTypes im TAR prüfen",
       "result": null,

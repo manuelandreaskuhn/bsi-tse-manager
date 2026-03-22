@@ -282,7 +282,7 @@
     },
     {
       "step": 23,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCurrentNumberOfClients aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Anzahl von Aufzeichnungssystemen, die aktuell an nicht beendeten Transaktionen beteiligt sind.",
@@ -314,7 +314,7 @@
     },
     {
       "step": 24,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getMaxNumberOfClients aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der maximalen Anzahl von Aufzeichnungssystemen, die gleichzeitig Transaktionen protokollieren können.",
@@ -346,7 +346,7 @@
     },
     {
       "step": 25,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getRegisteredClients aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell registrierten Aufzeichnungssysteme.",
@@ -400,7 +400,7 @@
     },
     {
       "step": 27,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCurrentNumberOfTransactions aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Anzahl von offenen Transaktionen.",
@@ -454,7 +454,7 @@
     },
     {
       "step": 29,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getMaxNumberOfTransactions aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der maximalen Anzahl von offenen Transaktionen, die gleichzeitig von der Technischen Sicherheitseinrichtung verwaltet werden können.",
@@ -512,7 +512,7 @@
     },
     {
       "step": 31,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getTransactionState aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des Stadiums in welchem sich eine Transaktion befindet. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.",
@@ -640,7 +640,7 @@
     },
     {
       "step": 36,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getOpenTransactions aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Transaktionsnummern aller nicht beendeten Transaktionen.",
@@ -704,7 +704,7 @@
     },
     {
       "step": 38,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCurrentTransactionCounter aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Transaktionszählers.",

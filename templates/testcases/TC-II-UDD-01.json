@@ -116,10 +116,10 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
-      "title": "updateDevice aufrufen",
+      "type": "VERIFY",
+      "title": "updateDevice aufrufen / Geräte-Update durchführen via updateDevice",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Installation von Updates für die TSE. Es wird ein Fehler provoziert, der bewirkt, dass das Update vollständig fehlschlägt.",
+      "instruction": "Aufruf der Funktionalität zur Installation von Updates für die TSE. Es wird ein Fehler provoziert, der bewirkt, dass das Update vollständig fehlschlägt.\n\nTAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateDevice → eventType \"updateDevice / updateDeviceCompleted\" (alt: updateDeviceCompleted) ──\n  • System-Log-Datei mit eventType=\"updateDeviceCompleted\" im TAR-Container vorhanden (MUSS)\n  • System-Log-Datei mit eventType=\"updateDevice\" im TAR-Container vorhanden (SOLLTE, wenn direkt via updateDevice aufgerufen)\n  • updateDevice-Log enthält: componentName, manufacturer, model, version für alle aktualisierten Komponenten\n  • updateDeviceCompleted-Log enthält neuen Versionsstand aller Komponenten (ggf. certificationID)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "updateDevice",
       "user": "admin",
       "checks": [
@@ -132,74 +132,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "source_test": "II_UDD_01",
-      "tar_validation": []
-    },
-    {
-      "step": 8,
-      "type": "SETUP",
-      "title": "startTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
-      "function": "startTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_UDD_01",
-      "tar_validation": []
-    },
-    {
-      "step": 9,
-      "type": "SETUP",
-      "title": "Nutzer admin authentifizieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
-      "function": "authenticateUser",
-      "user": "admin",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.2",
-        "BSI TR-03151-1 §6.2"
-      ],
-      "source_test": "II_UDD_01",
-      "tar_validation": []
-    },
-    {
-      "step": 10,
-      "type": "VERIFY",
-      "title": "Geräte-Update durchführen via updateDevice",
-      "result": null,
-      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateDevice → eventType \"updateDevice / updateDeviceCompleted\" (alt: updateDeviceCompleted) ──\n  • System-Log-Datei mit eventType=\"updateDeviceCompleted\" im TAR-Container vorhanden (MUSS)\n  • System-Log-Datei mit eventType=\"updateDevice\" im TAR-Container vorhanden (SOLLTE, wenn direkt via updateDevice aufgerufen)\n  • updateDevice-Log enthält: componentName, manufacturer, model, version für alle aktualisierten Komponenten\n  • updateDeviceCompleted-Log enthält neuen Versionsstand aller Komponenten (ggf. certificationID)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
-      "function": "updateDevice",
-      "user": "admin",
-      "checks": [
+        },
         {
           "description": "Update erfolgreich abgeschlossen, kein Fehler",
           "expected": "errorCode = None",
@@ -501,6 +434,7 @@
           "rule_id": "EXP_LOG_01_UPDATE_DEVICE"
         }
       ],
+      "source_test": "II_UDD_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -643,14 +577,67 @@
           "result": null
         }
       ],
-      "source_test": "II_UDD_01",
       "references": [
         "BSI TR-03151-1 §4.8 / BSI TR-03153-1 §9.10",
         "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {
-      "step": 11,
+      "step": 8,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_UDD_01",
+      "tar_validation": []
+    },
+    {
+      "step": 9,
+      "type": "SETUP",
+      "title": "Nutzer admin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin.",
+      "function": "authenticateUser",
+      "user": "admin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "II_UDD_01",
+      "tar_validation": []
+    },
+    {
+      "step": 10,
       "type": "VERIFY",
       "title": "Offline-Update fernverbundener Komponenten (SM_REMOTE_COMPONENTS, UPDATE_EXTE...",
       "result": null,
@@ -1017,7 +1004,7 @@
       "notes": "Nur wenn SM_REMOTE_COMPONENTS + UPDATE_EXTERNAL aktiv"
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "VERIFY",
       "title": "Offline-Update Speichermedium (STORAGE_REMOTE, UPDATE_EXTERNAL)",
       "result": null,
@@ -1381,7 +1368,7 @@
       "notes": "Nur wenn STORAGE_REMOTE + UPDATE_EXTERNAL aktiv"
     },
     {
-      "step": 13,
+      "step": 12,
       "type": "VERIFY",
       "title": "Externes Update mit Start-Log (UPDATE_EXTERNAL_LOGGED)",
       "result": null,
@@ -1412,7 +1399,7 @@
       "tar_validation": []
     },
     {
-      "step": 14,
+      "step": 13,
       "type": "VERIFY",
       "title": "Externes Update ohne Start-Log (UPDATE_EXTERNAL_NOT_LOGGED)",
       "result": null,
@@ -1443,7 +1430,7 @@
       "tar_validation": []
     },
     {
-      "step": 15,
+      "step": 14,
       "type": "NEGATIVE",
       "title": "Fehlerfälle: updateDevice – ErrorOpenTransactionFound, fehlgeschlagenes Update",
       "result": null,

@@ -136,7 +136,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "updateTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Für forceSignature wird FALSE übergeben.",
@@ -335,7 +335,7 @@
     },
     {
       "step": 15,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Zeit aktualisieren",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container. Die Prüfung wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE durchgeführt.",

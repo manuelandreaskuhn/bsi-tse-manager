@@ -82,7 +82,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCurrentSignatureCounter aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des aktuellen Stands des Signaturzählers.",

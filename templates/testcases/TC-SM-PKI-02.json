@@ -39,7 +39,7 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "exportSerialNumbers aufrufen",
       "result": null,
       "instruction": "Prüfung, ob der Hersteller eine korrekte Anleitung bereitstellt, wie über den Verzeichnisdienst Zertifikate von Technischen Sicherheitseinrichtungen gesucht und heruntergeladen werden können. Praktisch wird insbesondere geprüft, ob Technische Sicherheitseinrichtungen über ihre Seriennummern gesucht werden können.",

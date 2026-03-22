@@ -156,7 +156,7 @@
     },
     {
       "step": 10,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "setDescription aufrufen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Erstellen oder Ändern der Beschreibung der TSE in dem TAR-Container.",

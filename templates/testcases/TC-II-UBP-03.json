@@ -100,7 +100,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Nutzer logger authentifizieren",
       "result": null,
       "instruction": "Wiederholter Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Der Funktionsaufruf wird so oft wiederholt, dass sicher darauf geschlossen werden kann, dass die Maßnahme den Erfolg von andauernden Rateversuchen verhindert bzw. erkennbar ist, dass das Erraten der PUK unterbunden wird.",
@@ -136,7 +136,7 @@
     },
     {
       "step": 9,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Nutzer logger authentifizieren",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Entsperren der PIN eines autorisierten Nutzers. Der Aufruf wird mehrere Male wiederholt. Der Funktion wird die User-ID des Nutzers, dessen PIN-Eingabe für die Authentifizierung blockiert ist, und eine neue PIN übergeben. Die übergebene PUK ist nicht korrekt. Die Funktionalität wird aufgerufen, bis der Mechanismus zum Schutz vor der Password Guessing Attack greift.",
@@ -246,7 +246,7 @@
     },
     {
       "step": 13,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "unblockPin aufrufen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in den Log-Nachrichten für das Entsperren der PIN des Nutzers in dem TAR-Container. Es werden die Aufrufe aus Testschritt 1 betrachtet, welche vor dem Greifen des Schutzes vor Password Guessing Attack erstellt wurden.",
@@ -374,7 +374,7 @@
     },
     {
       "step": 17,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "unblockPin aufrufen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers admin in dem TAR-Container.",
@@ -480,7 +480,7 @@
     },
     {
       "step": 20,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "unblockPin aufrufen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für das Entsperren der PIN des Nutzers timeadmin in dem TAR-Container.",

@@ -68,7 +68,7 @@
     },
     {
       "step": 4,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getDeviceHealth aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe von Zustandsdaten der TSE.",
@@ -122,7 +122,7 @@
     },
     {
       "step": 6,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getComponentVersions aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe von Versionsinformationen über die TSE.",
@@ -176,7 +176,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getEndOfUsageDate aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",

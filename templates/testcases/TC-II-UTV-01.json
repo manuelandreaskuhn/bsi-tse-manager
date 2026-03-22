@@ -74,7 +74,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getUpdateVariants aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der möglichen Varianten, wie Updates für Transaktionen durchgeführt werden können.",

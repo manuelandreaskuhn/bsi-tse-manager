@@ -316,10 +316,10 @@
     },
     {
       "step": 15,
-      "type": "SETUP",
-      "title": "Aufzeichnungssystem registrieren",
+      "type": "VERIFY",
+      "title": "Aufzeichnungssystem registrieren / Client registrieren und Transaktionen testen",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass das Aufzeichnungssystem nicht registriert werden kann.",
+      "instruction": "Aufruf der Funktionalität zur Registrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass das Aufzeichnungssystem nicht registriert werden kann.\n\nTAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── registerClient → eventType \"registerClient\" ──\n  • System-Log-Datei mit eventType=\"registerClient\" im TAR-Container vorhanden\n  • eventOrigin = integration-interface\n  • clientId des registrierten Systems in eventData vorhanden (REG_LOG_CLIENTID_PRESENT)\n\n── deregisterClient → eventType \"deregisterClient\" ──\n  • System-Log-Datei mit eventType=\"deregisterClient\" im TAR-Container vorhanden (DRC_LOG_PRESENT)\n  • eventOrigin = integration-interface (DRC_LOG_EVORIGIN)\n  • clientId des deregistrierten Systems in eventData vorhanden und korrekt (DRC_LOG_CLIENTID)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "registerClient",
       "user": "logger",
       "checks": [
@@ -332,158 +332,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.13"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 16,
-      "type": "SETUP",
-      "title": "Aufzeichnungssystem deregistrieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
-      "function": "deregisterClient",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.14"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 17,
-      "type": "SETUP",
-      "title": "startTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
-      "function": "startTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 18,
-      "type": "SETUP",
-      "title": "finishTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
-      "function": "finishTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6",
-        "BSI TR-03151-1 §5.3.3"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 19,
-      "type": "SETUP",
-      "title": "Aufzeichnungssystem deregistrieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird die Seriennummer eines Aufzeichnungssystems übergeben, das nicht registriert ist.",
-      "function": "deregisterClient",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered  ausgelöst.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.14"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 20,
-      "type": "SETUP",
-      "title": "Aufzeichnungssystem deregistrieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass die Deregistrierung nicht erfolgreich durchgeführt werden und die erfolgreiche Ausführung der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion mit der übergebenen Seriennummer eines Aufzeichnungssystems nicht verhindert werden kann.",
-      "function": "deregisterClient",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorDeregisterClientFailed ausgelöst.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.14"
-      ],
-      "source_test": "II_REC_01",
-      "tar_validation": []
-    },
-    {
-      "step": 21,
-      "type": "VERIFY",
-      "title": "Client registrieren und Transaktionen testen",
-      "result": null,
-      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── registerClient → eventType \"registerClient\" ──\n  • System-Log-Datei mit eventType=\"registerClient\" im TAR-Container vorhanden\n  • eventOrigin = integration-interface\n  • clientId des registrierten Systems in eventData vorhanden (REG_LOG_CLIENTID_PRESENT)\n\n── deregisterClient → eventType \"deregisterClient\" ──\n  • System-Log-Datei mit eventType=\"deregisterClient\" im TAR-Container vorhanden (DRC_LOG_PRESENT)\n  • eventOrigin = integration-interface (DRC_LOG_EVORIGIN)\n  • clientId des deregistrierten Systems in eventData vorhanden und korrekt (DRC_LOG_CLIENTID)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
-      "function": "registerClient",
-      "user": "logger",
-      "parameters": {
-        "clientId": "<gültige Seriennummer mit allen erlaubten Zeichen>"
-      },
-      "checks": [
+        },
         {
           "description": "Registrierung erfolgreich",
           "expected": "Kein Fehler",
@@ -851,6 +700,12 @@
           "rule_id": "EXP_LOG_01_DEREGISTER_CLIENT"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.13",
+        "BSI TR-03151-1 §4.11",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "source_test": "II_REC_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -1035,14 +890,144 @@
           "result": null
         }
       ],
-      "source_test": "II_REC_01",
-      "references": [
-        "BSI TR-03151-1 §4.11",
-        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
-      ]
+      "parameters": {
+        "clientId": "<gültige Seriennummer mit allen erlaubten Zeichen>"
+      }
     },
     {
-      "step": 22,
+      "step": 16,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01",
+      "tar_validation": []
+    },
+    {
+      "step": 17,
+      "type": "SETUP",
+      "title": "startTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_REC_01",
+      "tar_validation": []
+    },
+    {
+      "step": 18,
+      "type": "SETUP",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client2 übergeben.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_REC_01",
+      "tar_validation": []
+    },
+    {
+      "step": 19,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird die Seriennummer eines Aufzeichnungssystems übergeben, das nicht registriert ist.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorClientNotRegistered  ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01",
+      "tar_validation": []
+    },
+    {
+      "step": 20,
+      "type": "SETUP",
+      "title": "Aufzeichnungssystem deregistrieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Deregistrierung von Aufzeichnungssystemen. Es wird ein Fehler provoziert, der bewirkt, dass die Deregistrierung nicht erfolgreich durchgeführt werden und die erfolgreiche Ausführung der Funktionalitäten für das Starten, für die Aktualisierung und zum Beenden von Transaktion mit der übergebenen Seriennummer eines Aufzeichnungssystems nicht verhindert werden kann.",
+      "function": "deregisterClient",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorDeregisterClientFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.14"
+      ],
+      "source_test": "II_REC_01",
+      "tar_validation": []
+    },
+    {
+      "step": 21,
       "type": "NEGATIVE",
       "title": "Fehlerfälle bei Registrierung",
       "result": null,
@@ -1095,7 +1080,7 @@
       "tar_validation": []
     },
     {
-      "step": 23,
+      "step": 22,
       "type": "VERIFY",
       "title": "Client deregistrieren",
       "result": null,
@@ -1255,7 +1240,7 @@
       "source_test": "II_REC_01"
     },
     {
-      "step": 24,
+      "step": 23,
       "type": "NEGATIVE",
       "title": "Fehlerfälle bei Deregistrierung",
       "result": null,

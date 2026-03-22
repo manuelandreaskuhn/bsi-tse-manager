@@ -192,124 +192,16 @@
     },
     {
       "step": 9,
-      "type": "SETUP",
-      "title": "finishTransaction aufrufen",
+      "type": "VERIFY",
+      "title": "finishTransaction aufrufen / Alle Transaktionen beenden und TAR validieren",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.",
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.\n\nAlle Transaktionen beenden und TAR validieren\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
       "function": "finishTransaction",
       "user": "logger",
       "checks": [
         {
           "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
           "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6",
-        "BSI TR-03151-1 §5.3.3"
-      ],
-      "source_test": "SM_CON_06",
-      "tar_validation": []
-    },
-    {
-      "step": 10,
-      "type": "SETUP",
-      "title": "Nutzer timeadmin authentifizieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.",
-      "function": "authenticateUser",
-      "user": "timeadmin",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.2",
-        "BSI TR-03151-1 §6.2"
-      ],
-      "source_test": "SM_CON_06",
-      "tar_validation": []
-    },
-    {
-      "step": 11,
-      "type": "SETUP",
-      "title": "Zeit aktualisieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
-      "function": "updateTime",
-      "user": "timeadmin",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.7",
-        "BSI TR-03151-1 §4.2"
-      ],
-      "source_test": "SM_CON_06",
-      "tar_validation": []
-    },
-    {
-      "step": 12,
-      "type": "SETUP",
-      "title": "Nutzer logger authentifizieren",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
-      "function": "authenticateUser",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.2",
-        "BSI TR-03151-1 §6.2"
-      ],
-      "source_test": "SM_CON_06",
-      "tar_validation": []
-    },
-    {
-      "step": 13,
-      "type": "ACTION",
-      "title": "Mehrere Transaktionen parallel starten und versetzt aktualisieren",
-      "result": null,
-      "instruction": "Mehrere Transaktionen parallel starten und versetzt aktualisieren\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
-      "function": "startTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Signaturzähler monoton steigend über alle parallelen Operationen",
-          "expected": "Keine Lücken",
           "result_options": [
             "pass",
             "fail",
@@ -317,33 +209,6 @@
           ],
           "result": null
         },
-        {
-          "description": "Jede Transaktion behält ihre eigene Transaktionsnummer",
-          "expected": "Eindeutigkeit",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "SM_CON_06",
-      "tar_validation": []
-    },
-    {
-      "step": 14,
-      "type": "VERIFY",
-      "title": "Alle Transaktionen beenden und TAR validieren",
-      "result": null,
-      "instruction": "Alle Transaktionen beenden und TAR validieren\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
-      "function": "finishTransaction",
-      "user": "logger",
-      "checks": [
         {
           "description": "Alle parallelen Transaktionen vollständig im TAR",
           "expected": "`F ⊆ S` ist erfüllt. Anzahl der vollständigen (Start + Finish)",
@@ -939,6 +804,11 @@
           "rule_id": "SIG_CTR_OVERFLOW_CHECK"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "SM_CON_06",
       "tar_validation": [
         {
           "check_id": "EXP_TAR_01",
@@ -1317,20 +1187,126 @@
           "outcome_type": "PASS_FAIL",
           "condition": "mandatory",
           "result": null
-        },
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "type": "SETUP",
+      "title": "Nutzer timeadmin authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers timeadmin.",
+      "function": "authenticateUser",
+      "user": "timeadmin",
+      "checks": [
         {
-          "check_id": "SIG_VERIFY_CONCAT",
-          "title": "Korrektheit der Feldkonkatenation",
-          "outcome_type": "PASS_FAIL",
-          "condition": "mandatory",
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
           "result": null
         }
       ],
       "references": [
-        "BSI TR-03153-1 §6.3.1.6",
-        "BSI TR-03151-1 §5.3.3"
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
       ],
-      "source_test": "SM_CON_06"
+      "source_test": "SM_CON_06",
+      "tar_validation": []
+    },
+    {
+      "step": 11,
+      "type": "SETUP",
+      "title": "Zeit aktualisieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Aktualisierung der Zeit innerhalb des Sicherheitsmoduls.",
+      "function": "updateTime",
+      "user": "timeadmin",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2"
+      ],
+      "source_test": "SM_CON_06",
+      "tar_validation": []
+    },
+    {
+      "step": 12,
+      "type": "SETUP",
+      "title": "Nutzer logger authentifizieren",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers logger.",
+      "function": "authenticateUser",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.2",
+        "BSI TR-03151-1 §6.2"
+      ],
+      "source_test": "SM_CON_06",
+      "tar_validation": []
+    },
+    {
+      "step": 13,
+      "type": "ACTION",
+      "title": "Mehrere Transaktionen parallel starten und versetzt aktualisieren",
+      "result": null,
+      "instruction": "Mehrere Transaktionen parallel starten und versetzt aktualisieren\n\nAufruf der Funktionalität für das Starten einer Transaktion.",
+      "function": "startTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Signaturzähler monoton steigend über alle parallelen Operationen",
+          "expected": "Keine Lücken",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Jede Transaktion behält ihre eigene Transaktionsnummer",
+          "expected": "Eindeutigkeit",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "SM_CON_06",
+      "tar_validation": []
     }
   ],
   "references": [

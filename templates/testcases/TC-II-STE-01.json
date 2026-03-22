@@ -68,7 +68,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "runSelfTest aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests.",
@@ -139,7 +139,7 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "runSelfTest aufrufen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Auslösung des Selbsttests in dem TAR-Container.",
@@ -205,7 +205,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "runSelfTest aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests. Es wird ein Fehler provoziert, der dazu führt, dass ein Selbsttest fehlschlägt.",
@@ -276,10 +276,10 @@
     },
     {
       "step": 10,
-      "type": "SETUP",
-      "title": "runSelfTest aufrufen",
+      "type": "VERIFY",
+      "title": "runSelfTest aufrufen / Selbsttest auslösen",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests. Es wird ein Fehler provoziert, der dazu führt, dass der Selbsttest abgebrochen wird.",
+      "instruction": "Aufruf der Funktionalität zur Auslösung eines Selbsttests. Es wird ein Fehler provoziert, der dazu führt, dass der Selbsttest abgebrochen wird.\n\nTAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── runSelfTest (intern fehlgeschlagen) → eventType \"selfTest (intern fehlgeschlagen)\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" UND eventOrigin ∈ {\"SMA\", \"CSP\"} im TAR-Container vorhanden\n  • eventTriggeredByUser DARF NICHT vorhanden sein (Tabelle 16: intern ausgelöster Selbsttest)\n  • Abzugrenzen von extern ausgelöstem selfTest: eventOrigin ≠ integration-interface\n\n── runSelfTest → eventType \"selfTest\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" im TAR-Container vorhanden\n  • Extern ausgelöst: eventOrigin = integration-interface\n  • Extern ausgelöst: eventTriggeredByUser MUSS gesetzt sein (EVDATA_SELFTEST_TRIGGER)\n  • selfTest-Ereignis ist zeitunabhängig – darf vor updateTime auftreten (TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "runSelfTest",
       "user": "logger",
       "checks": [
@@ -292,29 +292,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.2"
-      ],
-      "source_test": "II_STE_01",
-      "tar_validation": []
-    },
-    {
-      "step": 11,
-      "type": "VERIFY",
-      "title": "Selbsttest auslösen",
-      "result": null,
-      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── runSelfTest (intern fehlgeschlagen) → eventType \"selfTest (intern fehlgeschlagen)\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" UND eventOrigin ∈ {\"SMA\", \"CSP\"} im TAR-Container vorhanden\n  • eventTriggeredByUser DARF NICHT vorhanden sein (Tabelle 16: intern ausgelöster Selbsttest)\n  • Abzugrenzen von extern ausgelöstem selfTest: eventOrigin ≠ integration-interface\n\n── runSelfTest → eventType \"selfTest\" ──\n  • System-Log-Datei mit eventType=\"selfTest\" im TAR-Container vorhanden\n  • Extern ausgelöst: eventOrigin = integration-interface\n  • Extern ausgelöst: eventTriggeredByUser MUSS gesetzt sein (EVDATA_SELFTEST_TRIGGER)\n  • selfTest-Ereignis ist zeitunabhängig – darf vor updateTime auftreten (TIMESET_SELFTEST_MAY_PRECEDE_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
-      "function": "runSelfTest",
-      "user": "logger",
-      "expected_return": {
-        "selfTestResults": {
-          "type": "STRUCTURE",
-          "constraint": "Gemäß Spezifikation; bestanden"
-        }
-      },
-      "checks": [
+        },
         {
           "description": "Selbsttest erfolgreich ausgelöst",
           "expected": "Kein Fehler",
@@ -719,6 +697,13 @@
           "rule_id": "EXP_LOG_01_SELFTEST_FAILED"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.2",
+        "BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5",
+        "BSI TR-03153-1 §9.8.5 / Tabelle 16",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "source_test": "II_STE_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -895,16 +880,10 @@
           "condition": "conditional",
           "result": null
         }
-      ],
-      "source_test": "II_STE_01",
-      "references": [
-        "BSI TR-03151-1 §4.5 / BSI TR-03153-1 §9.8.5",
-        "BSI TR-03153-1 §9.8.5 / Tabelle 16",
-        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {
-      "step": 12,
+      "step": 11,
       "type": "NEGATIVE",
       "title": "Selbsttest-Fehlerfall",
       "result": null,

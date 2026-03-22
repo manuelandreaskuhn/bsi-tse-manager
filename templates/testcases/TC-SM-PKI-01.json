@@ -41,10 +41,10 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
-      "title": "exportLoggingCertificates aufrufen",
+      "type": "VERIFY",
+      "title": "exportLoggingCertificates aufrufen / Einzelzertifikat-Prüfungen gegen BSI TR-03116-5 (SM_PKI_02, FP)",
       "result": null,
-      "instruction": "Aufruf von exportLoggingCertificates (ohne Authentifizierung), um die Zertifikatskette zu exportieren.",
+      "instruction": "Aufruf von exportLoggingCertificates (ohne Authentifizierung), um die Zertifikatskette zu exportieren.\n\nEinzelzertifikat-Prüfungen gegen BSI TR-03116-5 (SM_PKI_02, FP)",
       "function": "exportLoggingCertificates",
       "user": "unauthenticated",
       "checks": [
@@ -67,45 +67,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "source_test": "SM_PKI_01",
-      "tar_validation": []
-    },
-    {
-      "step": 4,
-      "type": "VERIFY",
-      "title": "PKI-Zertifizierung nach BSI TR-03145 Teil 5 prüfen (SM_PKI_01)",
-      "result": null,
-      "instruction": "PKI-Zertifizierung nach BSI TR-03145 Teil 5 prüfen (SM_PKI_01)",
-      "checks": [
-        {
-          "description": "Gesamte Zertifikatskette (inkl. Vertrauensanker) von BSI TR-03145-Teil-5-zertifizierter PKI ausgestellt",
-          "expected": "Zertifizierungsnachweis vorhanden",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "tar_validation": []
-    },
-    {
-      "step": 5,
-      "type": "VERIFY",
-      "title": "Einzelzertifikat-Prüfungen gegen BSI TR-03116-5 (SM_PKI_02, FP)",
-      "result": null,
-      "instruction": "Einzelzertifikat-Prüfungen gegen BSI TR-03116-5 (SM_PKI_02, FP)",
-      "function": "exportLoggingCertificates",
-      "expected_return": {
-        "tarContainer": {
-          "type": "TAR-FILE",
-          "constraint": "CertificateExport-TAR"
-        }
-      },
-      "checks": [
+        },
         {
           "description": "Alle Zertifikate X.509 Version 3",
           "expected": "Version 3 erkannt.",
@@ -503,6 +465,7 @@
           "rule_id": "CHAIN_ISSUER_MATCH"
         }
       ],
+      "source_test": "SM_PKI_01",
       "tar_validation": [
         {
           "check_id": "EXP_TAR_01",
@@ -799,13 +762,39 @@
           "result": null
         }
       ],
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "CertificateExport-TAR"
+        }
+      },
       "references": [
         "BSI TR-03153-1 §6.3.1.17",
         "BSI TR-03151-1"
       ]
     },
     {
-      "step": 6,
+      "step": 4,
+      "type": "VERIFY",
+      "title": "PKI-Zertifizierung nach BSI TR-03145 Teil 5 prüfen (SM_PKI_01)",
+      "result": null,
+      "instruction": "PKI-Zertifizierung nach BSI TR-03145 Teil 5 prüfen (SM_PKI_01)",
+      "checks": [
+        {
+          "description": "Gesamte Zertifikatskette (inkl. Vertrauensanker) von BSI TR-03145-Teil-5-zertifizierter PKI ausgestellt",
+          "expected": "Zertifizierungsnachweis vorhanden",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "tar_validation": []
+    },
+    {
+      "step": 5,
       "type": "VERIFY",
       "title": "Externe Zertifikatsverifikation (SM_PKI_03)",
       "result": null,

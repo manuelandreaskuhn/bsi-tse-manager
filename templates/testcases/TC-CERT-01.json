@@ -44,10 +44,10 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
-      "title": "exportLoggingCertificates aufrufen",
+      "type": "VERIFY",
+      "title": "exportLoggingCertificates aufrufen / CertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette (exportLoggingCertificates).",
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette (exportLoggingCertificates).\n\nCertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
       "function": "exportLoggingCertificates",
       "user": "unauthenticated",
       "checks": [
@@ -70,25 +70,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "source_test": "SM_PKI_02",
-      "tar_validation": []
-    },
-    {
-      "step": 4,
-      "type": "VERIFY",
-      "title": "CertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
-      "result": null,
-      "instruction": "CertificateExport-TAR exportieren und alle Zertifikate vollständig prüfen",
-      "function": "exportLoggingCertificates",
-      "expected_return": {
-        "tarContainer": {
-          "type": "TAR-FILE",
-          "constraint": "CertificateExport-TAR"
-        }
-      },
-      "checks": [
+        },
         {
           "description": "Alle Zertifikate X.509 Version 3",
           "expected": "Version 3 erkannt.",
@@ -574,6 +556,7 @@
           "rule_id": "CRL_LIVE_VALIDITY"
         }
       ],
+      "source_test": "SM_PKI_02",
       "tar_validation": [
         {
           "check_id": "EXP_TAR_01",
@@ -898,6 +881,12 @@
           "result": null
         }
       ],
+      "expected_return": {
+        "tarContainer": {
+          "type": "TAR-FILE",
+          "constraint": "CertificateExport-TAR"
+        }
+      },
       "references": [
         "BSI TR-03153-1 §6.3.1.17",
         "BSI TR-03151-1"

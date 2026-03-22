@@ -67,10 +67,10 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
-      "title": "setDescription aufrufen",
+      "type": "VERIFY",
+      "title": "setDescription aufrufen / TAR-Export nach Nutzer-Änderung der Beschreibung",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Es wird eine neue Beschreibung der TSE beim Funktionsaufruf übergeben.",
+      "instruction": "Aufruf der Funktionalität zum Erstellen oder Ändern der Beschreibung der TSE. Es wird eine neue Beschreibung der TSE beim Funktionsaufruf übergeben.\n\nTAR-Export nach Nutzer-Änderung der Beschreibung\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
       "function": "setDescription",
       "user": "admin",
       "checks": [
@@ -83,10 +83,136 @@
             "skip"
           ],
           "result": null
+        },
+        {
+          "description": "description:-Zeile enthält Nutzer-Beschreibung korrekt",
+          "expected": "EXP_INF_07",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Datei info.csv vorhanden [EXP_INF_01]",
+          "expected": "`info.csv` gefunden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_01"
+        },
+        {
+          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
+          "expected": "Korrekt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_01b"
+        },
+        {
+          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
+          "expected": "Alle Komponenten-Bezeichner gültig.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_02a"
+        },
+        {
+          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
+          "expected": "Alle Pflichtfelder vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_02b"
+        },
+        {
+          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
+          "expected": "`description:`-Zeile vorhanden.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_02c"
+        },
+        {
+          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
+          "expected": "Alle Zeilen erkannt.",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null,
+          "rule_id": "EXP_INF_05"
         }
       ],
       "source_test": "EXP_INF_06",
-      "tar_validation": []
+      "tar_validation": [
+        {
+          "check_id": "EXP_INF_01",
+          "title": "Datei info.csv vorhanden",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_01b",
+          "title": "Dateiname info.csv (exakt)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02a",
+          "title": "Komponenten-Bezeichner",
+          "outcome_type": "PASS_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02b",
+          "title": "Pflichtfelder in Komponentenzeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_02c",
+          "title": "Beschreibungszeile (description:)",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_05",
+          "title": "Keine unbekannten Zeilen",
+          "outcome_type": "PASS_WARN_FAIL",
+          "condition": "mandatory",
+          "result": null
+        },
+        {
+          "check_id": "EXP_INF_07",
+          "title": "",
+          "outcome_type": "PASS_FAIL",
+          "condition": "conditional",
+          "result": null
+        }
+      ]
     },
     {
       "step": 6,
@@ -360,145 +486,6 @@
     },
     {
       "step": 8,
-      "type": "VERIFY",
-      "title": "TAR-Export nach Nutzer-Änderung der Beschreibung",
-      "result": null,
-      "instruction": "TAR-Export nach Nutzer-Änderung der Beschreibung\n\nAufruf der Funktionalität für den Export aller Log-Nachrichten sowie von Zertifikaten und Zusatzdateien.",
-      "function": "setDescription",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "description:-Zeile enthält Nutzer-Beschreibung korrekt",
-          "expected": "EXP_INF_07",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Datei info.csv vorhanden [EXP_INF_01]",
-          "expected": "`info.csv` gefunden.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_01"
-        },
-        {
-          "description": "Dateiname info.csv (exakt) [EXP_INF_01b]",
-          "expected": "Korrekt.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_01b"
-        },
-        {
-          "description": "Komponenten-Bezeichner [EXP_INF_02a]",
-          "expected": "Alle Komponenten-Bezeichner gültig.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_02a"
-        },
-        {
-          "description": "Pflichtfelder in Komponentenzeilen [EXP_INF_02b]",
-          "expected": "Alle Pflichtfelder vorhanden.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_02b"
-        },
-        {
-          "description": "Beschreibungszeile (description:) [EXP_INF_02c]",
-          "expected": "`description:`-Zeile vorhanden.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_02c"
-        },
-        {
-          "description": "Keine unbekannten Zeilen [EXP_INF_05]",
-          "expected": "Alle Zeilen erkannt.",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null,
-          "rule_id": "EXP_INF_05"
-        }
-      ],
-      "tar_validation": [
-        {
-          "check_id": "EXP_INF_01",
-          "title": "Datei info.csv vorhanden",
-          "outcome_type": "PASS_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_01b",
-          "title": "Dateiname info.csv (exakt)",
-          "outcome_type": "PASS_WARN_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_02a",
-          "title": "Komponenten-Bezeichner",
-          "outcome_type": "PASS_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_02b",
-          "title": "Pflichtfelder in Komponentenzeilen",
-          "outcome_type": "PASS_WARN_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_02c",
-          "title": "Beschreibungszeile (description:)",
-          "outcome_type": "PASS_WARN_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_05",
-          "title": "Keine unbekannten Zeilen",
-          "outcome_type": "PASS_WARN_FAIL",
-          "condition": "mandatory",
-          "result": null
-        },
-        {
-          "check_id": "EXP_INF_07",
-          "title": "",
-          "outcome_type": "PASS_FAIL",
-          "condition": "conditional",
-          "result": null
-        }
-      ],
-      "source_test": "EXP_INF_06"
-    },
-    {
-      "step": 9,
       "type": "VERIFY",
       "title": "Strukturelle Konsistenz aller drei Exporte vergleichen",
       "result": null,

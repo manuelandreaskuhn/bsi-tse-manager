@@ -50,7 +50,7 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Nutzer admin authentifizieren",
       "result": null,
       "instruction": "Aufruf von authenticateUser mit userId=admin und dem korrekten PIN. Der Rückgabewert authenticationResult wird als $authResult festgehalten, remainingRetries als $retries.",

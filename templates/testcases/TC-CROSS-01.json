@@ -116,7 +116,7 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "exportSerialNumbers aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Seriennummern.",
@@ -149,7 +149,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCertificate aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Zertifikate der Zertifikatskette.",

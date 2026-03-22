@@ -44,7 +44,7 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getEndOfUsageDate aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des Datums ab dem die Technische Sicherheitseinrichtung planmäßig nicht mehr zur Sicherung von Transaktionen verwendet werden kann.",

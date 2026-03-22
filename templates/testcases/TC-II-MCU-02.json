@@ -127,7 +127,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "updateTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Seriennummer des Aufzeichnungssystems und die Parameter processData, processType und additionalExternalData übergeben.",
@@ -191,7 +191,7 @@
     },
     {
       "step": 10,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "startTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Der Aufruf wird wiederholt bis die maximale Anzahl an parallel geöffneten Transaktionen erreicht ist, die das Sicherheitsmodul verwalten kann. Bei den Aufrufen der Funktionalität werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",

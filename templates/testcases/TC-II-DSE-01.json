@@ -139,7 +139,7 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Sicherheitsmodul deaktivieren",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Außerbetriebnahme des Sicherheitsmoduls der TSE in dem TAR-Container.",
@@ -222,10 +222,10 @@
     },
     {
       "step": 9,
-      "type": "SETUP",
-      "title": "Sicherheitsmodul deaktivieren",
+      "type": "VERIFY",
+      "title": "Sicherheitsmodul deaktivieren / Sicherheitsmodul außer Betrieb nehmen",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE. Es wird ein Fehler provoziert, der bewirkt, dass die Deaktivierung des Sicherheitsmoduls fehlschlägt.",
+      "instruction": "Aufruf der Funktionalität zur Außerbetriebnahme des Sicherheitsmoduls der TSE. Es wird ein Fehler provoziert, der bewirkt, dass die Deaktivierung des Sicherheitsmoduls fehlschlägt.\n\nTAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── disableSecureElement → eventType \"disableSecureElement\" ──\n  • System-Log-Datei mit eventType=\"disableSecureElement\" im TAR-Container vorhanden (DSE_LOG_PRESENT)\n  • eventOrigin = integration-interface (DSE_LOG_EVORIGIN)\n  • eventData ist eine leere ASN.1-Sequenz (DSE_LOG_EVDATA_EMPTY)\n  • disableSecureElement ist der letzte signierte Log-Eintrag (höchster signatureCounter) (DSE_FINAL_LOG / STOR_EVT_DISABLE_IS_LAST)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "disableSecureElement",
       "user": "logger",
       "checks": [
@@ -238,23 +238,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.15"
-      ],
-      "source_test": "II_DSE_01",
-      "tar_validation": []
-    },
-    {
-      "step": 10,
-      "type": "VERIFY",
-      "title": "Sicherheitsmodul außer Betrieb nehmen",
-      "result": null,
-      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── disableSecureElement → eventType \"disableSecureElement\" ──\n  • System-Log-Datei mit eventType=\"disableSecureElement\" im TAR-Container vorhanden (DSE_LOG_PRESENT)\n  • eventOrigin = integration-interface (DSE_LOG_EVORIGIN)\n  • eventData ist eine leere ASN.1-Sequenz (DSE_LOG_EVDATA_EMPTY)\n  • disableSecureElement ist der letzte signierte Log-Eintrag (höchster signatureCounter) (DSE_FINAL_LOG / STOR_EVT_DISABLE_IS_LAST)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
-      "function": "disableSecureElement",
-      "user": "logger",
-      "checks": [
+        },
         {
           "description": "Deaktivierung erfolgreich",
           "expected": "Kein Fehler",
@@ -572,6 +556,12 @@
           "rule_id": "EXP_LOG_01_DISABLE_SE"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.15",
+        "BSI TR-03151-1 §4.9 / BSI TR-03153-1 §9.7.3",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "source_test": "II_DSE_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -755,15 +745,10 @@
           "condition": "mandatory",
           "result": null
         }
-      ],
-      "source_test": "II_DSE_01",
-      "references": [
-        "BSI TR-03151-1 §4.9 / BSI TR-03153-1 §9.7.3",
-        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
       ]
     },
     {
-      "step": 11,
+      "step": 10,
       "type": "NEGATIVE",
       "title": "Fehlerfall: Deaktivierung fehlgeschlagen",
       "result": null,

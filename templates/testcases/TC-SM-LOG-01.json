@@ -84,7 +84,7 @@
     },
     {
       "step": 6,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Datenfelder des authenticateSmaAdmin-Logs prüfen (SM_LOG_02)",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Authentifizierung des Administrators der Sicherheitsmodulanwendung in dem TAR-Container.",

@@ -216,7 +216,7 @@
     },
     {
       "step": 11,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "updateTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Der Aufruf wird für jede mit dem (sicherheitseinrichtungsübergreifenden) CSP verbundene TSE wiederholt. Für jede dieser TSE wird der Aufruf für jede in Testschritt 1 gestartete Transaktion wiederholt. Bei den Aufrufen werden jeweils unterschiedliche Daten für die Parameter processData, processType und additionalExternalData übergeben. Für die Seriennummer des Aufzeichnungssystems werden möglichst viele unterschiedliche Werte übergeben.",

@@ -60,7 +60,7 @@
     },
     {
       "step": 4,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getCertificate aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe des Zertifikats der TSE und der zugehörigen Zertifikatskette.",

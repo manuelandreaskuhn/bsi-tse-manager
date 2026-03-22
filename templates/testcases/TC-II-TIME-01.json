@@ -113,7 +113,7 @@
     },
     {
       "step": 7,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "logOut aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Abmelden von Nutzern. Für den Aufruf wird der Funktionsname logOut verwendet.",
@@ -176,7 +176,7 @@
     },
     {
       "step": 9,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Datenfelder der updateTime-Log-Nachricht im TAR prüfen",
       "result": null,
       "instruction": "Prüfung der Inhalte von Datenfeldern in der Log-Nachricht für die Aktualisierung der Zeit innerhalb des Sicherheitsmoduls in dem TAR-Container.",
@@ -587,7 +587,7 @@
     },
     {
       "step": 22,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getTimeSyncVariant aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen.",
@@ -620,10 +620,10 @@
     },
     {
       "step": 23,
-      "type": "SETUP",
-      "title": "updateTime: Fehlerfall provozieren",
+      "type": "VERIFY",
+      "title": "updateTime: Fehlerfall provozieren / updateTime mit gültigem Zeitwert (NO_TIME_SYNC)",
       "result": null,
-      "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen. Es wird ein Fehler provoziert, der bewirkt, dass die unterstützte Variante zur Aktualisierung der Zeit nicht festgestellt werden kann.",
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der Möglichkeit über die Schnittstelle die Zeit zu stellen. Es wird ein Fehler provoziert, der bewirkt, dass die unterstützte Variante zur Aktualisierung der Zeit nicht festgestellt werden kann.\n\nTAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateTime → eventType \"updateTime\" ──\n  • System-Log-Datei mit eventType=\"updateTime\" im TAR-Container vorhanden\n  • seTimeAfterUpdate-Feld in eventData vorhanden (EVDATA_UPDATETIME)\n  • Maximaler Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)\n  • updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)\n  • Alle TransactionLog-Einträge nach erstem updateTime (TIMESET_TXN_AFTER_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
       "function": "updateTime",
       "user": "logger",
       "checks": [
@@ -636,83 +636,7 @@
             "skip"
           ],
           "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.7",
-        "BSI TR-03151-1 §4.2"
-      ],
-      "source_test": "II_UDT_01",
-      "tar_validation": []
-    },
-    {
-      "step": 24,
-      "type": "SETUP",
-      "title": "getCurrentSeTime aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit.",
-      "function": "getCurrentSeTime",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
         },
-        {
-          "description": "Der Rückgabewert des Parameters \"currentSeTime\" entspricht der offiziellen Zeit, welche zum Zeitpunkt des Aufrufs der Funktionalität, zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit, vorlag.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "source_test": "II_UDT_01",
-      "tar_validation": []
-    },
-    {
-      "step": 25,
-      "type": "SETUP",
-      "title": "getCurrentSeTime aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit. Es wird ein Fehler provoziert, der bewirkt, dass die aktuelle Zeit nicht vom Sicherheitsmodul bezogen werden kann.",
-      "function": "getCurrentSeTime",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "source_test": "II_UDT_01",
-      "tar_validation": []
-    },
-    {
-      "step": 26,
-      "type": "VERIFY",
-      "title": "updateTime mit gültigem Zeitwert (NO_TIME_SYNC)",
-      "result": null,
-      "instruction": "TAR-Container exportieren und System-Log-Nachrichten für folgende Funktionen prüfen:\n\n\n── updateTime → eventType \"updateTime\" ──\n  • System-Log-Datei mit eventType=\"updateTime\" im TAR-Container vorhanden\n  • seTimeAfterUpdate-Feld in eventData vorhanden (EVDATA_UPDATETIME)\n  • Maximaler Zeitabstand zwischen updateTime-Ereignissen ≤ ICS-Maximalwert (SYS_EVT_UPDATETIME_GAP)\n  • updateTime liegt zeitlich nach initialize (INIT_SEQ_UPDATETIME_AFTER_INIT)\n  • Alle TransactionLog-Einträge nach erstem updateTime (TIMESET_TXN_AFTER_UPDATETIME)\n\n\nPrüfmethodik (EXP_LOG_01, r36-exp-log-01.js):\n1. exportLogMessages aufrufen, TAR-Container bereitstellen.\n2. System-Log-Dateien im TAR nach Dateinamen-Schema filtern:    Zeitstempel_Sig-N_Log-Sys_{eventType}.log\n3. Für jede gesuchte Funktion: Mindestens eine Datei mit passendem eventType vorhanden?\n4. ASN.1-Inhalt parsen, Pflichtfelder und Werte prüfen.",
-      "function": "updateTime",
-      "user": "timeadmin",
-      "parameters": {
-        "newDateTime": "<gültiger Zeitwert im ICS-deklarierten Format>"
-      },
-      "checks": [
         {
           "description": "Zeit wird aktualisiert, kein Fehler",
           "expected": "errorCode = None",
@@ -1030,6 +954,13 @@
           "rule_id": "EXP_LOG_01_UPDATE_TIME"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.7",
+        "BSI TR-03151-1 §4.2",
+        "BSI TR-03151-1 §4.7",
+        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
+      ],
+      "source_test": "II_UDT_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -1207,14 +1138,68 @@
           "result": null
         }
       ],
-      "source_test": "II_UDT_01",
-      "references": [
-        "BSI TR-03151-1 §4.7",
-        "TAR-Analyzer: r36-exp-log-01.js (EXP_LOG_01 Funktions-Log-Nachweis)"
-      ]
+      "parameters": {
+        "newDateTime": "<gültiger Zeitwert im ICS-deklarierten Format>"
+      }
     },
     {
-      "step": 27,
+      "step": 24,
+      "type": "VERIFY",
+      "title": "getCurrentSeTime aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit.",
+      "function": "getCurrentSeTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert des Parameters \"currentSeTime\" entspricht der offiziellen Zeit, welche zum Zeitpunkt des Aufrufs der Funktionalität, zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit, vorlag.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01",
+      "tar_validation": []
+    },
+    {
+      "step": 25,
+      "type": "SETUP",
+      "title": "getCurrentSeTime aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell im Krypto-Kern gestellten Zeit. Es wird ein Fehler provoziert, der bewirkt, dass die aktuelle Zeit nicht vom Sicherheitsmodul bezogen werden kann.",
+      "function": "getCurrentSeTime",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird beendet und es wird die Fehlermeldung ErrorGetCurrentSeTimeFailed ausgelöst.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "source_test": "II_UDT_01",
+      "tar_validation": []
+    },
+    {
+      "step": 26,
       "type": "ACTION",
       "title": "updateTime ohne Parameter (TIME_SYNC)",
       "result": null,
@@ -1241,7 +1226,7 @@
       "tar_validation": []
     },
     {
-      "step": 28,
+      "step": 27,
       "type": "NEGATIVE",
       "title": "Fehler: Ungültiges Zeitformat",
       "result": null,
@@ -1287,7 +1272,7 @@
       "tar_validation": []
     },
     {
-      "step": 29,
+      "step": 28,
       "type": "VERIFY",
       "title": "Zeitmonotonie und Zeitformat-Konsistenz im Export prüfen",
       "result": null,
@@ -1456,7 +1441,7 @@
       "source_test": "II_UDT_01"
     },
     {
-      "step": 30,
+      "step": 29,
       "type": "NEGATIVE",
       "title": "Fehler: Falsche updateTime-Variante",
       "result": null,
@@ -1479,7 +1464,7 @@
       "tar_validation": []
     },
     {
-      "step": 31,
+      "step": 30,
       "type": "ACTION",
       "title": "getTimeSyncVariant",
       "result": null,
@@ -1518,7 +1503,7 @@
       "tar_validation": []
     },
     {
-      "step": 32,
+      "step": 31,
       "type": "ACTION",
       "title": "getCurrentSeTime (II_CURRENTTIME)",
       "result": null,

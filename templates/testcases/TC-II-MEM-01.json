@@ -52,7 +52,7 @@
     },
     {
       "step": 3,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getTotalMemory aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der Gesamtkapazität des Speichermediums.",
@@ -106,7 +106,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "getUsedMemory aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Ausgabe der aktuell verwendeten Speicherkapazität.",

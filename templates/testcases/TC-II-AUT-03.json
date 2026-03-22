@@ -80,7 +80,7 @@
     },
     {
       "step": 6,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "Nutzer logger authentifizieren",
       "result": null,
       "instruction": "Aufruf der Funktionalität zur Authentifizierung des Nutzers admin. In der Ausführung der Funktionalität zum Abmelden von Nutzern werden Fehler provoziert.",

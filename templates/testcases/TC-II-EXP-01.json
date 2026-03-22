@@ -85,7 +85,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "startTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf von startTransaction mit clientId=$client1, processData und processType, um Log-Nachrichten zu erzeugen. Transaktionsnummer als $tn1 festhalten.",

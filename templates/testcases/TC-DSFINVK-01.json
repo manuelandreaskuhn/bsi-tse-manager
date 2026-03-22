@@ -89,196 +89,23 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
-      "title": "startTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $starttime1 = signatureCreationTime, $serial = serialNumber, $sig1 = signatureCounter, $signature1 = signatureValue.",
-      "function": "startTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_STA_01",
-      "tar_validation": []
-    },
-    {
-      "step": 6,
-      "type": "SETUP",
-      "title": "updateTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
-      "function": "updateTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert performedUpdateProtection entspricht noPrevPassedProtected.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.5",
-        "BSI TR-03151-1 §5.3.2"
-      ],
-      "source_test": "II_STA_01",
-      "tar_validation": []
-    },
-    {
-      "step": 7,
-      "type": "SETUP",
-      "title": "finishTransaction aufrufen",
-      "result": null,
-      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
-      "function": "finishTransaction",
-      "user": "logger",
-      "checks": [
-        {
-          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        },
-        {
-          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
-          "expected": "Erfüllt",
-          "result_options": [
-            "pass",
-            "fail",
-            "skip"
-          ],
-          "result": null
-        }
-      ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.6",
-        "BSI TR-03151-1 §5.3.3"
-      ],
-      "source_test": "II_STA_01",
-      "tar_validation": []
-    },
-    {
-      "step": 8,
       "type": "VERIFY",
-      "title": "Kassenvorgang starten mit Seriennummer als clientId",
+      "title": "startTransaction aufrufen / Kassenvorgang starten mit Seriennummer als clientId",
       "result": null,
-      "instruction": "Kassenvorgang starten mit Seriennummer als clientId\n\nAufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.",
+      "instruction": "Aufruf der Funktionalität für das Starten einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Der für processData übergebene Wert wird als $data1 festgehalten. Der für processType übergebene Wert wird als $type1 festgehalten.\n\nRückgabewerte festhalten: $tn1 = transactionNumber, $starttime1 = signatureCreationTime, $serial = serialNumber, $sig1 = signatureCounter, $signature1 = signatureValue.\n\nKassenvorgang starten mit Seriennummer als clientId",
       "function": "startTransaction",
       "user": "logger",
-      "parameters": {
-        "clientId": "<Kassen-Seriennummer gemäß §146a AO>",
-        "processData": "<strukturierte Kassendaten>",
-        "processType": "<DSFinV-K-konformer processType z.B. 'Kassenbeleg-V1'>"
-      },
-      "expected_return": {
-        "transactionNumber": {
-          "constraint": "Fortlaufend"
-        },
-        "signatureCreationTime": {
-          "constraint": "Aktuell"
-        },
-        "serialNumber": {
-          "constraint": "32 Byte"
-        },
-        "signatureCounter": {
-          "constraint": "Inkrementiert"
-        },
-        "signature": {
-          "constraint": "Valide ECDSA-Signatur"
-        }
-      },
       "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
         {
           "description": "Kassen-Seriennummer als clientId akzeptiert",
           "expected": "Kein Fehler",
@@ -574,6 +401,11 @@
           "rule_id": "LOG_FIELD_ADD_EXT_ABSENT"
         }
       ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.4",
+        "BSI TR-03151-1 §5.3.1"
+      ],
+      "source_test": "II_STA_01",
       "tar_validation": [
         {
           "check_id": "LOG_PARSE",
@@ -744,14 +576,165 @@
           "result": null
         }
       ],
-      "references": [
-        "BSI TR-03153-1 §6.3.1.4",
-        "BSI TR-03151-1 §5.3.1"
-      ],
-      "source_test": "II_STA_01"
+      "expected_return": {
+        "transactionNumber": {
+          "constraint": "Fortlaufend"
+        },
+        "signatureCreationTime": {
+          "constraint": "Aktuell"
+        },
+        "serialNumber": {
+          "constraint": "32 Byte"
+        },
+        "signatureCounter": {
+          "constraint": "Inkrementiert"
+        },
+        "signature": {
+          "constraint": "Valide ECDSA-Signatur"
+        }
+      },
+      "parameters": {
+        "clientId": "<Kassen-Seriennummer gemäß §146a AO>",
+        "processData": "<strukturierte Kassendaten>",
+        "processType": "<DSFinV-K-konformer processType z.B. 'Kassenbeleg-V1'>"
+      }
     },
     {
-      "step": 9,
+      "step": 6,
+      "type": "VERIFY",
+      "title": "updateTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Die übergebenen Daten unterscheiden sich von den zuvor übergebenen Daten.",
+      "function": "updateTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedUpdateProtection entspricht noPrevPassedProtected.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.5",
+        "BSI TR-03151-1 §5.3.2"
+      ],
+      "source_test": "II_STA_01",
+      "tar_validation": []
+    },
+    {
+      "step": 7,
+      "type": "VERIFY",
+      "title": "finishTransaction aufrufen",
+      "result": null,
+      "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für clientId wird der zuvor festgehaltene Wert $client1 übergeben. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben. Der für processData übergebene Wert wird als $data2 festgehalten. Der für processType übergebene Wert wird als $type2 festgehalten. Der für additionalExternalData übergebene Wert wird als $add2 festgehalten.",
+      "function": "finishTransaction",
+      "user": "logger",
+      "checks": [
+        {
+          "description": "Die Ausführung wird ohne Fehlermeldung beendet.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert performedFinishProtection entspricht updateLogNotCreated.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCreationTime ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureValue ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        },
+        {
+          "description": "Der Rückgabewert secondLogSignatureCounter ist nicht vorhanden oder leer.",
+          "expected": "Erfüllt",
+          "result_options": [
+            "pass",
+            "fail",
+            "skip"
+          ],
+          "result": null
+        }
+      ],
+      "references": [
+        "BSI TR-03153-1 §6.3.1.6",
+        "BSI TR-03151-1 §5.3.3"
+      ],
+      "source_test": "II_STA_01",
+      "tar_validation": []
+    },
+    {
+      "step": 8,
       "type": "ACTION",
       "title": "Kassenvorgang abschließen",
       "result": null,
@@ -794,7 +777,7 @@
       "tar_validation": []
     },
     {
-      "step": 10,
+      "step": 9,
       "type": "VERIFY",
       "title": "Log-Nachrichten im TAR validieren",
       "result": null,

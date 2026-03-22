@@ -157,7 +157,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "updateTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für forceSignature wird FALSE übergeben. Der Aufruf wird so oft wiederholt, dass der interne Speicher des Sicherheitsmoduls komplett gefüllt ist. Das Ziel ist, dass jede weitere Aktualisierung dazu führt, dass die im Speicher vorgehaltene Daten gesichert werden.",

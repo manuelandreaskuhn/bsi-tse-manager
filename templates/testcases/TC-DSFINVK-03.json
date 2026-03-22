@@ -79,7 +79,7 @@
     },
     {
       "step": 5,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "startTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf von startTransaction für einen Kassenvorgang. Für clientId wird die Kassen-Seriennummer $client1 übergeben. processType wird gemäß DSFinV-K (z.B. 'Kassenbeleg-V1') gesetzt. Die Transaktionsnummer wird als $tn1 festgehalten.",
@@ -116,7 +116,7 @@
     },
     {
       "step": 6,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "finishTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf von finishTransaction für die Transaktion $tn1 mit finalen processData (Betragsangaben). processType wird als $type1 festgehalten.",

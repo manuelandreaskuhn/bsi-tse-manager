@@ -72,7 +72,7 @@
     },
     {
       "step": 6,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "startTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf von startTransaction, um mindestens eine Transaktions-Log-Nachricht zu erzeugen. Transaktionsnummer als $tn1 festhalten.",

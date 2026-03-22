@@ -143,7 +143,7 @@
     },
     {
       "step": 8,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "updateTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität für die Aktualisierung einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.\n\nRückgabewerte festhalten: $sig2 = signatureCounter.",
@@ -180,7 +180,7 @@
     },
     {
       "step": 9,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "finishTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn1 übergeben.\n\nRückgabewerte festhalten: $sig5 = signatureCounter.",
@@ -217,7 +217,7 @@
     },
     {
       "step": 10,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "finishTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn2 übergeben.\n\nRückgabewerte festhalten: $sig10 = signatureCounter.",
@@ -254,7 +254,7 @@
     },
     {
       "step": 11,
-      "type": "SETUP",
+      "type": "VERIFY",
       "title": "finishTransaction aufrufen",
       "result": null,
       "instruction": "Aufruf der Funktionalität zum Beenden einer Transaktion. Für transactionNumber wird der zuvor festgehaltene Wert $tn3 übergeben.\n\nRückgabewerte festhalten: $sig15 = signatureCounter.",
